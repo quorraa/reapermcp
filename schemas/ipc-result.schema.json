@@ -1,0 +1,400 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qlabs.dev/schemas/ipc-result.schema.json",
+  "title": "QLabs REAPER MCP IPC result envelope",
+  "description": "The JSON document the bridge writes to <ipc-dir>/results/<request-id>.result.json. Exactly one of `result` and `error` is non-null; `ok` is the discriminator.",
+  "type": "object",
+  "required": ["protocol_version", "request_id", "ok", "bridge_version", "completed_at"],
+  "additionalProperties": true,
+  "properties": {
+    "protocol_version": { "const": "qlabs-reaper-ipc/1" },
+    "request_id": {
+      "description": "Always the stem of the command file, even when the envelope could not be parsed.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "command": {
+      "type": ["string", "null"],
+      "description": "Null when the request was too malformed to determine a command."
+    },
+    "ok": { "type": "boolean" },
+    "result": { "type": ["object", "null"] },
+    "error": { "$ref": "#/$defs/error" },
+    "transaction_id": { "type": ["string", "null"] },
+    "bridge_version": { "type": "string" },
+    "reaper_version": { "type": ["string", "null"] },
+    "started_at": { "type": ["string", "null"] },
+    "completed_at": { "type": "string" },
+    "duration_ms": { "type": "number", "minimum": 0 },
+    "warnings": { "type": "array", "items": { "$ref": "#/$defs/warning" } }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "ok": { "const": true } }, "required": ["ok"] },
+      "then": {
+        "properties": { "result": { "type": "object" }, "error": { "type": "null" } },
+        "required": ["result"]
+      },
+      "else": {
+        "properties": { "result": { "type": "null" }, "error": { "type": "object" } },
+        "required": ["error"]
+      }
+    },
+    {
+      "if": {
+        "properties": { "ok": { "const": true }, "command": { "const": "ping" } },
+        "required": ["ok", "command"]
+      },
+      "then": { "properties": { "result": { "$ref": "#/$defs/pingResult" } } }
+    },
+    {
+      "if": {
+        "properties": { "ok": { "const": true }, "command": { "const": "status" } },
+        "required": ["ok", "command"]
+      },
+      "then": { "properties": { "result": { "$ref": "#/$defs/statusResult" } } }
+    },
+    {
+      "if": {
+        "properties": { "ok": { "const": true }, "command": { "const": "inspect_selection" } },
+        "required": ["ok", "command"]
+      },
+      "then": { "properties": { "result": { "$ref": "#/$defs/snapshotResult" } } }
+    },
+    {
+      "if": {
+        "properties": { "ok": { "const": true }, "command": { "const": "stage_candidate" } },
+        "required": ["ok", "command"]
+      },
+      "then": { "properties": { "result": { "$ref": "#/$defs/stageResult" } } }
+    },
+    {
+      "if": {
+        "properties": { "ok": { "const": true }, "command": { "const": "commit_candidate" } },
+        "required": ["ok", "command"]
+      },
+      "then": { "properties": { "result": { "$ref": "#/$defs/commitResult" } } }
+    },
+    {
+      "if": {
+        "properties": { "ok": { "const": true }, "command": { "const": "discard_candidate" } },
+        "required": ["ok", "command"]
+      },
+      "then": { "properties": { "result": { "$ref": "#/$defs/discardResult" } } }
+    },
+    {
+      "if": {
+        "properties": { "ok": { "const": true }, "command": { "const": "undo_last_generation" } },
+        "required": ["ok", "command"]
+      },
+      "then": { "properties": { "result": { "$ref": "#/$defs/undoResult" } } }
+    }
+  ],
+  "$defs": {
+    "hash": { "type": ["string", "null"], "pattern": "^fnv1a64:[0-9a-f]{16}$" },
+    "warning": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    },
+    "error": {
+      "type": ["object", "null"],
+      "required": ["code", "message"],
+      "additionalProperties": true,
+      "properties": {
+        "code": {
+          "description": "Brief section 19 codes plus the documented bridge extensions. BRIDGE_OFFLINE and IPC_TIMEOUT are produced by the Rust client, never by the bridge.",
+          "enum": [
+            "BRIDGE_OFFLINE",
+            "BRIDGE_VERSION_MISMATCH",
+            "IPC_TIMEOUT",
+            "IPC_PROTOCOL_MISMATCH",
+            "INVALID_INSTANCE_TOKEN",
+            "EXPIRED_REQUEST",
+            "PAYLOAD_TOO_LARGE",
+            "NO_ACTIVE_PROJECT",
+            "NO_MIDI_SOURCE",
+            "MULTIPLE_MIDI_SOURCES",
+            "AMBIGUOUS_MELODY",
+            "SOURCE_ITEM_MISSING",
+            "SOURCE_TAKE_MISSING",
+            "STALE_SNAPSHOT",
+            "PROJECT_CHANGED",
+            "MIDI_CHANGED",
+            "TEMPO_MAP_CHANGED",
+            "INVALID_EDIT_PLAN",
+            "KNOWLEDGE_INVALID",
+            "UNSUPPORTED_REAPER_VERSION",
+            "UNDO_NOT_OWNED",
+            "INTERNAL_BRIDGE_ERROR",
+            "MALFORMED_REQUEST",
+            "UNKNOWN_COMMAND",
+            "DUPLICATE_REQUEST",
+            "RESULT_TOO_LARGE",
+            "TRANSACTION_NOT_FOUND"
+          ]
+        },
+        "message": { "type": "string", "maxLength": 2000 },
+        "details": {
+          "type": "object",
+          "description": "Advisory only. Branch on `code`, never on `details`."
+        }
+      }
+    },
+    "pingResult": {
+      "type": "object",
+      "required": ["pong", "bridge_version", "protocol_version"],
+      "additionalProperties": true,
+      "properties": {
+        "pong": { "const": true },
+        "bridge_version": { "type": "string" },
+        "protocol_version": { "type": "string" },
+        "server_time": { "type": "string" },
+        "uptime_seconds": { "type": "number" }
+      }
+    },
+    "statusResult": {
+      "type": "object",
+      "required": ["bridge_connected", "ipc_protocol_version", "active_project", "commands"],
+      "additionalProperties": true,
+      "properties": {
+        "bridge_connected": { "type": "boolean" },
+        "bridge_version": { "type": "string" },
+        "bridge_schema_version": { "type": "string" },
+        "ipc_protocol_version": { "type": "string" },
+        "reaper_version": { "type": ["string", "null"] },
+        "heartbeat_age_seconds": { "type": "number" },
+        "heartbeat_timestamp": { "type": "integer" },
+        "active_project": { "type": "boolean" },
+        "project_uuid": { "type": ["string", "null"] },
+        "project_name": { "type": ["string", "null"] },
+        "project_path": { "type": ["string", "null"] },
+        "play_state": { "type": ["integer", "number", "null"] },
+        "selected_item_count": { "type": "integer", "minimum": 0 },
+        "active_midi_editor": { "type": "boolean" },
+        "knowledge_version": { "type": ["string", "null"] },
+        "uptime_seconds": { "type": "number" },
+        "requests_processed": { "type": "integer", "minimum": 0 },
+        "requests_failed": { "type": "integer", "minimum": 0 },
+        "ipc_dir": { "type": "string" },
+        "commands": { "type": "array", "items": { "type": "string" } },
+        "limits": { "type": "object" }
+      }
+    },
+    "note": {
+      "type": "object",
+      "required": [
+        "index", "start_ppq", "end_ppq", "start_qn", "end_qn",
+        "item_relative_start_qn", "item_relative_end_qn",
+        "pitch", "velocity", "channel", "muted", "selected"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "source_index": { "type": "integer", "minimum": 0 },
+        "start_ppq": { "type": "number" },
+        "end_ppq": { "type": "number" },
+        "start_qn": { "type": "number" },
+        "end_qn": { "type": "number" },
+        "duration_qn": { "type": "number" },
+        "item_relative_start_qn": { "type": "number" },
+        "item_relative_end_qn": { "type": "number" },
+        "start_seconds": { "type": "number" },
+        "end_seconds": { "type": "number" },
+        "pitch": { "type": "integer", "minimum": 0, "maximum": 127 },
+        "velocity": { "type": "integer", "minimum": 0, "maximum": 127 },
+        "channel": { "type": "integer", "minimum": 0, "maximum": 15 },
+        "muted": { "type": "boolean" },
+        "selected": { "type": "boolean" }
+      }
+    },
+    "tempoMarker": {
+      "type": "object",
+      "required": ["index", "time_seconds", "qn", "bpm", "timesig_num", "timesig_den", "linear"],
+      "additionalProperties": true,
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "time_seconds": { "type": "number" },
+        "qn": { "type": "number" },
+        "bpm": { "type": "number" },
+        "timesig_num": { "type": "integer" },
+        "timesig_den": { "type": "integer" },
+        "linear": { "type": "boolean" },
+        "synthetic": {
+          "type": "boolean",
+          "description": "Present only on the marker synthesised for a project with no explicit tempo markers."
+        }
+      }
+    },
+    "snapshotResult": {
+      "type": "object",
+      "required": [
+        "snapshot_id", "project_uuid", "project_state_change_count",
+        "item_guid", "take_guid",
+        "item_position_seconds", "item_length_seconds",
+        "item_position_qn", "item_end_qn", "item_length_qn",
+        "is_loop_source", "midi_hash", "note_selection_hash",
+        "tempo_map_hash", "timesig_map_hash", "note_list_hash", "snapshot_hash",
+        "note_count", "notes", "timestamp", "bridge_version"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "snapshot_id": { "type": "string" },
+        "project_pointer": { "type": "string" },
+        "project_uuid": { "type": "string" },
+        "project_state_change_count": { "type": "integer", "minimum": 0 },
+        "track_guid": { "type": ["string", "null"] },
+        "item_guid": { "type": "string" },
+        "take_guid": { "type": "string" },
+        "item_position_seconds": { "type": "number" },
+        "item_length_seconds": { "type": "number" },
+        "item_position_qn": { "type": "number" },
+        "item_end_qn": { "type": "number" },
+        "item_length_qn": { "type": "number" },
+        "is_loop_source": { "type": "boolean" },
+        "note_scope": { "enum": ["selected_or_all", "selected_only", "all"] },
+        "extraction_mode": { "type": "string" },
+        "extraction_channel": { "type": ["integer", "null"], "minimum": 0, "maximum": 15 },
+        "resolved_by": { "enum": ["active_editor", "selected_item"] },
+        "midi_hash": { "$ref": "#/$defs/hash" },
+        "note_selection_hash": { "$ref": "#/$defs/hash" },
+        "tempo_map_hash": { "$ref": "#/$defs/hash" },
+        "timesig_map_hash": { "$ref": "#/$defs/hash" },
+        "note_list_hash": { "$ref": "#/$defs/hash" },
+        "snapshot_hash": { "$ref": "#/$defs/hash" },
+        "note_count": { "type": "integer", "minimum": 0 },
+        "source_note_count": { "type": "integer", "minimum": 0 },
+        "notes": { "type": "array", "items": { "$ref": "#/$defs/note" } },
+        "tempo_markers": { "type": "array", "items": { "$ref": "#/$defs/tempoMarker" } },
+        "tempo_at_item_start": { "type": "number" },
+        "time_signature_at_item_start": {
+          "type": "object",
+          "required": ["numerator", "denominator"],
+          "properties": {
+            "numerator": { "type": "integer" },
+            "denominator": { "type": "integer" }
+          }
+        },
+        "timestamp": { "type": "integer" },
+        "timestamp_iso": { "type": "string" },
+        "bridge_version": { "type": "string" },
+        "reaper_version": { "type": ["string", "null"] },
+        "selection_assumptions": { "type": "array", "items": { "type": "string" } },
+        "warnings": { "type": "array", "items": { "$ref": "#/$defs/warning" } }
+      }
+    },
+    "stageResult": {
+      "type": "object",
+      "required": ["transaction_id", "candidate_id", "plan_id", "undo_label", "status",
+        "tracks", "items", "note_count"],
+      "additionalProperties": true,
+      "properties": {
+        "transaction_id": { "type": "string" },
+        "candidate_id": { "type": "string" },
+        "plan_id": { "type": "string" },
+        "undo_label": { "type": "string" },
+        "status": { "const": "preview" },
+        "tracks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["temp_id", "kind"],
+            "properties": {
+              "temp_id": { "type": "string" },
+              "kind": { "enum": ["track", "folder_track"] },
+              "guid": { "type": ["string", "null"] },
+              "name": { "type": "string" }
+            }
+          }
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["temp_id", "note_count"],
+            "properties": {
+              "temp_id": { "type": "string" },
+              "guid": { "type": ["string", "null"] },
+              "take_guid": { "type": ["string", "null"] },
+              "note_count": { "type": "integer", "minimum": 0 },
+              "start_qn": { "type": "number" },
+              "end_qn": { "type": "number" }
+            }
+          }
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "temp_id": { "type": "string" },
+              "marker_index": { "type": "integer" },
+              "name": { "type": "string" }
+            }
+          }
+        },
+        "sends": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "temp_id": { "type": "string" },
+              "send_index": { "type": "integer" },
+              "to_track_guid": { "type": "string" }
+            }
+          }
+        },
+        "note_count": { "type": "integer", "minimum": 0 },
+        "project_state_change_count": { "type": "integer", "minimum": 0 },
+        "warnings": { "type": "array", "items": { "$ref": "#/$defs/warning" } }
+      }
+    },
+    "commitResult": {
+      "type": "object",
+      "required": ["transaction_id", "status", "committed_tracks", "committed_items", "committed_takes"],
+      "additionalProperties": true,
+      "properties": {
+        "transaction_id": { "type": "string" },
+        "status": { "const": "committed" },
+        "undo_label": { "type": "string" },
+        "committed_tracks": { "type": "integer", "minimum": 0 },
+        "committed_items": { "type": "integer", "minimum": 0 },
+        "committed_takes": { "type": "integer", "minimum": 0 },
+        "inspected_tracks": { "type": "integer", "minimum": 0 },
+        "inspected_items": { "type": "integer", "minimum": 0 },
+        "inspected_takes": { "type": "integer", "minimum": 0 },
+        "project_state_change_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "discardResult": {
+      "type": "object",
+      "required": ["transaction_id", "removed_items", "removed_tracks"],
+      "additionalProperties": true,
+      "properties": {
+        "transaction_id": { "type": "string" },
+        "undo_label": { "type": "string" },
+        "removed_items": { "type": "integer", "minimum": 0 },
+        "removed_tracks": { "type": "integer", "minimum": 0 },
+        "retained_tracks": { "type": "integer", "minimum": 0 },
+        "warnings": { "type": "array", "items": { "$ref": "#/$defs/warning" } },
+        "project_state_change_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "undoResult": {
+      "type": "object",
+      "required": ["undone", "transaction_id", "undo_label"],
+      "additionalProperties": true,
+      "properties": {
+        "undone": { "const": true },
+        "transaction_id": { "type": "string" },
+        "undo_label": { "type": "string" },
+        "kind": { "enum": ["stage", "commit", "discard", "unknown"] },
+        "project_state_change_count": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

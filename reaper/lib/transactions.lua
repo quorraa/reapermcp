@@ -127,7 +127,7 @@ end
 local function check_tags(raw, field)
   local out = {}
   if raw == nil or raw == json.null then return out end
-  if not util.is_array(raw) then
+  if not util.is_list(raw) then
     return nil, plan_error(field .. " must be an array of [key, value] pairs")
   end
   if #raw > protocol.LIMITS.MAX_TAGS_PER_OBJECT then
@@ -199,7 +199,7 @@ function M.validate_plan(plan)
 
   -- Operations ---------------------------------------------------------------
   local ops = plan.operations
-  if not util.is_array(ops) then
+  if not util.is_list(ops) then
     return nil, plan_error("operations must be an array")
   end
   if #ops == 0 then
@@ -310,7 +310,7 @@ function M.validate_plan(plan)
       if not sym then return nil, perr end
       norm.item = op.item
       local notes = op.notes
-      if not util.is_array(notes) then
+      if not util.is_list(notes) then
         return nil, plan_error(string.format("operations[%d].notes must be an array", i))
       end
       local out = {}
@@ -432,7 +432,7 @@ function M.validate_plan(plan)
   -- Preconditions ------------------------------------------------------------
   local pres = plan.preconditions
   if pres == nil or pres == json.null then pres = {} end
-  if not util.is_array(pres) then
+  if not util.is_list(pres) then
     return nil, plan_error("preconditions must be an array")
   end
   if #pres > L.MAX_PRECONDITIONS then
@@ -472,7 +472,7 @@ function M.validate_plan(plan)
   -- Expected outputs ---------------------------------------------------------
   local outs = plan.expected_outputs
   if outs == nil or outs == json.null then outs = {} end
-  if not util.is_array(outs) then
+  if not util.is_list(outs) then
     return nil, plan_error("expected_outputs must be an array")
   end
   if #outs > L.MAX_EXPECTED_OUTPUTS then
@@ -606,7 +606,18 @@ function M.check_plan_preconditions(proj, model, ctx)
       return nil, protocol.err(protocol.ERR.STALE_SNAPSHOT,
         "the project no longer matches the snapshot this plan was generated from; "
         .. "re-inspect and re-generate rather than writing stale material",
-        { expected = model.base_snapshot_hash, actual = rebuilt.snapshot_hash })
+        {
+          expected = model.base_snapshot_hash,
+          actual = rebuilt.snapshot_hash,
+          -- Echoed so the caller can tell a genuine edit apart from having sent
+          -- different scope/extraction settings than the snapshot was built with.
+          rebuilt_with = {
+            source_mode = ctx.source_mode or "auto",
+            note_scope = rebuilt.note_scope,
+            extraction_mode = rebuilt.extraction_mode,
+            extraction_channel = rebuilt.extraction_channel or json.null,
+          },
+        })
     end
   end
 

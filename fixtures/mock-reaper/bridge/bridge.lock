@@ -1,0 +1,12 @@
+{
+  "acquired_at": 1785091400,
+  "acquired_at_iso": "2026-07-26T18:43:20Z",
+  "bridge_version": "1.0.0",
+  "heartbeat_at": 1785091879,
+  "heartbeat_at_iso": "2026-07-26T18:51:19Z",
+  "ipc_dir": "/reaper/Scripts/QLabs-Reaper-MCP/ipc",
+  "pid_token": "9f2c1a7b4e0d63558a1140fbb2c37e91",
+  "protocol_version": "qlabs-reaper-ipc/1",
+  "reaper_version": "7.22/linux-x86_64",
+  "stale_after_seconds": 10
+}

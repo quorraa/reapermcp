@@ -93,11 +93,17 @@ return {
   end },
 
   { "is_array distinguishes arrays from maps", function()
-    H.ok(util.is_array({}))
+    local json = require("json")
+    H.falsy(util.is_array({}), "an empty plain table is an object")
+    H.ok(util.is_array(json.array({})), "an explicitly tagged empty array is an array")
     H.ok(util.is_array({ 1, 2, 3 }))
     H.falsy(util.is_array({ a = 1 }))
     H.falsy(util.is_array({ [1] = 1, [3] = 3 }))
     H.falsy(util.is_array("x"))
+    H.falsy(util.is_array(json.object({})))
+    H.ok(util.is_list({}))
+    H.ok(util.is_list({ 1, 2 }))
+    H.falsy(util.is_list({ a = 1 }))
   end },
 
   { "path joining collapses separators", function()

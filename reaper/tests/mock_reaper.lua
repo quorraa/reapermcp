@@ -253,6 +253,7 @@ function Mock:api()
   function R.RefreshToolbar2() return true end
   function R.genGuid() return new_guid(self_) end
   function R.MarkProjectDirty(proj) proj.dirty = true end
+  function R.IsProjectDirty(proj) return (proj or self_:project()).dirty and 1 or 0 end
 
   ------------------------------------------------------------------ filesystem
   function R.RecursiveCreateDirectory(path)
@@ -439,8 +440,18 @@ function Mock:api()
     return nil
   end
   function R.GetMediaItem_Track(item) return item.track end
-  function R.GetMediaItemInfo_Value(item, key) return item.values[key] or 0 end
+  function R.GetMediaItemInfo_Value(item, key)
+    if key == "B_UISEL" then return item.selected and 1 or 0 end
+    return item.values[key] or 0
+  end
   function R.SetMediaItemInfo_Value(item, key, value)
+    if key == "B_UISEL" then
+      local prev = item.selected
+      item.selected = value ~= 0
+      touch(item.proj)
+      record(item.proj, function() item.selected = prev end)
+      return true
+    end
     local prev = item.values[key]
     item.values[key] = value
     touch(item.proj)

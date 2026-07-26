@@ -1,0 +1,64 @@
+{
+  "bridge_version": "1.0.0",
+  "command": "stage_candidate",
+  "completed_at": "2026-07-26T18:51:19Z",
+  "duration_ms": 12.5,
+  "error": null,
+  "ok": true,
+  "protocol_version": "qlabs-reaper-ipc/1",
+  "reaper_version": "7.22/linux-x86_64",
+  "request_id": "valid-stage",
+  "result": {
+    "candidate_id": "00000000-0000-4000-8000-0000000000c1",
+    "items": [
+      {
+        "end_qn": 8,
+        "guid": "0000000a-000a-400a-800a-00000000000a",
+        "note_count": 2,
+        "start_qn": 0,
+        "take_guid": "0000000b-000b-400b-800b-00000000000b",
+        "temp_id": "bass_item"
+      },
+      {
+        "end_qn": 8,
+        "guid": "00000008-0008-4008-8008-000000000008",
+        "note_count": 6,
+        "start_qn": 0,
+        "take_guid": "00000009-0009-4009-8009-000000000009",
+        "temp_id": "chord_item"
+      }
+    ],
+    "note_count": 8,
+    "plan_id": "00000000-0000-4000-8000-0000000000b1",
+    "project_state_change_count": 116,
+    "regions": [],
+    "sends": [],
+    "status": "preview",
+    "tracks": [
+      {
+        "guid": "00000007-0007-4007-8007-000000000007",
+        "kind": "track",
+        "name": "Bass",
+        "temp_id": "bass"
+      },
+      {
+        "guid": "00000006-0006-4006-8006-000000000006",
+        "kind": "track",
+        "name": "Chords",
+        "temp_id": "chords"
+      },
+      {
+        "guid": "00000005-0005-4005-8005-000000000005",
+        "kind": "folder_track",
+        "name": "QLabs Candidate 01 -- Warm Extended",
+        "temp_id": "folder"
+      }
+    ],
+    "transaction_id": "00000000-0000-4000-8000-0000000000d1",
+    "undo_label": "QLabs MCP: Stage candidate 00000000",
+    "warnings": []
+  },
+  "started_at": "2026-07-26T18:51:19Z",
+  "transaction_id": "00000000-0000-4000-8000-0000000000d1",
+  "warnings": []
+}

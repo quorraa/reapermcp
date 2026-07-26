@@ -28,6 +28,7 @@ local SUITES = {
   "test_snapshot",
   "test_transactions",
   "test_bridge",
+  "test_fixtures",
 }
 
 local pattern = arg and arg[1] or nil
@@ -47,7 +48,8 @@ local function run_suite(name)
       skipped = skipped + 1
     else
       -- Reset shared module state between cases.
-      package.loaded["util"].fs = package.loaded["util"].realfs
+      local u = package.loaded["util"]
+      if u then u.fs = u.realfs end
       local ok, err = xpcall(fn, function(e)
         if type(e) == "table" then
           return string.format("%s: %s\n%s", tostring(e.code), tostring(e.message),

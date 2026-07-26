@@ -128,6 +128,12 @@ function M.new(opts)
   local cfg_path, cfg_created
   if cfg == nil then
     cfg, cfg_path, cfg_created = M.load_config(script_dir)
+  else
+    local merged = M.default_config()
+    for k, v in pairs(cfg) do
+      if v ~= json.null then merged[k] = v end
+    end
+    cfg = merged
   end
 
   local ipc_dir = opts.ipc_dir
@@ -811,13 +817,16 @@ function Bridge:tick()
 
   if now - self.last_heartbeat >= self.heartbeat_interval then
     self.last_heartbeat = now
-    self:write_heartbeat("online")
+    -- Ownership is checked BEFORE the heartbeat write, because the write also
+    -- refreshes the lock and would otherwise silently reclaim it.
     if not self:owns_lock() then
       self.log:warn("another instance took the lock; shutting this one down")
       self.stop_reason = "lock_lost"
       self.running = false
+      pcall(function() self:write_heartbeat("offline") end)
       return false
     end
+    self:write_heartbeat("online")
   end
 
   if now - self.last_gc >= protocol.LIMITS.GC_INTERVAL_SECONDS then

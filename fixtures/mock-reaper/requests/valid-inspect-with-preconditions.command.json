@@ -1,0 +1,19 @@
+{
+  "command": "inspect_selection",
+  "created_at": "2026-07-26T18:51:19Z",
+  "expected_project": {
+    "midi_hash": "fnv1a64:fac2c019eba29541",
+    "project_uuid": "00000000-0000-4000-8000-000000000001",
+    "snapshot_hash": "fnv1a64:3e7bf035037bcf4f",
+    "source_item_guid": "00000002-0002-4002-8002-000000000002",
+    "source_take_guid": "00000003-0003-4003-8003-000000000003",
+    "tempo_map_hash": "fnv1a64:387bdc9bc9f1446a"
+  },
+  "expires_at": "2026-07-26T18:51:49Z",
+  "instance_token": "0123456789abcdef0123456789abcdef",
+  "payload": {
+    "note_scope": "all"
+  },
+  "protocol_version": "qlabs-reaper-ipc/1",
+  "request_id": "valid-inspect-with-preconditions"
+}

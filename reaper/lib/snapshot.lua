@@ -403,14 +403,20 @@ function M.timesig_canonical(markers)
   return table.concat(out)
 end
 
---- Canonical string for the snapshot hash. Deliberately excludes the timestamp,
---- bridge version, REAPER version and snapshot id so the value is reproducible
---- from project state alone.
+--- Canonical string for the snapshot hash.
+---
+--- Deliberately EXCLUDED: the snapshot id, the timestamp, the bridge version,
+--- the REAPER version and the project state-change count. The first four are
+--- per-call values that would make the hash unreproducible; the state-change
+--- count is excluded because it increments on unrelated edits (even a selection
+--- change), which would reduce `snapshot_hash` to a restatement of that counter
+--- instead of a content hash of the source material. The state-change count
+--- remains available as its own `expected_project.state_change_count` /
+--- `state_change_count` precondition for callers that want strict equality.
 function M.snapshot_canonical(s)
   local lines = {
     "qlabs.snapshot.v1",
     "project_uuid=" .. s_or_null(s.project_uuid),
-    "state_change_count=" .. d(s.project_state_change_count),
     "track_guid=" .. s_or_null(s.track_guid),
     "item_guid=" .. s_or_null(s.item_guid),
     "take_guid=" .. s_or_null(s.take_guid),

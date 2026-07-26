@@ -1,0 +1,9 @@
+{
+  "command": "ping",
+  "created_at": "2026-07-26T18:51:19Z",
+  "expires_at": "2026-07-26T18:51:49Z",
+  "instance_token": "not-the-installation-token",
+  "payload": {},
+  "protocol_version": "qlabs-reaper-ipc/1",
+  "request_id": "invalid-token"
+}

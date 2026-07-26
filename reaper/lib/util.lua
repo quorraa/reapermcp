@@ -378,19 +378,36 @@ function M.copy(t)
   return o
 end
 
---- True when `v` is a Lua array (1..n contiguous integer keys, no others).
+--- True when `v` must be treated as a JSON array. The rule matches json.lua's
+--- encoder exactly: an explicit `__jsontype` metatable hint wins, otherwise a
+--- non-empty table whose keys are exactly 1..n is an array. An EMPTY plain table
+--- is an object, which is what makes `payload = {}` a valid JSON object.
 function M.is_array(v)
   if type(v) ~= "table" then return false end
+  local mt = getmetatable(v)
+  local hint = mt and rawget(mt, "__jsontype")
+  if hint == "array" then return true end
+  if hint == "object" then return false end
   local n = 0
   for k in pairs(v) do
     if type(k) ~= "number" then return false end
     if k < 1 or k % 1 ~= 0 then return false end
     if k > n then n = k end
   end
+  if n == 0 then return false end
   for i = 1, n do
     if v[i] == nil then return false end
   end
   return true
+end
+
+--- True when `v` is an array-shaped value OR an empty table. Used where the
+--- protocol expects a possibly-empty list that a caller may have serialised as
+--- `[]` (metatable-tagged) or built as a bare Lua table.
+function M.is_list(v)
+  if type(v) ~= "table" then return false end
+  if M.is_array(v) then return true end
+  return next(v) == nil
 end
 
 --- Bounded FIFO set, used for the request-id replay guard.
