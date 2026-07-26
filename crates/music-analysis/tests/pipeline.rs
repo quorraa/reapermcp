@@ -61,8 +61,18 @@ fn top_collection(a: &Analysis) -> Vec<i32> {
 // ---------------------------------------------------------------------------
 
 #[test]
-fn the_corpus_is_eleven_fixtures() {
-    assert_eq!(fixtures().len(), 11);
+fn the_corpus_is_discovered_and_every_fixture_is_distinct() {
+    let all = fixtures();
+    assert!(
+        all.len() >= 11,
+        "the corpus has shrunk to {} fixtures",
+        all.len()
+    );
+    let mut ids: Vec<&str> = all.iter().map(|f| f.id.as_str()).collect();
+    ids.sort_unstable();
+    let before = ids.len();
+    ids.dedup();
+    assert_eq!(before, ids.len(), "two fixtures share an id");
 }
 
 #[test]

@@ -1,6 +1,6 @@
 {
   "fixture_version": "1.0.0",
-  "id": "progressions/sixteen_bar_c_major",
+  "id": "melodies/sixteen_bar_c_major",
   "title": "Sixteen-bar diatonic melody in C major",
   "description": "The performance reference: sixteen bars of 4/4 with four four-bar phrases. Used to measure that three candidates are generated well inside a second in release mode.",
   "tempo_bpm": 120.0,

@@ -312,7 +312,7 @@ fn emit_entry_options(
         // A few qualities are the whole point of one function entry and
         // nonsense anywhere else: an augmented sixth is not a colour a
         // Neapolitan can borrow just because both are built on a major triad.
-        if crate::keyctx::AMBIGUOUS_SYMBOL_QUALITIES.contains(&quality.id.as_str())
+        if crate::keyctx::SINGLE_PURPOSE_QUALITIES.contains(&quality.id.as_str())
             && quality.id != entry.triad_quality
         {
             continue;

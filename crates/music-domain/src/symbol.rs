@@ -36,6 +36,15 @@
 //!   **family**; the concrete tensions are chosen downstream by the harmony
 //!   engine from melody, destination, style and voice leading. This parser
 //!   deliberately does not fix them.
+//! * An accidental-prefixed degree is an **alteration** whatever its number, so
+//!   `(b3)` and `(#4)` are as much alterations as `b9` and `#11`. Only the bare
+//!   `2`, `4` and `6` — and anything written after `add` — are additions.
+//! * An alteration written straight after the root would be swallowed by the
+//!   root's own accidental (`C` plus `#4` reads back as C-sharp), so
+//!   [`ChordSpec::render_ascii`] parenthesises it in that position: `C(#4)`,
+//!   `C(b3)(#4)`. The parenthesised form is the canonical rendering of the
+//!   augmented sixths, which are the only chords in the shipped vocabulary that
+//!   carry an alteration with nothing before it.
 //! * `m7b5` normalizes to a diminished triad with a minor seventh, so a
 //!   half-diminished chord has one canonical representation however it was
 //!   written (`Cm7b5`, `Cø`, `Cø7`, `C-7b5`).
@@ -714,8 +723,13 @@ impl<'a> Parser<'a> {
                 };
                 self.force_seventh(q);
             }
-            5 | 9 | 11 | 13 => self.push_alteration(degree),
-            2 | 4 | 6 => self.push_added(degree),
+            // A chromatically altered degree is an alteration of the chord's own
+            // structure, whatever its number: `#4` is the augmented sixth of an
+            // Italian/French/German sixth, `b3` the doubled third of a German
+            // sixth. `add` is the spelling that means "a plain extra tone", and
+            // it takes its own path through `read_degree_after_marker`.
+            3 | 4 | 5 | 9 | 11 | 13 => self.push_alteration(degree),
+            2 | 6 => self.push_added(degree),
             _ => return Err(self.err(format!("degree {number} cannot be altered here"))),
         }
         Ok(())
@@ -1083,6 +1097,11 @@ mod tests {
         "Cdim(9)",
         "Csus9",
         "C13sus2",
+        // The augmented sixths: a low alteration with no seventh above it, and
+        // so the only chords whose alteration lands directly on the root.
+        "C(#4)",
+        "C(#4)add2",
+        "C(b3)(#4)",
     ];
 
     fn spec(s: &str) -> ChordSpec {
@@ -1121,6 +1140,42 @@ mod tests {
                 .unwrap_or_else(|e| panic!("{s} rendered as {rendered:?} which failed: {e}"));
             assert_eq!(second, first, "{s} rendered as {rendered:?}");
         }
+    }
+
+    #[test]
+    fn augmented_sixths_render_unambiguously() {
+        // Italian, French and German sixths on C. Each carries an alteration
+        // with no seventh above it, so the alteration lands on the root.
+        for (text, alterations, added) in [
+            ("C(#4)", vec![ChordDegree::new(4, 1)], vec![]),
+            (
+                "C(#4)add2",
+                vec![ChordDegree::new(4, 1)],
+                vec![ChordDegree::new(2, 0)],
+            ),
+            (
+                "C(b3)(#4)",
+                vec![ChordDegree::new(3, -1), ChordDegree::new(4, 1)],
+                vec![],
+            ),
+        ] {
+            let s = spec(text);
+            assert_eq!(s.triad, TriadQuality::Major, "{text}");
+            assert_eq!(s.seventh, SeventhQuality::None, "{text}");
+            assert_eq!(s.alterations, alterations, "{text}");
+            assert_eq!(s.added, added, "{text}");
+            assert_eq!(s.render_ascii(), text, "{text}");
+        }
+    }
+
+    #[test]
+    fn a_bare_alteration_never_reads_back_as_a_root_accidental() {
+        // The defect this pins: "C" + "#4" rendered flat would re-parse as a
+        // C-sharp chord with an added fourth, a different chord entirely.
+        let italian = spec("C(#4)");
+        assert_ne!(italian, spec("C#4"));
+        assert_eq!(spec("C#4").root.0, Letter::C);
+        assert_eq!(spec("C#4").root.1, Accidental::SHARP);
     }
 
     #[test]

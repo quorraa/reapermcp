@@ -546,7 +546,7 @@ fn traces_report_alternatives_and_assumptions() {
 #[test]
 fn sixteen_bars_produce_three_candidates() {
     let p = GenerateParams::default().with_profile("jazz_standard");
-    let (h, candidates) = run_on("progressions/sixteen_bar_c_major", &p);
+    let (h, candidates) = run_on("melodies/sixteen_bar_c_major", &p);
     assert_eq!(candidates.len(), 3);
     let (start, end) = (
         BeatTime::ZERO,

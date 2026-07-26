@@ -575,6 +575,9 @@ impl ChordSpec {
         let mut s = String::new();
         s.push(self.root.0.as_char());
         s.push_str(&acc(self.root.1));
+        // Where the root text ends, so the renderer can tell whether an
+        // alteration would end up glued to the root's accidental.
+        let root_len = s.len();
 
         let stack = self.stack_top();
         let sixth = self.added.iter().any(|d| *d == ChordDegree::new(6, 0));
@@ -700,8 +703,22 @@ impl ChordSpec {
 
         let mut alterations = self.alterations.clone();
         alterations.sort_unstable();
+        // Nothing has been written since the root when the chord is a plain
+        // triad with no seventh, and there an alteration's accidental would be
+        // read back as part of the root: `C` plus `#4` is indistinguishable
+        // from C-sharp with an added fourth. Parentheses are the grammar's
+        // existing unambiguous form, so the augmented sixths render `C(#4)`,
+        // `C(#4)add2` and `C(b3)(#4)` instead.
+        let needs_parens = s.len() == root_len;
         for a in alterations {
-            s.push_str(&format!("{}{}", acc(Accidental(a.alter)), a.number));
+            let text = format!("{}{}", acc(Accidental(a.alter)), a.number);
+            if needs_parens {
+                s.push('(');
+                s.push_str(&text);
+                s.push(')');
+            } else {
+                s.push_str(&text);
+            }
         }
 
         let mut added = self.added.clone();

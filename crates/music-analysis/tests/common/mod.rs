@@ -15,23 +15,50 @@ pub fn repo_root() -> PathBuf {
         .expect("the workspace root must exist")
 }
 
-/// Every committed fixture, in a stable order.
-pub fn fixtures() -> Vec<Fixture> {
+/// Subtrees of `fixtures/` that hold something other than fixtures: the golden
+/// outputs themselves, and the recorded IPC envelopes.
+const NON_FIXTURE_DIRS: &[&str] = &["expected", "mock-reaper"];
+
+/// Every `.json` file under `fixtures/` that is a fixture, sorted by path.
+///
+/// The corpus is *discovered*, never enumerated: dropping a new file into
+/// `fixtures/<group>/` is all it takes to add it to every test that walks this
+/// list.
+pub fn fixture_paths() -> Vec<PathBuf> {
+    let root = repo_root().join("fixtures");
     let mut out = Vec::new();
-    for dir in ["melodies", "loops", "progressions"] {
-        let d = repo_root().join("fixtures").join(dir);
-        let mut files: Vec<PathBuf> = std::fs::read_dir(&d)
-            .unwrap_or_else(|e| panic!("cannot read {}: {e}", d.display()))
-            .flatten()
-            .map(|e| e.path())
-            .filter(|p| p.extension().is_some_and(|x| x == "json"))
-            .collect();
-        files.sort();
-        for f in files {
-            out.push(Fixture::from_path(&f).unwrap_or_else(|e| panic!("{}: {e}", f.display())));
+    walk(&root, &mut out);
+    out.sort();
+    out
+}
+
+/// Recursive half of [`fixture_paths`].
+fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+    let entries =
+        std::fs::read_dir(dir).unwrap_or_else(|e| panic!("cannot read {}: {e}", dir.display()));
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            let name = path
+                .file_name()
+                .and_then(|n| n.to_str())
+                .unwrap_or_default();
+            if NON_FIXTURE_DIRS.contains(&name) {
+                continue;
+            }
+            walk(&path, out);
+        } else if path.extension().is_some_and(|x| x == "json") {
+            out.push(path);
         }
     }
-    out
+}
+
+/// Every committed fixture, in a stable order.
+pub fn fixtures() -> Vec<Fixture> {
+    fixture_paths()
+        .into_iter()
+        .map(|f| Fixture::from_path(&f).unwrap_or_else(|e| panic!("{}: {e}", f.display())))
+        .collect()
 }
 
 /// One fixture by id, e.g. `"melodies/dorian_vamp_d"`.

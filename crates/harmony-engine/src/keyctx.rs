@@ -329,16 +329,20 @@ pub fn parse_degrees(list: &[String]) -> Vec<ChordDegree> {
     list.iter().filter_map(|d| ChordDegree::parse(d)).collect()
 }
 
-/// Chord qualities whose rendered ASCII symbol cannot be re-parsed.
+/// Chord qualities that belong to exactly one function entry.
 ///
-/// `ChordSpec::render_ascii` writes an alteration immediately after the root
-/// letter when the chord carries no seventh, so `italian_sixth` on C renders
-/// `C#4`, which reads back as C-sharp with an added fourth. The three
-/// augmented-sixth qualities are the only records in the bundle that hit it.
-/// The engine still generates them: a candidate carries the semantic
-/// [`ChordSpec`] and the function entry's roman numeral, and the ASCII symbol
-/// is a display convenience rather than the identity.
-pub const AMBIGUOUS_SYMBOL_QUALITIES: &[&str] = &["italian_sixth", "french_sixth", "german_sixth"];
+/// An augmented sixth is the whole point of the function entry that names it
+/// and nonsense anywhere else: it is not a colour a Neapolitan can borrow just
+/// because both are built on a major triad. Candidate generation uses this to
+/// keep them out of every other entry's vocabulary.
+///
+/// These three used to be listed here for a second reason — their rendered
+/// ASCII symbol could not be re-parsed, because `ChordSpec::render_ascii` wrote
+/// the alteration straight after the root letter, so `italian_sixth` on C came
+/// out as `C#4`. That is fixed in `music-domain`: the alteration is
+/// parenthesised when nothing separates it from the root, giving `C(#4)`,
+/// `C(#4)add2` and `C(b3)(#4)`, all of which round-trip.
+pub const SINGLE_PURPOSE_QUALITIES: &[&str] = &["italian_sixth", "french_sixth", "german_sixth"];
 
 /// Whether a chord quality can realise a function entry's declared triad and
 /// seventh, i.e. whether it is an elaboration of the same harmony.
@@ -581,9 +585,6 @@ mod tests {
     fn quality_records_round_trip_through_the_symbol_parser() {
         let kb = KnowledgeBase::embedded();
         for q in kb.chord_qualities() {
-            if AMBIGUOUS_SYMBOL_QUALITIES.contains(&q.id.as_str()) {
-                continue;
-            }
             let spec = spec_from_quality(q, (Letter::C, Accidental::NATURAL));
             let text = spec.render_ascii();
             let parsed = symbol::parse(&text)
@@ -598,7 +599,7 @@ mod tests {
     }
 
     #[test]
-    fn the_documented_ambiguous_qualities_are_exactly_the_augmented_sixths() {
+    fn no_quality_in_the_bundle_renders_an_ambiguous_symbol() {
         let kb = KnowledgeBase::embedded();
         let mut found: Vec<&str> = Vec::new();
         for q in kb.chord_qualities() {
@@ -611,17 +612,38 @@ mod tests {
                 found.push(q.id.as_str());
             }
         }
+        let none: Vec<&str> = Vec::new();
         assert_eq!(
-            found, AMBIGUOUS_SYMBOL_QUALITIES,
-            "the set of qualities whose ASCII symbol does not round trip has changed"
+            found, none,
+            "every chord quality's ASCII symbol must round trip through the parser"
         );
+    }
+
+    #[test]
+    fn the_augmented_sixths_render_in_their_parenthesised_form() {
+        let kb = KnowledgeBase::embedded();
+        let root = (Letter::C, Accidental::NATURAL);
+        for (id, expect) in [
+            ("italian_sixth", "C(#4)"),
+            ("french_sixth", "C(#4)add2"),
+            ("german_sixth", "C(b3)(#4)"),
+        ] {
+            let q = kb.chord_quality(id).unwrap_or_else(|| panic!("{id}"));
+            let spec = spec_from_quality(q, root);
+            let text = spec.render_ascii();
+            assert_eq!(text, expect, "quality {id}");
+            assert_eq!(
+                symbol::parse(&text).unwrap_or_else(|e| panic!("{id}: {e:?}")),
+                spec,
+                "quality {id} does not survive its own symbol"
+            );
+        }
     }
 
     #[test]
     fn augmented_sixths_keep_their_semantic_identity() {
         let kb = KnowledgeBase::embedded();
-        // Even though the ASCII text is ambiguous, the spec is not: a German
-        // sixth on Ab must sound Ab, C, Eb (spelt b3 here) and F#.
+        // A German sixth on Ab must sound Ab, C, Eb (spelt b3 here) and F#.
         let spec = spec_from_quality(
             kb.chord_quality("german_sixth").expect("german_sixth"),
             (Letter::A, Accidental::FLAT),

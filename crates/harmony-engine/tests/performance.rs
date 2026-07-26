@@ -14,7 +14,7 @@ use harmony_engine::testing;
 use std::time::{Duration, Instant};
 
 /// The sixteen-bar reference fixture.
-const SIXTEEN_BARS: &str = "progressions/sixteen_bar_c_major";
+const SIXTEEN_BARS: &str = "melodies/sixteen_bar_c_major";
 
 /// The budget for three candidates over sixteen bars.
 fn budget() -> Duration {

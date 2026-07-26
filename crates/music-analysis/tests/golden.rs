@@ -1,5 +1,10 @@
 //! Golden analyses of the committed fixture corpus.
 //!
+//! The corpus is discovered by walking `fixtures/` (skipping `expected/` and
+//! `mock-reaper/`, which hold something other than fixtures), so it can grow
+//! without editing this crate. A fixture with no committed golden fails by
+//! name, with the command that generates one.
+//!
 //! Every fixture is analysed with a fixed set of parameters and the canonical
 //! JSON is compared byte-for-byte with the file committed under
 //! `fixtures/expected/`. This is the crate's strongest determinism guarantee:
@@ -62,8 +67,11 @@ fn every_fixture_analyses_and_matches_its_golden() {
         std::fs::create_dir_all(&dir).expect("the golden directory must be creatable");
     }
 
+    // The corpus is discovered, not counted: a new fixture joins the goldens by
+    // being committed under `fixtures/`, and the failure below is what tells
+    // whoever added it that its golden is still missing.
     let all = fixtures();
-    assert_eq!(all.len(), 11, "the committed corpus is eleven fixtures");
+    assert!(!all.is_empty(), "the fixture corpus is empty");
 
     for f in &all {
         let notes = analysis_notes(f);
@@ -78,7 +86,11 @@ fn every_fixture_analyses_and_matches_its_golden() {
         }
         let on_disk = std::fs::read_to_string(&path).unwrap_or_else(|_| {
             panic!(
-                "{} is missing; regenerate with MUSIC_ANALYSIS_WRITE_GOLDENS=1",
+                "the fixture {} has no committed golden at {}; \
+                 generate it with MUSIC_ANALYSIS_WRITE_GOLDENS=1 \
+                 cargo test -p music-analysis --test golden, then review the \
+                 new file before committing it",
+                f.id,
                 path.display()
             )
         });

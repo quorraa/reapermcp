@@ -43,26 +43,13 @@ pub fn fixture_root() -> PathBuf {
         .join("fixtures")
 }
 
-/// This crate's own `fixtures/` directory.
-///
-/// The shared corpus is pinned by `music-analysis`'s golden tests, which assert
-/// its exact size, so material that only this crate needs — the sixteen-bar
-/// performance reference and the melody-plus-chords reharmonisation source —
-/// lives here instead of growing the shared set.
-pub fn local_fixture_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("fixtures")
-}
-
 /// Loads a fixture by its id, e.g. `"melodies/eight_bar_c_major"`.
 ///
-/// The shared corpus is searched first, then this crate's own fixtures.
+/// Every fixture this crate uses lives in the shared corpus; the golden tests
+/// discover that corpus by walking it, so it can grow without a crate-local
+/// copy.
 pub fn load_fixture(id: &str) -> Fixture {
-    let shared = fixture_root().join(format!("{id}.json"));
-    let path = if shared.exists() {
-        shared
-    } else {
-        local_fixture_root().join(format!("{id}.json"))
-    };
+    let path = fixture_root().join(format!("{id}.json"));
     Fixture::from_path(&path).unwrap_or_else(|e| panic!("fixture {id}: {e}"))
 }
 
