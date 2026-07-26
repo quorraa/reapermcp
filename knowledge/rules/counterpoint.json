@@ -1,0 +1,504 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "counterpoint.dissonance_is_prepared",
+      "domain": "counterpoint",
+      "kind": "strong_theory_principle",
+      "summary": "In strict counterpoint a dissonance is approached as a consonance in the same voice.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "dissonance_is_on_strong_beat",
+        "dissonance_is_prepared"
+      ],
+      "effect": {
+        "score_delta": 3.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "strict_counterpoint",
+        "common_practice"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "intentional_cluster",
+        "pedal_point_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Counterpoint"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Preparation is what makes a dissonance sound intentional. Outside strict profiles, unprepared dissonance is normal and this rule is simply not applied.",
+      "test_ids": [
+        "dissonance_prepared_strict",
+        "unprepared_dissonance_allowed_jazz"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.strong_beats_are_consonant",
+      "domain": "counterpoint",
+      "kind": "strong_theory_principle",
+      "summary": "Metrically strong positions carry consonances unless the dissonance is a prepared suspension.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "dissonance_is_on_strong_beat"
+      ],
+      "effect": {
+        "score_delta": -3.5,
+        "severity": "major",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "strict_counterpoint"
+      ],
+      "exceptions": [
+        "dissonance_is_prepared",
+        "suspension_resolves_down_by_step",
+        "intentional_cluster"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Counterpoint"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "This is deliberately confined to the strict profile. Applying it generally would forbid the accented dissonances that most later styles depend on.",
+      "test_ids": [
+        "strong_beat_consonance_strict",
+        "accented_dissonance_allowed_elsewhere"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.prefer_contrary_motion",
+      "domain": "counterpoint",
+      "kind": "theory_default",
+      "summary": "Contrary motion between two independent lines is preferred to similar motion.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "motion_is_contrary"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "strict_counterpoint",
+        "common_practice",
+        "cinematic",
+        "jazz_standard",
+        "neo_soul_rnb"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Counterpoint"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Contrary motion is the cheapest source of independence and it removes most parallel problems as a side effect.",
+      "test_ids": [
+        "contrary_motion_preferred"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.avoid_simultaneous_leaps",
+      "domain": "counterpoint",
+      "kind": "theory_default",
+      "summary": "Both voices leaping at once in the same direction weakens independence.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "motion_is_similar",
+        "voice_leap_is_large"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "strict_counterpoint",
+        "common_practice",
+        "cinematic"
+      ],
+      "exceptions": [
+        "motion_is_contrary",
+        "role_is_bass"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Counterpoint"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Two simultaneous leaps make the listener hear one gesture rather than two lines, which is exactly what a countermelody is trying to avoid.",
+      "test_ids": [
+        "simultaneous_leaps_penalised"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.rhythmic_independence",
+      "domain": "counterpoint",
+      "kind": "theory_default",
+      "summary": "Two lines moving in identical rhythm are heard as one thickened line.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "part_duplicates_melody_rhythm"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "strict_counterpoint",
+        "common_practice",
+        "jazz_standard",
+        "cinematic",
+        "neo_soul_rnb",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "doubling_is_allowed_for_role"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Counterpoint"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Complementary rhythm is what distinguishes a countermelody from a harmony part. Note-for-note doubling is a legitimate choice, but only when it was asked for.",
+      "test_ids": [
+        "countermelody_rhythm_differs",
+        "countermelody_not_every_melody_onset"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.imitation_bonus",
+      "domain": "counterpoint",
+      "kind": "style_sensitive_preference",
+      "summary": "A countermelody that imitates a melodic motive at a delay is more convincing than free material.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "melody_note_is_structural"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "minor",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "strict_counterpoint",
+        "common_practice",
+        "cinematic",
+        "jazz_standard"
+      ],
+      "exceptions": [
+        "modal_center_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Motives and phrases"
+        }
+      ],
+      "confidence": 0.7,
+      "rationale": "Imitation gives a second line a reason to exist. It is preferred rather than required, because strict imitation quickly becomes mechanical.",
+      "test_ids": [
+        "imitation_scores_above_free_line"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.no_parallel_unisons",
+      "domain": "counterpoint",
+      "kind": "strong_theory_principle",
+      "summary": "Two independent voices must not move in parallel unisons.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "motion_is_parallel",
+        "interval_is_perfect_fifth_or_octave"
+      ],
+      "effect": {
+        "score_delta": -5.0,
+        "severity": "major",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "strict_counterpoint",
+        "common_practice"
+      ],
+      "exceptions": [
+        "doubling_is_allowed_for_role"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Counterpoint"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "A parallel unison is the complete collapse of two parts into one and is penalised more heavily than parallel octaves.",
+      "test_ids": [
+        "parallel_unisons_penalised"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.perfect_interval_at_arrival_points",
+      "domain": "counterpoint",
+      "kind": "theory_default",
+      "summary": "Perfect consonances are reserved for beginnings and arrival points where the merging of voices is wanted.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "interval_is_perfect_fifth_or_octave",
+        "cadence_is_expected_at_this_slot"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "strict_counterpoint",
+        "common_practice"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Counterpoint"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "The blend that makes perfect intervals wrong in the middle of a phrase is exactly what makes them right at its end.",
+      "test_ids": [
+        "perfect_interval_at_cadence_ok"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.countermelody_uses_phrase_gaps",
+      "domain": "counterpoint",
+      "kind": "arrangement_heuristic",
+      "summary": "A countermelody should be most active where the lead rests.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "onsets_collide_with_higher_priority_role"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "cinematic",
+        "common_practice"
+      ],
+      "exceptions": [
+        "phrase_contains_no_rest"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Texture and accompaniment patterns"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Call and response is the most reliable way to add a second line without masking the first, and it comes free from the phrase segmentation the analyser already produces.",
+      "test_ids": [
+        "countermelody_fills_phrase_gaps",
+        "call_and_response_uses_rests"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.countermelody_needs_register_separation",
+      "domain": "counterpoint",
+      "kind": "arrangement_heuristic",
+      "summary": "A countermelody sharing the lead's register competes with it regardless of its rhythm.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "register_overlaps_another_part",
+        "role_is_lead"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "doubling_is_allowed_for_role"
+      ],
+      "source_refs": [
+        {
+          "source_id": "berklee-orchestration-2",
+          "locator": "Course description"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "Register separation does more for clarity than any amount of rhythmic contrast, and it is the one lever available before timbre exists.",
+      "test_ids": [
+        "countermelody_register_separated"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.melodic_tritone_outline",
+      "domain": "counterpoint",
+      "kind": "style_sensitive_preference",
+      "summary": "Outlining a tritone melodically is avoided in strict profiles unless the interval resolves.",
+      "trigger": {
+        "event": "melody_phrase"
+      },
+      "conditions": [
+        "melody_outlines_augmented_or_tritone_interval"
+      ],
+      "effect": {
+        "score_delta": -2.0,
+        "severity": "minor",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "strict_counterpoint",
+        "common_practice"
+      ],
+      "exceptions": [
+        "note_is_left_by_step",
+        "modal_center_is_active",
+        "chromaticism_target_is_high"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Counterpoint"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "The tritone is unstable as an outline, not as a sound. Filling it in or resolving it removes the objection entirely.",
+      "test_ids": [
+        "melodic_tritone_penalised_strict"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.species_constraints_are_profile_scoped",
+      "domain": "counterpoint",
+      "kind": "implementation_heuristic",
+      "summary": "Species-counterpoint prohibitions are applied only in the strict_counterpoint profile and its descendants.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "strictness_is_common_practice"
+      ],
+      "effect": {
+        "score_delta": 0.0,
+        "severity": "info",
+        "score_component": "style_match"
+      },
+      "profiles": [
+        "strict_counterpoint"
+      ],
+      "exceptions": [],
+      "source_refs": [],
+      "confidence": 0.8,
+      "rationale": "Enforcing species rules everywhere would make the engine unusable for nine of the ten shipped profiles. Scoping them to one profile is the honest encoding of what they are.",
+      "test_ids": [
+        "species_rules_scoped_to_strict_profile"
+      ],
+      "version": 1
+    },
+    {
+      "id": "counterpoint.voice_independence_score",
+      "domain": "counterpoint",
+      "kind": "implementation_heuristic",
+      "summary": "Voice independence is scored from the mix of motion types, onset overlap and register separation rather than from any single test.",
+      "trigger": {
+        "event": "arrangement_plan"
+      },
+      "conditions": [
+        "motion_is_contrary",
+        "register_overlaps_another_part"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [],
+      "confidence": 0.65,
+      "rationale": "No individual rule captures independence; it is an aggregate. Exposing it as one named component lets a user see the trade-off instead of a single opaque total.",
+      "test_ids": [
+        "voice_independence_aggregated"
+      ],
+      "version": 1
+    }
+  ]
+}

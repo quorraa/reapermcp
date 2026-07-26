@@ -1,0 +1,906 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "extensions.major_natural_11_close_register",
+      "domain": "extensions",
+      "kind": "style_sensitive_preference",
+      "summary": "A natural 11 close to a major third can create a strong minor-ninth clash.",
+      "trigger": {
+        "event": "voicing_built",
+        "chord_family": "major",
+        "contains_degrees": [
+          "3",
+          "11"
+        ]
+      },
+      "conditions": [
+        "third_and_eleventh_are_in_adjacent_or_close_registers",
+        "third_is_not_suspended",
+        "cluster_intent_is_false"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "common_practice",
+        "jazz_standard",
+        "pop_rock",
+        "cinematic"
+      ],
+      "exceptions": [
+        "melody_is_11",
+        "third_is_omitted",
+        "voices_are_widely_spaced",
+        "intentional_cluster",
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.95,
+      "rationale": "Treat this as a voicing and register issue, not a universal ban on major-eleventh harmony.",
+      "test_ids": [
+        "major11_close_register_penalty",
+        "major11_omit3_exception",
+        "major11_melody_exception"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.sharp_eleven_preferred_over_natural_eleven",
+      "domain": "extensions",
+      "kind": "theory_default",
+      "summary": "On a major-family chord the raised eleventh is the default colour because it sits a whole step above the third instead of a half step.",
+      "trigger": {
+        "event": "chord_selected",
+        "chord_family": "major",
+        "contains_degrees": [
+          "11"
+        ]
+      },
+      "conditions": [
+        "chord_has_altered_tones"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic",
+        "modal_ambient",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "melody_is_11",
+        "third_is_suspended"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "The raised eleventh gives the Lydian colour without the clash, which is why it is far more common on major seventh chords than the natural eleventh.",
+      "test_ids": [
+        "sharp11_distinct_from_natural11",
+        "sharp11_preferred_on_major7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.minor_eleven_is_consonant",
+      "domain": "extensions",
+      "kind": "theory_default",
+      "summary": "The natural eleventh over a minor chord is a perfect fourth above the minor third and needs no special treatment.",
+      "trigger": {
+        "event": "chord_selected",
+        "chord_family": "minor",
+        "contains_degrees": [
+          "11"
+        ]
+      },
+      "conditions": [
+        "seventh_is_present"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "The register-sensitive clash rule is specific to the major third. Applying it to minor chords would remove one of the most common modal colours there is.",
+      "test_ids": [
+        "minor11_no_penalty",
+        "minor11_default_modal_color"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.alteration_requires_destination",
+      "domain": "extensions",
+      "kind": "strong_theory_principle",
+      "summary": "Which alterations a dominant carries must be chosen from its destination, its melody and its voice-leading path.",
+      "trigger": {
+        "event": "chord_selected",
+        "chord_family": "dominant"
+      },
+      "conditions": [
+        "chord_has_altered_tones"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "major",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic",
+        "common_practice",
+        "blues"
+      ],
+      "exceptions": [
+        "target_chord_follows",
+        "altered_tone_resolves_by_step"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "An alteration that does not resolve into the next chord is decoration without a consequence, and it is the fastest way to make generated jazz harmony sound arbitrary.",
+      "test_ids": [
+        "altered_tension_connects_to_destination",
+        "unresolved_alteration_penalised"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.alt_expands_to_explicit_alternatives",
+      "domain": "extensions",
+      "kind": "hard_integrity",
+      "summary": "The 'alt' marker denotes a family; the engine must expand it into explicit, spelled alternatives rather than substituting one fixed collection.",
+      "trigger": {
+        "event": "symbol_parsed",
+        "chord_family": "dominant"
+      },
+      "conditions": [
+        "chord_has_altered_tones"
+      ],
+      "effect": {
+        "score_delta": -6.0,
+        "severity": "major",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Hiding a fixed altered scale behind the marker throws away the choice the notation was deliberately leaving open, and produces spellings that contradict the resolution.",
+      "test_ids": [
+        "alt_generates_explicit_alternatives",
+        "alt_not_fixed_pitch_set"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.flat_thirteen_conflicts_with_natural_fifth",
+      "domain": "extensions",
+      "kind": "theory_default",
+      "summary": "A flat thirteenth and a natural fifth sounding together are a half-step clash rather than a colour; omit the fifth.",
+      "trigger": {
+        "event": "voicing_built",
+        "chord_family": "dominant",
+        "contains_degrees": [
+          "5",
+          "b13"
+        ]
+      },
+      "conditions": [
+        "chord_has_altered_tones"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "moderate",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "fifth_is_omitted",
+        "voices_are_widely_spaced",
+        "intentional_cluster"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "This is the one alteration conflict that is close to categorical: the two notes are a semitone apart in the same register and neither is a guide tone.",
+      "test_ids": [
+        "b13_omits_natural_fifth"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.sharp_nine_separated_from_major_third",
+      "domain": "extensions",
+      "kind": "style_sensitive_preference",
+      "summary": "The raised ninth is the blues minor third against the chord's major third and needs register separation.",
+      "trigger": {
+        "event": "voicing_built",
+        "chord_family": "dominant",
+        "contains_degrees": [
+          "3",
+          "#9"
+        ]
+      },
+      "conditions": [
+        "register_is_low"
+      ],
+      "effect": {
+        "score_delta": -2.0,
+        "severity": "moderate",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "voices_are_widely_spaced",
+        "melody_is_altered_tone",
+        "intentional_cluster",
+        "register_is_high"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Voiced a ninth or more apart the two thirds are the characteristic sound; voiced a semitone apart in the lower middle register they are mud.",
+      "test_ids": [
+        "sharp9_needs_register_separation",
+        "sharp9_on_top_is_fine"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.flat_nine_prefers_minor_destination",
+      "domain": "extensions",
+      "kind": "theory_default",
+      "summary": "A flat ninth on a dominant fits best when the target chord is minor, because the alteration falls into a chord tone of the target.",
+      "trigger": {
+        "event": "chord_pair",
+        "chord_family": "dominant",
+        "contains_degrees": [
+          "b9"
+        ]
+      },
+      "conditions": [
+        "target_chord_follows",
+        "key_is_minor"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic",
+        "common_practice",
+        "blues"
+      ],
+      "exceptions": [
+        "chromaticism_target_is_high"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The flat ninth of the dominant is the fifth of the minor tonic a half step below it, so the resolution is by the smallest possible motion.",
+      "test_ids": [
+        "b9_to_minor_target"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.natural_thirteen_needs_dorian_context",
+      "domain": "extensions",
+      "kind": "theory_default",
+      "summary": "A natural thirteenth on a minor seventh chord requires Dorian or melodic-minor context; in Aeolian the available degree is the flat thirteenth.",
+      "trigger": {
+        "event": "chord_selected",
+        "chord_family": "minor",
+        "contains_degrees": [
+          "13"
+        ]
+      },
+      "conditions": [
+        "modal_center_is_active"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "chromaticism_target_is_high",
+        "melody_is_extension"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Chord-scale theory"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Adding a natural thirteenth to an Aeolian minor chord silently changes the mode. The extension must be checked against the active collection, not just against the chord.",
+      "test_ids": [
+        "minor13_requires_dorian",
+        "minor13_uses_modal_context"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.guide_tones_have_highest_retention_priority",
+      "domain": "extensions",
+      "kind": "theory_default",
+      "summary": "When voices are scarce, the third and seventh are kept before any other chord member.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "guide_tones_present"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "third_is_suspended",
+        "chord_is_symmetric_collection"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Jazz voicings"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "The guide tones carry chord quality. Losing them to keep a ninth produces a voicing whose colour is right and whose identity is wrong.",
+      "test_ids": [
+        "guide_tones_retained_first",
+        "quality_survives_reduction"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.fifth_is_omitted_first",
+      "domain": "extensions",
+      "kind": "theory_default",
+      "summary": "The fifth is the first chord member dropped when the voice count is limited.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "fifth_is_omitted"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "chord_has_altered_tones",
+        "chord_is_symmetric_collection",
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Jazz voicings"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "A perfect fifth adds almost no information beyond the root. The exception is an altered fifth, which is a colour tone and must not be treated as omissible.",
+      "test_ids": [
+        "fifth_omitted_first",
+        "altered_fifth_not_omissible"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.root_omitted_when_bass_supplies_it",
+      "domain": "extensions",
+      "kind": "theory_default",
+      "summary": "A chord's root may be left out of an upper voicing when a bass part is clearly sounding it.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "root_is_omitted",
+        "bass_supplies_root"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "electronic_loop",
+        "drum_and_bass",
+        "pop_rock",
+        "cinematic"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Jazz voicings"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Rootless voicings depend entirely on this condition. Used without a bass they leave the harmony genuinely ambiguous rather than merely open.",
+      "test_ids": [
+        "rootless_requires_bass",
+        "rootless_without_bass_penalised"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.omission_does_not_change_identity",
+      "domain": "extensions",
+      "kind": "hard_integrity",
+      "summary": "Leaving a chord member out of a voicing must never rewrite the chord's semantic identity.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "omission_changes_semantic_identity"
+      ],
+      "effect": {
+        "score_delta": -10.0,
+        "severity": "major",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.95,
+      "rationale": "A thirteenth chord voiced without its fifth, ninth and eleventh is still a thirteenth chord. Confusing the played notes with the chord identity breaks analysis, explanation and round-tripping at once.",
+      "test_ids": [
+        "omission_preserves_identity",
+        "c13_identity_survives_omissions",
+        "root_omission_keeps_identity"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.sixth_does_not_imply_seventh",
+      "domain": "extensions",
+      "kind": "hard_integrity",
+      "summary": "A sixth chord contains a sixth and no seventh; it is not a thirteenth chord.",
+      "trigger": {
+        "event": "symbol_parsed",
+        "contains_degrees": [
+          "6"
+        ]
+      },
+      "conditions": [
+        "seventh_is_present"
+      ],
+      "effect": {
+        "score_delta": -10.0,
+        "severity": "major",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.95,
+      "rationale": "C6 and C13 are different chords with different functions. Collapsing them is one of the most common chord-parser bugs and it changes what the harmony means.",
+      "test_ids": [
+        "c6_not_c13",
+        "sixth_implies_no_seventh"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.add_does_not_imply_seventh",
+      "domain": "extensions",
+      "kind": "hard_integrity",
+      "summary": "An added tone is added to a triad; it does not introduce a seventh.",
+      "trigger": {
+        "event": "symbol_parsed",
+        "contains_degrees": [
+          "9"
+        ]
+      },
+      "conditions": [
+        "seventh_is_present"
+      ],
+      "effect": {
+        "score_delta": -10.0,
+        "severity": "major",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.95,
+      "rationale": "Cadd9 and C9 differ by a whole chord member and by function. The parser must keep added tones and stacked extensions in separate fields.",
+      "test_ids": [
+        "cadd9_not_c9",
+        "add9_no_seventh"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.sus_replaces_third",
+      "domain": "extensions",
+      "kind": "hard_integrity",
+      "summary": "A suspended chord replaces its third; add2 and add4 retain it.",
+      "trigger": {
+        "event": "symbol_parsed",
+        "chord_family": "sus"
+      },
+      "conditions": [
+        "third_is_suspended"
+      ],
+      "effect": {
+        "score_delta": -10.0,
+        "severity": "major",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "third_is_omitted"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.95,
+      "rationale": "Csus4 and C11 sound similar and mean different things: one has no third at all, the other has a third that a particular voicing happens to omit.",
+      "test_ids": [
+        "sus4_not_eleven",
+        "sus_replaces_third",
+        "add4_retains_third"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.extension_density_target",
+      "domain": "extensions",
+      "kind": "implementation_heuristic",
+      "summary": "The number of sounding extensions per chord tracks the requested extension-density control and the profile's default.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "extension_density_is_high"
+      ],
+      "effect": {
+        "score_delta": 1.0,
+        "severity": "minor",
+        "score_component": "complexity_target"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [],
+      "confidence": 0.7,
+      "rationale": "Without an explicit target the search drifts toward whichever density happens to score best on other components, and the control appears to do nothing.",
+      "test_ids": [
+        "extension_density_control_effective"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.avoid_tone_is_profile_sensitive",
+      "domain": "extensions",
+      "kind": "style_sensitive_preference",
+      "summary": "So-called avoid notes are profile-sensitive guidance, never hard exclusions.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "melody_is_extension"
+      ],
+      "effect": {
+        "score_delta": -1.0,
+        "severity": "minor",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "common_practice",
+        "jazz_standard",
+        "pop_rock",
+        "cinematic"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "intentional_cluster",
+        "melody_note_is_structural",
+        "chromaticism_target_is_high"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Chord-scale theory"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "The natural fourth over a major chord is an avoid note in a bebop context and an essential colour in a sus or quartal context. Encoding it as a ban removes a whole vocabulary.",
+      "test_ids": [
+        "avoid_tone_soft_penalty",
+        "avoid_tone_bypassed_modal"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.major_seventh_not_over_dominant_function",
+      "domain": "extensions",
+      "kind": "theory_default",
+      "summary": "A major seventh over a chord acting as a dominant contradicts its function.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "function_is_dominant",
+        "seventh_is_present"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "extension_appropriateness"
+      },
+      "profiles": [
+        "common_practice",
+        "jazz_standard",
+        "pop_rock",
+        "cinematic",
+        "blues"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "quartal_or_planing_context",
+        "chromaticism_target_is_high"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The dominant's identity is the tritone between third and flat seventh. Raising the seventh removes it, which is fine as colour and fatal as function.",
+      "test_ids": [
+        "major_seventh_not_on_dominant"
+      ],
+      "version": 1
+    },
+    {
+      "id": "extensions.ambiguous_symbol_reports_alternatives",
+      "domain": "extensions",
+      "kind": "hard_integrity",
+      "summary": "When a chord symbol admits more than one parse at the same precedence, the parser must report the ambiguity rather than silently pick one.",
+      "trigger": {
+        "event": "symbol_parsed"
+      },
+      "conditions": [
+        "chord_symbol_is_ambiguous"
+      ],
+      "effect": {
+        "score_delta": -8.0,
+        "severity": "major",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "The alias table assigns every token an explicit precedence precisely so that longest and most specific wins deterministically. A genuine tie is a data defect and must surface as one instead of becoming a silent coin flip.",
+      "test_ids": [
+        "ambiguous_symbol_reported",
+        "symbol_precedence_is_total"
+      ],
+      "version": 1
+    }
+  ]
+}

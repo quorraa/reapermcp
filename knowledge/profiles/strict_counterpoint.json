@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "strict_counterpoint",
+      "name": "Strict counterpoint",
+      "parent": "common_practice",
+      "summary": "Species-style constraints: parallel perfect intervals, voice crossing, weak voice independence and unresolved tendency tones are penalised heavily.",
+      "harmonic_vocabulary": {
+        "core": [
+          "major_triad",
+          "minor_triad",
+          "diminished_triad",
+          "dominant7"
+        ],
+        "occasional": [
+          "half_diminished7",
+          "diminished7",
+          "minor7",
+          "major7"
+        ],
+        "avoided": [
+          "dominant7_alt",
+          "six_nine",
+          "minor13",
+          "dominant13",
+          "add9",
+          "sus2",
+          "power"
+        ]
+      },
+      "functional_strength": 0.95,
+      "modal_tolerance": 0.05,
+      "chromaticism_preference": 0.15,
+      "extension_density": 0.0,
+      "alteration_preference": 0.05,
+      "harmonic_rhythm": {
+        "default_slots_per_bar": 1,
+        "min_slot_qn": "1",
+        "max_slot_qn": "4",
+        "coupled_to_tempo": true
+      },
+      "voice_leading_strictness": 1.0,
+      "parallel_motion_treatment": "forbidden",
+      "dissonance_treatment": "prepared_and_resolved",
+      "register_spacing": {
+        "open_voicing_bias": 0.6,
+        "low_interval_limit_source": "instrument_profile",
+        "min_top_spacing_semitones": 2,
+        "max_outer_voice_span_semitones": 24
+      },
+      "bass_behavior": {
+        "allowed_modes": [
+          "roots",
+          "inversions",
+          "stepwise",
+          "contrary_motion"
+        ],
+        "default_mode": "contrary_motion",
+        "octave_folding": false,
+        "ornamentation": "none"
+      },
+      "countermelody_density": 0.6,
+      "arrangement_density": 0.25,
+      "loop_preference": {
+        "default_intent": "closed_tonic",
+        "allowed_intents": [
+          "closed_tonic",
+          "open_dominant",
+          "one_shot_ending"
+        ],
+        "wrap_weight": 0.9,
+        "tail_policy": "resolve"
+      },
+      "candidate_diversity": 0.35,
+      "default_complexity": 0.3,
+      "score_weights": {
+        "melody_fit": 1.2,
+        "harmonic_coherence": 1.3,
+        "functional_or_modal_coherence": 1.5,
+        "voice_leading": 2.2,
+        "extension_appropriateness": 0.2,
+        "style_match": 0.8,
+        "phrase_direction": 1.2,
+        "bass_quality": 1.0,
+        "arrangement_clarity": 0.8,
+        "loop_compatibility": 0.3,
+        "complexity_target": 0.4,
+        "chromaticism_target": 0.4,
+        "candidate_diversity": 0.4
+      },
+      "rule_overrides": {
+        "voice_leading.parallel_perfect_fifths": 2.5,
+        "voice_leading.parallel_octaves": 2.5,
+        "voice_leading.direct_perfect_in_outer_voices": 2.0,
+        "voice_leading.voice_crossing": 2.0,
+        "voice_leading.voice_overlap": 1.8,
+        "voice_leading.tendency_tone_unresolved_at_cadence": 2.0,
+        "counterpoint.strong_beats_are_consonant": 2.0,
+        "counterpoint.dissonance_is_prepared": 2.0,
+        "counterpoint.no_parallel_unisons": 2.0,
+        "counterpoint.rhythmic_independence": 1.8,
+        "harmony.planing_suspends_function": "disabled",
+        "voice_leading.planing_suppresses_parallel_penalty": "disabled",
+        "voice_leading.power_chord_parallels_are_idiomatic": "disabled",
+        "harmony.blues_dominant_seventh_is_stable_tonic": "disabled",
+        "extensions.extension_density_target": "disabled"
+      },
+      "notes": "Inherits every common-practice default and then multiplies the independence-related penalties. The planing and power-chord exemptions are explicitly disabled here so a quartal or riff candidate cannot escape the parallel rules by claiming a texture."
+    }
+  ]
+}

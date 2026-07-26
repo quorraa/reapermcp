@@ -1,0 +1,1310 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "voice_leading.parallel_perfect_fifths",
+      "domain": "voice_leading",
+      "kind": "style_sensitive_preference",
+      "summary": "Two voices moving in parallel perfect fifths reduce voice independence.",
+      "trigger": {
+        "event": "voice_pair_motion",
+        "interval": "P5"
+      },
+      "conditions": [
+        "motion_is_parallel",
+        "interval_is_perfect_fifth_or_octave"
+      ],
+      "effect": {
+        "score_delta": -4.0,
+        "severity": "major",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "jazz_standard"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context",
+        "intentional_cluster"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "The penalty is large in strict profiles and absent in power-chord, planing and quartal contexts, where parallel perfect intervals are the intended sound rather than an error.",
+      "test_ids": [
+        "parallel_fifths_penalised_strict",
+        "parallel_fifths_free_in_power_profile"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.parallel_octaves",
+      "domain": "voice_leading",
+      "kind": "style_sensitive_preference",
+      "summary": "Parallel octaves between independent voices collapse two parts into one.",
+      "trigger": {
+        "event": "voice_pair_motion",
+        "interval": "P8"
+      },
+      "conditions": [
+        "motion_is_parallel",
+        "interval_is_perfect_fifth_or_octave"
+      ],
+      "effect": {
+        "score_delta": -4.0,
+        "severity": "major",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "jazz_standard"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context",
+        "doubling_is_allowed_for_role"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Deliberate octave doubling for weight is a different thing from two independent voices accidentally fusing, and the arrangement layer declares which one is happening.",
+      "test_ids": [
+        "parallel_octaves_penalised_strict",
+        "octave_doubling_allowed_when_declared"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.direct_perfect_in_outer_voices",
+      "domain": "voice_leading",
+      "kind": "style_sensitive_preference",
+      "summary": "Reaching a perfect fifth or octave by similar motion in the outer voices is avoided in strict profiles.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "motion_is_similar",
+        "interval_is_perfect_fifth_or_octave",
+        "outer_voices_involved"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "strict_counterpoint",
+        "common_practice"
+      ],
+      "exceptions": [
+        "stepwise_connection_available",
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "This is one of the most style-specific rules in the set: it is a real constraint in chorale writing and irrelevant almost everywhere else.",
+      "test_ids": [
+        "hidden_fifths_penalised_strict",
+        "hidden_fifths_ignored_pop"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.leading_tone_resolves_up",
+      "domain": "voice_leading",
+      "kind": "strong_theory_principle",
+      "summary": "The leading tone rises by half step to the tonic, especially in an outer voice.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "leading_tone_resolves_up_by_step"
+      ],
+      "effect": {
+        "score_delta": 3.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "jazz_standard",
+        "pop_rock",
+        "blues"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Inner voices are allowed to fall to the fifth of the tonic to complete the chord; the requirement is strongest in the soprano and at cadences.",
+      "test_ids": [
+        "leading_tone_rises_in_soprano",
+        "g7_to_c_b_resolves_to_c"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.chordal_seventh_resolves_down",
+      "domain": "voice_leading",
+      "kind": "strong_theory_principle",
+      "summary": "A chordal seventh falls by step into the next chord.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "chordal_seventh_resolves_down_by_step"
+      ],
+      "effect": {
+        "score_delta": 3.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "cinematic",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "quartal_or_planing_context",
+        "function_is_tonic"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        },
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "This is what chains a sequence of seventh chords together. A stable tonic seventh, as in blues or a major seventh tonic, is exempt because it is not acting as a dissonance.",
+      "test_ids": [
+        "seventh_resolves_down",
+        "g7_to_c_f_resolves_to_e",
+        "tonic_seventh_exempt_from_resolution"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.altered_tone_resolves_by_step",
+      "domain": "voice_leading",
+      "kind": "strong_theory_principle",
+      "summary": "Every altered tone should move by step into a chord tone of the following chord.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "altered_tone_resolves_by_step"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "common_practice",
+        "cinematic",
+        "blues"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context",
+        "modal_center_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Alterations are voice-leading devices before they are colours; an alteration that leaps away has no audible reason to have been there.",
+      "test_ids": [
+        "altered_tones_resolve_stepwise"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.common_tone_retention",
+      "domain": "voice_leading",
+      "kind": "theory_default",
+      "summary": "Pitch classes shared between adjacent chords are kept in the same voice.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "common_tone_available",
+        "common_tone_retained"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context",
+        "motion_is_contrary"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Common-tone retention is the cheapest possible way to make a progression sound connected, and it is the primary connective device in modal and ambient writing where function is weak.",
+      "test_ids": [
+        "common_tone_retained_same_voice",
+        "common_tone_bonus_modal"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.minimal_total_motion",
+      "domain": "voice_leading",
+      "kind": "theory_default",
+      "summary": "Among otherwise equal voicings, prefer the one with the least total semitone travel.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "total_motion_is_minimal"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "intentional_cluster",
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Total travel is a good tiebreaker and a bad objective on its own; used alone it produces static inner voices and no shape, so it is one component among several.",
+      "test_ids": [
+        "minimal_motion_preferred",
+        "minimal_motion_is_not_sole_objective"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.voice_crossing",
+      "domain": "voice_leading",
+      "kind": "style_sensitive_preference",
+      "summary": "Voices crossing above or below their neighbours obscure the texture.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "voice_crossing_present"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "jazz_standard",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "intentional_cluster",
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Crossing is most damaging where voices are timbrally similar, which is why the penalty is strongest in the choral and chorale profiles.",
+      "test_ids": [
+        "voice_crossing_penalised",
+        "voice_crossing_allowed_when_declared"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.voice_overlap",
+      "domain": "voice_leading",
+      "kind": "style_sensitive_preference",
+      "summary": "A voice moving past the previous pitch of an adjacent voice weakens part identity.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "voice_overlap_present"
+      ],
+      "effect": {
+        "score_delta": -2.0,
+        "severity": "minor",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "exceptions": [
+        "intentional_cluster",
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Overlap is subtler than crossing and correspondingly less penalised, but it is what makes an inner voice appear to jump register.",
+      "test_ids": [
+        "voice_overlap_penalised"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.large_leap_limit",
+      "domain": "voice_leading",
+      "kind": "theory_default",
+      "summary": "A single voice should not leap more than an octave in a generated part.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "voice_leap_is_large"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "role_is_bass",
+        "melody_reaches_registral_peak"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Bass parts leap by octave routinely as a register device, so the bass role is exempt rather than the limit being raised for everyone.",
+      "test_ids": [
+        "voice_leap_limited",
+        "bass_octave_leap_allowed"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.spacing_respects_instrument_low_interval_limit",
+      "domain": "voice_leading",
+      "kind": "arrangement_heuristic",
+      "summary": "Minimum spacing in the low register is read from the active instrument profile, not from a single universal law.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "spacing_violates_instrument_low_interval_limit",
+        "register_is_low"
+      ],
+      "effect": {
+        "score_delta": -3.5,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "intentional_cluster",
+        "voices_are_widely_spaced"
+      ],
+      "source_refs": [
+        {
+          "source_id": "berklee-orchestration-2",
+          "locator": "Course description"
+        },
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.7,
+      "rationale": "Where the limit falls depends on timbre: a sine sub, a string section and a distorted guitar tolerate completely different intervals at the same pitch. The data lives in instrument_profiles.json and is editable.",
+      "test_ids": [
+        "low_interval_limit_from_profile",
+        "low_interval_limit_is_not_universal"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.upper_voices_within_an_octave",
+      "domain": "voice_leading",
+      "kind": "theory_default",
+      "summary": "In four-part writing, adjacent upper voices normally stay within an octave of each other.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "outer_voice_span_exceeds_two_octaves"
+      ],
+      "effect": {
+        "score_delta": -1.5,
+        "severity": "minor",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "exceptions": [
+        "voices_are_widely_spaced",
+        "quartal_or_planing_context",
+        "role_is_pad_or_sustained"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The bass is exempt from this convention: a large gap between bass and tenor is normal and a large gap between tenor and alto is not.",
+      "test_ids": [
+        "upper_voice_spacing_within_octave"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.leading_tone_not_doubled",
+      "domain": "voice_leading",
+      "kind": "strong_theory_principle",
+      "summary": "The leading tone is not doubled, because both copies would have to resolve to the same pitch.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "doubling_is_on_tendency_tone"
+      ],
+      "effect": {
+        "score_delta": -4.0,
+        "severity": "major",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context",
+        "modal_center_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Doubling a tendency tone forces either parallel octaves or an unresolved leading tone. The same argument applies to the chordal seventh and to altered degrees.",
+      "test_ids": [
+        "leading_tone_not_doubled"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.chordal_seventh_not_doubled",
+      "domain": "voice_leading",
+      "kind": "theory_default",
+      "summary": "The chordal seventh is not doubled in four-part writing.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "seventh_is_present",
+        "doubling_is_on_tendency_tone"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "jazz_standard"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context",
+        "role_is_pad_or_sustained"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Two sevenths both resolving down by step produce parallel octaves; one of them has to break its resolution.",
+      "test_ids": [
+        "chordal_seventh_not_doubled"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.double_the_root_by_default",
+      "domain": "voice_leading",
+      "kind": "theory_default",
+      "summary": "In a root-position triad the root is the default doubling.",
+      "trigger": {
+        "event": "voicing_built"
+      },
+      "conditions": [
+        "chord_is_in_root_position"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context",
+        "chord_is_rootless_voicing"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "It is a default, not a law. Voice leading regularly justifies doubling the third or fifth, and the engine reports which doubling it chose and why.",
+      "test_ids": [
+        "root_doubled_by_default",
+        "doubling_choice_reported"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.midi_pitch_within_range",
+      "domain": "voice_leading",
+      "kind": "mathematical_invariant",
+      "summary": "Every generated pitch must lie within MIDI 0 to 127.",
+      "trigger": {
+        "event": "note_emitted"
+      },
+      "conditions": [
+        "midi_pitch_out_of_range"
+      ],
+      "effect": {
+        "score_delta": -1000.0,
+        "severity": "major",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "reaper-reascript-help",
+          "locator": "MIDI functions"
+        }
+      ],
+      "confidence": 1.0,
+      "rationale": "A hard bound imposed by the MIDI representation itself and by the REAPER API that receives the notes. Violations are rejected before scoring, never penalised.",
+      "test_ids": [
+        "midi_pitch_bounds_enforced",
+        "no_invalid_midi_pitches"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.duration_is_positive",
+      "domain": "voice_leading",
+      "kind": "mathematical_invariant",
+      "summary": "Every generated note must have a strictly positive duration.",
+      "trigger": {
+        "event": "note_emitted"
+      },
+      "conditions": [
+        "duration_is_not_positive"
+      ],
+      "effect": {
+        "score_delta": -1000.0,
+        "severity": "major",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "reaper-reascript-help",
+          "locator": "MIDI functions"
+        }
+      ],
+      "confidence": 1.0,
+      "rationale": "A zero or negative duration is not a musical choice; it is malformed data that REAPER will either reject or silently reinterpret.",
+      "test_ids": [
+        "positive_duration_enforced",
+        "no_negative_durations"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.monophonic_parts_do_not_overlap",
+      "domain": "voice_leading",
+      "kind": "hard_integrity",
+      "summary": "A part declared monophonic must never contain overlapping notes.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "notes_overlap_in_monophonic_part"
+      ],
+      "effect": {
+        "score_delta": -1000.0,
+        "severity": "major",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "reaper-reascript-help",
+          "locator": "MIDI functions"
+        }
+      ],
+      "confidence": 1.0,
+      "rationale": "Overlapping notes on a monophonic instrument produce unpredictable playback and make the part's voice identity meaningless.",
+      "test_ids": [
+        "monophonic_no_overlap",
+        "illegal_monophonic_overlap_rejected"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.notes_stay_within_generated_item",
+      "domain": "voice_leading",
+      "kind": "hard_integrity",
+      "summary": "No generated note may fall outside the bounds of the item created for it.",
+      "trigger": {
+        "event": "note_emitted"
+      },
+      "conditions": [
+        "note_outside_item_bounds"
+      ],
+      "effect": {
+        "score_delta": -1000.0,
+        "severity": "major",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "reaper-reascript-help",
+          "locator": "Project and item functions"
+        }
+      ],
+      "confidence": 1.0,
+      "rationale": "Notes outside an item are invisible in the editor and are lost on the first item edit, which silently corrupts the staged candidate.",
+      "test_ids": [
+        "notes_within_item_bounds"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.source_material_is_never_mutated",
+      "domain": "voice_leading",
+      "kind": "hard_integrity",
+      "summary": "Staging a candidate must not modify the user's source item, take or notes.",
+      "trigger": {
+        "event": "arrangement_plan"
+      },
+      "conditions": [
+        "source_material_would_be_mutated"
+      ],
+      "effect": {
+        "score_delta": -1000.0,
+        "severity": "major",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "reaper-reascript-help",
+          "locator": "Project and item functions"
+        }
+      ],
+      "confidence": 1.0,
+      "rationale": "Nondestructive preview is a product guarantee. Any plan that would touch the source is rejected at validation time rather than scored down.",
+      "test_ids": [
+        "no_source_mutation_during_staging"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.voice_stays_within_instrument_range",
+      "domain": "voice_leading",
+      "kind": "hard_integrity",
+      "summary": "Each voice must stay inside the range declared by its instrument profile.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "voice_exceeds_instrument_range"
+      ],
+      "effect": {
+        "score_delta": -20.0,
+        "severity": "major",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "berklee-orchestration-2",
+          "locator": "Course description"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Range is per-instrument data. It is enforced as a hard constraint on generated parts but never used to reject the user's own material.",
+      "test_ids": [
+        "range_enforced_per_instrument",
+        "bass_within_configured_range"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.register_drift_control",
+      "domain": "voice_leading",
+      "kind": "implementation_heuristic",
+      "summary": "A voicing sequence should not drift steadily upward or downward across a phrase.",
+      "trigger": {
+        "event": "progression_path"
+      },
+      "conditions": [
+        "outer_voice_span_exceeds_two_octaves"
+      ],
+      "effect": {
+        "score_delta": -1.5,
+        "severity": "minor",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "role_is_pad_or_sustained"
+      ],
+      "source_refs": [],
+      "confidence": 0.7,
+      "rationale": "Greedy nearest-voicing search reliably walks itself out of register over eight bars. Penalising drift is cheaper and more predictable than re-seeding the search.",
+      "test_ids": [
+        "register_drift_penalised",
+        "voicings_stay_in_register"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.contrary_motion_in_outer_voices",
+      "domain": "voice_leading",
+      "kind": "theory_default",
+      "summary": "Contrary motion between the outer voices strengthens independence and avoids most parallel problems.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "motion_is_contrary",
+        "outer_voices_involved"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "jazz_standard",
+        "pop_rock",
+        "neo_soul_rnb"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Contrary motion is the single most effective structural fix for parallel perfect intervals, and it makes the outer-voice frame audible as a frame.",
+      "test_ids": [
+        "contrary_motion_outer_voices_bonus"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.oblique_motion_over_pedal",
+      "domain": "voice_leading",
+      "kind": "theory_default",
+      "summary": "Over a pedal point, oblique motion is expected and dissonances against the pedal need no preparation.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "motion_is_oblique",
+        "pedal_point_is_active"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Applying ordinary dissonance treatment against a sustained pedal produces constant false violations, because the pedal is by definition not participating in the counterpoint.",
+      "test_ids": [
+        "pedal_dissonance_not_penalised",
+        "oblique_motion_over_pedal_bonus"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.planing_suppresses_parallel_penalty",
+      "domain": "voice_leading",
+      "kind": "style_sensitive_preference",
+      "summary": "In a planing or quartal context, parallel perfect intervals carry no penalty at all.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "motion_is_parallel",
+        "quartal_or_planing_context"
+      ],
+      "effect": {
+        "score_delta": 0.0,
+        "severity": "info",
+        "score_component": "style_match"
+      },
+      "profiles": [
+        "modal_ambient",
+        "neo_soul_rnb",
+        "cinematic",
+        "electronic_loop",
+        "jazz_standard",
+        "pop_rock",
+        "blues",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Modal and chromatic substitutions"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "This rule exists specifically to zero the parallel-perfect rules rather than merely reduce them, so a planing candidate is not quietly outscored by a non-planing one.",
+      "test_ids": [
+        "planing_zeroes_parallel_penalty"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.power_chord_parallels_are_idiomatic",
+      "domain": "voice_leading",
+      "kind": "style_sensitive_preference",
+      "summary": "Successive power chords are parallel fifths by construction and must not be penalised.",
+      "trigger": {
+        "event": "voice_pair_motion",
+        "voicing_family": "power"
+      },
+      "conditions": [
+        "motion_is_parallel",
+        "interval_is_perfect_fifth_or_octave"
+      ],
+      "effect": {
+        "score_delta": 0.0,
+        "severity": "info",
+        "score_component": "style_match"
+      },
+      "profiles": [
+        "pop_rock",
+        "blues",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "strictness_is_common_practice"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Blues harmony"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "A power-chord riff is the clearest case in the whole rule set where a strong common-practice principle is simply the wrong tool.",
+      "test_ids": [
+        "power_chord_no_parallel_penalty"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.suspension_resolves_down",
+      "domain": "voice_leading",
+      "kind": "strong_theory_principle",
+      "summary": "A prepared suspension resolves down by step while the other voices hold or move.",
+      "trigger": {
+        "event": "voice_pair_motion"
+      },
+      "conditions": [
+        "dissonance_is_prepared",
+        "suspension_resolves_down_by_step"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "jazz_standard",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "intentional_cluster"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Non-chord tones"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Preparation, dissonance, resolution is the three-stage shape. Skipping preparation produces an appoggiatura, and resolving upward produces a retardation.",
+      "test_ids": [
+        "suspension_resolves_down_by_step"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.tendency_tone_unresolved_at_cadence",
+      "domain": "voice_leading",
+      "kind": "strong_theory_principle",
+      "summary": "Leaving a tendency tone unresolved at a cadence undermines the arrival.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "tendency_tone_is_unresolved",
+        "cadence_is_expected_at_this_slot"
+      ],
+      "effect": {
+        "score_delta": -4.0,
+        "severity": "major",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "jazz_standard",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Mid-phrase an unresolved tendency tone is a colour; at a cadence it is the difference between arriving and stopping.",
+      "test_ids": [
+        "unresolved_tendency_at_cadence_penalised"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.path_is_optimized_globally",
+      "domain": "voice_leading",
+      "kind": "implementation_heuristic",
+      "summary": "The progression is optimised as a connected path, not by choosing the best chord at each slot independently.",
+      "trigger": {
+        "event": "progression_path"
+      },
+      "conditions": [
+        "stepwise_connection_available"
+      ],
+      "effect": {
+        "score_delta": 3.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [],
+      "confidence": 0.75,
+      "rationale": "Greedy per-slot selection produces locally attractive chords that cannot be connected. The search is a bounded beam over complete phrases with a fixed seed so ordering is reproducible.",
+      "test_ids": [
+        "path_search_is_global",
+        "same_seed_same_ordering",
+        "greedy_selection_rejected"
+      ],
+      "version": 1
+    },
+    {
+      "id": "voice_leading.preserve_melody_pitches_exactly",
+      "domain": "voice_leading",
+      "kind": "hard_integrity",
+      "summary": "When preserve-melody is requested, every melody pitch and onset must survive unchanged.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "melody_material_would_be_altered"
+      ],
+      "effect": {
+        "score_delta": -1000.0,
+        "severity": "major",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "mcp-spec-2025-11-25",
+          "locator": "Server Features: Tools"
+        }
+      ],
+      "confidence": 1.0,
+      "rationale": "This is a contract with the caller rather than a musical judgement: the tool argument says the melody is fixed, so any candidate that alters it is invalid regardless of how well it scores.",
+      "test_ids": [
+        "preserve_melody_keeps_every_pitch",
+        "preserve_rhythm_keeps_onsets"
+      ],
+      "version": 1
+    }
+  ]
+}

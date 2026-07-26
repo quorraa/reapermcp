@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qlabs.local/schemas/theory-rule.schema.json",
+  "title": "QLabs theory rule file",
+  "description": "Validates each file under knowledge/rules/. Rules are the executable form of the theory: a trigger selects when the rule is considered, conditions and exceptions are drawn from a closed predicate vocabulary, and the effect contributes to one named score component.",
+  "type": "object",
+  "required": ["schema_version", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/rule" }
+    }
+  },
+  "$defs": {
+    "rule": {
+      "title": "Theory rule",
+      "type": "object",
+      "required": ["id", "domain", "kind", "summary", "trigger", "conditions", "effect", "profiles", "exceptions", "source_refs", "confidence", "rationale", "test_ids", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Domain-prefixed dotted identifier, unique across every rule file.",
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 120,
+          "pattern": "^[a-z_]+\\.[a-z0-9_]+$"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["melody", "harmony", "extensions", "voice_leading", "counterpoint", "arrangement", "looping"]
+        },
+        "kind": {
+          "description": "How binding the rule is. hard_integrity and mathematical_invariant are enforced before scoring; everything else contributes to the score vector.",
+          "type": "string",
+          "enum": ["hard_integrity", "mathematical_invariant", "strong_theory_principle", "theory_default", "style_sensitive_preference", "arrangement_heuristic", "loop_integrity", "implementation_heuristic"]
+        },
+        "summary": {
+          "description": "One sentence of original wording. Never a quotation from a source.",
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 400
+        },
+        "trigger": { "$ref": "#/$defs/trigger" },
+        "conditions": {
+          "description": "All listed predicates must hold for the rule to apply.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/predicate" }
+        },
+        "effect": { "$ref": "#/$defs/effect" },
+        "profiles": {
+          "description": "Style profiles in which this rule is active at all.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/profile_id" }
+        },
+        "exceptions": {
+          "description": "Any listed predicate holding bypasses the rule, which is then reported with status 'bypassed'.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/predicate" }
+        },
+        "source_refs": {
+          "description": "Must be non-empty unless kind is implementation_heuristic, in which case it must be empty. The loader enforces that relationship; the schema only fixes the shape.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/source_ref" }
+        },
+        "confidence": {
+          "description": "How confident the authors are that the rule states its principle correctly for its declared profiles.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rationale": {
+          "description": "Why the rule exists and where it stops applying. Original wording.",
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 1200
+        },
+        "test_ids": {
+          "description": "snake_case names of the automated tests that pin this rule's behaviour.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 80,
+            "pattern": "^[a-z][a-z0-9_]*$"
+          }
+        },
+        "version": {
+          "description": "Incremented whenever the rule's meaning changes.",
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "trigger": {
+      "title": "Rule trigger",
+      "description": "Selects the engine event and optional narrowing selectors. Every key is drawn from a closed list so the Rust evaluator can dispatch on it exhaustively.",
+      "type": "object",
+      "required": ["event"],
+      "minProperties": 1,
+      "maxProperties": 6,
+      "propertyNames": {
+        "enum": ["event", "chord_family", "contains_degrees", "function_class", "role", "scale_family", "voicing_family", "cadence_kind", "loop_intent", "note_role", "motion", "interval", "progression_tag"]
+      },
+      "properties": {
+        "event": {
+          "type": "string",
+          "enum": ["symbol_parsed", "note_emitted", "melody_note", "melody_phrase", "nct_hypothesis", "harmonic_grid", "chord_selected", "chord_pair", "progression_path", "voicing_built", "voice_pair_motion", "part_generated", "arrangement_plan", "loop_boundary"]
+        },
+        "chord_family": {
+          "type": "string",
+          "enum": ["major", "minor", "dominant", "half_dim", "dim", "sus", "power", "aug", "any"]
+        },
+        "contains_degrees": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/degree" }
+        },
+        "function_class": {
+          "type": "string",
+          "enum": ["tonic", "predominant", "dominant", "applied", "chromatic", "modal", "pedal", "passing", "neighbor", "unclassified"]
+        },
+        "role": {
+          "type": "string",
+          "enum": ["lead", "counterlead", "bass", "harmonic_bed", "pad", "comping", "pulse", "ostinato", "riff", "percussion", "impact", "transition", "texture", "ambience", "ornament", "ear_candy"]
+        },
+        "scale_family": {
+          "type": "string",
+          "enum": ["diatonic", "minor", "pentatonic", "blues", "symmetric", "synthetic", "chromatic", "melodic_minor_mode", "harmonic_minor_mode"]
+        },
+        "voicing_family": {
+          "type": "string",
+          "enum": ["close", "open", "drop2", "drop3", "shell", "rootless", "spread", "quartal", "quintal", "cluster", "power", "upper_structure", "pedal"]
+        },
+        "cadence_kind": {
+          "type": "string",
+          "enum": ["perfect_authentic", "imperfect_authentic", "half", "plagal", "deceptive", "phrygian", "modal", "none"]
+        },
+        "loop_intent": {
+          "type": "string",
+          "enum": ["closed_tonic", "open_dominant", "modal_drone", "seamless_color", "transition_ready", "one_shot_ending"]
+        },
+        "note_role": {
+          "type": "string",
+          "enum": ["melody", "counter", "bass", "harmony", "pedal", "ornament", "percussion", "unknown"]
+        },
+        "motion": {
+          "type": "string",
+          "enum": ["parallel", "similar", "contrary", "oblique", "static"]
+        },
+        "interval": {
+          "description": "Short interval name such as P5, M3 or A4.",
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 4,
+          "pattern": "^[dmMPA]\\d{1,2}$"
+        },
+        "progression_tag": {
+          "description": "Matches a tag declared on a progression or cadence schema.",
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "pattern": "^[a-z][a-z0-9_]*$"
+        }
+      }
+    },
+    "effect": {
+      "title": "Rule effect",
+      "type": "object",
+      "required": ["score_delta", "severity", "score_component"],
+      "additionalProperties": false,
+      "properties": {
+        "score_delta": {
+          "description": "Added to the named score component when the rule applies. Values at or below -1000 mark constraints the engine rejects outright rather than scores.",
+          "type": "number",
+          "minimum": -1000,
+          "maximum": 1000
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["info", "minor", "moderate", "major"]
+        },
+        "score_component": {
+          "description": "Which of the thirteen score components this rule contributes to.",
+          "type": "string",
+          "enum": ["melody_fit", "harmonic_coherence", "functional_or_modal_coherence", "voice_leading", "extension_appropriateness", "style_match", "phrase_direction", "bass_quality", "arrangement_clarity", "loop_compatibility", "complexity_target", "chromaticism_target", "candidate_diversity"]
+        }
+      }
+    },
+    "source_ref": {
+      "title": "Source reference",
+      "type": "object",
+      "required": ["source_id", "locator"],
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "locator": {
+          "description": "A chapter or section title from the referenced source.",
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 200
+        }
+      }
+    },
+    "predicate": {
+      "description": "An identifier from the closed predicate vocabulary documented in docs/THEORY_MODEL.md. The loader rejects any predicate the engine cannot evaluate.",
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 80,
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "degree": {
+      "description": "A chord or scale degree such as 1, b3, #11 or bb7.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4,
+      "pattern": "^[b#]{0,2}\\d{1,2}$"
+    },
+    "profile_id": {
+      "type": "string",
+      "enum": ["common_practice", "strict_counterpoint", "jazz_standard", "blues", "pop_rock", "neo_soul_rnb", "modal_ambient", "cinematic", "electronic_loop", "drum_and_bass"]
+    }
+  }
+}

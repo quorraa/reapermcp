@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "modal_ambient",
+      "name": "Modal ambient",
+      "parent": null,
+      "summary": "Common tones, pedals, planing, slow harmonic rhythm, open spacing and very low functional-cadence pressure.",
+      "harmonic_vocabulary": {
+        "core": [
+          "major_triad",
+          "minor_triad",
+          "sus2",
+          "sus4",
+          "major7",
+          "minor7",
+          "minor11",
+          "add9",
+          "six_nine",
+          "power"
+        ],
+        "occasional": [
+          "major7_sharp11",
+          "minor9",
+          "dominant7sus4",
+          "major9",
+          "augmented_major7",
+          "minor6"
+        ],
+        "avoided": [
+          "dominant7",
+          "dominant7_flat9",
+          "dominant7_alt",
+          "diminished7",
+          "german_sixth",
+          "italian_sixth"
+        ]
+      },
+      "functional_strength": 0.15,
+      "modal_tolerance": 1.0,
+      "chromaticism_preference": 0.35,
+      "extension_density": 0.5,
+      "alteration_preference": 0.2,
+      "harmonic_rhythm": {
+        "default_slots_per_bar": 1,
+        "min_slot_qn": "4",
+        "max_slot_qn": "16",
+        "coupled_to_tempo": false
+      },
+      "voice_leading_strictness": 0.4,
+      "parallel_motion_treatment": "idiomatic",
+      "dissonance_treatment": "stable_color",
+      "register_spacing": {
+        "open_voicing_bias": 0.85,
+        "low_interval_limit_source": "instrument_profile",
+        "min_top_spacing_semitones": 3,
+        "max_outer_voice_span_semitones": 36
+      },
+      "bass_behavior": {
+        "allowed_modes": [
+          "pedal",
+          "roots",
+          "stepwise",
+          "ostinato"
+        ],
+        "default_mode": "pedal",
+        "octave_folding": false,
+        "ornamentation": "none"
+      },
+      "countermelody_density": 0.25,
+      "arrangement_density": 0.2,
+      "loop_preference": {
+        "default_intent": "modal_drone",
+        "allowed_intents": [
+          "closed_tonic",
+          "open_dominant",
+          "modal_drone",
+          "seamless_color",
+          "transition_ready",
+          "one_shot_ending"
+        ],
+        "wrap_weight": 1.0,
+        "tail_policy": "sustain"
+      },
+      "candidate_diversity": 0.55,
+      "default_complexity": 0.4,
+      "score_weights": {
+        "melody_fit": 1.2,
+        "harmonic_coherence": 0.9,
+        "functional_or_modal_coherence": 0.6,
+        "voice_leading": 1.2,
+        "extension_appropriateness": 0.9,
+        "style_match": 1.6,
+        "phrase_direction": 0.5,
+        "bass_quality": 0.8,
+        "arrangement_clarity": 1.2,
+        "loop_compatibility": 1.5,
+        "complexity_target": 0.6,
+        "chromaticism_target": 1.0,
+        "candidate_diversity": 0.7
+      },
+      "rule_overrides": {
+        "harmony.modal_vamp_avoids_leading_tone": 2.0,
+        "harmony.planing_suspends_function": 1.8,
+        "harmony.dominant_seventh_resolves_down_fifth": "disabled",
+        "harmony.ii_v_i_is_preferred_cadential_path": "disabled",
+        "harmony.root_position_at_cadence": "disabled",
+        "harmony.retrogression_penalty": "disabled",
+        "voice_leading.common_tone_retention": 1.8,
+        "voice_leading.oblique_motion_over_pedal": 1.6,
+        "voice_leading.parallel_perfect_fifths": "disabled",
+        "voice_leading.parallel_octaves": 0.3,
+        "voice_leading.tendency_tone_unresolved_at_cadence": "disabled",
+        "looping.modal_drone_does_not_require_dominant": 1.8,
+        "looping.closed_tonic_prefers_dominant_to_tonic_wrap": 0.3,
+        "counterpoint.dissonance_is_prepared": "disabled"
+      },
+      "notes": "The clearest counterexample to a single universal harmony model. Functional scoring is almost entirely switched off and replaced by common-tone retention, pedal continuity and loop seamlessness."
+    }
+  ]
+}

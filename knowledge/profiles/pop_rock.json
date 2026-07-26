@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "pop_rock",
+      "name": "Pop and rock",
+      "parent": null,
+      "summary": "Triads, sus chords and power chords over strong loops. Modal borrowing is normal, parallel fifths are idiomatic, and harmonic rhythm is slow and regular.",
+      "harmonic_vocabulary": {
+        "core": [
+          "major_triad",
+          "minor_triad",
+          "power",
+          "sus2",
+          "sus4",
+          "add9",
+          "major6",
+          "minor7",
+          "dominant7"
+        ],
+        "occasional": [
+          "major7",
+          "major9",
+          "minor9",
+          "six_nine",
+          "dominant7sus4",
+          "minor_add9"
+        ],
+        "avoided": [
+          "dominant7_alt",
+          "half_diminished7",
+          "diminished_major7",
+          "augmented_major7",
+          "dominant13_sharp11"
+        ]
+      },
+      "functional_strength": 0.6,
+      "modal_tolerance": 0.6,
+      "chromaticism_preference": 0.25,
+      "extension_density": 0.25,
+      "alteration_preference": 0.15,
+      "harmonic_rhythm": {
+        "default_slots_per_bar": 1,
+        "min_slot_qn": "2",
+        "max_slot_qn": "8",
+        "coupled_to_tempo": true
+      },
+      "voice_leading_strictness": 0.35,
+      "parallel_motion_treatment": "idiomatic",
+      "dissonance_treatment": "free",
+      "register_spacing": {
+        "open_voicing_bias": 0.5,
+        "low_interval_limit_source": "instrument_profile",
+        "min_top_spacing_semitones": 1,
+        "max_outer_voice_span_semitones": 26
+      },
+      "bass_behavior": {
+        "allowed_modes": [
+          "roots",
+          "inversions",
+          "stepwise",
+          "pedal",
+          "ostinato"
+        ],
+        "default_mode": "roots",
+        "octave_folding": true,
+        "ornamentation": "none"
+      },
+      "countermelody_density": 0.3,
+      "arrangement_density": 0.5,
+      "loop_preference": {
+        "default_intent": "closed_tonic",
+        "allowed_intents": [
+          "closed_tonic",
+          "open_dominant",
+          "modal_drone",
+          "seamless_color",
+          "transition_ready",
+          "one_shot_ending"
+        ],
+        "wrap_weight": 0.85,
+        "tail_policy": "repeat"
+      },
+      "candidate_diversity": 0.6,
+      "default_complexity": 0.35,
+      "score_weights": {
+        "melody_fit": 1.5,
+        "harmonic_coherence": 1.1,
+        "functional_or_modal_coherence": 0.8,
+        "voice_leading": 0.7,
+        "extension_appropriateness": 0.5,
+        "style_match": 1.4,
+        "phrase_direction": 1.0,
+        "bass_quality": 1.1,
+        "arrangement_clarity": 1.1,
+        "loop_compatibility": 1.3,
+        "complexity_target": 0.6,
+        "chromaticism_target": 0.6,
+        "candidate_diversity": 1.0
+      },
+      "rule_overrides": {
+        "voice_leading.parallel_perfect_fifths": 0.2,
+        "voice_leading.parallel_octaves": 0.3,
+        "voice_leading.direct_perfect_in_outer_voices": "disabled",
+        "voice_leading.power_chord_parallels_are_idiomatic": 1.5,
+        "harmony.retrogression_penalty": "disabled",
+        "harmony.borrowed_chord_comes_from_parallel_mode": 1.3,
+        "harmony.minor_plagal_flat_six_falls": 1.3,
+        "counterpoint.dissonance_is_prepared": "disabled",
+        "counterpoint.strong_beats_are_consonant": "disabled",
+        "extensions.avoid_tone_is_profile_sensitive": 0.6
+      },
+      "notes": "Root of its own small family: electronic_loop inherits from it. Its defining traits are a slow, regular harmonic rhythm and a complete indifference to parallel perfect intervals."
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "drum_and_bass",
+      "name": "Drum and bass",
+      "parent": "electronic_loop",
+      "summary": "Fast rhythmic surface over deliberately slow, independently configured harmonic rhythm. Sub-register clarity and two-chord modal loops are the defaults.",
+      "harmonic_vocabulary": {
+        "core": [
+          "minor7",
+          "minor9",
+          "minor11",
+          "sus2",
+          "sus4",
+          "power",
+          "major7",
+          "add9"
+        ],
+        "occasional": [
+          "minor6",
+          "six_nine",
+          "major9",
+          "dominant7sus4",
+          "half_diminished7",
+          "minor13"
+        ],
+        "avoided": [
+          "dominant7",
+          "dominant7_flat9",
+          "diminished7",
+          "german_sixth",
+          "italian_sixth",
+          "french_sixth",
+          "augmented_triad"
+        ]
+      },
+      "functional_strength": 0.25,
+      "modal_tolerance": 0.9,
+      "chromaticism_preference": 0.3,
+      "extension_density": 0.45,
+      "alteration_preference": 0.2,
+      "harmonic_rhythm": {
+        "default_slots_per_bar": 1,
+        "min_slot_qn": "8",
+        "max_slot_qn": "32",
+        "coupled_to_tempo": false
+      },
+      "voice_leading_strictness": 0.3,
+      "parallel_motion_treatment": "idiomatic",
+      "dissonance_treatment": "stable_color",
+      "register_spacing": {
+        "open_voicing_bias": 0.8,
+        "low_interval_limit_source": "instrument_profile",
+        "min_top_spacing_semitones": 2,
+        "max_outer_voice_span_semitones": 36
+      },
+      "bass_behavior": {
+        "allowed_modes": [
+          "ostinato",
+          "roots",
+          "pedal"
+        ],
+        "default_mode": "ostinato",
+        "octave_folding": true,
+        "ornamentation": "none"
+      },
+      "countermelody_density": 0.2,
+      "arrangement_density": 0.45,
+      "loop_preference": {
+        "default_intent": "modal_drone",
+        "allowed_intents": [
+          "closed_tonic",
+          "open_dominant",
+          "modal_drone",
+          "seamless_color",
+          "transition_ready",
+          "one_shot_ending"
+        ],
+        "wrap_weight": 1.0,
+        "tail_policy": "wrap"
+      },
+      "candidate_diversity": 0.55,
+      "default_complexity": 0.4,
+      "score_weights": {
+        "melody_fit": 0.9,
+        "harmonic_coherence": 0.8,
+        "functional_or_modal_coherence": 0.4,
+        "voice_leading": 0.7,
+        "extension_appropriateness": 0.6,
+        "style_match": 1.4,
+        "phrase_direction": 0.5,
+        "bass_quality": 1.8,
+        "arrangement_clarity": 1.6,
+        "loop_compatibility": 2.0,
+        "complexity_target": 0.6,
+        "chromaticism_target": 0.5,
+        "candidate_diversity": 1.0
+      },
+      "rule_overrides": {
+        "harmony.harmonic_rhythm_is_independent_of_tempo": 2.0,
+        "harmony.modal_vamp_avoids_leading_tone": 1.6,
+        "harmony.dominant_seventh_resolves_down_fifth": "disabled",
+        "harmony.ii_v_i_is_preferred_cadential_path": "disabled",
+        "arrangement.sub_register_carries_root_only": 1.8,
+        "arrangement.bass_stays_in_range": 1.5,
+        "looping.modal_drone_does_not_require_dominant": 1.6,
+        "looping.pedal_continues_across_wrap": 1.4,
+        "voice_leading.parallel_perfect_fifths": "disabled",
+        "voice_leading.parallel_octaves": 0.2,
+        "counterpoint.rhythmic_independence": 0.5
+      },
+      "notes": "The profile that exists to prove harmonic rhythm is not derived from tempo: its default slot length is eight quarter notes even though the rhythmic grid is the fastest in the set. Chords must not be assumed to change at drum tempo."
+    }
+  ]
+}

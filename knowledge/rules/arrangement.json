@@ -1,0 +1,662 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "arrangement.roles_occupy_separate_registers",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "Two parts with different roles should not share the same register window.",
+      "trigger": {
+        "event": "arrangement_plan"
+      },
+      "conditions": [
+        "register_overlaps_another_part"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "doubling_is_allowed_for_role",
+        "role_is_pad_or_sustained"
+      ],
+      "source_refs": [
+        {
+          "source_id": "berklee-orchestration-2",
+          "locator": "Course description"
+        },
+        {
+          "source_id": "mt21c",
+          "locator": "Texture and accompaniment patterns"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Masking is a register problem before it is a level problem, and register is the only control available in a MIDI-only version-one product.",
+      "test_ids": [
+        "register_separation_reduces_collisions",
+        "roles_produce_distinct_parts"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.background_parts_avoid_lead_onsets",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "A background part whose onsets consistently coincide with the lead's competes for attention.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "onsets_collide_with_higher_priority_role"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "doubling_is_allowed_for_role",
+        "role_is_lead"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Texture and accompaniment patterns"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Offbeat and afterbeat comping patterns exist precisely to solve this, which is why they are the default accompaniment shapes in most profiles.",
+      "test_ids": [
+        "background_avoids_lead_onsets",
+        "offbeat_comping_reduces_collision"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.density_matches_role_target",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "Each part's onset density should stay within the budget declared by its arrangement pattern.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "part_density_exceeds_role_target"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "complexity_target_is_high"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Texture and accompaniment patterns"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "Density is the arrangement parameter users notice first. Tying it to the pattern makes the density control audibly effective instead of a vague nudge.",
+      "test_ids": [
+        "density_setting_changes_note_density",
+        "sparse_profile_contains_rests"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.pad_sustains_common_tones",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "A pad should tie common tones across chord changes rather than re-articulate every voice.",
+      "trigger": {
+        "event": "part_generated",
+        "role": "pad"
+      },
+      "conditions": [
+        "role_is_pad_or_sustained",
+        "common_tone_available"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "harmonic_rhythm_is_fast"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Texture and accompaniment patterns"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "A pad that re-strikes on every chord is a block-chord part with a slow attack. Tying common tones is what makes the texture continuous.",
+      "test_ids": [
+        "pad_produces_sustained_behavior",
+        "pad_ties_common_tones"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.bass_stays_in_range",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "The bass part stays inside its instrument profile's comfortable range wherever possible.",
+      "trigger": {
+        "event": "part_generated",
+        "role": "bass"
+      },
+      "conditions": [
+        "role_is_bass",
+        "voice_exceeds_instrument_range"
+      ],
+      "effect": {
+        "score_delta": -4.0,
+        "severity": "major",
+        "score_component": "bass_quality"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "berklee-orchestration-2",
+          "locator": "Course description"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Below the profile's low limit pitch definition collapses on typical playback systems, so the engine should transpose the note up an octave rather than write it.",
+      "test_ids": [
+        "bass_within_configured_range",
+        "bass_octave_folded_when_too_low"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.sub_register_carries_root_only",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "In the sub-bass register only the root should sound; thirds and extensions become mud.",
+      "trigger": {
+        "event": "part_generated",
+        "role": "bass"
+      },
+      "conditions": [
+        "role_is_bass",
+        "register_is_low"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "moderate",
+        "score_component": "bass_quality"
+      },
+      "profiles": [
+        "electronic_loop",
+        "drum_and_bass",
+        "pop_rock",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "exceptions": [
+        "intentional_cluster"
+      ],
+      "source_refs": [
+        {
+          "source_id": "berklee-orchestration-2",
+          "locator": "Course description"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The low-interval-limit data already encodes the general case; this rule states the specific consequence for the part that lives there.",
+      "test_ids": [
+        "sub_bass_root_only"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.phrases_need_rests",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "A part that never rests across a whole phrase flattens the arrangement.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "phrase_contains_no_rest"
+      ],
+      "effect": {
+        "score_delta": -2.0,
+        "severity": "minor",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "role_is_pad_or_sustained",
+        "pedal_point_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Formal contrast"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "Strategic silence is a contrast device on the same footing as register and density, and it is the one most often forgotten by generators.",
+      "test_ids": [
+        "sparse_profile_contains_rests",
+        "strategic_silence_present"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.doubling_is_declared_not_incidental",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "Octave and unison doubling between parts is only acceptable when the pattern declares it.",
+      "trigger": {
+        "event": "arrangement_plan"
+      },
+      "conditions": [
+        "doubling_is_allowed_for_role"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "berklee-orchestration-2",
+          "locator": "Course description"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "Declared doubling adds weight; incidental doubling removes a part. The distinction is data, so the trace can say which one happened.",
+      "test_ids": [
+        "doubling_limited_by_role"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.polyphony_within_instrument_limit",
+      "domain": "arrangement",
+      "kind": "hard_integrity",
+      "summary": "A generated part must not exceed its instrument profile's polyphony.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "polyphony_exceeds_profile_limit"
+      ],
+      "effect": {
+        "score_delta": -20.0,
+        "severity": "major",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "berklee-orchestration-2",
+          "locator": "Course description"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "A monophonic profile with two simultaneous notes is not a stylistic choice, it is an unplayable part.",
+      "test_ids": [
+        "polyphony_limit_enforced"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.contrast_beyond_dynamics",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "Section contrast must use register, rhythm, density, texture, harmony, articulation or silence, not velocity alone.",
+      "trigger": {
+        "event": "arrangement_plan"
+      },
+      "conditions": [
+        "contrast_is_dynamics_only"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Formal contrast"
+        },
+        {
+          "source_id": "berklee-orchestration-2",
+          "locator": "Course description"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "Velocity-only contrast is the default failure mode of automatic arrangement and it disappears entirely once a compressor is involved.",
+      "test_ids": [
+        "contrast_uses_more_than_velocity"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.foreground_role_wins_contested_register",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "When two parts contest a register, the one with higher priority keeps it and the other is moved.",
+      "trigger": {
+        "event": "arrangement_plan"
+      },
+      "conditions": [
+        "register_overlaps_another_part",
+        "role_is_lead"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "berklee-orchestration-2",
+          "locator": "Course description"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "An explicit priority order makes conflict resolution deterministic, which matters as much as the musical result because the same input must always produce the same arrangement.",
+      "test_ids": [
+        "foreground_priority_resolves_conflict"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.transition_fill_precedes_section_change",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "A transition fill belongs in the last half bar before a section boundary.",
+      "trigger": {
+        "event": "arrangement_plan"
+      },
+      "conditions": [
+        "cadence_is_expected_at_this_slot"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "phrase_direction"
+      },
+      "profiles": [
+        "pop_rock",
+        "electronic_loop",
+        "drum_and_bass",
+        "cinematic",
+        "neo_soul_rnb"
+      ],
+      "exceptions": [
+        "is_loop_wrap_boundary"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Formal contrast"
+        }
+      ],
+      "confidence": 0.7,
+      "rationale": "A fill placed anywhere else reads as an error rather than a signal. It is also excluded from loop-repeatability scoring because it deliberately breaks the pattern.",
+      "test_ids": [
+        "transition_fill_before_boundary"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.energy_curve_is_respected",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "Layer count, register span and onset density should follow the requested energy curve.",
+      "trigger": {
+        "event": "arrangement_plan"
+      },
+      "conditions": [
+        "part_density_exceeds_role_target"
+      ],
+      "effect": {
+        "score_delta": -2.0,
+        "severity": "moderate",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Formal contrast"
+        }
+      ],
+      "confidence": 0.7,
+      "rationale": "The energy curve is the only whole-piece control the caller has. If parts ignore it, every section sounds the same regardless of what was asked for.",
+      "test_ids": [
+        "energy_curve_changes_layer_count"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.layer_removal_preserves_chord_identity",
+      "domain": "arrangement",
+      "kind": "arrangement_heuristic",
+      "summary": "Removing a layer must not delete the last sounding third or seventh of a chord.",
+      "trigger": {
+        "event": "arrangement_plan"
+      },
+      "conditions": [
+        "essential_chord_tone_only_in_this_layer"
+      ],
+      "effect": {
+        "score_delta": -5.0,
+        "severity": "major",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "intentional_cluster",
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Jazz voicings"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Breakdown sections routinely strip the exact part that was carrying chord quality, leaving a progression that no longer sounds like the one that was generated.",
+      "test_ids": [
+        "layer_removal_keeps_guide_tones",
+        "breakdown_preserves_harmony"
+      ],
+      "version": 1
+    },
+    {
+      "id": "arrangement.instrument_data_is_authoritative",
+      "domain": "arrangement",
+      "kind": "implementation_heuristic",
+      "summary": "Ranges, spacing limits and polyphony come from instrument_profiles.json and are editable rather than hard-coded.",
+      "trigger": {
+        "event": "part_generated"
+      },
+      "conditions": [
+        "voice_exceeds_instrument_range"
+      ],
+      "effect": {
+        "score_delta": 0.0,
+        "severity": "info",
+        "score_component": "arrangement_clarity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [],
+      "confidence": 0.8,
+      "rationale": "Hard-coding one universal set of ranges would make the engine wrong for every instrument the user actually has loaded.",
+      "test_ids": [
+        "instrument_ranges_are_data_driven"
+      ],
+      "version": 1
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qlabs.local/schemas/style-profile.schema.json",
+  "title": "QLabs style profile file",
+  "description": "Validates each file under knowledge/profiles/. Each file declares exactly one profile. A profile is the complete set of stylistic settings that turns the shared rule base into one usable musical grammar: which rules are active, how strongly they count, and what the engine should prefer when rules disagree.",
+  "type": "object",
+  "required": ["schema_version", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": { "$ref": "#/$defs/profile" }
+    }
+  },
+  "$defs": {
+    "profile": {
+      "title": "Style profile",
+      "type": "object",
+      "required": ["id", "name", "parent", "summary", "harmonic_vocabulary", "functional_strength", "modal_tolerance", "chromaticism_preference", "extension_density", "alteration_preference", "harmonic_rhythm", "voice_leading_strictness", "parallel_motion_treatment", "dissonance_treatment", "register_spacing", "bass_behavior", "countermelody_density", "arrangement_density", "loop_preference", "candidate_diversity", "default_complexity", "score_weights", "rule_overrides", "notes"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/profile_id" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "parent": {
+          "description": "The profile this one inherits from, or null for a root profile. The loader rejects cycles and unknown parents.",
+          "anyOf": [
+            { "$ref": "#/$defs/profile_id" },
+            { "type": "null" }
+          ]
+        },
+        "summary": { "type": "string", "minLength": 20, "maxLength": 600 },
+        "harmonic_vocabulary": { "$ref": "#/$defs/vocabulary" },
+        "functional_strength": { "$ref": "#/$defs/unit" },
+        "modal_tolerance": { "$ref": "#/$defs/unit" },
+        "chromaticism_preference": { "$ref": "#/$defs/unit" },
+        "extension_density": { "$ref": "#/$defs/unit" },
+        "alteration_preference": { "$ref": "#/$defs/unit" },
+        "harmonic_rhythm": { "$ref": "#/$defs/harmonic_rhythm" },
+        "voice_leading_strictness": { "$ref": "#/$defs/unit" },
+        "parallel_motion_treatment": {
+          "description": "How parallel perfect intervals are treated before any per-rule override is applied.",
+          "type": "string",
+          "enum": ["forbidden", "penalised", "neutral", "idiomatic"]
+        },
+        "dissonance_treatment": {
+          "type": "string",
+          "enum": ["prepared_and_resolved", "resolved", "free", "stable_color"]
+        },
+        "register_spacing": { "$ref": "#/$defs/register_spacing" },
+        "bass_behavior": { "$ref": "#/$defs/bass_behavior" },
+        "countermelody_density": { "$ref": "#/$defs/unit" },
+        "arrangement_density": { "$ref": "#/$defs/unit" },
+        "loop_preference": { "$ref": "#/$defs/loop_preference" },
+        "candidate_diversity": { "$ref": "#/$defs/unit" },
+        "default_complexity": { "$ref": "#/$defs/unit" },
+        "score_weights": { "$ref": "#/$defs/score_weights" },
+        "rule_overrides": { "$ref": "#/$defs/rule_overrides" },
+        "notes": { "type": "string", "minLength": 10, "maxLength": 1500 }
+      }
+    },
+    "vocabulary": {
+      "title": "Harmonic vocabulary",
+      "description": "Chord-quality ids grouped by how idiomatic they are for this profile. 'avoided' is guidance for candidate generation, not a hard filter.",
+      "type": "object",
+      "required": ["core", "occasional", "avoided"],
+      "additionalProperties": false,
+      "properties": {
+        "core": { "$ref": "#/$defs/quality_list" },
+        "occasional": { "$ref": "#/$defs/quality_list" },
+        "avoided": { "$ref": "#/$defs/quality_list" }
+      }
+    },
+    "quality_list": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "description": "A chord-quality id declared in knowledge/chord_qualities.json.",
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 60,
+        "pattern": "^[a-z][a-z0-9_]*$"
+      }
+    },
+    "harmonic_rhythm": {
+      "title": "Harmonic rhythm policy",
+      "type": "object",
+      "required": ["default_slots_per_bar", "min_slot_qn", "max_slot_qn", "coupled_to_tempo"],
+      "additionalProperties": false,
+      "properties": {
+        "default_slots_per_bar": { "type": "integer", "minimum": 1, "maximum": 16 },
+        "min_slot_qn": { "$ref": "#/$defs/rational" },
+        "max_slot_qn": { "$ref": "#/$defs/rational" },
+        "coupled_to_tempo": {
+          "description": "False means the profile explicitly forbids deriving harmonic rhythm from tempo or from the rhythmic grid.",
+          "type": "boolean"
+        }
+      }
+    },
+    "register_spacing": {
+      "title": "Register and spacing preferences",
+      "type": "object",
+      "required": ["open_voicing_bias", "low_interval_limit_source", "min_top_spacing_semitones", "max_outer_voice_span_semitones"],
+      "additionalProperties": false,
+      "properties": {
+        "open_voicing_bias": { "$ref": "#/$defs/unit" },
+        "low_interval_limit_source": {
+          "description": "Where low-register spacing limits come from. There is deliberately no universal constant.",
+          "type": "string",
+          "enum": ["instrument_profile", "voicing_template"]
+        },
+        "min_top_spacing_semitones": { "type": "integer", "minimum": 0, "maximum": 12 },
+        "max_outer_voice_span_semitones": { "type": "integer", "minimum": 12, "maximum": 60 }
+      }
+    },
+    "bass_behavior": {
+      "title": "Bass behaviour",
+      "type": "object",
+      "required": ["allowed_modes", "default_mode", "octave_folding", "ornamentation"],
+      "additionalProperties": false,
+      "properties": {
+        "allowed_modes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/bass_mode" }
+        },
+        "default_mode": { "$ref": "#/$defs/bass_mode" },
+        "octave_folding": {
+          "description": "Whether a bass note below the instrument's usable range may be folded up an octave.",
+          "type": "boolean"
+        },
+        "ornamentation": {
+          "type": "string",
+          "enum": ["none", "passing_tones", "chromatic_approach"]
+        }
+      }
+    },
+    "bass_mode": {
+      "type": "string",
+      "enum": ["roots", "inversions", "stepwise", "pedal", "ostinato", "contrary_motion"]
+    },
+    "loop_preference": {
+      "title": "Loop preference",
+      "type": "object",
+      "required": ["default_intent", "allowed_intents", "wrap_weight", "tail_policy"],
+      "additionalProperties": false,
+      "properties": {
+        "default_intent": { "$ref": "#/$defs/loop_intent" },
+        "allowed_intents": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/loop_intent" }
+        },
+        "wrap_weight": { "$ref": "#/$defs/unit" },
+        "tail_policy": {
+          "type": "string",
+          "enum": ["resolve", "turnaround", "repeat", "sustain", "wrap"]
+        }
+      }
+    },
+    "loop_intent": {
+      "type": "string",
+      "enum": ["closed_tonic", "open_dominant", "modal_drone", "seamless_color", "transition_ready", "one_shot_ending"]
+    },
+    "score_weights": {
+      "title": "Score component weights",
+      "description": "Non-negative weight per score component. Weights need not sum to one; the engine normalises them before combining components into a total.",
+      "type": "object",
+      "minProperties": 13,
+      "maxProperties": 13,
+      "propertyNames": {
+        "enum": ["melody_fit", "harmonic_coherence", "functional_or_modal_coherence", "voice_leading", "extension_appropriateness", "style_match", "phrase_direction", "bass_quality", "arrangement_clarity", "loop_compatibility", "complexity_target", "chromaticism_target", "candidate_diversity"]
+      },
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 10
+      }
+    },
+    "rule_overrides": {
+      "title": "Rule overrides",
+      "description": "Maps a rule id to a non-negative multiplier applied to its score delta, or to the literal string 'disabled' to switch the rule off for this profile. Overrides are inherited from the parent profile and merged, with the child winning on conflict.",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 120,
+        "pattern": "^[a-z_]+\\.[a-z0-9_]+$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          { "type": "number", "minimum": 0, "maximum": 10 },
+          { "type": "string", "const": "disabled" }
+        ]
+      }
+    },
+    "unit": {
+      "description": "A normalised control in the closed interval zero to one.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "rational": {
+      "description": "An exact musical duration in quarter notes, written as an integer or a reduced fraction such as 1/2 or 7/3.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12,
+      "pattern": "^\\d{1,4}(/\\d{1,4})?$"
+    },
+    "profile_id": {
+      "type": "string",
+      "enum": ["common_practice", "strict_counterpoint", "jazz_standard", "blues", "pop_rock", "neo_soul_rnb", "modal_ambient", "cinematic", "electronic_loop", "drum_and_bass"]
+    }
+  }
+}

@@ -1421,10 +1421,10 @@
         "event": "progression_path"
       },
       "conditions": [
-        "chord_is_diatonic_to_key"
+        "candidate_duplicates_existing_strategy"
       ],
       "effect": {
-        "score_delta": 0.0,
+        "score_delta": -4.0,
         "severity": "moderate",
         "score_component": "candidate_diversity"
       },

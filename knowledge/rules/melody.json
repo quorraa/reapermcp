@@ -356,7 +356,7 @@
       "conditions": [
         "note_is_approached_by_step",
         "note_is_left_by_step",
-        "melody_is_repeated_pitch"
+        "note_returns_to_previous_pitch"
       ],
       "effect": {
         "score_delta": 3.0,

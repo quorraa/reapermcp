@@ -1,0 +1,607 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "looping.no_hanging_note_past_loop_end",
+      "domain": "looping",
+      "kind": "loop_integrity",
+      "summary": "A generated note must not sound past the loop end without an explicit carry or split policy.",
+      "trigger": {
+        "event": "loop_boundary"
+      },
+      "conditions": [
+        "note_extends_past_loop_end"
+      ],
+      "effect": {
+        "score_delta": -20.0,
+        "severity": "major",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "note_carry_policy_is_explicit"
+      ],
+      "source_refs": [
+        {
+          "source_id": "reaper-reascript-help",
+          "locator": "MIDI functions"
+        }
+      ],
+      "confidence": 0.95,
+      "rationale": "A hanging note is audible as a stuck voice on the first repeat. Carrying it is a valid choice, but only when the caller asked for it.",
+      "test_ids": [
+        "hanging_note_detected",
+        "carry_policy_allows_overhang"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.pickup_wraps_or_duplicates",
+      "domain": "looping",
+      "kind": "loop_integrity",
+      "summary": "Material before the first downbeat must be either wrapped into the loop tail or duplicated, never silently dropped.",
+      "trigger": {
+        "event": "loop_boundary"
+      },
+      "conditions": [
+        "pickup_is_present"
+      ],
+      "effect": {
+        "score_delta": -6.0,
+        "severity": "moderate",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "note_carry_policy_is_explicit"
+      ],
+      "source_refs": [
+        {
+          "source_id": "reaper-reascript-help",
+          "locator": "MIDI functions"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "An anacrusis is the most common reason a loop that looks correct in the editor does not repeat correctly, because the first pass is missing its own upbeat.",
+      "test_ids": [
+        "pickup_requires_special_handling",
+        "pickup_wrapped_into_tail"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.exact_length_is_preserved",
+      "domain": "looping",
+      "kind": "mathematical_invariant",
+      "summary": "The generated loop span must equal the requested loop length exactly, with no floating-point drift.",
+      "trigger": {
+        "event": "loop_boundary"
+      },
+      "conditions": [
+        "loop_length_is_exact"
+      ],
+      "effect": {
+        "score_delta": -1000.0,
+        "severity": "major",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "reaper-reascript-help",
+          "locator": "MIDI functions"
+        }
+      ],
+      "confidence": 1.0,
+      "rationale": "Loop boundaries are compared for exact equality, which is why musical time is a normalised rational rather than a float. A drift of one tick compounds on every repeat.",
+      "test_ids": [
+        "loop_length_exact",
+        "loop_boundary_equality_is_exact"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.closed_tonic_prefers_dominant_to_tonic_wrap",
+      "domain": "looping",
+      "kind": "style_sensitive_preference",
+      "summary": "For a closed tonal loop, ending on the dominant and beginning on the tonic makes the wrap sound intended.",
+      "trigger": {
+        "event": "loop_boundary",
+        "loop_intent": "closed_tonic"
+      },
+      "conditions": [
+        "final_chord_is_dominant_function",
+        "first_chord_is_tonic_function"
+      ],
+      "effect": {
+        "score_delta": 4.0,
+        "severity": "moderate",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "common_practice",
+        "jazz_standard",
+        "pop_rock",
+        "blues",
+        "cinematic",
+        "electronic_loop"
+      ],
+      "exceptions": [
+        "modal_center_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "The wrap becomes an authentic cadence, which is why turnarounds exist. This is a strong preference for one intent and no requirement at all for the others.",
+      "test_ids": [
+        "v_to_i_across_wrap_compatible",
+        "closed_tonic_prefers_turnaround"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.modal_drone_does_not_require_dominant",
+      "domain": "looping",
+      "kind": "style_sensitive_preference",
+      "summary": "A modal or drone loop is judged on common tones and pedal continuity, not on dominant-to-tonic motion.",
+      "trigger": {
+        "event": "loop_boundary",
+        "loop_intent": "modal_drone"
+      },
+      "conditions": [
+        "modal_center_is_active",
+        "common_tone_retained"
+      ],
+      "effect": {
+        "score_delta": 3.5,
+        "severity": "moderate",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "modal_ambient",
+        "electronic_loop",
+        "drum_and_bass",
+        "cinematic",
+        "neo_soul_rnb"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Chord-scale theory"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Forcing every loop to close on a tonic is the loop-engine equivalent of forcing every passage into a major key. Modal loops close by continuity instead.",
+      "test_ids": [
+        "modal_drone_no_dominant_required",
+        "modal_loop_scored_on_common_tones"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.open_dominant_ends_unresolved",
+      "domain": "looping",
+      "kind": "style_sensitive_preference",
+      "summary": "An open-dominant loop is supposed to end unresolved, so an unresolved tendency tone at the wrap is correct rather than a fault.",
+      "trigger": {
+        "event": "loop_boundary",
+        "loop_intent": "open_dominant"
+      },
+      "conditions": [
+        "final_chord_is_dominant_function",
+        "tendency_tone_is_unresolved"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "The unresolved-tendency penalty must be suppressed for this intent, otherwise the engine penalises the caller for asking for exactly what it produced.",
+      "test_ids": [
+        "open_dominant_unresolved_is_ok"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.seamless_color_uses_common_tones",
+      "domain": "looping",
+      "kind": "style_sensitive_preference",
+      "summary": "A seamless-colour loop should share pitch classes across the wrap so the seam is inaudible.",
+      "trigger": {
+        "event": "loop_boundary",
+        "loop_intent": "seamless_color"
+      },
+      "conditions": [
+        "common_tone_available",
+        "common_tone_retained"
+      ],
+      "effect": {
+        "score_delta": 3.0,
+        "severity": "moderate",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "modal_ambient",
+        "electronic_loop",
+        "cinematic",
+        "neo_soul_rnb",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Chord-scale theory"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The goal is that the listener cannot locate the loop point at all, which is a different objective from making the loop close.",
+      "test_ids": [
+        "seamless_loop_shares_common_tones"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.bass_continuity_across_wrap",
+      "domain": "looping",
+      "kind": "loop_integrity",
+      "summary": "A large bass leap across the wrap makes the loop point audible.",
+      "trigger": {
+        "event": "loop_boundary"
+      },
+      "conditions": [
+        "bass_leaps_across_wrap"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "moderate",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "final_chord_is_dominant_function",
+        "role_is_bass"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The bass is the part a listener uses to locate the beat, so a discontinuity there is far more noticeable than the same leap in an inner voice. A dominant-to-tonic fifth is the intended exception.",
+      "test_ids": [
+        "bass_discontinuity_detected",
+        "bass_fifth_across_wrap_allowed"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.voice_leading_smooth_across_wrap",
+      "domain": "looping",
+      "kind": "loop_integrity",
+      "summary": "The wrap is scored as an ordinary chord pair, so voice-leading quality applies there too.",
+      "trigger": {
+        "event": "loop_boundary"
+      },
+      "conditions": [
+        "is_loop_wrap_boundary",
+        "stepwise_connection_available"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "intentional_cluster"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Treating the wrap as a real chord connection rather than a special case is what makes loop audits agree with the harmony engine.",
+      "test_ids": [
+        "voice_leading_discontinuity_detected",
+        "wrap_scored_as_chord_pair"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.pedal_continues_across_wrap",
+      "domain": "looping",
+      "kind": "loop_integrity",
+      "summary": "A pedal or drone that stops at the loop end and restarts creates an audible seam.",
+      "trigger": {
+        "event": "loop_boundary"
+      },
+      "conditions": [
+        "pedal_point_is_active",
+        "pedal_continues_across_wrap"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "note_carry_policy_is_explicit"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "A drone is the safest loop element precisely because it never re-articulates; re-triggering it throws that advantage away.",
+      "test_ids": [
+        "pedal_continuous_across_wrap"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.harmonic_rhythm_stable_at_wrap",
+      "domain": "looping",
+      "kind": "loop_integrity",
+      "summary": "A change of harmonic rhythm at the wrap point makes the loop stumble.",
+      "trigger": {
+        "event": "loop_boundary"
+      },
+      "conditions": [
+        "harmonic_rhythm_changes_at_wrap"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "cadence_is_expected_at_this_slot"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "The last slot being half the length of the first is a common artefact of generating a turnaround, and it is audible immediately on repeat.",
+      "test_ids": [
+        "harmonic_rhythm_stable_at_wrap"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.one_shot_ending_is_excluded_from_wrap_scoring",
+      "domain": "looping",
+      "kind": "loop_integrity",
+      "summary": "Material declared as a one-shot ending is not scored for loop compatibility.",
+      "trigger": {
+        "event": "loop_boundary",
+        "loop_intent": "one_shot_ending"
+      },
+      "conditions": [
+        "final_chord_is_tonic_function"
+      ],
+      "effect": {
+        "score_delta": 0.0,
+        "severity": "info",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "A stinger is meant to stop. Scoring it against loop criteria would penalise it for succeeding at its actual job.",
+      "test_ids": [
+        "one_shot_excluded_from_loop_scoring"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.transition_ready_leaves_an_opening",
+      "domain": "looping",
+      "kind": "style_sensitive_preference",
+      "summary": "A transition-ready loop should end on a chord that can move on rather than one that closes.",
+      "trigger": {
+        "event": "loop_boundary",
+        "loop_intent": "transition_ready"
+      },
+      "conditions": [
+        "final_chord_is_dominant_function"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "electronic_loop",
+        "drum_and_bass",
+        "cinematic",
+        "pop_rock",
+        "modal_ambient"
+      ],
+      "exceptions": [
+        "final_chord_is_tonic_function"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "This intent exists so a loop can be dropped into a longer arrangement; a fully closed ending forces an edit at the exact point the caller wanted flexibility.",
+      "test_ids": [
+        "transition_ready_stays_open"
+      ],
+      "version": 1
+    },
+    {
+      "id": "looping.layer_removal_at_wrap_preserves_harmony",
+      "domain": "looping",
+      "kind": "loop_integrity",
+      "summary": "A layer that only exists in the final bar must not be the only source of a chord tone at the wrap.",
+      "trigger": {
+        "event": "loop_boundary"
+      },
+      "conditions": [
+        "essential_chord_tone_only_in_this_layer",
+        "is_loop_wrap_boundary"
+      ],
+      "effect": {
+        "score_delta": -4.0,
+        "severity": "major",
+        "score_component": "loop_compatibility"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "intentional_cluster"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Jazz voicings"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The wrap is where layer changes and harmony changes coincide, so it is where a missing guide tone is most likely and least noticed during generation.",
+      "test_ids": [
+        "wrap_layer_removal_keeps_chord_tone"
+      ],
+      "version": 1
+    }
+  ]
+}

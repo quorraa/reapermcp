@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "neo_soul_rnb",
+      "name": "Neo-soul and R&B",
+      "parent": "jazz_standard",
+      "summary": "Jazz vocabulary at slower harmonic rhythm with denser extensions, chromatic mediant and passing motion, quartal and cluster voicings, and a strong loop orientation.",
+      "harmonic_vocabulary": {
+        "core": [
+          "major9",
+          "minor9",
+          "minor11",
+          "six_nine",
+          "dominant7sus4",
+          "minor6_9",
+          "major7_sharp11",
+          "dominant13",
+          "minor13"
+        ],
+        "occasional": [
+          "dominant7_alt",
+          "dominant7_sharp9",
+          "dominant13_flat9",
+          "half_diminished9",
+          "diminished7",
+          "minor_major9",
+          "add9"
+        ],
+        "avoided": [
+          "power",
+          "diminished_triad",
+          "italian_sixth",
+          "french_sixth",
+          "german_sixth"
+        ]
+      },
+      "functional_strength": 0.55,
+      "modal_tolerance": 0.75,
+      "chromaticism_preference": 0.65,
+      "extension_density": 0.9,
+      "alteration_preference": 0.65,
+      "harmonic_rhythm": {
+        "default_slots_per_bar": 1,
+        "min_slot_qn": "2",
+        "max_slot_qn": "8",
+        "coupled_to_tempo": true
+      },
+      "voice_leading_strictness": 0.45,
+      "parallel_motion_treatment": "neutral",
+      "dissonance_treatment": "stable_color",
+      "register_spacing": {
+        "open_voicing_bias": 0.65,
+        "low_interval_limit_source": "instrument_profile",
+        "min_top_spacing_semitones": 2,
+        "max_outer_voice_span_semitones": 30
+      },
+      "bass_behavior": {
+        "allowed_modes": [
+          "roots",
+          "inversions",
+          "stepwise",
+          "pedal",
+          "ostinato",
+          "contrary_motion"
+        ],
+        "default_mode": "stepwise",
+        "octave_folding": true,
+        "ornamentation": "chromatic_approach"
+      },
+      "countermelody_density": 0.35,
+      "arrangement_density": 0.55,
+      "loop_preference": {
+        "default_intent": "seamless_color",
+        "allowed_intents": [
+          "closed_tonic",
+          "open_dominant",
+          "modal_drone",
+          "seamless_color",
+          "transition_ready",
+          "one_shot_ending"
+        ],
+        "wrap_weight": 0.9,
+        "tail_policy": "sustain"
+      },
+      "candidate_diversity": 0.7,
+      "default_complexity": 0.7,
+      "score_weights": {
+        "melody_fit": 1.2,
+        "harmonic_coherence": 1.1,
+        "functional_or_modal_coherence": 0.7,
+        "voice_leading": 1.2,
+        "extension_appropriateness": 1.8,
+        "style_match": 1.5,
+        "phrase_direction": 1.0,
+        "bass_quality": 1.1,
+        "arrangement_clarity": 1.1,
+        "loop_compatibility": 1.3,
+        "complexity_target": 1.2,
+        "chromaticism_target": 1.0,
+        "candidate_diversity": 0.9
+      },
+      "rule_overrides": {
+        "extensions.extension_density_target": 1.6,
+        "extensions.avoid_tone_is_profile_sensitive": 0.3,
+        "extensions.major_natural_11_close_register": 0.6,
+        "harmony.planing_suspends_function": 1.4,
+        "harmony.chromatic_mediant_is_not_diatonic": 1.3,
+        "harmony.suspension_resolves_to_third": 0.4,
+        "harmony.ii_v_i_is_preferred_cadential_path": 0.6,
+        "harmony.root_position_at_cadence": 0.4,
+        "voice_leading.parallel_perfect_fifths": 0.4,
+        "looping.seamless_color_uses_common_tones": 1.5
+      },
+      "notes": "A child of jazz_standard: it keeps the same chord vocabulary and guide-tone logic but slows the harmonic rhythm, raises extension density, and stops treating suspensions and cadences as things that must resolve."
+    }
+  ]
+}
