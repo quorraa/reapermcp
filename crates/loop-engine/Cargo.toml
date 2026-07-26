@@ -1,0 +1,18 @@
+[package]
+name = "loop-engine"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+qjson.workspace = true
+music-domain.workspace = true
+theory-kb.workspace = true
+music-analysis.workspace = true
+harmony-engine.workspace = true

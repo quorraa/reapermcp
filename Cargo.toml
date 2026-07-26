@@ -1,0 +1,42 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/qjson",
+    "crates/music-domain",
+    "crates/theory-kb",
+    "crates/music-analysis",
+    "crates/harmony-engine",
+    "crates/arrangement-engine",
+    "crates/loop-engine",
+    "crates/reaper-ipc",
+    "crates/reaper-music-mcp",
+    "xtask",
+]
+
+[workspace.package]
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.85"
+license = "MIT"
+repository = "https://github.com/quorraa/reapermcp"
+authors = ["QLabs"]
+
+[workspace.dependencies]
+qjson = { path = "crates/qjson" }
+music-domain = { path = "crates/music-domain" }
+theory-kb = { path = "crates/theory-kb" }
+music-analysis = { path = "crates/music-analysis" }
+harmony-engine = { path = "crates/harmony-engine" }
+arrangement-engine = { path = "crates/arrangement-engine" }
+loop-engine = { path = "crates/loop-engine" }
+reaper-ipc = { path = "crates/reaper-ipc" }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = "unwind"
+strip = "debuginfo"
