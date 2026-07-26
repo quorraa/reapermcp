@@ -1,0 +1,39 @@
+{
+  "fixture_version": "1.0.0",
+  "id": "progressions/ii_v_i_c_major",
+  "title": "ii-V-I in C major",
+  "description": "Canonical functional progression for roman-numeral, function and voice-leading tests.",
+  "tempo_bpm": 120.0,
+  "time_signature": "4/4",
+  "tempo_map": [
+    {
+      "qn": "0",
+      "bpm": 120.0,
+      "linear": false
+    }
+  ],
+  "meter_map": [
+    {
+      "qn": "0",
+      "sig": "4/4",
+      "measure": 0
+    }
+  ],
+  "chords": [
+    {
+      "symbol": "Dm7",
+      "onset": "0",
+      "duration": "4"
+    },
+    {
+      "symbol": "G7",
+      "onset": "4",
+      "duration": "4"
+    },
+    {
+      "symbol": "Cmaj7",
+      "onset": "8",
+      "duration": "8"
+    }
+  ]
+}

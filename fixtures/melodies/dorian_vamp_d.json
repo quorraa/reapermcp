@@ -1,0 +1,242 @@
+{
+  "fixture_version": "1.0.0",
+  "id": "melodies/dorian_vamp_d",
+  "title": "D Dorian modal melody",
+  "description": "Emphasises the natural 6 (B) against a D minor centre so key detection must prefer Dorian over D natural minor. Slow harmonic rhythm suits modal_ambient profile and modal_drone loop intent.",
+  "tempo_bpm": 84.0,
+  "time_signature": "4/4",
+  "tempo_map": [
+    {
+      "qn": "0",
+      "bpm": 84.0,
+      "linear": false
+    }
+  ],
+  "meter_map": [
+    {
+      "qn": "0",
+      "sig": "4/4",
+      "measure": 0
+    }
+  ],
+  "loop": {
+    "start_qn": "0",
+    "end_qn": "32",
+    "intent": "modal_drone"
+  },
+  "key_hint": {
+    "tonic": "D",
+    "scale_id": "dorian"
+  },
+  "notes": [
+    {
+      "pitch": "D4",
+      "onset": "0",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F4",
+      "onset": "2",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "3",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "A4",
+      "onset": "4",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "B4",
+      "onset": "6",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "A4",
+      "onset": "8",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "9",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F4",
+      "onset": "10",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E4",
+      "onset": "12",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D4",
+      "onset": "14",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "A4",
+      "onset": "16",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "C5",
+      "onset": "18",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "B4",
+      "onset": "20",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "A4",
+      "onset": "21",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "22",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F4",
+      "onset": "24",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E4",
+      "onset": "26",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D4",
+      "onset": "27",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D4",
+      "onset": "28",
+      "duration": "4",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    }
+  ]
+}

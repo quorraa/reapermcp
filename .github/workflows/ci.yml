@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  rust:
+    name: Rust (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install toolchain
+        run: |
+          rustup toolchain install stable --profile minimal --component rustfmt,clippy
+          rustup default stable
+          rustc --version
+          cargo --version
+
+      - name: Cache build
+        uses: actions/cache@v4
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
+
+      # The workspace has zero external dependencies, so every step runs offline.
+      - name: Format
+        run: cargo fmt --all --check
+
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets --all-features --offline -- -D warnings
+
+      - name: Test
+        run: cargo test --workspace --all-features --offline
+
+      - name: Validate knowledge bundle
+        run: cargo run -p xtask --offline -- validate-knowledge
+
+      - name: Validate JSON schemas
+        run: cargo run -p xtask --offline -- validate-schemas
+
+      - name: Validate fixtures
+        run: cargo run -p xtask --offline -- validate-fixtures
+
+      - name: Release build
+        run: cargo build --workspace --release --offline
+
+      - name: Doctor (JSON)
+        run: cargo run -p reaper-music-mcp --release --offline -- doctor --json
+
+  lua:
+    name: REAPER Lua bridge
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lua
+        run: sudo apt-get update && sudo apt-get install -y lua5.4
+
+      - name: Bridge unit tests (mock REAPER host)
+        working-directory: reaper
+        run: lua5.4 tests/run_tests.lua

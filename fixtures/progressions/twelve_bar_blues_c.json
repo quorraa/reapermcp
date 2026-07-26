@@ -1,0 +1,89 @@
+{
+  "fixture_version": "1.0.0",
+  "id": "progressions/twelve_bar_blues_c",
+  "title": "Twelve-bar blues in C",
+  "description": "Dominant sevenths as stable primary harmony; used to verify the blues profile does not demand resolution after every seventh chord.",
+  "tempo_bpm": 92.0,
+  "time_signature": "4/4",
+  "tempo_map": [
+    {
+      "qn": "0",
+      "bpm": 92.0,
+      "linear": false
+    }
+  ],
+  "meter_map": [
+    {
+      "qn": "0",
+      "sig": "4/4",
+      "measure": 0
+    }
+  ],
+  "loop": {
+    "start_qn": "0",
+    "end_qn": "48",
+    "intent": "seamless_color"
+  },
+  "chords": [
+    {
+      "symbol": "C7",
+      "onset": "0",
+      "duration": "4"
+    },
+    {
+      "symbol": "F7",
+      "onset": "4",
+      "duration": "4"
+    },
+    {
+      "symbol": "C7",
+      "onset": "8",
+      "duration": "4"
+    },
+    {
+      "symbol": "C7",
+      "onset": "12",
+      "duration": "4"
+    },
+    {
+      "symbol": "F7",
+      "onset": "16",
+      "duration": "4"
+    },
+    {
+      "symbol": "F7",
+      "onset": "20",
+      "duration": "4"
+    },
+    {
+      "symbol": "C7",
+      "onset": "24",
+      "duration": "4"
+    },
+    {
+      "symbol": "C7",
+      "onset": "28",
+      "duration": "4"
+    },
+    {
+      "symbol": "G7",
+      "onset": "32",
+      "duration": "4"
+    },
+    {
+      "symbol": "F7",
+      "onset": "36",
+      "duration": "4"
+    },
+    {
+      "symbol": "C7",
+      "onset": "40",
+      "duration": "4"
+    },
+    {
+      "symbol": "G7",
+      "onset": "44",
+      "duration": "4"
+    }
+  ]
+}
