@@ -282,10 +282,18 @@ function realfs.append(path, data)
 end
 
 function realfs.rename(from, to)
-  -- os.rename fails on Windows when the destination exists; remove first.
-  if realfs.exists(to) then os.remove(to) end
+  -- POSIX rename(2) replaces the destination atomically, so try it first: that
+  -- keeps heartbeat.json continuously present. Windows' rename fails when the
+  -- destination exists, so fall back to unlink-then-rename only on failure.
   local ok, err = os.rename(from, to)
-  return ok and true or false, err
+  if ok then return true end
+  if realfs.exists(to) then
+    os.remove(to)
+    local ok2, err2 = os.rename(from, to)
+    if ok2 then return true end
+    return false, err2
+  end
+  return false, err
 end
 
 function realfs.remove(path)
