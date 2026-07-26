@@ -27,7 +27,9 @@ fn edit_items(
     path: &str,
     mut f: impl FnMut(JsonMap) -> Option<JsonMap>,
 ) {
-    let text = files.get(path).unwrap_or_else(|| panic!("{path} is absent"));
+    let text = files
+        .get(path)
+        .unwrap_or_else(|| panic!("{path} is absent"));
     let doc = Json::parse(text).expect("valid JSON");
     let root = doc.as_obj().expect("an object").clone();
     let items = doc.arr_field("items").expect("an items array").to_vec();
@@ -66,7 +68,9 @@ fn edit_item(
 
 /// Rewrites a top-level field of a whole file (used for the manifest).
 fn edit_root(files: &mut BTreeMap<String, String>, path: &str, f: impl FnOnce(&mut JsonMap)) {
-    let text = files.get(path).unwrap_or_else(|| panic!("{path} is absent"));
+    let text = files
+        .get(path)
+        .unwrap_or_else(|| panic!("{path} is absent"));
     let doc = Json::parse(text).expect("valid JSON");
     let mut root = doc.as_obj().expect("an object").clone();
     f(&mut root);
@@ -111,12 +115,17 @@ fn the_unmodified_bundle_has_no_problems() {
 #[test]
 fn duplicate_rule_ids_are_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        m.insert(
-            "id",
-            Json::Str("harmony.dominant_seventh_resolves_down_fifth".into()),
-        );
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            m.insert(
+                "id",
+                Json::Str("harmony.dominant_seventh_resolves_down_fifth".into()),
+            );
+        },
+    );
     expect_code(&problems(f), "KB_DUPLICATE_ID");
 }
 
@@ -226,9 +235,14 @@ fn a_missing_knowledge_file_is_rejected() {
 #[test]
 fn a_profile_inheritance_cycle_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "profiles/common_practice.json", "common_practice", |m| {
-        m.insert("parent", Json::Str("jazz_standard".into()));
-    });
+    edit_item(
+        &mut f,
+        "profiles/common_practice.json",
+        "common_practice",
+        |m| {
+            m.insert("parent", Json::Str("jazz_standard".into()));
+        },
+    );
     let p = problems(f);
     expect_code(&p, "KB_PROFILE_CYCLE");
     assert!(p
@@ -248,9 +262,14 @@ fn a_self_parenting_profile_is_rejected() {
 #[test]
 fn a_missing_profile_parent_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "profiles/jazz_standard.json", "jazz_standard", |m| {
-        m.insert("parent", Json::Str("ragtime".into()));
-    });
+    edit_item(
+        &mut f,
+        "profiles/jazz_standard.json",
+        "jazz_standard",
+        |m| {
+            m.insert("parent", Json::Str("ragtime".into()));
+        },
+    );
     let p = problems(f);
     expect_code(&p, "KB_MISSING_PARENT");
     assert!(p.iter().any(|e| e.message.contains("ragtime")));
@@ -269,7 +288,11 @@ fn a_missing_required_profile_is_rejected() {
 fn score_weights_missing_a_component_are_rejected() {
     let mut f = files();
     edit_item(&mut f, "profiles/blues.json", "blues", |m| {
-        let mut w = m.get("score_weights").and_then(Json::as_obj).cloned().unwrap();
+        let mut w = m
+            .get("score_weights")
+            .and_then(Json::as_obj)
+            .cloned()
+            .unwrap();
         w.remove("voice_leading");
         m.insert("score_weights", Json::Obj(w));
     });
@@ -282,7 +305,11 @@ fn score_weights_missing_a_component_are_rejected() {
 fn score_weights_naming_an_unknown_component_are_rejected() {
     let mut f = files();
     edit_item(&mut f, "profiles/blues.json", "blues", |m| {
-        let mut w = m.get("score_weights").and_then(Json::as_obj).cloned().unwrap();
+        let mut w = m
+            .get("score_weights")
+            .and_then(Json::as_obj)
+            .cloned()
+            .unwrap();
         w.remove("voice_leading");
         w.insert("swagger", Json::Float(1.0));
         m.insert("score_weights", Json::Obj(w));
@@ -296,7 +323,11 @@ fn score_weights_naming_an_unknown_component_are_rejected() {
 fn a_negative_score_weight_is_rejected() {
     let mut f = files();
     edit_item(&mut f, "profiles/blues.json", "blues", |m| {
-        let mut w = m.get("score_weights").and_then(Json::as_obj).cloned().unwrap();
+        let mut w = m
+            .get("score_weights")
+            .and_then(Json::as_obj)
+            .cloned()
+            .unwrap();
         w.insert("voice_leading", Json::Float(-1.0));
         m.insert("score_weights", Json::Obj(w));
     });
@@ -344,52 +375,77 @@ fn a_profile_naming_an_unknown_chord_quality_is_rejected() {
 #[test]
 fn an_unknown_rule_kind_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        m.insert("kind", Json::Str("vibes_based_guidance".into()));
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            m.insert("kind", Json::Str("vibes_based_guidance".into()));
+        },
+    );
     expect_code(&problems(f), "KB_UNKNOWN_ENUM");
 }
 
 #[test]
 fn an_unknown_rule_domain_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        m.insert("domain", Json::Str("percussion".into()));
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            m.insert("domain", Json::Str("percussion".into()));
+        },
+    );
     expect_code(&problems(f), "KB_UNKNOWN_ENUM");
 }
 
 #[test]
 fn an_unknown_trigger_event_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        let mut t = m.get("trigger").and_then(Json::as_obj).cloned().unwrap();
-        t.insert("event", Json::Str("vibe_check".into()));
-        m.insert("trigger", Json::Obj(t));
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            let mut t = m.get("trigger").and_then(Json::as_obj).cloned().unwrap();
+            t.insert("event", Json::Str("vibe_check".into()));
+            m.insert("trigger", Json::Obj(t));
+        },
+    );
     expect_code(&problems(f), "KB_UNKNOWN_ENUM");
 }
 
 #[test]
 fn an_unknown_severity_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        let mut e = m.get("effect").and_then(Json::as_obj).cloned().unwrap();
-        e.insert("severity", Json::Str("catastrophic".into()));
-        m.insert("effect", Json::Obj(e));
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            let mut e = m.get("effect").and_then(Json::as_obj).cloned().unwrap();
+            e.insert("severity", Json::Str("catastrophic".into()));
+            m.insert("effect", Json::Obj(e));
+        },
+    );
     expect_code(&problems(f), "KB_UNKNOWN_ENUM");
 }
 
 #[test]
 fn an_unimplemented_predicate_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        m.insert(
-            "conditions",
-            Json::Arr(vec![Json::Str("chord_sounds_nice".into())]),
-        );
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            m.insert(
+                "conditions",
+                Json::Arr(vec![Json::Str("chord_sounds_nice".into())]),
+            );
+        },
+    );
     let p = problems(f);
     expect_code(&p, "KB_UNKNOWN_PREDICATE");
     assert!(p.iter().any(|e| e.message.contains("chord_sounds_nice")));
@@ -398,12 +454,17 @@ fn an_unimplemented_predicate_is_rejected() {
 #[test]
 fn an_unimplemented_predicate_in_an_exception_is_also_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        m.insert(
-            "exceptions",
-            Json::Arr(vec![Json::Str("the_producer_said_so".into())]),
-        );
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            m.insert(
+                "exceptions",
+                Json::Arr(vec![Json::Str("the_producer_said_so".into())]),
+            );
+        },
+    );
     expect_code(&problems(f), "KB_UNKNOWN_PREDICATE");
 }
 
@@ -414,9 +475,14 @@ fn an_unimplemented_predicate_in_an_exception_is_also_rejected() {
 #[test]
 fn an_empty_test_id_list_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        m.insert("test_ids", Json::Arr(vec![]));
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            m.insert("test_ids", Json::Arr(vec![]));
+        },
+    );
     expect_code(&problems(f), "KB_MISSING_TEST_IDS");
 }
 
@@ -461,10 +527,7 @@ fn an_invalid_chord_degree_in_a_quality_is_rejected() {
 fn an_invalid_scale_degree_spelling_is_rejected() {
     let mut f = files();
     edit_item(&mut f, "scales.json", "major", |m| {
-        m.insert(
-            "tension_degrees",
-            Json::Arr(vec![Json::Str("bbb4".into())]),
-        );
+        m.insert("tension_degrees", Json::Arr(vec![Json::Str("bbb4".into())]));
     });
     expect_code(&problems(f), "KB_INVALID_DEGREE");
 }
@@ -502,9 +565,14 @@ fn a_heuristic_carrying_a_citation_is_rejected() {
 #[test]
 fn a_sourced_rule_without_a_citation_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        m.insert("source_refs", Json::Arr(vec![]));
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            m.insert("source_refs", Json::Arr(vec![]));
+        },
+    );
     let p = problems(f);
     expect_code(&p, "KB_INCONSISTENT");
     assert!(p.iter().any(|e| e.message.contains("must cite")));
@@ -513,9 +581,14 @@ fn a_sourced_rule_without_a_citation_is_rejected() {
 #[test]
 fn a_rule_id_that_disagrees_with_its_domain_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        m.insert("id", Json::Str("melody.tonic_is_stable".into()));
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            m.insert("id", Json::Str("melody.tonic_is_stable".into()));
+        },
+    );
     let p = problems(f);
     expect_code(&p, "KB_INCONSISTENT");
     assert!(p.iter().any(|e| e.message.contains("must start with")));
@@ -550,7 +623,7 @@ fn a_duplicate_chord_symbol_token_is_rejected() {
 fn a_duplicate_chord_symbol_precedence_is_rejected() {
     let mut f = files();
     let first = KnowledgeBase::embedded().chord_symbols()[0].precedence;
-    edit_item(&mut f, "chord_symbols.json", "sym_maj13", |m| {
+    edit_item(&mut f, "chord_symbols.json", "sym_maj9", |m| {
         m.insert("precedence", Json::Int(first));
     });
     let p = problems(f);
@@ -565,10 +638,15 @@ fn a_duplicate_chord_symbol_precedence_is_rejected() {
 #[test]
 fn a_schema_violation_is_rejected() {
     let mut f = files();
-    edit_item(&mut f, "rules/harmony.json", "harmony.tonic_is_stable", |m| {
-        // `summary` has a minLength of 10 in theory-rule.schema.json.
-        m.insert("summary", Json::Str("short".into()));
-    });
+    edit_item(
+        &mut f,
+        "rules/harmony.json",
+        "harmony.blues_dominant_seventh_is_stable_tonic",
+        |m| {
+            // `summary` has a minLength of 10 in theory-rule.schema.json.
+            m.insert("summary", Json::Str("short".into()));
+        },
+    );
     expect_code(&problems(f), "KB_SCHEMA");
 }
 
@@ -660,9 +738,7 @@ fn dropping_records_below_the_minimum_is_rejected() {
     });
     let p = problems(f);
     expect_code(&p, "KB_COUNT_MISMATCH");
-    assert!(p
-        .iter()
-        .any(|e| e.message.contains("at least 30 scales")));
+    assert!(p.iter().any(|e| e.message.contains("at least 30 scales")));
 }
 
 #[test]
@@ -681,7 +757,9 @@ fn a_pending_hash_is_accepted_for_the_embedded_bundle_only() {
         },
     );
     assert!(
-        !embedded_rules.iter().any(|e| e.code == "KB_UNSTAMPED_MANIFEST"),
+        !embedded_rules
+            .iter()
+            .any(|e| e.code == "KB_UNSTAMPED_MANIFEST"),
         "the embedded bundle may be unstamped while xtask is what stamps it"
     );
 

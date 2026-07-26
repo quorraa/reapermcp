@@ -75,6 +75,10 @@ impl Tri {
     }
 
     /// Kleene negation: `Unknown` negates to `Unknown`.
+    ///
+    /// Named `not` to read as the logic table it implements; `std::ops::Not`
+    /// is implemented below and delegates here.
+    #[allow(clippy::should_implement_trait)] // std::ops::Not is also implemented, below.
     pub fn not(self) -> Tri {
         match self {
             Tri::True => Tri::False,
@@ -126,6 +130,14 @@ impl Tri {
             Tri::False => "false",
             Tri::Unknown => "unknown",
         }
+    }
+}
+
+impl std::ops::Not for Tri {
+    type Output = Tri;
+
+    fn not(self) -> Tri {
+        Tri::not(self)
     }
 }
 
@@ -1423,14 +1435,14 @@ impl<'k> RuleEngine<'k> {
                     (Some(w), Some(tags)) => tags.iter().any(|t| t == w),
                     _ => false,
                 },
-                _ => {
-                    let fact_key = selector_fact(key);
-                    match (want.as_str(), ctx.get_str(fact_key)) {
+                _ => match selector_fact(key) {
+                    Some(fact_key) => match (want.as_str(), ctx.get_str(fact_key)) {
                         (Some("any"), Some(_)) => true,
                         (Some(w), Some(have)) => w == have,
                         _ => false,
-                    }
-                }
+                    },
+                    None => false,
+                },
             };
             if !matched {
                 return Some(format!(
@@ -1448,20 +1460,23 @@ impl<'k> RuleEngine<'k> {
 }
 
 /// Maps a trigger selector key to the context fact key it reads.
-fn selector_fact(selector: &str) -> &'static str {
+///
+/// `None` for a selector this build does not know, which the schema's closed
+/// `propertyNames` list makes unreachable for valid data; the caller then
+/// treats the selector as unmatched rather than as satisfied.
+fn selector_fact(selector: &str) -> Option<&'static str> {
     match selector {
-        "chord_family" => facts::CHORD_FAMILY,
-        "function_class" => facts::FUNCTION_CLASS,
-        "role" => facts::ROLE,
-        "scale_family" => facts::SCALE_FAMILY,
-        "voicing_family" => facts::VOICING_FAMILY,
-        "cadence_kind" => facts::CADENCE_KIND,
-        "loop_intent" => facts::LOOP_INTENT,
-        "note_role" => facts::NOTE_ROLE,
-        "motion" => facts::MOTION,
-        "interval" => facts::INTERVAL,
-        // Unreachable for valid data: the schema fixes the selector key set.
-        other => Box::leak(other.to_string().into_boxed_str()),
+        "chord_family" => Some(facts::CHORD_FAMILY),
+        "function_class" => Some(facts::FUNCTION_CLASS),
+        "role" => Some(facts::ROLE),
+        "scale_family" => Some(facts::SCALE_FAMILY),
+        "voicing_family" => Some(facts::VOICING_FAMILY),
+        "cadence_kind" => Some(facts::CADENCE_KIND),
+        "loop_intent" => Some(facts::LOOP_INTENT),
+        "note_role" => Some(facts::NOTE_ROLE),
+        "motion" => Some(facts::MOTION),
+        "interval" => Some(facts::INTERVAL),
+        _ => None,
     }
 }
 

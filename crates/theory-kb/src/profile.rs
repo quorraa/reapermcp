@@ -118,7 +118,7 @@ pub fn ancestry(profiles: &[StyleProfile], id: &str) -> Result<Vec<String>, KbEr
     let mut chain: Vec<String> = Vec::new();
     let mut cursor = id.to_string();
     loop {
-        if chain.iter().any(|c| *c == cursor) {
+        if chain.contains(&cursor) {
             chain.push(cursor.clone());
             return Err(KbError::profile_cycle(
                 format!("knowledge/profiles/{id}.json"),

@@ -54,16 +54,13 @@ fn fixture_schema(path: &Path) -> Option<&'static str> {
 /// envelopes; only the bridge can reject them, at request time. They are
 /// listed here rather than being silently exempted by a looser rule, so
 /// adding a genuinely structural negative fixture still gets checked.
-const SEMANTIC_NEGATIVES: &[&str] = &[
-    "invalid-expired.command.json",
-    "invalid-token.command.json",
-];
+const SEMANTIC_NEGATIVES: &[&str] = &["invalid-expired.command.json", "invalid-token.command.json"];
 
 /// True when a fixture's name declares it as a structural negative case.
 fn expects_failure(path: &Path) -> bool {
-    path.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
-        n.starts_with("invalid-") && !SEMANTIC_NEGATIVES.contains(&n)
-    })
+    path.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|n| n.starts_with("invalid-") && !SEMANTIC_NEGATIVES.contains(&n))
 }
 
 /// True when the fixture is a negative case the schema cannot detect.
@@ -146,7 +143,9 @@ pub fn validate_schemas(root: &Path) -> Report {
             }
         }
     }
-    report.note(format!("checked {checked} knowledge files against their schema"));
+    report.note(format!(
+        "checked {checked} knowledge files against their schema"
+    ));
     report.detail("knowledge_files", count(checked));
 
     // --- fixtures ---
@@ -162,7 +161,11 @@ pub fn validate_schemas(root: &Path) -> Report {
             report.problem(name, "schema is missing from schemas/");
             continue;
         };
-        let rel = path.strip_prefix(root).unwrap_or(&path).display().to_string();
+        let rel = path
+            .strip_prefix(root)
+            .unwrap_or(&path)
+            .display()
+            .to_string();
         let text = std::fs::read_to_string(&path).unwrap_or_default();
         let negative_case = expects_failure(&path);
         let violations = match Json::parse(&text) {
@@ -221,13 +224,19 @@ mod tests {
             Some("ipc-result.schema.json")
         );
         assert_eq!(fixture_schema(Path::new("a/melody.json")), None);
-        assert!(expects_failure(Path::new("x/invalid-truncated.command.json")));
+        assert!(expects_failure(Path::new(
+            "x/invalid-truncated.command.json"
+        )));
         assert!(!expects_failure(Path::new("x/valid-token.command.json")));
         // Semantic negatives are structurally valid, so they are checked as
         // positives instead.
         assert!(!expects_failure(Path::new("x/invalid-token.command.json")));
-        assert!(is_semantic_negative(Path::new("x/invalid-token.command.json")));
-        assert!(!is_semantic_negative(Path::new("x/invalid-truncated.command.json")));
+        assert!(is_semantic_negative(Path::new(
+            "x/invalid-token.command.json"
+        )));
+        assert!(!is_semantic_negative(Path::new(
+            "x/invalid-truncated.command.json"
+        )));
     }
 
     #[test]

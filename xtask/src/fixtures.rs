@@ -27,7 +27,11 @@ pub fn validate_fixtures(root: &Path) -> Report {
             continue;
         }
         for path in crate::schemas::json_files(&d) {
-            let rel = path.strip_prefix(root).unwrap_or(&path).display().to_string();
+            let rel = path
+                .strip_prefix(root)
+                .unwrap_or(&path)
+                .display()
+                .to_string();
             match Fixture::from_path(&path) {
                 Ok(f) => {
                     if let Err(e) = f.validate() {
@@ -38,7 +42,9 @@ pub fn validate_fixtures(root: &Path) -> Report {
                     // golden output can be found from the fixture alone.
                     let expected_id = format!(
                         "{dir}/{}",
-                        path.file_stem().and_then(|s| s.to_str()).unwrap_or_default()
+                        path.file_stem()
+                            .and_then(|s| s.to_str())
+                            .unwrap_or_default()
                     );
                     if f.id != expected_id {
                         report.problem(

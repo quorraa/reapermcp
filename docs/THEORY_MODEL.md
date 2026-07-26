@@ -294,7 +294,12 @@ data readable.
 | --- | --- | --- |
 | `candidate_duplicates_existing_strategy` | A candidate matches an already-selected candidate on root motion, functional path, modal source and bass contour. | 1 |
 
-**Total: 115 predicates, all of them used by at least one rule (396 total references, average 3.4 uses per predicate).**
+**Total: 116 predicates, all of them used by at least one rule (396 total references, average 3.4 uses per predicate).**
+
+This count is enforced, not asserted: `RuleEngine::known_predicates()` must equal the set
+of predicates the rule data actually uses, in both directions, and a predicate appearing in
+`knowledge/` that the engine does not implement is a validation failure rather than a silent
+no-op. See `crates/theory-kb/tests/embedded_parity.rs`.
 
 ### Trigger events
 

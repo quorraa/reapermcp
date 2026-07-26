@@ -90,7 +90,8 @@ fn major11_close_register_penalty() {
         a.explanation
     );
     assert!(
-        a.explanation.contains("the third and the natural eleventh sit close together"),
+        a.explanation
+            .contains("the third and the natural eleventh sit close together"),
         "the explanation should name the condition in English: {}",
         a.explanation
     );
@@ -111,7 +112,9 @@ fn major11_omit3_exception() {
 
     assert_eq!(a.status, RuleStatus::Bypassed);
     assert_eq!(a.score_delta, 0.0);
-    assert!(a.matched_exceptions.contains(&"third_is_omitted".to_string()));
+    assert!(a
+        .matched_exceptions
+        .contains(&"third_is_omitted".to_string()));
     assert_eq!(outcome.delta("extension_appropriateness"), 0.0);
     assert!(
         a.explanation.contains("Set aside here because"),
@@ -163,7 +166,8 @@ fn the_eleventh_rule_is_not_applicable_to_a_profile_that_does_not_list_it() {
     assert_eq!(a.status, RuleStatus::NotApplicable);
     assert_eq!(a.score_delta, 0.0);
     assert!(
-        a.explanation.contains("modal_ambient profile does not use this rule"),
+        a.explanation
+            .contains("modal_ambient profile does not use this rule"),
         "{}",
         a.explanation
     );
@@ -288,10 +292,7 @@ fn hard_rules_are_evaluated_before_soft_ones() {
     let first_soft = outcome
         .applications
         .iter()
-        .position(|a| {
-            kb().rule(&a.rule_id)
-                .is_some_and(|r| !r.kind.is_hard())
-        })
+        .position(|a| kb().rule(&a.rule_id).is_some_and(|r| !r.kind.is_hard()))
         .expect("the event has soft rules too");
     let last_hard = outcome
         .applications
@@ -369,9 +370,15 @@ fn v_to_i_across_wrap_compatible() {
         .with_str(facts::FIRST_CHORD_FUNCTION, "tonic")
         .with_str(facts::KEY_CENTER_KIND, "tonal");
     let outcome = RuleEngine::new(kb(), &p).evaluate(&ctx);
-    let a = app(&outcome, "looping.closed_tonic_prefers_dominant_to_tonic_wrap");
+    let a = app(
+        &outcome,
+        "looping.closed_tonic_prefers_dominant_to_tonic_wrap",
+    );
     assert_eq!(a.status, RuleStatus::Applied);
-    assert!(a.score_delta > 0.0, "a good wrap is rewarded, not merely allowed");
+    assert!(
+        a.score_delta > 0.0,
+        "a good wrap is rewarded, not merely allowed"
+    );
     assert!(outcome.delta("loop_compatibility") > 0.0);
     assert!(
         a.explanation.contains("Credited"),
@@ -391,14 +398,13 @@ fn closed_tonic_prefers_turnaround() {
         .with_str(facts::FIRST_CHORD_FUNCTION, "tonic")
         .with_str(facts::KEY_CENTER_KIND, "tonal");
     let outcome = RuleEngine::new(kb(), &p).evaluate(&ctx);
-    let a = app(&outcome, "looping.closed_tonic_prefers_dominant_to_tonic_wrap");
+    let a = app(
+        &outcome,
+        "looping.closed_tonic_prefers_dominant_to_tonic_wrap",
+    );
     assert_eq!(a.status, RuleStatus::NotApplicable);
     assert_eq!(outcome.delta("loop_compatibility"), 0.0);
-    assert!(
-        a.explanation.contains("does not hold"),
-        "{}",
-        a.explanation
-    );
+    assert!(a.explanation.contains("does not hold"), "{}", a.explanation);
 }
 
 #[test]
@@ -415,7 +421,10 @@ fn modal_drone_no_dominant_required() {
     assert_eq!(a.status, RuleStatus::Applied);
     assert!(a.score_delta > 0.0);
     // The tonal wrap rule must not even be considered for this loop intent.
-    let closed = app(&outcome, "looping.closed_tonic_prefers_dominant_to_tonic_wrap");
+    let closed = app(
+        &outcome,
+        "looping.closed_tonic_prefers_dominant_to_tonic_wrap",
+    );
     assert_eq!(closed.status, RuleStatus::NotApplicable);
 }
 
@@ -631,7 +640,11 @@ fn evaluate_only_considers_rules_listening_for_the_event() {
     let p = profile("common_practice");
     let ctx = RuleContext::new().with_event(RuleEvent::HarmonicGrid);
     let outcome = RuleEngine::new(kb(), &p).evaluate(&ctx);
-    assert_eq!(outcome.applications.len(), 2, "two rules watch harmonic_grid");
+    assert_eq!(
+        outcome.applications.len(),
+        2,
+        "two rules watch harmonic_grid"
+    );
     for a in &outcome.applications {
         assert_eq!(
             kb().rule(&a.rule_id).map(|r| r.trigger.event),
@@ -669,7 +682,11 @@ fn every_application_carries_a_real_explanation() {
     for event in RuleEvent::all() {
         let ctx = RuleContext::new().with_event(*event);
         for a in RuleEngine::new(kb(), &p).evaluate(&ctx).applications {
-            assert!(!a.explanation.is_empty(), "{} has no explanation", a.rule_id);
+            assert!(
+                !a.explanation.is_empty(),
+                "{} has no explanation",
+                a.rule_id
+            );
             assert!(
                 a.explanation.len() > 20,
                 "{} has a stub explanation: {}",

@@ -30,11 +30,11 @@ fn disk_files() -> BTreeMap<String, String> {
 #[test]
 fn the_embedded_path_list_matches_the_disk_tree() {
     let disk: Vec<String> = disk_files().keys().cloned().collect();
-    let embedded: Vec<String> = EMBEDDED_FILES.iter().map(|(p, _)| (*p).to_string()).collect();
-    assert_eq!(
-        embedded, disk,
-        "run `cargo run -p xtask -- regen-embedded`"
-    );
+    let embedded: Vec<String> = EMBEDDED_FILES
+        .iter()
+        .map(|(p, _)| (*p).to_string())
+        .collect();
+    assert_eq!(embedded, disk, "run `cargo run -p xtask -- regen-embedded`");
 }
 
 #[test]
@@ -52,7 +52,12 @@ fn the_embedded_contents_match_the_disk_tree_byte_for_byte() {
 #[test]
 fn the_embedded_list_is_sorted_and_uses_forward_slashes() {
     for w in EMBEDDED_FILES.windows(2) {
-        assert!(w[0].0 < w[1].0, "{} then {} is out of order", w[0].0, w[1].0);
+        assert!(
+            w[0].0 < w[1].0,
+            "{} then {} is out of order",
+            w[0].0,
+            w[1].0
+        );
     }
     for (p, _) in EMBEDDED_FILES {
         assert!(!p.contains('\\'), "{p} uses a backslash");
@@ -81,7 +86,10 @@ fn the_predicate_vocabulary_is_exactly_the_one_the_data_uses() {
         "predicates implemented but never used by knowledge/: {unused:?}"
     );
 
-    assert_eq!(used, implemented, "the two sets must be identical, in order");
+    assert_eq!(
+        used, implemented,
+        "the two sets must be identical, in order"
+    );
     assert_eq!(used.len(), 116);
 }
 
@@ -138,7 +146,8 @@ fn every_record_round_trips_through_json() {
         assert_eq!(&back, r, "{}", r.id);
     }
     for s in kb.sources() {
-        let back = theory_kb::SourceRecord::from_json(&s.to_json(), "round-trip").expect("re-reads");
+        let back =
+            theory_kb::SourceRecord::from_json(&s.to_json(), "round-trip").expect("re-reads");
         assert_eq!(&back, s, "{}", s.id);
     }
     for q in kb.chord_qualities() {

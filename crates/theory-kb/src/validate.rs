@@ -429,7 +429,7 @@ fn check_profiles(kb: &KnowledgeBase, errors: &mut Vec<KbError>) {
             ));
         }
 
-        for (rule_id, _) in &p.rule_overrides {
+        for rule_id in p.rule_overrides.keys() {
             if !rule_ids.contains(rule_id.as_str()) {
                 errors.push(KbError::unresolved_ref(
                     &path,

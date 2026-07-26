@@ -254,13 +254,19 @@ pub fn render_embedded(paths: &[String]) -> String {
     let mut out = String::new();
     out.push_str("//! Generated file - do not edit by hand.\n");
     out.push_str("//!\n");
-    out.push_str("//! Regenerate with `cargo run -p xtask -- regen-embedded`. The list is checked\n");
-    out.push_str("//! against `knowledge/` on disk by `tests/embedded_parity.rs`, so it can never\n");
+    out.push_str(
+        "//! Regenerate with `cargo run -p xtask -- regen-embedded`. The list is checked\n",
+    );
+    out.push_str(
+        "//! against `knowledge/` on disk by `tests/embedded_parity.rs`, so it can never\n",
+    );
     out.push_str("//! silently drift from the tree it was generated from.\n");
     out.push('\n');
     out.push_str("/// Every file under `knowledge/`, as `(relative path, contents)` pairs.\n");
     out.push_str("///\n");
-    out.push_str("/// Paths use forward slashes and are sorted byte-wise ascending. The layout is\n");
+    out.push_str(
+        "/// Paths use forward slashes and are sorted byte-wise ascending. The layout is\n",
+    );
     out.push_str("/// fixed by the generator, so `rustfmt` is asked to leave it alone.\n");
     out.push_str("#[rustfmt::skip]\n");
     out.push_str("pub static EMBEDDED_FILES: &[(&str, &str)] = &[\n");
@@ -287,7 +293,10 @@ pub fn regen_embedded(root: &Path, check_only: bool) -> Report {
     let paths: Vec<String> = files.keys().cloned().collect();
     for p in &paths {
         if p.contains('"') || p.contains('\\') {
-            report.problem(p, "knowledge file names must not contain quotes or backslashes");
+            report.problem(
+                p,
+                "knowledge file names must not contain quotes or backslashes",
+            );
             return report;
         }
     }

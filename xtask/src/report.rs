@@ -66,7 +66,8 @@ impl Report {
         for p in sub.problems {
             self.problems.push(p);
         }
-        self.details.insert(sub.command.clone(), Json::Obj(sub.details));
+        self.details
+            .insert(sub.command.clone(), Json::Obj(sub.details));
         if !sub.ok {
             self.ok = false;
         }
