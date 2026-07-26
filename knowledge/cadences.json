@@ -1,0 +1,1056 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "cad_perfect_authentic",
+      "name": "Perfect authentic cadence",
+      "degrees": [
+        "V",
+        "I"
+      ],
+      "function_path": [
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major",
+        "harmonic_minor"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "pop_rock",
+        "jazz_standard"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Both chords in root position; the bass leaps a fifth down or a fourth up.",
+      "voice_leading_notes": "The leading tone is in the top voice and rises to the tonic; the tonic must be the highest note of the final chord. Anything less is an imperfect cadence.",
+      "expected_destination": "Nothing: this is the strongest available close.",
+      "explanation_template": "Perfect authentic cadence in {key}: root-position dominant to root-position tonic with the tonic in the melody.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ],
+      "cadence_kind": "perfect_authentic",
+      "closure_strength": 1.0
+    },
+    {
+      "id": "cad_imperfect_authentic",
+      "name": "Imperfect authentic cadence",
+      "degrees": [
+        "V",
+        "I"
+      ],
+      "function_path": [
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major",
+        "harmonic_minor"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "pop_rock",
+        "jazz_standard",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "One or both chords inverted, or the bass leaps but the melody does not arrive on the tonic.",
+      "voice_leading_notes": "Same resolution as the perfect form but with the third or fifth on top, which leaves the phrase feeling continued rather than concluded.",
+      "expected_destination": "A further phrase; this cadence invites continuation.",
+      "explanation_template": "Imperfect authentic cadence in {key}: the dominant resolves to tonic, but inversion or melodic placement withholds full closure.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ],
+      "cadence_kind": "imperfect_authentic",
+      "closure_strength": 0.7
+    },
+    {
+      "id": "cad_half",
+      "name": "Half cadence",
+      "degrees": [
+        "ii6",
+        "V"
+      ],
+      "function_path": [
+        "predominant",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "major",
+        "natural_minor",
+        "harmonic_minor"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "pop_rock",
+        "cinematic",
+        "jazz_standard"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "ii6",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "2",
+            "4",
+            "6"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Ends on a root-position dominant.",
+      "voice_leading_notes": "Nothing needs to resolve; the point is that the tendency tones are left hanging.",
+      "expected_destination": "A consequent phrase ending on an authentic cadence.",
+      "explanation_template": "Half cadence in {key}: the phrase pauses on the dominant, leaving its tendencies unresolved so the next phrase must answer.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "mt21c"
+      ],
+      "cadence_kind": "half",
+      "closure_strength": 0.4
+    },
+    {
+      "id": "cad_phrygian_half",
+      "name": "Phrygian half cadence",
+      "degrees": [
+        "iv6",
+        "V"
+      ],
+      "function_path": [
+        "predominant",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "harmonic_minor",
+        "phrygian"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "cinematic",
+        "modal_ambient"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "iv6",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "4",
+            "b6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Bass falls by half step from the flat sixth degree to the dominant.",
+      "voice_leading_notes": "Outer voices expand from a sixth to an octave in contrary motion, the bass descending by half step and the top voice rising by whole step.",
+      "expected_destination": "A minor-key consequent phrase.",
+      "explanation_template": "Phrygian half cadence in {key}: the bass falls a half step onto the dominant while the top voice rises, an exclusively minor-key gesture.",
+      "tags": [],
+      "notes": "Encoded here with iv6 as the approach because the first-inversion minor subdominant is what places the flat sixth degree in the bass.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ],
+      "cadence_kind": "phrygian",
+      "closure_strength": 0.45
+    },
+    {
+      "id": "cad_plagal",
+      "name": "Plagal cadence",
+      "degrees": [
+        "IV",
+        "I"
+      ],
+      "function_path": [
+        "predominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major",
+        "mixolydian"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "pop_rock",
+        "blues",
+        "cinematic",
+        "modal_ambient"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "IV",
+          "quality": "major_triad",
+          "chord_tones": [
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Bass rises a fourth or falls a fifth into the tonic.",
+      "voice_leading_notes": "One common tone is held and one voice moves by step. There are no tendency tones, which is why the effect is confirming rather than concluding.",
+      "expected_destination": "Usually appended after an authentic cadence has already closed the phrase.",
+      "explanation_template": "Plagal cadence in {key}: the subdominant falls to tonic without any leading tone, confirming rather than establishing the key.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ],
+      "cadence_kind": "plagal",
+      "closure_strength": 0.55
+    },
+    {
+      "id": "cad_minor_plagal",
+      "name": "Minor plagal cadence",
+      "degrees": [
+        "iv",
+        "I"
+      ],
+      "function_path": [
+        "predominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major",
+        "harmonic_major"
+      ],
+      "style_profiles": [
+        "pop_rock",
+        "neo_soul_rnb",
+        "cinematic",
+        "jazz_standard",
+        "modal_ambient"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "iv",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "4",
+            "b6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Same bass motion as the plagal cadence.",
+      "voice_leading_notes": "The borrowed flat sixth degree falls by half step to the fifth of the tonic. That half step gives this cadence more pull than the plain plagal form.",
+      "expected_destination": "Final tonic.",
+      "explanation_template": "Minor plagal cadence in {key}: the borrowed minor subdominant supplies a descending half step into the tonic.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "mt21c-mode-mixture",
+        "open-music-theory"
+      ],
+      "cadence_kind": "plagal",
+      "closure_strength": 0.6
+    },
+    {
+      "id": "cad_deceptive",
+      "name": "Deceptive cadence",
+      "degrees": [
+        "V",
+        "vi"
+      ],
+      "function_path": [
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "cinematic",
+        "pop_rock",
+        "jazz_standard"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "vi",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "6",
+            "1",
+            "3"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Bass rises by step instead of resolving down a fifth.",
+      "voice_leading_notes": "The leading tone still rises to the tonic degree; the bass moving up a step is what denies the expected arrival. Double the third of vi to avoid parallel octaves.",
+      "expected_destination": "A renewed approach to a real cadence.",
+      "explanation_template": "Deceptive cadence in {key}: the dominant resolves to the submediant, so the leading tone still rises but the expected tonic never arrives.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ],
+      "cadence_kind": "deceptive",
+      "closure_strength": 0.25
+    },
+    {
+      "id": "cad_deceptive_minor",
+      "name": "Deceptive cadence in minor",
+      "degrees": [
+        "V",
+        "VI"
+      ],
+      "function_path": [
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "harmonic_minor",
+        "natural_minor"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "cinematic",
+        "jazz_standard"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "VI",
+          "quality": "major_triad",
+          "chord_tones": [
+            "b6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Bass rises a half step from the dominant to the flat sixth degree.",
+      "voice_leading_notes": "The half-step bass rise makes the minor-key version stronger than its major counterpart. Double the third of VI.",
+      "expected_destination": "A renewed cadential approach.",
+      "explanation_template": "Deceptive cadence in {key} minor: the dominant moves up a half step to the submediant rather than resolving.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ],
+      "cadence_kind": "deceptive",
+      "closure_strength": 0.25
+    },
+    {
+      "id": "cad_aeolian",
+      "name": "Aeolian cadence",
+      "degrees": [
+        "bVII",
+        "i"
+      ],
+      "function_path": [
+        "modal",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "natural_minor",
+        "aeolian",
+        "dorian"
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "pop_rock",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass",
+        "blues"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "bVII",
+          "quality": "major_triad",
+          "chord_tones": [
+            "b7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "i",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Bass falls a whole step into the tonic.",
+      "voice_leading_notes": "No leading tone by design. The flat seventh degree falls a whole step and the other voices should move by step or hold.",
+      "expected_destination": "Itself, in a loop, or the next phrase.",
+      "explanation_template": "Aeolian cadence in {key}: the subtonic falls a whole step to the tonic, closing the phrase modally rather than functionally.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ],
+      "cadence_kind": "modal",
+      "closure_strength": 0.5
+    },
+    {
+      "id": "cad_dorian_plagal",
+      "name": "Dorian plagal cadence",
+      "degrees": [
+        "IV",
+        "i"
+      ],
+      "function_path": [
+        "modal",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "dorian"
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "jazz_standard",
+        "neo_soul_rnb",
+        "electronic_loop"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "IV",
+          "quality": "major_triad",
+          "chord_tones": [
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "i",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Bass falls a fourth to the tonic.",
+      "voice_leading_notes": "The major third of IV is the natural sixth degree of the mode and should fall by step into the fifth of the tonic chord.",
+      "expected_destination": "Itself in a vamp.",
+      "explanation_template": "Dorian plagal cadence in {key}: the major subdominant closes to the minor tonic, keeping the natural sixth degree audible.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ],
+      "cadence_kind": "modal",
+      "closure_strength": 0.5
+    },
+    {
+      "id": "cad_jazz_turnaround",
+      "name": "Jazz turnaround cadence",
+      "degrees": [
+        "iii7",
+        "VI7",
+        "ii7",
+        "V7",
+        "Imaj7"
+      ],
+      "function_path": [
+        "tonic",
+        "applied",
+        "predominant",
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major",
+        "altered"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "blues"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "iii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "3",
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "VI7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "6",
+            "#1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "ii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        },
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 4
+        }
+      ],
+      "bass_implications": "Roots fall in fifths throughout.",
+      "voice_leading_notes": "Guide tones chain by half step from chord to chord. Alternate rootless A and B shapes so the voicing does not climb out of register.",
+      "expected_destination": "The top of the next chorus.",
+      "explanation_template": "Turnaround cadence in {key}: a chain of descending-fifth resolutions delivers the tonic and simultaneously sets up a repeat.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ],
+      "cadence_kind": "perfect_authentic",
+      "closure_strength": 0.9
+    },
+    {
+      "id": "cad_tritone_sub",
+      "name": "Tritone-substitute cadence",
+      "degrees": [
+        "bII7",
+        "Imaj7"
+      ],
+      "function_path": [
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "lydian_dominant",
+        "altered",
+        "major"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "bII7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "b2",
+            "4",
+            "b6",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Bass falls a half step into the tonic.",
+      "voice_leading_notes": "The tritone of bII7 resolves exactly as V7's would, but the roles are exchanged: its seventh becomes the third of the tonic and its third becomes the seventh degree.",
+      "expected_destination": "Tonic.",
+      "explanation_template": "Tritone-substitute cadence in {key}: a dominant a half step above the tonic delivers the same tritone resolution over a chromatic bass.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ],
+      "cadence_kind": "perfect_authentic",
+      "closure_strength": 0.8
+    },
+    {
+      "id": "cad_backdoor",
+      "name": "Backdoor cadence",
+      "degrees": [
+        "bVII7",
+        "Imaj7"
+      ],
+      "function_path": [
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "mixolydian",
+        "lydian_dominant",
+        "major"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "pop_rock",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "bVII7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "b7",
+            "2",
+            "4",
+            "b6"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Bass rises a whole step into the tonic.",
+      "voice_leading_notes": "The chordal seventh falls a half step into the major third of the tonic. There is no leading tone at all.",
+      "expected_destination": "Tonic.",
+      "explanation_template": "Backdoor cadence in {key}: a borrowed dominant a whole step below the tonic resolves upward, with the flat seventh degree falling into the major third.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "mt21c-mode-mixture",
+        "open-music-theory"
+      ],
+      "cadence_kind": "modal",
+      "closure_strength": 0.7
+    },
+    {
+      "id": "cad_evaded",
+      "name": "Evaded cadence",
+      "degrees": [
+        "V7",
+        "I6"
+      ],
+      "function_path": [
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major",
+        "harmonic_minor"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "jazz_standard",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "I6",
+          "quality": "major6",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "6"
+          ],
+          "color_tones": [
+            "2",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "The bass moves to the third of the tonic instead of its root.",
+      "voice_leading_notes": "The expected resolution is redirected at the last moment; the leading tone may leap down to the fifth rather than rising, which is what marks the cadence as evaded.",
+      "expected_destination": "Another cadential attempt.",
+      "explanation_template": "Evaded cadence in {key}: the dominant arrives but the tonic appears in inversion, so the phrase is denied its close and must try again.",
+      "tags": [],
+      "notes": "",
+      "source_refs": [
+        "mt21c"
+      ],
+      "cadence_kind": "imperfect_authentic",
+      "closure_strength": 0.3
+    }
+  ]
+}

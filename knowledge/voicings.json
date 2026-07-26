@@ -1,0 +1,1881 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "close_triad_root",
+      "name": "Close-position triad, root position",
+      "family": "close",
+      "voice_count": 3,
+      "degree_layout": [
+        "1",
+        "3",
+        "5"
+      ],
+      "required_degrees": [
+        "1",
+        "3"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 84
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 40,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 48,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 55,
+          "min_semitones": 4
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "notes": "The reference triad shape. Compact and blend-friendly, but it masks easily when another part occupies the same octave.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "close_triad_first_inversion",
+      "name": "Close-position triad, first inversion",
+      "family": "close",
+      "voice_count": 3,
+      "degree_layout": [
+        "3",
+        "5",
+        "1"
+      ],
+      "required_degrees": [
+        "1",
+        "3"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 86
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 40,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 48,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 55,
+          "min_semitones": 4
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "notes": "Third in the bass. Lighter than root position and the standard way to keep a bass line stepwise through a prolongation.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "close_triad_second_inversion",
+      "name": "Close-position triad, second inversion",
+      "family": "close",
+      "voice_count": 3,
+      "degree_layout": [
+        "5",
+        "1",
+        "3"
+      ],
+      "required_degrees": [
+        "1",
+        "3",
+        "5"
+      ],
+      "optional_degrees": [],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 86
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 40,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 48,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 55,
+          "min_semitones": 4
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "pop_rock",
+        "modal_ambient"
+      ],
+      "notes": "Fifth in the bass. In strict profiles this is a dissonant sonority that must be a cadential, passing or pedal six-four, not a free inversion.",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "open_triad_root",
+      "name": "Open-position triad",
+      "family": "open",
+      "voice_count": 3,
+      "degree_layout": [
+        "1",
+        "5",
+        "3"
+      ],
+      "required_degrees": [
+        "1",
+        "3"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 43,
+        "high_midi": 84
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "notes": "Root, fifth, then third an octave up. The default keyboard and string shape below middle C because the wide bottom interval stays clear.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "chorale_close_four_part",
+      "name": "Chorale close position, four parts",
+      "family": "close",
+      "voice_count": 4,
+      "degree_layout": [
+        "1",
+        "5",
+        "1",
+        "3"
+      ],
+      "required_degrees": [
+        "1",
+        "3"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 40,
+        "high_midi": 79
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 40,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 48,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 55,
+          "min_semitones": 4
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "notes": "Doubled root, upper three voices inside an octave. The safest doubling for a root-position major or minor triad.",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "chorale_open_four_part",
+      "name": "Chorale open position, four parts",
+      "family": "open",
+      "voice_count": 4,
+      "degree_layout": [
+        "1",
+        "3",
+        "5",
+        "1"
+      ],
+      "required_degrees": [
+        "1",
+        "3"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 40,
+        "high_midi": 79
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "notes": "Upper three voices span more than an octave. Better separation for choir and strings; the tenor-alto gap should still stay inside an octave.",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "close_seventh_root",
+      "name": "Close-position seventh chord",
+      "family": "close",
+      "voice_count": 4,
+      "degree_layout": [
+        "1",
+        "3",
+        "5",
+        "7"
+      ],
+      "required_degrees": [
+        "1",
+        "3",
+        "7"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 84
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 40,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 48,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 55,
+          "min_semitones": 4
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "notes": "All four chord tones inside an octave. Muddy below the bass staff; use drop 2 instead in low registers.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "close_seventh_third_in_bass",
+      "name": "Close-position seventh, third in bass",
+      "family": "close",
+      "voice_count": 4,
+      "degree_layout": [
+        "3",
+        "5",
+        "7",
+        "1"
+      ],
+      "required_degrees": [
+        "1",
+        "3",
+        "7"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 86
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 40,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 48,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 55,
+          "min_semitones": 4
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "notes": "First-inversion seventh chord. Puts a guide tone in the bass, which is useful when the bass part is doubling roots elsewhere.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "drop2_seventh",
+      "name": "Drop 2 seventh chord",
+      "family": "drop2",
+      "voice_count": 4,
+      "degree_layout": [
+        "5",
+        "1",
+        "3",
+        "7"
+      ],
+      "required_degrees": [
+        "1",
+        "3",
+        "7"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 48,
+        "high_midi": 88
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "pop_rock",
+        "cinematic",
+        "common_practice"
+      ],
+      "notes": "Second voice from the top of a close voicing dropped an octave. The default four-part guitar and piano shape: it opens the bottom without losing the close-position top.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "drop3_seventh",
+      "name": "Drop 3 seventh chord",
+      "family": "drop3",
+      "voice_count": 4,
+      "degree_layout": [
+        "3",
+        "1",
+        "5",
+        "7"
+      ],
+      "required_degrees": [
+        "1",
+        "3",
+        "7"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 45,
+        "high_midi": 88
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "cinematic",
+        "neo_soul_rnb"
+      ],
+      "notes": "Third voice from the top dropped an octave, leaving a tenth at the bottom. Needs a wider range than drop 2 and reads as more orchestral.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "drop2and4_seventh",
+      "name": "Drop 2 and 4 seventh chord",
+      "family": "spread",
+      "voice_count": 4,
+      "degree_layout": [
+        "7",
+        "3",
+        "1",
+        "5"
+      ],
+      "required_degrees": [
+        "1",
+        "3",
+        "7"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 43,
+        "high_midi": 88
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "cinematic",
+        "modal_ambient"
+      ],
+      "notes": "Both the second and fourth voices from the top are dropped. Very open; good for sustained writing and poor for fast comping.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "shell_root_third_seventh",
+      "name": "Shell voicing, 1-3-7",
+      "family": "shell",
+      "voice_count": 3,
+      "degree_layout": [
+        "1",
+        "3",
+        "7"
+      ],
+      "required_degrees": [
+        "1",
+        "3",
+        "7"
+      ],
+      "optional_degrees": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 48,
+        "high_midi": 76
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "blues",
+        "neo_soul_rnb",
+        "pop_rock"
+      ],
+      "notes": "Root plus both guide tones. Minimum information needed to state a seventh chord; leaves maximum room for melody and bass.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "shell_root_seventh_third",
+      "name": "Shell voicing, 1-7-3",
+      "family": "shell",
+      "voice_count": 3,
+      "degree_layout": [
+        "1",
+        "7",
+        "3"
+      ],
+      "required_degrees": [
+        "1",
+        "3",
+        "7"
+      ],
+      "optional_degrees": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 48,
+        "high_midi": 79
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "blues",
+        "neo_soul_rnb"
+      ],
+      "notes": "The inverted shell. Alternating between the two shell shapes across a ii-V-I keeps the guide tones moving by step instead of leaping.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "guide_tone_duo",
+      "name": "Guide-tone pair",
+      "family": "shell",
+      "voice_count": 2,
+      "degree_layout": [
+        "3",
+        "7"
+      ],
+      "required_degrees": [
+        "3",
+        "7"
+      ],
+      "optional_degrees": [],
+      "omissible_degrees": [
+        "1",
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 52,
+        "high_midi": 79
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "notes": "Third and seventh only. The sparsest voicing that still identifies chord quality; ideal when a bass part already supplies the root.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "rootless_a_major_family",
+      "name": "Rootless A, major and dominant",
+      "family": "rootless",
+      "voice_count": 4,
+      "degree_layout": [
+        "3",
+        "5",
+        "7",
+        "9"
+      ],
+      "required_degrees": [
+        "3",
+        "7"
+      ],
+      "optional_degrees": [
+        "5",
+        "9"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 81
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb"
+      ],
+      "notes": "Left-hand rootless shape starting from the third. Assumes a bass instrument is playing the root; do not use it when nothing else states the root.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "rootless_b_major_family",
+      "name": "Rootless B, major and dominant",
+      "family": "rootless",
+      "voice_count": 4,
+      "degree_layout": [
+        "7",
+        "9",
+        "3",
+        "5"
+      ],
+      "required_degrees": [
+        "3",
+        "7"
+      ],
+      "optional_degrees": [
+        "5",
+        "9"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 81
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb"
+      ],
+      "notes": "The inversion of rootless A. Alternate A and B between adjacent chords to keep the voicing inside one register instead of drifting.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "rootless_a_minor_family",
+      "name": "Rootless A, minor family",
+      "family": "rootless",
+      "voice_count": 4,
+      "degree_layout": [
+        "b3",
+        "5",
+        "b7",
+        "9"
+      ],
+      "required_degrees": [
+        "b3",
+        "b7"
+      ],
+      "optional_degrees": [
+        "5",
+        "9"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 81
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "modal_ambient"
+      ],
+      "notes": "Minor-seventh rootless shape. On a ii chord the ninth is almost always available.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "rootless_b_minor_family",
+      "name": "Rootless B, minor family",
+      "family": "rootless",
+      "voice_count": 4,
+      "degree_layout": [
+        "b7",
+        "9",
+        "b3",
+        "5"
+      ],
+      "required_degrees": [
+        "b3",
+        "b7"
+      ],
+      "optional_degrees": [
+        "5",
+        "9"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 81
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "modal_ambient"
+      ],
+      "notes": "Inverted minor rootless shape.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "rootless_altered_dominant",
+      "name": "Rootless altered dominant",
+      "family": "rootless",
+      "voice_count": 4,
+      "degree_layout": [
+        "3",
+        "b13",
+        "b7",
+        "b9"
+      ],
+      "required_degrees": [
+        "3",
+        "b7"
+      ],
+      "optional_degrees": [
+        "b9",
+        "b13"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 81
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb"
+      ],
+      "notes": "Guide tones with two alterations. Which alterations are voiced must be chosen from the melody and the destination, not fixed in advance.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "spread_bass_tenth",
+      "name": "Bass with a tenth",
+      "family": "spread",
+      "voice_count": 4,
+      "degree_layout": [
+        "1",
+        "3",
+        "5",
+        "7"
+      ],
+      "required_degrees": [
+        "1",
+        "3"
+      ],
+      "optional_degrees": [
+        "5",
+        "7"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 36,
+        "high_midi": 76
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 45,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 57,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "cinematic",
+        "neo_soul_rnb",
+        "common_practice"
+      ],
+      "notes": "Root low, third a tenth above it, remaining tones stacked. The tenth is the smallest interval that stays clear at the bottom of the piano.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "quartal_three_voice",
+      "name": "Three-voice quartal stack",
+      "family": "quartal",
+      "voice_count": 3,
+      "degree_layout": [
+        "1",
+        "4",
+        "b7"
+      ],
+      "required_degrees": [
+        "1",
+        "4"
+      ],
+      "optional_degrees": [
+        "b7"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 52,
+        "high_midi": 84
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "modal_ambient",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "notes": "Two stacked fourths. Deliberately ambiguous in quality, which is why it suits modal writing where a third would over-specify the harmony.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "quartal_four_voice",
+      "name": "Four-voice quartal stack",
+      "family": "quartal",
+      "voice_count": 4,
+      "degree_layout": [
+        "1",
+        "4",
+        "b7",
+        "b3"
+      ],
+      "required_degrees": [
+        "1",
+        "4"
+      ],
+      "optional_degrees": [
+        "b7",
+        "b3"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 48,
+        "high_midi": 88
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "modal_ambient",
+        "cinematic"
+      ],
+      "notes": "Three stacked fourths. Plane it in parallel freely; parallel-fifth logic does not apply to a texture whose whole identity is parallel motion.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "so_what_voicing",
+      "name": "Fourths with a third on top",
+      "family": "quartal",
+      "voice_count": 5,
+      "degree_layout": [
+        "1",
+        "4",
+        "b7",
+        "b3",
+        "5"
+      ],
+      "required_degrees": [
+        "1",
+        "4"
+      ],
+      "optional_degrees": [
+        "b7",
+        "b3",
+        "5"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 48,
+        "high_midi": 84
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "modal_ambient",
+        "neo_soul_rnb"
+      ],
+      "notes": "Three perfect fourths capped by a major third. The canonical modal-jazz five-voice shape; the top third stops the stack sounding unresolved.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "quintal_three_voice",
+      "name": "Three-voice quintal stack",
+      "family": "quintal",
+      "voice_count": 3,
+      "degree_layout": [
+        "1",
+        "5",
+        "9"
+      ],
+      "required_degrees": [
+        "1",
+        "5"
+      ],
+      "optional_degrees": [
+        "9"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 40,
+        "high_midi": 84
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 45,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 57,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "pop_rock"
+      ],
+      "notes": "Stacked fifths. Open and modally neutral; the standard low-register pad and drone shape because fifths stay clear where thirds turn to mud.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "cluster_second_stack",
+      "name": "Second cluster",
+      "family": "cluster",
+      "voice_count": 4,
+      "degree_layout": [
+        "1",
+        "2",
+        "3",
+        "5"
+      ],
+      "required_degrees": [
+        "1",
+        "2",
+        "3"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 60,
+        "high_midi": 96
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "neo_soul_rnb",
+        "electronic_loop"
+      ],
+      "notes": "Adjacent seconds treated as a colour rather than a dissonance to resolve. Only viable above the middle of the keyboard; clusters below C3 lose all definition.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "power_chord_fifth",
+      "name": "Power chord",
+      "family": "power",
+      "voice_count": 2,
+      "degree_layout": [
+        "1",
+        "5"
+      ],
+      "required_degrees": [
+        "1",
+        "5"
+      ],
+      "optional_degrees": [],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 40,
+        "high_midi": 72
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "pop_rock",
+        "blues",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "notes": "Root and fifth only. Parallel motion between successive power chords is the intended sound, so parallel-perfect penalties must be disabled for this family.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "power_chord_octave",
+      "name": "Power chord with octave",
+      "family": "power",
+      "voice_count": 3,
+      "degree_layout": [
+        "1",
+        "5",
+        "1"
+      ],
+      "required_degrees": [
+        "1",
+        "5"
+      ],
+      "optional_degrees": [],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 40,
+        "high_midi": 76
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "pop_rock",
+        "blues",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "notes": "Root, fifth, octave. Slightly fuller than the bare fifth and still modally neutral.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "upper_structure_major_two",
+      "name": "Upper structure: major triad on 9",
+      "family": "upper_structure",
+      "voice_count": 5,
+      "degree_layout": [
+        "3",
+        "b7",
+        "9",
+        "#11",
+        "13"
+      ],
+      "required_degrees": [
+        "3",
+        "b7"
+      ],
+      "optional_degrees": [
+        "9",
+        "#11",
+        "13"
+      ],
+      "omissible_degrees": [
+        "5",
+        "1"
+      ],
+      "register_hint": {
+        "low_midi": 52,
+        "high_midi": 88
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "notes": "A major triad built on the ninth placed over the guide tones of a dominant chord, producing 9, #11 and 13. Pairs with a Lydian-dominant destination.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "upper_structure_flat_two",
+      "name": "Upper structure: major triad on b9",
+      "family": "upper_structure",
+      "voice_count": 5,
+      "degree_layout": [
+        "3",
+        "b7",
+        "b9",
+        "11",
+        "b13"
+      ],
+      "required_degrees": [
+        "3",
+        "b7"
+      ],
+      "optional_degrees": [
+        "b9",
+        "b13"
+      ],
+      "omissible_degrees": [
+        "5",
+        "1"
+      ],
+      "register_hint": {
+        "low_midi": 52,
+        "high_midi": 88
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb"
+      ],
+      "notes": "Major triad on the flat ninth over dominant guide tones. Maximum tension; needs a destination a fifth or a half step below.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "upper_structure_flat_six",
+      "name": "Upper structure: major triad on b13",
+      "family": "upper_structure",
+      "voice_count": 5,
+      "degree_layout": [
+        "3",
+        "b7",
+        "b13",
+        "1",
+        "b3"
+      ],
+      "required_degrees": [
+        "3",
+        "b7"
+      ],
+      "optional_degrees": [
+        "b13",
+        "b3"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 52,
+        "high_midi": 88
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "notes": "Major triad on the flat thirteenth, giving b13 and #9. The characteristic altered dominant colour when resolving to a minor tonic.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "pedal_voicing_over_tonic",
+      "name": "Pedal voicing over a tonic bass",
+      "family": "pedal",
+      "voice_count": 5,
+      "degree_layout": [
+        "1",
+        "5",
+        "1",
+        "3",
+        "5"
+      ],
+      "required_degrees": [
+        "1"
+      ],
+      "optional_degrees": [
+        "3",
+        "5"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 36,
+        "high_midi": 88
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 45,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 57,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "pop_rock",
+        "drum_and_bass"
+      ],
+      "notes": "Sustained tonic below, freely changing upper voices. Chords above the pedal are judged on colour and voice leading rather than on root motion.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "pedal_voicing_over_dominant",
+      "name": "Pedal voicing over a dominant bass",
+      "family": "pedal",
+      "voice_count": 5,
+      "degree_layout": [
+        "5",
+        "1",
+        "3",
+        "5",
+        "b7"
+      ],
+      "required_degrees": [
+        "5"
+      ],
+      "optional_degrees": [
+        "1",
+        "3",
+        "b7"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 36,
+        "high_midi": 88
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 45,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 57,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "common_practice",
+        "cinematic",
+        "modal_ambient",
+        "electronic_loop"
+      ],
+      "notes": "Dominant pedal supporting predominant and tonic-shaped chords above. Builds cadential expectation without changing the bass.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "four_way_close_block",
+      "name": "Four-way close block chord",
+      "family": "close",
+      "voice_count": 4,
+      "degree_layout": [
+        "5",
+        "7",
+        "1",
+        "3"
+      ],
+      "required_degrees": [
+        "1",
+        "3",
+        "7"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 84
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "notes": "Melody on top with the remaining chord tones packed beneath inside an octave, moving in parallel with the melody. Used for harmonised melodic lines, not for comping.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "four_way_close_drop2_melody",
+      "name": "Four-way close, drop 2 under the melody",
+      "family": "drop2",
+      "voice_count": 4,
+      "degree_layout": [
+        "1",
+        "5",
+        "7",
+        "3"
+      ],
+      "required_degrees": [
+        "1",
+        "3",
+        "7"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 48,
+        "high_midi": 88
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "cinematic",
+        "neo_soul_rnb"
+      ],
+      "notes": "Block-chord melody harmonisation opened up by dropping the second voice. The usual fix when a four-way close shape falls below the middle of the keyboard.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "six_nine_close",
+      "name": "Six-nine voicing",
+      "family": "close",
+      "voice_count": 4,
+      "degree_layout": [
+        "1",
+        "3",
+        "6",
+        "9"
+      ],
+      "required_degrees": [
+        "1",
+        "3"
+      ],
+      "optional_degrees": [
+        "6",
+        "9"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "register_hint": {
+        "low_midi": 55,
+        "high_midi": 84
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 1
+        }
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "pop_rock",
+        "blues"
+      ],
+      "notes": "Sixth and ninth replacing the seventh. The most stable colourful major tonic, and the usual final chord of a jazz arrangement.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "octave_doubled_triad",
+      "name": "Octave-doubled triad",
+      "family": "open",
+      "voice_count": 6,
+      "degree_layout": [
+        "1",
+        "5",
+        "1",
+        "3",
+        "5",
+        "1"
+      ],
+      "required_degrees": [
+        "1",
+        "3"
+      ],
+      "optional_degrees": [
+        "5"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 36,
+        "high_midi": 96
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 45,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 57,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "cinematic",
+        "pop_rock",
+        "electronic_loop",
+        "modal_ambient"
+      ],
+      "notes": "Triad spread across three octaves. Maximum weight and minimum voice independence; use for arrival points, not for continuous texture.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "sus_pedal_two_hand",
+      "name": "Two-hand suspended voicing",
+      "family": "spread",
+      "voice_count": 5,
+      "degree_layout": [
+        "1",
+        "5",
+        "1",
+        "4",
+        "b7"
+      ],
+      "required_degrees": [
+        "1",
+        "4"
+      ],
+      "optional_degrees": [
+        "5",
+        "b7"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 40,
+        "high_midi": 84
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 45,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 57,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "neo_soul_rnb",
+        "modal_ambient",
+        "electronic_loop",
+        "pop_rock",
+        "cinematic"
+      ],
+      "notes": "Fifth in the left hand, fourth and flat seventh above. Reads as suspended rather than dominant because the third is absent entirely.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "low_bass_open_fifth_pad",
+      "name": "Wide open fifth pad",
+      "family": "spread",
+      "voice_count": 4,
+      "degree_layout": [
+        "1",
+        "5",
+        "9",
+        "5"
+      ],
+      "required_degrees": [
+        "1",
+        "5"
+      ],
+      "optional_degrees": [
+        "9"
+      ],
+      "omissible_degrees": [],
+      "register_hint": {
+        "low_midi": 33,
+        "high_midi": 79
+      },
+      "min_spacing_semitones_by_register": [
+        {
+          "below_midi": 45,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 57,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 128,
+          "min_semitones": 2
+        }
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "notes": "Very wide fifth-based shape for sustained low material. The bottom interval is at least an octave so the low register stays defined.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    }
+  ]
+}

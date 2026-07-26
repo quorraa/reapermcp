@@ -1,0 +1,1381 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "sym_maj13",
+      "token_kind": "quality",
+      "written": "maj13",
+      "ascii_variants": [
+        "M13",
+        "ma13",
+        "Maj13"
+      ],
+      "unicode_variants": [
+        "Δ13",
+        "△13"
+      ],
+      "quality_id": "major13",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 960,
+      "canonical_ascii": "maj13",
+      "canonical_unicode": "Δ13",
+      "notes": ""
+    },
+    {
+      "id": "sym_maj11",
+      "token_kind": "quality",
+      "written": "maj11",
+      "ascii_variants": [
+        "M11",
+        "ma11",
+        "Maj11"
+      ],
+      "unicode_variants": [
+        "Δ11"
+      ],
+      "quality_id": "major11",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 955,
+      "canonical_ascii": "maj11",
+      "canonical_unicode": "Δ11",
+      "notes": ""
+    },
+    {
+      "id": "sym_maj9",
+      "token_kind": "quality",
+      "written": "maj9",
+      "ascii_variants": [
+        "M9",
+        "ma9",
+        "Maj9"
+      ],
+      "unicode_variants": [
+        "Δ9",
+        "△9"
+      ],
+      "quality_id": "major9",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 950,
+      "canonical_ascii": "maj9",
+      "canonical_unicode": "Δ9",
+      "notes": ""
+    },
+    {
+      "id": "sym_maj7",
+      "token_kind": "quality",
+      "written": "maj7",
+      "ascii_variants": [
+        "M7",
+        "ma7",
+        "Maj7",
+        "j7"
+      ],
+      "unicode_variants": [
+        "Δ7",
+        "△7"
+      ],
+      "quality_id": "major7",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 945,
+      "canonical_ascii": "maj7",
+      "canonical_unicode": "Δ7",
+      "notes": "A bare Delta with no number is also read as a major seventh."
+    },
+    {
+      "id": "sym_delta_bare",
+      "token_kind": "quality",
+      "written": "Δ",
+      "ascii_variants": [],
+      "unicode_variants": [
+        "△"
+      ],
+      "quality_id": "major7",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 700,
+      "canonical_ascii": "maj7",
+      "canonical_unicode": "Δ7",
+      "notes": "Bare triangle. Conventionally means major seventh, not a major triad."
+    },
+    {
+      "id": "sym_maj6",
+      "token_kind": "quality",
+      "written": "maj6",
+      "ascii_variants": [
+        "M6",
+        "ma6"
+      ],
+      "unicode_variants": [],
+      "quality_id": "major6",
+      "degrees_added": [
+        "6"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 900,
+      "canonical_ascii": "6",
+      "canonical_unicode": "6",
+      "notes": ""
+    },
+    {
+      "id": "sym_minmaj9",
+      "token_kind": "quality",
+      "written": "mMaj9",
+      "ascii_variants": [
+        "mmaj9",
+        "minmaj9",
+        "m(maj9)",
+        "-maj9"
+      ],
+      "unicode_variants": [
+        "mΔ9",
+        "-Δ9"
+      ],
+      "quality_id": "minor_major9",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 985,
+      "canonical_ascii": "mMaj9",
+      "canonical_unicode": "mΔ9",
+      "notes": ""
+    },
+    {
+      "id": "sym_minmaj7",
+      "token_kind": "quality",
+      "written": "mMaj7",
+      "ascii_variants": [
+        "mmaj7",
+        "minmaj7",
+        "m(maj7)",
+        "-maj7",
+        "mM7"
+      ],
+      "unicode_variants": [
+        "mΔ7",
+        "-Δ7"
+      ],
+      "quality_id": "minor_major7",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 980,
+      "canonical_ascii": "mMaj7",
+      "canonical_unicode": "mΔ7",
+      "notes": "Must be matched before the plain minor token, otherwise 'm' consumes the 'm' and 'Maj7' is misread as a separate major-seventh suffix."
+    },
+    {
+      "id": "sym_min13",
+      "token_kind": "quality",
+      "written": "m13",
+      "ascii_variants": [
+        "min13",
+        "-13",
+        "mi13"
+      ],
+      "unicode_variants": [],
+      "quality_id": "minor13",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 940,
+      "canonical_ascii": "m13",
+      "canonical_unicode": "m13",
+      "notes": ""
+    },
+    {
+      "id": "sym_min11",
+      "token_kind": "quality",
+      "written": "m11",
+      "ascii_variants": [
+        "min11",
+        "-11",
+        "mi11"
+      ],
+      "unicode_variants": [],
+      "quality_id": "minor11",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 935,
+      "canonical_ascii": "m11",
+      "canonical_unicode": "m11",
+      "notes": ""
+    },
+    {
+      "id": "sym_min9",
+      "token_kind": "quality",
+      "written": "m9",
+      "ascii_variants": [
+        "min9",
+        "-9",
+        "mi9"
+      ],
+      "unicode_variants": [],
+      "quality_id": "minor9",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 930,
+      "canonical_ascii": "m9",
+      "canonical_unicode": "m9",
+      "notes": ""
+    },
+    {
+      "id": "sym_min7b5",
+      "token_kind": "quality",
+      "written": "m7b5",
+      "ascii_variants": [
+        "min7b5",
+        "mi7b5",
+        "-7b5",
+        "m7(b5)",
+        "hdim7"
+      ],
+      "unicode_variants": [
+        "m7♭5"
+      ],
+      "quality_id": "half_diminished7",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 975,
+      "canonical_ascii": "m7b5",
+      "canonical_unicode": "ø7",
+      "notes": ""
+    },
+    {
+      "id": "sym_halfdim",
+      "token_kind": "quality",
+      "written": "ø",
+      "ascii_variants": [
+        "o/"
+      ],
+      "unicode_variants": [
+        "ø7",
+        "⌀"
+      ],
+      "quality_id": "half_diminished7",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 970,
+      "canonical_ascii": "m7b5",
+      "canonical_unicode": "ø7",
+      "notes": "A bare slashed circle means half-diminished seventh, not a half-diminished triad."
+    },
+    {
+      "id": "sym_min7",
+      "token_kind": "quality",
+      "written": "m7",
+      "ascii_variants": [
+        "min7",
+        "-7",
+        "mi7"
+      ],
+      "unicode_variants": [],
+      "quality_id": "minor7",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 925,
+      "canonical_ascii": "m7",
+      "canonical_unicode": "m7",
+      "notes": ""
+    },
+    {
+      "id": "sym_min69",
+      "token_kind": "quality",
+      "written": "m6/9",
+      "ascii_variants": [
+        "m69",
+        "min6/9",
+        "-6/9"
+      ],
+      "unicode_variants": [],
+      "quality_id": "minor6_9",
+      "degrees_added": [
+        "6",
+        "9"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 915,
+      "canonical_ascii": "m6/9",
+      "canonical_unicode": "m6/9",
+      "notes": "The slash here is part of the quality name, not a bass indication. The parser must test this token before treating '/' as a slash-bass separator."
+    },
+    {
+      "id": "sym_min6",
+      "token_kind": "quality",
+      "written": "m6",
+      "ascii_variants": [
+        "min6",
+        "-6",
+        "mi6"
+      ],
+      "unicode_variants": [],
+      "quality_id": "minor6",
+      "degrees_added": [
+        "6"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 905,
+      "canonical_ascii": "m6",
+      "canonical_unicode": "m6",
+      "notes": ""
+    },
+    {
+      "id": "sym_minadd9",
+      "token_kind": "quality",
+      "written": "m(add9)",
+      "ascii_variants": [
+        "madd9",
+        "min(add9)",
+        "-add9"
+      ],
+      "unicode_variants": [],
+      "quality_id": "minor_add9",
+      "degrees_added": [
+        "9"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 920,
+      "canonical_ascii": "m(add9)",
+      "canonical_unicode": "m(add9)",
+      "notes": ""
+    },
+    {
+      "id": "sym_min",
+      "token_kind": "quality",
+      "written": "m",
+      "ascii_variants": [
+        "min",
+        "-",
+        "mi"
+      ],
+      "unicode_variants": [],
+      "quality_id": "minor_triad",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 300,
+      "canonical_ascii": "m",
+      "canonical_unicode": "m",
+      "notes": "Lowest-precedence minor token; only matched when no longer minor spelling applies."
+    },
+    {
+      "id": "sym_dim7",
+      "token_kind": "quality",
+      "written": "dim7",
+      "ascii_variants": [
+        "o7"
+      ],
+      "unicode_variants": [
+        "°7"
+      ],
+      "quality_id": "diminished7",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 990,
+      "canonical_ascii": "dim7",
+      "canonical_unicode": "°7",
+      "notes": ""
+    },
+    {
+      "id": "sym_dim",
+      "token_kind": "quality",
+      "written": "dim",
+      "ascii_variants": [
+        "o"
+      ],
+      "unicode_variants": [
+        "°"
+      ],
+      "quality_id": "diminished_triad",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 400,
+      "canonical_ascii": "dim",
+      "canonical_unicode": "°",
+      "notes": "A bare degree sign with no seventh means a diminished triad."
+    },
+    {
+      "id": "sym_dimmaj7",
+      "token_kind": "quality",
+      "written": "dim(maj7)",
+      "ascii_variants": [
+        "dimMaj7",
+        "oMaj7"
+      ],
+      "unicode_variants": [
+        "°Δ7"
+      ],
+      "quality_id": "diminished_major7",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 995,
+      "canonical_ascii": "dim(maj7)",
+      "canonical_unicode": "°Δ7",
+      "notes": ""
+    },
+    {
+      "id": "sym_aug7",
+      "token_kind": "quality",
+      "written": "aug7",
+      "ascii_variants": [
+        "+7",
+        "7+5",
+        "7#5"
+      ],
+      "unicode_variants": [
+        "7♯5"
+      ],
+      "quality_id": "dominant7_sharp5",
+      "degrees_added": [],
+      "degrees_altered": [
+        "#5"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 965,
+      "canonical_ascii": "7#5",
+      "canonical_unicode": "7♯5",
+      "notes": ""
+    },
+    {
+      "id": "sym_augmaj7",
+      "token_kind": "quality",
+      "written": "maj7#5",
+      "ascii_variants": [
+        "M7#5",
+        "+Maj7",
+        "maj7+5"
+      ],
+      "unicode_variants": [
+        "Δ7♯5"
+      ],
+      "quality_id": "augmented_major7",
+      "degrees_added": [],
+      "degrees_altered": [
+        "#5"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 968,
+      "canonical_ascii": "maj7#5",
+      "canonical_unicode": "Δ7♯5",
+      "notes": ""
+    },
+    {
+      "id": "sym_aug",
+      "token_kind": "quality",
+      "written": "aug",
+      "ascii_variants": [
+        "+"
+      ],
+      "unicode_variants": [],
+      "quality_id": "augmented_triad",
+      "degrees_added": [],
+      "degrees_altered": [
+        "#5"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 410,
+      "canonical_ascii": "aug",
+      "canonical_unicode": "+",
+      "notes": ""
+    },
+    {
+      "id": "sym_13sus4",
+      "token_kind": "quality",
+      "written": "13sus4",
+      "ascii_variants": [
+        "13sus"
+      ],
+      "unicode_variants": [],
+      "quality_id": "dominant13sus4",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": true,
+      "implies_seventh": true,
+      "precedence": 899,
+      "canonical_ascii": "13sus4",
+      "canonical_unicode": "13sus4",
+      "notes": ""
+    },
+    {
+      "id": "sym_9sus4",
+      "token_kind": "quality",
+      "written": "9sus4",
+      "ascii_variants": [
+        "9sus"
+      ],
+      "unicode_variants": [],
+      "quality_id": "dominant9sus4",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": true,
+      "implies_seventh": true,
+      "precedence": 898,
+      "canonical_ascii": "9sus4",
+      "canonical_unicode": "9sus4",
+      "notes": "'11' on a dominant is treated as the same practical sonority but keeps the dominant11 quality id so the semantic third is not discarded."
+    },
+    {
+      "id": "sym_7sus4",
+      "token_kind": "quality",
+      "written": "7sus4",
+      "ascii_variants": [
+        "7sus"
+      ],
+      "unicode_variants": [],
+      "quality_id": "dominant7sus4",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": true,
+      "implies_seventh": true,
+      "precedence": 897,
+      "canonical_ascii": "7sus4",
+      "canonical_unicode": "7sus4",
+      "notes": ""
+    },
+    {
+      "id": "sym_sus4",
+      "token_kind": "quality",
+      "written": "sus4",
+      "ascii_variants": [
+        "sus"
+      ],
+      "unicode_variants": [],
+      "quality_id": "sus4",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": true,
+      "implies_seventh": false,
+      "precedence": 890,
+      "canonical_ascii": "sus4",
+      "canonical_unicode": "sus4",
+      "notes": ""
+    },
+    {
+      "id": "sym_sus2",
+      "token_kind": "quality",
+      "written": "sus2",
+      "ascii_variants": [
+        "2"
+      ],
+      "unicode_variants": [],
+      "quality_id": "sus2",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": true,
+      "implies_seventh": false,
+      "precedence": 891,
+      "canonical_ascii": "sus2",
+      "canonical_unicode": "sus2",
+      "notes": "A bare '2' after a root is ambiguous in the wild; this table resolves it to sus2 and requires 'add2' for the added-second reading."
+    },
+    {
+      "id": "sym_69",
+      "token_kind": "quality",
+      "written": "6/9",
+      "ascii_variants": [
+        "69"
+      ],
+      "unicode_variants": [],
+      "quality_id": "six_nine",
+      "degrees_added": [
+        "6",
+        "9"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 916,
+      "canonical_ascii": "6/9",
+      "canonical_unicode": "6/9",
+      "notes": "Like m6/9, this slash is part of the quality and must be tested before slash-bass handling."
+    },
+    {
+      "id": "sym_6",
+      "token_kind": "quality",
+      "written": "6",
+      "ascii_variants": [],
+      "unicode_variants": [],
+      "quality_id": "major6",
+      "degrees_added": [
+        "6"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 500,
+      "canonical_ascii": "6",
+      "canonical_unicode": "6",
+      "notes": "A sixth chord, never a thirteenth: no seventh is implied."
+    },
+    {
+      "id": "sym_13",
+      "token_kind": "quality",
+      "written": "13",
+      "ascii_variants": [],
+      "unicode_variants": [],
+      "quality_id": "dominant13",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 520,
+      "canonical_ascii": "13",
+      "canonical_unicode": "13",
+      "notes": ""
+    },
+    {
+      "id": "sym_11",
+      "token_kind": "quality",
+      "written": "11",
+      "ascii_variants": [],
+      "unicode_variants": [],
+      "quality_id": "dominant11",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 519,
+      "canonical_ascii": "11",
+      "canonical_unicode": "11",
+      "notes": ""
+    },
+    {
+      "id": "sym_9",
+      "token_kind": "quality",
+      "written": "9",
+      "ascii_variants": [],
+      "unicode_variants": [],
+      "quality_id": "dominant9",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 518,
+      "canonical_ascii": "9",
+      "canonical_unicode": "9",
+      "notes": "Dominant ninth, which implies a flat seventh. Contrast with add9."
+    },
+    {
+      "id": "sym_7",
+      "token_kind": "quality",
+      "written": "7",
+      "ascii_variants": [],
+      "unicode_variants": [],
+      "quality_id": "dominant7",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 510,
+      "canonical_ascii": "7",
+      "canonical_unicode": "7",
+      "notes": ""
+    },
+    {
+      "id": "sym_5",
+      "token_kind": "quality",
+      "written": "5",
+      "ascii_variants": [],
+      "unicode_variants": [],
+      "quality_id": "power",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 505,
+      "canonical_ascii": "5",
+      "canonical_unicode": "5",
+      "notes": ""
+    },
+    {
+      "id": "sym_maj",
+      "token_kind": "quality",
+      "written": "maj",
+      "ascii_variants": [
+        "M",
+        "ma",
+        "Maj"
+      ],
+      "unicode_variants": [],
+      "quality_id": "major_triad",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 310,
+      "canonical_ascii": "",
+      "canonical_unicode": "",
+      "notes": "Explicit major triad. The canonical rendering of a plain major triad is the bare root with no suffix."
+    },
+    {
+      "id": "sym_implicit_major",
+      "token_kind": "quality",
+      "written": "",
+      "ascii_variants": [],
+      "unicode_variants": [],
+      "quality_id": "major_triad",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 100,
+      "canonical_ascii": "",
+      "canonical_unicode": "",
+      "notes": "Empty suffix. The fallback when no quality token matches after the root."
+    },
+    {
+      "id": "sym_add9",
+      "token_kind": "addition",
+      "written": "add9",
+      "ascii_variants": [
+        "(add9)",
+        "add 9"
+      ],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [
+        "9"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 880,
+      "canonical_ascii": "add9",
+      "canonical_unicode": "add9",
+      "notes": "Adds a ninth without a seventh; must outrank the plain '9' quality token."
+    },
+    {
+      "id": "sym_add2",
+      "token_kind": "addition",
+      "written": "add2",
+      "ascii_variants": [
+        "(add2)"
+      ],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [
+        "2"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 879,
+      "canonical_ascii": "add2",
+      "canonical_unicode": "add2",
+      "notes": ""
+    },
+    {
+      "id": "sym_add4",
+      "token_kind": "addition",
+      "written": "add4",
+      "ascii_variants": [
+        "(add4)"
+      ],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [
+        "4"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 878,
+      "canonical_ascii": "add4",
+      "canonical_unicode": "add4",
+      "notes": ""
+    },
+    {
+      "id": "sym_add11",
+      "token_kind": "addition",
+      "written": "add11",
+      "ascii_variants": [
+        "(add11)"
+      ],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [
+        "11"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 881,
+      "canonical_ascii": "add11",
+      "canonical_unicode": "add11",
+      "notes": ""
+    },
+    {
+      "id": "sym_add13",
+      "token_kind": "addition",
+      "written": "add13",
+      "ascii_variants": [
+        "(add13)"
+      ],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [
+        "13"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 882,
+      "canonical_ascii": "add13",
+      "canonical_unicode": "add13",
+      "notes": ""
+    },
+    {
+      "id": "sym_addb9",
+      "token_kind": "addition",
+      "written": "addb9",
+      "ascii_variants": [
+        "(addb9)"
+      ],
+      "unicode_variants": [
+        "add♭9"
+      ],
+      "quality_id": null,
+      "degrees_added": [
+        "b9"
+      ],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 883,
+      "canonical_ascii": "addb9",
+      "canonical_unicode": "add♭9",
+      "notes": "Distinct from 7b9: no seventh is implied, so the flat ninth is a colour tone over a triad rather than a dominant alteration."
+    },
+    {
+      "id": "sym_b5",
+      "token_kind": "alteration",
+      "written": "b5",
+      "ascii_variants": [
+        "-5",
+        "(b5)"
+      ],
+      "unicode_variants": [
+        "♭5"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [
+        "b5"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 870,
+      "canonical_ascii": "b5",
+      "canonical_unicode": "♭5",
+      "notes": ""
+    },
+    {
+      "id": "sym_s5",
+      "token_kind": "alteration",
+      "written": "#5",
+      "ascii_variants": [
+        "+5",
+        "(#5)"
+      ],
+      "unicode_variants": [
+        "♯5"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [
+        "#5"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 871,
+      "canonical_ascii": "#5",
+      "canonical_unicode": "♯5",
+      "notes": ""
+    },
+    {
+      "id": "sym_b9",
+      "token_kind": "alteration",
+      "written": "b9",
+      "ascii_variants": [
+        "(b9)"
+      ],
+      "unicode_variants": [
+        "♭9"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [
+        "b9"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 872,
+      "canonical_ascii": "b9",
+      "canonical_unicode": "♭9",
+      "notes": ""
+    },
+    {
+      "id": "sym_s9",
+      "token_kind": "alteration",
+      "written": "#9",
+      "ascii_variants": [
+        "+9",
+        "(#9)"
+      ],
+      "unicode_variants": [
+        "♯9"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [
+        "#9"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 873,
+      "canonical_ascii": "#9",
+      "canonical_unicode": "♯9",
+      "notes": ""
+    },
+    {
+      "id": "sym_s11",
+      "token_kind": "alteration",
+      "written": "#11",
+      "ascii_variants": [
+        "+11",
+        "(#11)"
+      ],
+      "unicode_variants": [
+        "♯11"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [
+        "#11"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 875,
+      "canonical_ascii": "#11",
+      "canonical_unicode": "♯11",
+      "notes": ""
+    },
+    {
+      "id": "sym_b11",
+      "token_kind": "alteration",
+      "written": "b11",
+      "ascii_variants": [],
+      "unicode_variants": [
+        "♭11"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [
+        "b11"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 874,
+      "canonical_ascii": "b11",
+      "canonical_unicode": "♭11",
+      "notes": "Very rare; retained so unusual input round-trips rather than failing."
+    },
+    {
+      "id": "sym_b13",
+      "token_kind": "alteration",
+      "written": "b13",
+      "ascii_variants": [
+        "(b13)"
+      ],
+      "unicode_variants": [
+        "♭13"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [
+        "b13"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 876,
+      "canonical_ascii": "b13",
+      "canonical_unicode": "♭13",
+      "notes": ""
+    },
+    {
+      "id": "sym_s13",
+      "token_kind": "alteration",
+      "written": "#13",
+      "ascii_variants": [],
+      "unicode_variants": [
+        "♯13"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [
+        "#13"
+      ],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 877,
+      "canonical_ascii": "#13",
+      "canonical_unicode": "♯13",
+      "notes": "Enharmonic with a flat seventh; accepted on input, normalised to b7 by the engine."
+    },
+    {
+      "id": "sym_alt",
+      "token_kind": "alt_marker",
+      "written": "alt",
+      "ascii_variants": [
+        "(alt)",
+        "altered"
+      ],
+      "unicode_variants": [],
+      "quality_id": "dominant7_alt",
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": true,
+      "precedence": 885,
+      "canonical_ascii": "alt",
+      "canonical_unicode": "alt",
+      "notes": "Marks the altered-dominant family. It does not fix a pitch collection; the engine selects and spells the specific alterations from context."
+    },
+    {
+      "id": "sym_no3",
+      "token_kind": "omission",
+      "written": "no3",
+      "ascii_variants": [
+        "omit3",
+        "(no3)",
+        "(omit3)"
+      ],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [
+        "3"
+      ],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 860,
+      "canonical_ascii": "no3",
+      "canonical_unicode": "no3",
+      "notes": ""
+    },
+    {
+      "id": "sym_no5",
+      "token_kind": "omission",
+      "written": "no5",
+      "ascii_variants": [
+        "omit5",
+        "(no5)",
+        "(omit5)"
+      ],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [
+        "5"
+      ],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 861,
+      "canonical_ascii": "no5",
+      "canonical_unicode": "no5",
+      "notes": ""
+    },
+    {
+      "id": "sym_no1",
+      "token_kind": "omission",
+      "written": "no1",
+      "ascii_variants": [
+        "omit1",
+        "(no1)",
+        "noroot"
+      ],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [
+        "1"
+      ],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 862,
+      "canonical_ascii": "no1",
+      "canonical_unicode": "no1",
+      "notes": ""
+    },
+    {
+      "id": "sym_no7",
+      "token_kind": "omission",
+      "written": "no7",
+      "ascii_variants": [
+        "omit7",
+        "(no7)"
+      ],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [
+        "7"
+      ],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 863,
+      "canonical_ascii": "no7",
+      "canonical_unicode": "no7",
+      "notes": ""
+    },
+    {
+      "id": "sym_slash_bass",
+      "token_kind": "bass",
+      "written": "/",
+      "ascii_variants": [],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 50,
+      "canonical_ascii": "/",
+      "canonical_unicode": "/",
+      "notes": "Slash-bass separator. Only applies when the following text parses as a pitch class; otherwise the slash belongs to a quality token such as 6/9 or a polychord marker."
+    },
+    {
+      "id": "sym_polychord",
+      "token_kind": "polychord",
+      "written": "|",
+      "ascii_variants": [
+        "\\"
+      ],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 60,
+      "canonical_ascii": "|",
+      "canonical_unicode": "|",
+      "notes": "Upper structure over lower structure, e.g. D|C7. Distinct from a slash bass, which only names a single bass pitch."
+    },
+    {
+      "id": "sym_paren_open",
+      "token_kind": "grouping",
+      "written": "(",
+      "ascii_variants": [],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 40,
+      "canonical_ascii": "(",
+      "canonical_unicode": "(",
+      "notes": "Opens a parenthesised tension group; contents are parsed as additions and alterations in written order."
+    },
+    {
+      "id": "sym_paren_close",
+      "token_kind": "grouping",
+      "written": ")",
+      "ascii_variants": [],
+      "unicode_variants": [],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 41,
+      "canonical_ascii": ")",
+      "canonical_unicode": ")",
+      "notes": ""
+    },
+    {
+      "id": "sym_flat",
+      "token_kind": "accidental",
+      "written": "b",
+      "ascii_variants": [],
+      "unicode_variants": [
+        "♭"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 30,
+      "canonical_ascii": "b",
+      "canonical_unicode": "♭",
+      "notes": ""
+    },
+    {
+      "id": "sym_sharp",
+      "token_kind": "accidental",
+      "written": "#",
+      "ascii_variants": [],
+      "unicode_variants": [
+        "♯"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 31,
+      "canonical_ascii": "#",
+      "canonical_unicode": "♯",
+      "notes": ""
+    },
+    {
+      "id": "sym_double_flat",
+      "token_kind": "accidental",
+      "written": "bb",
+      "ascii_variants": [],
+      "unicode_variants": [
+        "𝄫"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 33,
+      "canonical_ascii": "bb",
+      "canonical_unicode": "𝄫",
+      "notes": ""
+    },
+    {
+      "id": "sym_double_sharp",
+      "token_kind": "accidental",
+      "written": "##",
+      "ascii_variants": [
+        "x"
+      ],
+      "unicode_variants": [
+        "𝄪"
+      ],
+      "quality_id": null,
+      "degrees_added": [],
+      "degrees_altered": [],
+      "degrees_omitted": [],
+      "replaces_third": false,
+      "implies_seventh": false,
+      "precedence": 34,
+      "canonical_ascii": "##",
+      "canonical_unicode": "𝄪",
+      "notes": ""
+    }
+  ]
+}

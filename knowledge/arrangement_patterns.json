@@ -1,0 +1,1594 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "arr_chorale_voicing",
+      "name": "Chorale-style voicing",
+      "role": "harmonic_bed",
+      "register": "mid",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 79
+      },
+      "density": 0.3,
+      "rhythmic_activity": "sustained",
+      "harmonic_responsibility": "full",
+      "priority": "background",
+      "allowed_doubling": [
+        "octave"
+      ],
+      "polyphony": 4,
+      "articulation_tendency": [
+        "sustain",
+        "legato"
+      ],
+      "note_length_tendency": "full_slot",
+      "section_participation": [
+        "verse",
+        "chorus",
+        "bridge",
+        "outro"
+      ],
+      "energy_contribution": 0.4,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1",
+        "onsets": [
+          "0"
+        ],
+        "sustain": "full_slot",
+        "velocity_curve": [
+          96
+        ]
+      },
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "notes": "One note per voice per chord, changing only when the harmony changes. Voice leading carries the entire interest, so voice count must stay constant.",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "arr_block_chords",
+      "name": "Block chords",
+      "role": "harmonic_bed",
+      "register": "mid",
+      "range": {
+        "low_midi": 52,
+        "high_midi": 84
+      },
+      "density": 0.5,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "full",
+      "priority": "midground",
+      "allowed_doubling": [
+        "octave"
+      ],
+      "polyphony": 4,
+      "articulation_tendency": [
+        "accent",
+        "staccato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "intro",
+        "verse",
+        "prechorus",
+        "chorus",
+        "bridge",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.55,
+      "loop_behavior": "restart",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1",
+        "onsets": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          104,
+          88,
+          96,
+          88
+        ]
+      },
+      "style_profiles": [
+        "pop_rock",
+        "cinematic",
+        "jazz_standard",
+        "blues"
+      ],
+      "notes": "All voices articulate together on the beat. Simple and strong, but it competes directly with any part that shares its register.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_sustained_pad",
+      "name": "Sustained pad",
+      "role": "pad",
+      "register": "wide",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 88
+      },
+      "density": 0.1,
+      "rhythmic_activity": "sustained",
+      "harmonic_responsibility": "full",
+      "priority": "background",
+      "allowed_doubling": [
+        "octave",
+        "unison"
+      ],
+      "polyphony": 6,
+      "articulation_tendency": [
+        "sustain"
+      ],
+      "note_length_tendency": "to_next",
+      "section_participation": [
+        "intro",
+        "verse",
+        "prechorus",
+        "chorus",
+        "bridge",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.25,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "4",
+        "onsets": [
+          "0"
+        ],
+        "sustain": "to_next",
+        "velocity_curve": [
+          64
+        ]
+      },
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "pop_rock",
+        "neo_soul_rnb"
+      ],
+      "notes": "One onset per harmonic slot at most. Common tones should be tied rather than re-struck; a pad that re-articulates on every chord stops functioning as a pad.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_broken_chords",
+      "name": "Broken chords",
+      "role": "comping",
+      "register": "mid",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 84
+      },
+      "density": 0.6,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "full",
+      "priority": "midground",
+      "allowed_doubling": [],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "legato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "verse",
+        "prechorus",
+        "bridge",
+        "intro"
+      ],
+      "energy_contribution": 0.45,
+      "loop_behavior": "restart",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/2",
+        "onsets": [
+          "0",
+          "1/2",
+          "1",
+          "3/2",
+          "2",
+          "5/2",
+          "3",
+          "7/2"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          88,
+          72,
+          80,
+          72,
+          84,
+          72,
+          80,
+          72
+        ]
+      },
+      "style_profiles": [
+        "common_practice",
+        "pop_rock",
+        "cinematic",
+        "neo_soul_rnb"
+      ],
+      "notes": "Chord tones sounded one at a time in a repeating shape. Monophonic in practice, so it occupies far less spectral space than a block chord of the same notes.",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "arr_arpeggio",
+      "name": "Arpeggio",
+      "role": "ostinato",
+      "register": "mid_high",
+      "range": {
+        "low_midi": 55,
+        "high_midi": 91
+      },
+      "density": 0.75,
+      "rhythmic_activity": "fast",
+      "harmonic_responsibility": "partial",
+      "priority": "midground",
+      "allowed_doubling": [],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "staccato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "intro",
+        "verse",
+        "prechorus",
+        "chorus",
+        "bridge",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.6,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/4",
+        "onsets": [
+          "0",
+          "1/4",
+          "1/2",
+          "3/4",
+          "1",
+          "5/4",
+          "3/2",
+          "7/4"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          92,
+          68,
+          76,
+          68,
+          88,
+          68,
+          76,
+          68
+        ]
+      },
+      "style_profiles": [
+        "electronic_loop",
+        "modal_ambient",
+        "cinematic",
+        "pop_rock",
+        "drum_and_bass"
+      ],
+      "notes": "Continuous fast chord-tone motion. Ascending shapes add energy and descending shapes release it; keep the pattern length a divisor of the loop length.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_alberti",
+      "name": "Alberti-style alternation",
+      "role": "comping",
+      "register": "mid",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 76
+      },
+      "density": 0.65,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "full",
+      "priority": "background",
+      "allowed_doubling": [],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "legato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "verse",
+        "bridge"
+      ],
+      "energy_contribution": 0.4,
+      "loop_behavior": "restart",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/2",
+        "onsets": [
+          "0",
+          "1/2",
+          "1",
+          "3/2",
+          "2",
+          "5/2",
+          "3",
+          "7/2"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          84,
+          68,
+          76,
+          68,
+          84,
+          68,
+          76,
+          68
+        ]
+      },
+      "style_profiles": [
+        "common_practice",
+        "cinematic"
+      ],
+      "notes": "Low-high-middle-high alternation over a single chord. Deliberately mechanical; its job is to keep motion going underneath a melody without attracting attention.",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "arr_offbeat_comping",
+      "name": "Offbeat comping",
+      "role": "comping",
+      "register": "mid",
+      "range": {
+        "low_midi": 52,
+        "high_midi": 81
+      },
+      "density": 0.5,
+      "rhythmic_activity": "syncopated",
+      "harmonic_responsibility": "full",
+      "priority": "midground",
+      "allowed_doubling": [],
+      "polyphony": 4,
+      "articulation_tendency": [
+        "staccato",
+        "accent"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "verse",
+        "chorus",
+        "prechorus"
+      ],
+      "energy_contribution": 0.6,
+      "loop_behavior": "restart",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/2",
+        "onsets": [
+          "1/2",
+          "3/2",
+          "5/2",
+          "7/2"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          96,
+          88,
+          96,
+          88
+        ]
+      },
+      "style_profiles": [
+        "pop_rock",
+        "blues",
+        "electronic_loop",
+        "neo_soul_rnb",
+        "jazz_standard"
+      ],
+      "notes": "Chords land only on the offbeats, leaving the downbeats to the bass and drums. The single most effective way to keep a mid-register part out of the bass's way.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_afterbeat_comping",
+      "name": "Afterbeat comping",
+      "role": "comping",
+      "register": "mid",
+      "range": {
+        "low_midi": 52,
+        "high_midi": 79
+      },
+      "density": 0.35,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "full",
+      "priority": "background",
+      "allowed_doubling": [],
+      "polyphony": 4,
+      "articulation_tendency": [
+        "staccato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "verse",
+        "chorus"
+      ],
+      "energy_contribution": 0.5,
+      "loop_behavior": "restart",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1",
+        "onsets": [
+          "1",
+          "3"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          92,
+          96
+        ]
+      },
+      "style_profiles": [
+        "pop_rock",
+        "blues",
+        "electronic_loop"
+      ],
+      "notes": "Chords on beats two and four only. Very sparse and strongly genre-marked.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_syncopated_stabs",
+      "name": "Syncopated stabs",
+      "role": "riff",
+      "register": "mid_high",
+      "range": {
+        "low_midi": 55,
+        "high_midi": 88
+      },
+      "density": 0.4,
+      "rhythmic_activity": "syncopated",
+      "harmonic_responsibility": "partial",
+      "priority": "foreground",
+      "allowed_doubling": [
+        "octave"
+      ],
+      "polyphony": 4,
+      "articulation_tendency": [
+        "accent",
+        "staccato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "chorus",
+        "prechorus",
+        "bridge"
+      ],
+      "energy_contribution": 0.75,
+      "loop_behavior": "restart",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/4",
+        "onsets": [
+          "0",
+          "3/4",
+          "3/2",
+          "5/2",
+          "13/4"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          112,
+          96,
+          104,
+          92,
+          108
+        ]
+      },
+      "style_profiles": [
+        "electronic_loop",
+        "drum_and_bass",
+        "pop_rock",
+        "neo_soul_rnb"
+      ],
+      "notes": "Short accented chords in an irregular pattern. High energy contribution from very few notes; the rests are as important as the hits.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_ostinato",
+      "name": "Ostinato",
+      "role": "ostinato",
+      "register": "mid",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 79
+      },
+      "density": 0.7,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "partial",
+      "priority": "midground",
+      "allowed_doubling": [],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "staccato",
+        "accent"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "intro",
+        "verse",
+        "prechorus",
+        "chorus",
+        "bridge",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.5,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/2",
+        "onsets": [
+          "0",
+          "1/2",
+          "3/2",
+          "2",
+          "3"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          96,
+          76,
+          84,
+          76,
+          88
+        ]
+      },
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass",
+        "pop_rock"
+      ],
+      "notes": "A fixed figure repeated regardless of the harmony above it. Its pattern length must divide the loop length exactly or the loop will drift.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_pedal_texture",
+      "name": "Pedal texture",
+      "role": "texture",
+      "register": "low_mid",
+      "range": {
+        "low_midi": 36,
+        "high_midi": 72
+      },
+      "density": 0.15,
+      "rhythmic_activity": "sustained",
+      "harmonic_responsibility": "root_only",
+      "priority": "background",
+      "allowed_doubling": [
+        "octave",
+        "fifth"
+      ],
+      "polyphony": 2,
+      "articulation_tendency": [
+        "sustain"
+      ],
+      "note_length_tendency": "full_slot",
+      "section_participation": [
+        "intro",
+        "verse",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.3,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "4",
+        "onsets": [
+          "0"
+        ],
+        "sustain": "full_slot",
+        "velocity_curve": [
+          72
+        ]
+      },
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "common_practice"
+      ],
+      "notes": "A single sustained pitch under changing harmony. Chords above it are evaluated for colour rather than root motion.",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "arr_drone",
+      "name": "Drone",
+      "role": "ambience",
+      "register": "low",
+      "range": {
+        "low_midi": 33,
+        "high_midi": 60
+      },
+      "density": 0.05,
+      "rhythmic_activity": "sustained",
+      "harmonic_responsibility": "root_only",
+      "priority": "background",
+      "allowed_doubling": [
+        "octave",
+        "fifth"
+      ],
+      "polyphony": 2,
+      "articulation_tendency": [
+        "sustain"
+      ],
+      "note_length_tendency": "full_slot",
+      "section_participation": [
+        "intro",
+        "verse",
+        "prechorus",
+        "chorus",
+        "bridge",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.2,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "4",
+        "onsets": [
+          "0"
+        ],
+        "sustain": "full_slot",
+        "velocity_curve": [
+          56
+        ]
+      },
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "drum_and_bass",
+        "electronic_loop"
+      ],
+      "notes": "An unbroken low pitch, usually root and fifth. Never re-articulates, including across the loop boundary, which makes it the safest possible loop element.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_riff_harmony",
+      "name": "Riff-based harmony",
+      "role": "riff",
+      "register": "low_mid",
+      "range": {
+        "low_midi": 40,
+        "high_midi": 72
+      },
+      "density": 0.6,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "partial",
+      "priority": "foreground",
+      "allowed_doubling": [
+        "octave"
+      ],
+      "polyphony": 2,
+      "articulation_tendency": [
+        "accent",
+        "mute"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "intro",
+        "verse",
+        "chorus"
+      ],
+      "energy_contribution": 0.7,
+      "loop_behavior": "restart",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/2",
+        "onsets": [
+          "0",
+          "1/2",
+          "1",
+          "2",
+          "5/2",
+          "3"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          110,
+          84,
+          96,
+          104,
+          84,
+          96
+        ]
+      },
+      "style_profiles": [
+        "pop_rock",
+        "blues",
+        "drum_and_bass",
+        "electronic_loop"
+      ],
+      "notes": "The riff itself states the harmony; no separate chord part is needed. Usually voiced as fifths or octaves so it stays modally neutral.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_call_and_response",
+      "name": "Call and response",
+      "role": "counterlead",
+      "register": "mid_high",
+      "range": {
+        "low_midi": 55,
+        "high_midi": 84
+      },
+      "density": 0.3,
+      "rhythmic_activity": "phrase_gaps",
+      "harmonic_responsibility": "none",
+      "priority": "foreground",
+      "allowed_doubling": [],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "legato",
+        "accent"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "verse",
+        "chorus",
+        "bridge"
+      ],
+      "energy_contribution": 0.55,
+      "loop_behavior": "restart",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1",
+        "onsets": [
+          "2",
+          "3"
+        ],
+        "sustain": "to_next",
+        "velocity_curve": [
+          92,
+          88
+        ]
+      },
+      "style_profiles": [
+        "blues",
+        "jazz_standard",
+        "pop_rock",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "notes": "Sounds only in the lead's rests. Onset placement is derived from the melody's phrase gaps rather than from a fixed grid, so the grid here is only a fallback.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_guide_tone_comping",
+      "name": "Sparse guide-tone comping",
+      "role": "comping",
+      "register": "mid",
+      "range": {
+        "low_midi": 55,
+        "high_midi": 76
+      },
+      "density": 0.2,
+      "rhythmic_activity": "sustained",
+      "harmonic_responsibility": "guide_tones",
+      "priority": "background",
+      "allowed_doubling": [],
+      "polyphony": 2,
+      "articulation_tendency": [
+        "sustain"
+      ],
+      "note_length_tendency": "to_next",
+      "section_participation": [
+        "intro",
+        "verse",
+        "prechorus",
+        "chorus",
+        "bridge",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.3,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "2",
+        "onsets": [
+          "0"
+        ],
+        "sustain": "to_next",
+        "velocity_curve": [
+          72
+        ]
+      },
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "drum_and_bass",
+        "electronic_loop"
+      ],
+      "notes": "Thirds and sevenths only, moving by step from chord to chord. The least intrusive way to state a functional progression underneath a busy melody.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "arr_layered_pad_pluck",
+      "name": "Layered pad and pluck",
+      "role": "texture",
+      "register": "wide",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 91
+      },
+      "density": 0.45,
+      "rhythmic_activity": "mixed",
+      "harmonic_responsibility": "full",
+      "priority": "background",
+      "allowed_doubling": [
+        "octave"
+      ],
+      "polyphony": 6,
+      "articulation_tendency": [
+        "sustain",
+        "staccato"
+      ],
+      "note_length_tendency": "mixed",
+      "section_participation": [
+        "chorus",
+        "bridge",
+        "outro"
+      ],
+      "energy_contribution": 0.6,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/2",
+        "onsets": [
+          "0",
+          "1",
+          "3/2",
+          "5/2",
+          "3"
+        ],
+        "sustain": "mixed",
+        "velocity_curve": [
+          64,
+          88,
+          76,
+          88,
+          76
+        ]
+      },
+      "style_profiles": [
+        "electronic_loop",
+        "modal_ambient",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "notes": "Two complementary layers: a sustained pad holding the harmony and a short pluck articulating the rhythm. The pluck must sit at least an octave above the pad's centre.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_bass_and_shell",
+      "name": "Bass and shell texture",
+      "role": "harmonic_bed",
+      "register": "low_mid",
+      "range": {
+        "low_midi": 40,
+        "high_midi": 76
+      },
+      "density": 0.35,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "guide_tones",
+      "priority": "background",
+      "allowed_doubling": [],
+      "polyphony": 3,
+      "articulation_tendency": [
+        "sustain",
+        "staccato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "intro",
+        "verse",
+        "prechorus",
+        "chorus",
+        "bridge",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.4,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1",
+        "onsets": [
+          "0",
+          "2"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          96,
+          84
+        ]
+      },
+      "style_profiles": [
+        "jazz_standard",
+        "blues",
+        "neo_soul_rnb",
+        "drum_and_bass"
+      ],
+      "notes": "Bass supplies the root, a shell voicing supplies quality. Two parts covering the whole harmony with three notes total, leaving the rest of the spectrum free.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "arr_counterline",
+      "name": "Counterline texture",
+      "role": "counterlead",
+      "register": "mid",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 76
+      },
+      "density": 0.4,
+      "rhythmic_activity": "complementary",
+      "harmonic_responsibility": "partial",
+      "priority": "midground",
+      "allowed_doubling": [],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "legato"
+      ],
+      "note_length_tendency": "to_next",
+      "section_participation": [
+        "verse",
+        "chorus",
+        "bridge"
+      ],
+      "energy_contribution": 0.5,
+      "loop_behavior": "restart",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/2",
+        "onsets": [
+          "1/2",
+          "3/2",
+          "5/2",
+          "7/2"
+        ],
+        "sustain": "to_next",
+        "velocity_curve": [
+          80,
+          76,
+          84,
+          76
+        ]
+      },
+      "style_profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "cinematic",
+        "neo_soul_rnb"
+      ],
+      "notes": "An independent line whose onsets deliberately avoid the melody's. Contrary motion is preferred; note-for-note doubling of the melody is a failure condition.",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "arr_parallel_planing",
+      "name": "Parallel planing texture",
+      "role": "harmonic_bed",
+      "register": "mid_high",
+      "range": {
+        "low_midi": 55,
+        "high_midi": 88
+      },
+      "density": 0.5,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "full",
+      "priority": "midground",
+      "allowed_doubling": [
+        "any"
+      ],
+      "polyphony": 4,
+      "articulation_tendency": [
+        "sustain",
+        "legato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "chorus",
+        "bridge",
+        "intro"
+      ],
+      "energy_contribution": 0.5,
+      "loop_behavior": "restart",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1",
+        "onsets": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          84,
+          76,
+          84,
+          76
+        ]
+      },
+      "style_profiles": [
+        "modal_ambient",
+        "neo_soul_rnb",
+        "cinematic",
+        "electronic_loop"
+      ],
+      "notes": "One voicing shape moved bodily. Parallel perfect intervals are intrinsic to the texture and must not be penalised.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "arr_crescendo_layering",
+      "name": "Crescendo layering",
+      "role": "texture",
+      "register": "wide",
+      "range": {
+        "low_midi": 40,
+        "high_midi": 96
+      },
+      "density": 0.55,
+      "rhythmic_activity": "accelerating",
+      "harmonic_responsibility": "full",
+      "priority": "midground",
+      "allowed_doubling": [
+        "octave"
+      ],
+      "polyphony": 8,
+      "articulation_tendency": [
+        "sustain",
+        "accent"
+      ],
+      "note_length_tendency": "mixed",
+      "section_participation": [
+        "prechorus",
+        "bridge",
+        "intro"
+      ],
+      "energy_contribution": 0.85,
+      "loop_behavior": "one_shot",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1",
+        "onsets": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          56,
+          72,
+          88,
+          108
+        ]
+      },
+      "style_profiles": [
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass",
+        "pop_rock"
+      ],
+      "notes": "Parts and register are added over successive bars while velocity rises. This is a transition device and is not loop-safe: it must not be the last bar of a loop.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_register_expansion",
+      "name": "Register-expansion build",
+      "role": "texture",
+      "register": "wide",
+      "range": {
+        "low_midi": 36,
+        "high_midi": 96
+      },
+      "density": 0.5,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "full",
+      "priority": "midground",
+      "allowed_doubling": [
+        "octave"
+      ],
+      "polyphony": 8,
+      "articulation_tendency": [
+        "sustain"
+      ],
+      "note_length_tendency": "full_slot",
+      "section_participation": [
+        "prechorus",
+        "bridge"
+      ],
+      "energy_contribution": 0.8,
+      "loop_behavior": "one_shot",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "2",
+        "onsets": [
+          "0",
+          "2"
+        ],
+        "sustain": "full_slot",
+        "velocity_curve": [
+          72,
+          92
+        ]
+      },
+      "style_profiles": [
+        "cinematic",
+        "modal_ambient",
+        "electronic_loop"
+      ],
+      "notes": "The outer voices move apart bar by bar while the note count stays the same. Contrast through register rather than volume.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_density_breakdown",
+      "name": "Density-reduction breakdown",
+      "role": "texture",
+      "register": "mid",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 79
+      },
+      "density": 0.12,
+      "rhythmic_activity": "sparse",
+      "harmonic_responsibility": "partial",
+      "priority": "background",
+      "allowed_doubling": [],
+      "polyphony": 2,
+      "articulation_tendency": [
+        "sustain"
+      ],
+      "note_length_tendency": "to_next",
+      "section_participation": [
+        "breakdown",
+        "bridge",
+        "verse"
+      ],
+      "energy_contribution": 0.15,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "4",
+        "onsets": [
+          "0"
+        ],
+        "sustain": "to_next",
+        "velocity_curve": [
+          64
+        ]
+      },
+      "style_profiles": [
+        "electronic_loop",
+        "drum_and_bass",
+        "modal_ambient",
+        "pop_rock",
+        "neo_soul_rnb"
+      ],
+      "notes": "Deliberate removal of layers. The loop audit must confirm that whatever remains still states the third or seventh of each chord, or the harmony disappears with the layers.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_transition_fill",
+      "name": "Transition fill",
+      "role": "transition",
+      "register": "mid_high",
+      "range": {
+        "low_midi": 55,
+        "high_midi": 91
+      },
+      "density": 0.6,
+      "rhythmic_activity": "fast",
+      "harmonic_responsibility": "none",
+      "priority": "foreground",
+      "allowed_doubling": [],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "accent",
+        "staccato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "prechorus",
+        "bridge",
+        "chorus"
+      ],
+      "energy_contribution": 0.7,
+      "loop_behavior": "one_shot",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/4",
+        "onsets": [
+          "5/2",
+          "11/4",
+          "3",
+          "13/4",
+          "7/2",
+          "15/4"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          80,
+          84,
+          92,
+          96,
+          104,
+          112
+        ]
+      },
+      "style_profiles": [
+        "pop_rock",
+        "electronic_loop",
+        "drum_and_bass",
+        "cinematic"
+      ],
+      "notes": "Occupies the last half bar before a section change. By definition it breaks the pattern, so it must be excluded from loop-repeatability scoring.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_pickup_entrance",
+      "name": "Pickup-led section entrance",
+      "role": "lead",
+      "register": "mid_high",
+      "range": {
+        "low_midi": 55,
+        "high_midi": 88
+      },
+      "density": 0.3,
+      "rhythmic_activity": "anacrusis",
+      "harmonic_responsibility": "none",
+      "priority": "foreground",
+      "allowed_doubling": [],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "legato",
+        "accent"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "verse",
+        "chorus",
+        "bridge"
+      ],
+      "energy_contribution": 0.6,
+      "loop_behavior": "pickup",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/2",
+        "onsets": [
+          "3",
+          "7/2"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          80,
+          92
+        ]
+      },
+      "style_profiles": [
+        "common_practice",
+        "jazz_standard",
+        "pop_rock",
+        "cinematic",
+        "blues"
+      ],
+      "notes": "Notes before the downbeat of the section they belong to. The loop engine must treat these as belonging to the following iteration and either wrap or duplicate them.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_stinger_ending",
+      "name": "Stinger ending",
+      "role": "impact",
+      "register": "wide",
+      "range": {
+        "low_midi": 36,
+        "high_midi": 91
+      },
+      "density": 0.1,
+      "rhythmic_activity": "single_hit",
+      "harmonic_responsibility": "full",
+      "priority": "foreground",
+      "allowed_doubling": [
+        "octave"
+      ],
+      "polyphony": 8,
+      "articulation_tendency": [
+        "accent"
+      ],
+      "note_length_tendency": "full_slot",
+      "section_participation": [
+        "outro"
+      ],
+      "energy_contribution": 0.9,
+      "loop_behavior": "one_shot",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "4",
+        "onsets": [
+          "0"
+        ],
+        "sustain": "full_slot",
+        "velocity_curve": [
+          118
+        ]
+      },
+      "style_profiles": [
+        "cinematic",
+        "electronic_loop",
+        "pop_rock",
+        "drum_and_bass"
+      ],
+      "notes": "A single full-register hit that ends the material. Incompatible with every loop intent except one_shot_ending.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_walking_bass",
+      "name": "Walking bass",
+      "role": "bass",
+      "register": "low",
+      "range": {
+        "low_midi": 33,
+        "high_midi": 60
+      },
+      "density": 0.8,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "root_and_line",
+      "priority": "midground",
+      "allowed_doubling": [],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "staccato",
+        "legato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "intro",
+        "verse",
+        "prechorus",
+        "chorus",
+        "bridge",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.55,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1",
+        "onsets": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          100,
+          84,
+          92,
+          84
+        ]
+      },
+      "style_profiles": [
+        "jazz_standard",
+        "blues",
+        "neo_soul_rnb"
+      ],
+      "notes": "One note per beat connecting chord roots by step and chromatic approach. The last beat of each slot should approach the next root by half step or by fifth.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "arr_root_pulse_bass",
+      "name": "Root pulse bass",
+      "role": "bass",
+      "register": "low",
+      "range": {
+        "low_midi": 33,
+        "high_midi": 55
+      },
+      "density": 0.5,
+      "rhythmic_activity": "on_grid",
+      "harmonic_responsibility": "root_only",
+      "priority": "midground",
+      "allowed_doubling": [
+        "octave"
+      ],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "staccato"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "intro",
+        "verse",
+        "prechorus",
+        "chorus",
+        "bridge",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.5,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1",
+        "onsets": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "sustain": "grid",
+        "velocity_curve": [
+          104,
+          88,
+          96,
+          88
+        ]
+      },
+      "style_profiles": [
+        "pop_rock",
+        "electronic_loop",
+        "cinematic",
+        "blues"
+      ],
+      "notes": "Roots on every beat. Maximum clarity, minimum interest; the default when the bass must stay out of the way.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "arr_syncopated_sub_bass",
+      "name": "Syncopated sub bass",
+      "role": "bass",
+      "register": "low",
+      "range": {
+        "low_midi": 28,
+        "high_midi": 48
+      },
+      "density": 0.35,
+      "rhythmic_activity": "syncopated",
+      "harmonic_responsibility": "root_only",
+      "priority": "foreground",
+      "allowed_doubling": [],
+      "polyphony": 1,
+      "articulation_tendency": [
+        "sustain"
+      ],
+      "note_length_tendency": "grid",
+      "section_participation": [
+        "intro",
+        "verse",
+        "prechorus",
+        "chorus",
+        "bridge",
+        "breakdown",
+        "outro"
+      ],
+      "energy_contribution": 0.65,
+      "loop_behavior": "seamless",
+      "rhythm": {
+        "bar_length_qn": "4",
+        "grid_qn": "1/4",
+        "onsets": [
+          "0",
+          "3/4",
+          "5/2",
+          "13/4"
+        ],
+        "sustain": "to_next",
+        "velocity_curve": [
+          112,
+          92,
+          104,
+          96
+        ]
+      },
+      "style_profiles": [
+        "drum_and_bass",
+        "electronic_loop",
+        "neo_soul_rnb"
+      ],
+      "notes": "Long syncopated sub notes under a fast drum pattern. Harmonic rhythm stays slow even though rhythmic activity is high; the two are independent parameters.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    }
+  ]
+}

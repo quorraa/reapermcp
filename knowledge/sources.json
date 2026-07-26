@@ -1,0 +1,390 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "mcp-spec-2025-11-25",
+      "title": "Model Context Protocol Specification, version 2025-11-25",
+      "authors": [],
+      "publisher": "Model Context Protocol project",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25",
+      "license": "unverified-reference-only",
+      "accessed_at": "2026-07-26",
+      "source_type": "official_docs",
+      "relevant_sections": [
+        {
+          "locator": "Base Protocol",
+          "topics": [
+            "json-rpc",
+            "lifecycle",
+            "initialize"
+          ]
+        },
+        {
+          "locator": "Transports",
+          "topics": [
+            "stdio",
+            "framing"
+          ]
+        },
+        {
+          "locator": "Server Features: Tools",
+          "topics": [
+            "tool schemas",
+            "structured output"
+          ]
+        },
+        {
+          "locator": "Server Features: Resources",
+          "topics": [
+            "resource uris",
+            "subscriptions"
+          ]
+        },
+        {
+          "locator": "Server Features: Prompts",
+          "topics": [
+            "prompt templates",
+            "arguments"
+          ]
+        }
+      ],
+      "usage": "technical-contract",
+      "notes": "Fixes the protocol version string and the tool/resource/prompt surface. Registered without network access during this build; the license identifier and the exact wording of section titles were not verified against the live page. No expressive text from this source was copied. Confirm before redistribution."
+    },
+    {
+      "id": "mcp-rust-sdk",
+      "title": "Model Context Protocol Rust SDK (repository)",
+      "authors": [],
+      "publisher": "Model Context Protocol project",
+      "url": "https://github.com/modelcontextprotocol/rust-sdk",
+      "license": "unverified-reference-only",
+      "accessed_at": "2026-07-26",
+      "source_type": "official_docs",
+      "relevant_sections": [
+        {
+          "locator": "README",
+          "topics": [
+            "server construction",
+            "transport selection"
+          ]
+        }
+      ],
+      "usage": "technical-contract",
+      "notes": "Reference implementation used to cross-check protocol shapes only. This build ships a std-only server and does not vendor SDK code. Registered without network access during this build; the license identifier and the exact wording of section titles were not verified against the live page. No expressive text from this source was copied. Confirm before redistribution."
+    },
+    {
+      "id": "reaper-reascript-api",
+      "title": "REAPER ReaScript documentation",
+      "authors": [],
+      "publisher": "Cockos Incorporated",
+      "url": "https://www.reaper.fm/sdk/reascript/reascript.php",
+      "license": "unverified-reference-only",
+      "accessed_at": "2026-07-26",
+      "source_type": "official_docs",
+      "relevant_sections": [
+        {
+          "locator": "ReaScript overview",
+          "topics": [
+            "lua scripting",
+            "deferred scripts"
+          ]
+        },
+        {
+          "locator": "Running scripts",
+          "topics": [
+            "action list",
+            "script registration"
+          ]
+        }
+      ],
+      "usage": "technical-contract",
+      "notes": "Proprietary vendor documentation. Used only to determine which official API calls exist; no text reproduced. Registered without network access during this build; the license identifier and the exact wording of section titles were not verified against the live page. No expressive text from this source was copied. Confirm before redistribution."
+    },
+    {
+      "id": "reaper-reascript-help",
+      "title": "REAPER ReaScript API function reference",
+      "authors": [],
+      "publisher": "Cockos Incorporated",
+      "url": "https://www.reaper.fm/sdk/reascript/reascripthelp.html",
+      "license": "unverified-reference-only",
+      "accessed_at": "2026-07-26",
+      "source_type": "official_docs",
+      "relevant_sections": [
+        {
+          "locator": "MIDI functions",
+          "topics": [
+            "midi notes",
+            "ppq conversion"
+          ]
+        },
+        {
+          "locator": "Project and item functions",
+          "topics": [
+            "takes",
+            "items",
+            "guids"
+          ]
+        },
+        {
+          "locator": "Undo functions",
+          "topics": [
+            "undo blocks",
+            "state change count"
+          ]
+        }
+      ],
+      "usage": "technical-contract",
+      "notes": "Proprietary vendor documentation. Function names only; no text reproduced. Registered without network access during this build; the license identifier and the exact wording of section titles were not verified against the live page. No expressive text from this source was copied. Confirm before redistribution."
+    },
+    {
+      "id": "open-music-theory",
+      "title": "Open Music Theory",
+      "authors": [],
+      "publisher": "VIVA / Pressbooks",
+      "url": "https://viva.pressbooks.pub/openmusictheory/",
+      "license": "unverified-reference-only",
+      "accessed_at": "2026-07-26",
+      "source_type": "open_textbook",
+      "relevant_sections": [
+        {
+          "locator": "Introduction to harmony",
+          "topics": [
+            "triads",
+            "seventh chords",
+            "roman numerals"
+          ]
+        },
+        {
+          "locator": "Embellishing and non-chord tones",
+          "topics": [
+            "passing tone",
+            "neighbor tone",
+            "suspension",
+            "anticipation"
+          ]
+        },
+        {
+          "locator": "Harmonic function",
+          "topics": [
+            "tonic",
+            "predominant",
+            "dominant",
+            "cadence"
+          ]
+        },
+        {
+          "locator": "Altered and extended chords",
+          "topics": [
+            "extensions",
+            "alterations",
+            "ninths",
+            "elevenths",
+            "thirteenths"
+          ]
+        },
+        {
+          "locator": "Jazz voicings",
+          "topics": [
+            "shell voicings",
+            "rootless voicings",
+            "drop 2"
+          ]
+        },
+        {
+          "locator": "Chord-scale theory",
+          "topics": [
+            "chord scale",
+            "avoid tones",
+            "modal sources"
+          ]
+        },
+        {
+          "locator": "Jazz embellishing chords",
+          "topics": [
+            "passing diminished",
+            "approach chords"
+          ]
+        },
+        {
+          "locator": "Jazz progressions and ii-V-I behavior",
+          "topics": [
+            "ii-V-I",
+            "turnaround",
+            "guide tones"
+          ]
+        },
+        {
+          "locator": "Blues harmony",
+          "topics": [
+            "twelve-bar blues",
+            "dominant seventh tonic"
+          ]
+        },
+        {
+          "locator": "Modal and chromatic substitutions",
+          "topics": [
+            "tritone substitution",
+            "modal mixture",
+            "planing"
+          ]
+        }
+      ],
+      "usage": "paraphrased-rule-source",
+      "notes": "Primary open textbook behind the harmony, non-chord-tone, extension and jazz rules in this bundle. Author/editor list intentionally left empty because it could not be confirmed offline; section locators are topic-level titles drawn from the project brief's required-coverage list rather than a verified table of contents. Every rule summary and rationale is original wording. Registered without network access during this build; the license identifier and the exact wording of section titles were not verified against the live page. No expressive text from this source was copied. Confirm before redistribution."
+    },
+    {
+      "id": "mt21c",
+      "title": "Music Theory for the 21st-Century Classroom",
+      "authors": [],
+      "publisher": "University of Puget Sound",
+      "url": "https://musictheory.pugetsound.edu/mt21c/MusicTheory.html",
+      "license": "unverified-reference-only",
+      "accessed_at": "2026-07-26",
+      "source_type": "open_textbook",
+      "relevant_sections": [
+        {
+          "locator": "Motives and phrases",
+          "topics": [
+            "motive",
+            "phrase",
+            "period"
+          ]
+        },
+        {
+          "locator": "Harmonic function",
+          "topics": [
+            "function",
+            "progression",
+            "prolongation"
+          ]
+        },
+        {
+          "locator": "Non-chord tones",
+          "topics": [
+            "passing tone",
+            "appoggiatura",
+            "escape tone",
+            "retardation"
+          ]
+        },
+        {
+          "locator": "Melodic analysis",
+          "topics": [
+            "contour",
+            "climax",
+            "leap recovery"
+          ]
+        },
+        {
+          "locator": "Voice leading",
+          "topics": [
+            "parallel fifths",
+            "doubling",
+            "spacing",
+            "tendency tones"
+          ]
+        },
+        {
+          "locator": "Counterpoint",
+          "topics": [
+            "species counterpoint",
+            "dissonance preparation",
+            "voice independence"
+          ]
+        },
+        {
+          "locator": "Texture and accompaniment patterns",
+          "topics": [
+            "alberti bass",
+            "arpeggiation",
+            "chorale texture"
+          ]
+        },
+        {
+          "locator": "Formal contrast",
+          "topics": [
+            "contrast",
+            "sectional form"
+          ]
+        },
+        {
+          "locator": "Jazz and extended tonality",
+          "topics": [
+            "extensions",
+            "modal harmony"
+          ]
+        }
+      ],
+      "usage": "paraphrased-rule-source",
+      "notes": "Primary open textbook behind the melody, voice-leading and counterpoint rules. Author list intentionally left empty because it could not be confirmed offline. Section locators are topic-level titles taken from the project brief's required-coverage list. Registered without network access during this build; the license identifier and the exact wording of section titles were not verified against the live page. No expressive text from this source was copied. Confirm before redistribution."
+    },
+    {
+      "id": "mt21c-mode-mixture",
+      "title": "Music Theory for the 21st-Century Classroom: Mode Mixture",
+      "authors": [],
+      "publisher": "University of Puget Sound",
+      "url": "https://musictheory.pugetsound.edu/mt21c/ModeMixtureSection.html",
+      "license": "unverified-reference-only",
+      "accessed_at": "2026-07-26",
+      "source_type": "open_textbook",
+      "relevant_sections": [
+        {
+          "locator": "Mode Mixture",
+          "topics": [
+            "borrowed chords",
+            "parallel mode",
+            "minor plagal",
+            "Neapolitan"
+          ]
+        }
+      ],
+      "usage": "paraphrased-rule-source",
+      "notes": "Cited separately from the parent textbook because the project brief supplies its own canonical URL. Backs the mixture and borrowed-chord rules. Registered without network access during this build; the license identifier and the exact wording of section titles were not verified against the live page. No expressive text from this source was copied. Confirm before redistribution."
+    },
+    {
+      "id": "ijcai-2024-constraint-composition",
+      "title": "IJCAI 2024 proceedings paper 0858 (constraint-based music composition)",
+      "authors": [],
+      "publisher": "International Joint Conferences on Artificial Intelligence",
+      "url": "https://www.ijcai.org/proceedings/2024/0858.pdf",
+      "license": "unverified-reference-only",
+      "accessed_at": "2026-07-26",
+      "source_type": "academic_paper",
+      "relevant_sections": [
+        {
+          "locator": "Full paper",
+          "topics": [
+            "constraint satisfaction",
+            "search",
+            "algorithmic composition"
+          ]
+        }
+      ],
+      "usage": "reference-only",
+      "notes": "The exact title and author list of this proceedings entry could NOT be resolved offline, so both are left unstated rather than guessed. It is registered as methodological background for the hard-constraint-then-soft-scoring search design and is deliberately not cited by any individual theory rule. Registered without network access during this build; the license identifier and the exact wording of section titles were not verified against the live page. No expressive text from this source was copied. Confirm before redistribution."
+    },
+    {
+      "id": "berklee-orchestration-2",
+      "title": "Orchestration 2: Writing Techniques for Full Orchestra (course page)",
+      "authors": [],
+      "publisher": "Berklee Online",
+      "url": "https://online.berklee.edu/courses/orchestration-2-writing-techniques-for-full-orchestra",
+      "license": "unverified-reference-only",
+      "accessed_at": "2026-07-26",
+      "source_type": "course_material",
+      "relevant_sections": [
+        {
+          "locator": "Course description",
+          "topics": [
+            "orchestration",
+            "doubling",
+            "register",
+            "texture"
+          ]
+        }
+      ],
+      "usage": "reference-only",
+      "notes": "A commercial course landing page, not an open text. Registered as bibliographic support for the arrangement domain only; no syllabus text was copied and no arrangement rule cites it as its sole authority. Registered without network access during this build; the license identifier and the exact wording of section titles were not verified against the live page. No expressive text from this source was copied. Confirm before redistribution."
+    }
+  ]
+}

@@ -1,0 +1,1856 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "major_triad",
+      "name": "Major triad",
+      "triad": "major",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "3",
+        "5"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "tonic_or_predominant",
+      "typical_scales": [
+        "major",
+        "lydian",
+        "mixolydian",
+        "major_pentatonic"
+      ],
+      "symbol_examples": [
+        "C",
+        "CM",
+        "Cmaj"
+      ],
+      "notes": "The reference consonance. Doubling the root is the safest default; doubling the third is reserved for voice-leading necessity in strict profiles.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "minor_triad",
+      "name": "Minor triad",
+      "triad": "minor",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "b3",
+        "5"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "minor",
+      "typical_function": "tonic_or_predominant",
+      "typical_scales": [
+        "natural_minor",
+        "dorian",
+        "phrygian",
+        "minor_pentatonic"
+      ],
+      "symbol_examples": [
+        "Cm",
+        "Cmin",
+        "C-"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "diminished_triad",
+      "name": "Diminished triad",
+      "triad": "diminished",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "b3",
+        "b5"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "dim",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "locrian",
+        "harmonic_minor",
+        "octatonic_whole_half"
+      ],
+      "symbol_examples": [
+        "Cdim",
+        "C°",
+        "Cmi(b5)"
+      ],
+      "notes": "Unstable because of the tritone between root and fifth. Usually appears in first inversion in common practice so the bass supports it.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "augmented_triad",
+      "name": "Augmented triad",
+      "triad": "augmented",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "3",
+        "#5"
+      ],
+      "extensions": [],
+      "alterations": [
+        "#5"
+      ],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "aug",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "whole_tone",
+        "harmonic_minor",
+        "ionian_sharp5"
+      ],
+      "symbol_examples": [
+        "Caug",
+        "C+",
+        "C(#5)"
+      ],
+      "notes": "Symmetric: any of its three notes can be heard as the root, so spelling is the only thing that fixes its function. The #5 tends upward by half step.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "sus2",
+      "name": "Suspended second",
+      "triad": "sus2",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "2",
+        "5"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "sus",
+      "typical_function": "any",
+      "typical_scales": [
+        "major",
+        "mixolydian",
+        "dorian",
+        "suspended_pentatonic"
+      ],
+      "symbol_examples": [
+        "Csus2",
+        "C2"
+      ],
+      "notes": "The second replaces the third; it does not have to resolve outside strict profiles.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "sus4",
+      "name": "Suspended fourth",
+      "triad": "sus4",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "4",
+        "5"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "sus",
+      "typical_function": "any",
+      "typical_scales": [
+        "major",
+        "mixolydian",
+        "suspended_pentatonic"
+      ],
+      "symbol_examples": [
+        "Csus4",
+        "Csus"
+      ],
+      "notes": "The fourth replaces the third. In common practice it is prepared and resolves down by step to the third; in pop and modal writing it is a stable colour.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "power",
+      "name": "Power chord",
+      "triad": "power",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "5"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "power",
+      "typical_function": "any",
+      "typical_scales": [
+        "minor_pentatonic",
+        "blues_minor",
+        "mixolydian",
+        "aeolian"
+      ],
+      "symbol_examples": [
+        "C5",
+        "C(no3)"
+      ],
+      "notes": "Third deliberately absent, so the chord is modally neutral and can be planed in parallel without implying parallel-fifth errors.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "major6",
+      "name": "Major sixth",
+      "triad": "major",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "6"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [
+        "6"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "major",
+        "lydian",
+        "major_pentatonic",
+        "bebop_major"
+      ],
+      "symbol_examples": [
+        "C6",
+        "Cmaj6"
+      ],
+      "notes": "A sixth, not a thirteenth: no seventh is implied and the sixth is a chord member rather than an extension.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "minor6",
+      "name": "Minor sixth",
+      "triad": "minor",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "b3",
+        "5",
+        "6"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [
+        "6"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "minor",
+      "typical_function": "tonic_or_predominant",
+      "typical_scales": [
+        "dorian",
+        "melodic_minor",
+        "dorian_sharp4"
+      ],
+      "symbol_examples": [
+        "Cm6",
+        "Cmin6",
+        "C-6"
+      ],
+      "notes": "The natural sixth marks the chord as Dorian or melodic minor rather than Aeolian.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "six_nine",
+      "name": "Six-nine",
+      "triad": "major",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "6",
+        "9"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [
+        "6",
+        "9"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "major",
+        "lydian",
+        "major_pentatonic"
+      ],
+      "symbol_examples": [
+        "C6/9",
+        "C69"
+      ],
+      "notes": "A maximally stable major tonic in jazz: colour without the leading-tone friction of a major seventh.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "minor6_9",
+      "name": "Minor six-nine",
+      "triad": "minor",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "b3",
+        "5",
+        "6",
+        "9"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [
+        "6",
+        "9"
+      ],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "minor",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "dorian",
+        "melodic_minor"
+      ],
+      "symbol_examples": [
+        "Cm6/9",
+        "Cmin69"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "major7",
+      "name": "Major seventh",
+      "triad": "major",
+      "seventh": "major",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "7"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "tonic_or_predominant",
+      "typical_scales": [
+        "major",
+        "lydian",
+        "bebop_major"
+      ],
+      "symbol_examples": [
+        "Cmaj7",
+        "CM7",
+        "CΔ7"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant7",
+      "name": "Dominant seventh",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "b7"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "mixolydian",
+        "lydian_dominant",
+        "altered",
+        "octatonic_half_whole",
+        "blues_minor"
+      ],
+      "symbol_examples": [
+        "C7",
+        "Cdom7"
+      ],
+      "notes": "The third and seventh form a tritone and carry the chord identity. In common practice this demands resolution; in blues it is a stable tonic sonority.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "minor7",
+      "name": "Minor seventh",
+      "triad": "minor",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "b3",
+        "5",
+        "b7"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "minor",
+      "typical_function": "predominant",
+      "typical_scales": [
+        "dorian",
+        "aeolian",
+        "phrygian",
+        "minor_pentatonic"
+      ],
+      "symbol_examples": [
+        "Cm7",
+        "Cmin7",
+        "C-7"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "minor_major7",
+      "name": "Minor-major seventh",
+      "triad": "minor",
+      "seventh": "major",
+      "degrees": [
+        "1",
+        "b3",
+        "5",
+        "7"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "minor",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "melodic_minor",
+        "harmonic_minor"
+      ],
+      "symbol_examples": [
+        "CmMaj7",
+        "Cm(maj7)",
+        "C-Δ7"
+      ],
+      "notes": "A minor tonic with a real leading tone. Distinct from Cm7: the seventh rises rather than falling.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "half_diminished7",
+      "name": "Half-diminished seventh",
+      "triad": "diminished",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "b3",
+        "b5",
+        "b7"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "1"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "half_dim",
+      "typical_function": "predominant",
+      "typical_scales": [
+        "locrian_natural_2",
+        "locrian",
+        "octatonic_whole_half"
+      ],
+      "symbol_examples": [
+        "Cø7",
+        "Cm7b5",
+        "Cmin7(b5)"
+      ],
+      "notes": "The standard predominant in minor. Prefer Locrian natural 2 as its chord scale so the ninth does not clash a half step above the root.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "diminished7",
+      "name": "Fully diminished seventh",
+      "triad": "diminished",
+      "seventh": "diminished",
+      "degrees": [
+        "1",
+        "b3",
+        "b5",
+        "bb7"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dim",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "octatonic_whole_half",
+        "harmonic_minor"
+      ],
+      "symbol_examples": [
+        "C°7",
+        "Cdim7"
+      ],
+      "notes": "Symmetric in sound but not in spelling: each of the four possible spellings implies a different resolution, and the engine must keep the spelling that matches the destination.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "diminished_major7",
+      "name": "Diminished major seventh",
+      "triad": "diminished",
+      "seventh": "major",
+      "degrees": [
+        "1",
+        "b3",
+        "b5",
+        "7"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dim",
+      "typical_function": "chromatic",
+      "typical_scales": [
+        "harmonic_minor",
+        "octatonic_whole_half"
+      ],
+      "symbol_examples": [
+        "C°Maj7",
+        "Cdim(maj7)"
+      ],
+      "notes": "Rare; appears as a linear or common-tone sonority rather than a functional chord.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "augmented_major7",
+      "name": "Augmented major seventh",
+      "triad": "augmented",
+      "seventh": "major",
+      "degrees": [
+        "1",
+        "3",
+        "#5",
+        "7"
+      ],
+      "extensions": [],
+      "alterations": [
+        "#5"
+      ],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "aug",
+      "typical_function": "tonic_or_chromatic",
+      "typical_scales": [
+        "lydian_augmented",
+        "ionian_sharp5",
+        "harmonic_minor"
+      ],
+      "symbol_examples": [
+        "Cmaj7#5",
+        "CΔ7(#5)",
+        "C+Maj7"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant7_sharp5",
+      "name": "Dominant seventh sharp five",
+      "triad": "augmented",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "#5",
+        "b7"
+      ],
+      "extensions": [],
+      "alterations": [
+        "#5"
+      ],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "whole_tone",
+        "altered"
+      ],
+      "symbol_examples": [
+        "C7#5",
+        "C+7",
+        "C7(+5)"
+      ],
+      "notes": "Enharmonically identical to a 7b13 voiced without the natural fifth; spelling should follow the resolution of the raised fifth (upward by half step).",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant7_flat5",
+      "name": "Dominant seventh flat five",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "b5",
+        "b7"
+      ],
+      "extensions": [],
+      "alterations": [
+        "b5"
+      ],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "whole_tone",
+        "lydian_dominant",
+        "altered"
+      ],
+      "symbol_examples": [
+        "C7b5",
+        "C7(-5)"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "major7_sharp11",
+      "name": "Major seventh sharp eleven",
+      "triad": "major",
+      "seventh": "major",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "7",
+        "#11"
+      ],
+      "extensions": [],
+      "alterations": [
+        "#11"
+      ],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "lydian",
+        "lydian_augmented",
+        "lydian_sharp2"
+      ],
+      "symbol_examples": [
+        "Cmaj7#11",
+        "CΔ7(#11)"
+      ],
+      "notes": "The Lydian tonic sound. Unlike a natural 11, the raised eleventh sits a whole step above the third and creates no minor-ninth clash.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "add9",
+      "name": "Added ninth",
+      "triad": "major",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "9"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [
+        "9"
+      ],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "major",
+        "lydian",
+        "major_pentatonic"
+      ],
+      "symbol_examples": [
+        "Cadd9",
+        "C(add9)"
+      ],
+      "notes": "Adds a ninth without implying a seventh. Distinct from C9, which is a dominant ninth.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "add2",
+      "name": "Added second",
+      "triad": "major",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "2",
+        "3",
+        "5"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [
+        "2"
+      ],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "major",
+        "major_pentatonic"
+      ],
+      "symbol_examples": [
+        "Cadd2",
+        "C(add2)"
+      ],
+      "notes": "Same pitch classes as add9 but voiced inside the octave, so the second sits against the third as a deliberate rub. Kept distinct from add9 because the voicing intent differs.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "add4",
+      "name": "Added fourth",
+      "triad": "major",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "3",
+        "4",
+        "5"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [
+        "4"
+      ],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "any",
+      "typical_scales": [
+        "major",
+        "mixolydian"
+      ],
+      "symbol_examples": [
+        "Cadd4",
+        "C(add4)"
+      ],
+      "notes": "Retains the third, unlike sus4. Register-sensitive for the same reason a natural 11 is.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "add11",
+      "name": "Added eleventh",
+      "triad": "major",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "11"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [
+        "11"
+      ],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "any",
+      "typical_scales": [
+        "major",
+        "mixolydian"
+      ],
+      "symbol_examples": [
+        "Cadd11",
+        "C(add11)"
+      ],
+      "notes": "The compound spelling of add4: the eleventh is expected above the third rather than beside it.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "minor_add9",
+      "name": "Minor added ninth",
+      "triad": "minor",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "b3",
+        "5",
+        "9"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [
+        "9"
+      ],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "minor",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "dorian",
+        "aeolian",
+        "melodic_minor"
+      ],
+      "symbol_examples": [
+        "Cm(add9)",
+        "Cmadd9"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "major9",
+      "name": "Major ninth",
+      "triad": "major",
+      "seventh": "major",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "7",
+        "9"
+      ],
+      "extensions": [
+        "9"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "major",
+        "lydian"
+      ],
+      "symbol_examples": [
+        "Cmaj9",
+        "CM9",
+        "CΔ9"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "major11",
+      "name": "Major eleventh",
+      "triad": "major",
+      "seventh": "major",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "7",
+        "9",
+        "11"
+      ],
+      "extensions": [
+        "9",
+        "11"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5",
+        "3"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "major",
+        "lydian"
+      ],
+      "symbol_examples": [
+        "Cmaj11",
+        "CM11"
+      ],
+      "notes": "The natural eleventh sits a minor ninth above the major third. Playable, but it needs register separation, third omission, or the eleventh in the melody. The Lydian alternative raises the eleventh instead.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "major13",
+      "name": "Major thirteenth",
+      "triad": "major",
+      "seventh": "major",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "7",
+        "9",
+        "13"
+      ],
+      "extensions": [
+        "9",
+        "13"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5",
+        "9"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "major",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "major",
+        "lydian"
+      ],
+      "symbol_examples": [
+        "Cmaj13",
+        "CM13"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant9",
+      "name": "Dominant ninth",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "b7",
+        "9"
+      ],
+      "extensions": [
+        "9"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "mixolydian",
+        "lydian_dominant",
+        "bebop_dominant"
+      ],
+      "symbol_examples": [
+        "C9"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant11",
+      "name": "Dominant eleventh",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "b7",
+        "9",
+        "11"
+      ],
+      "extensions": [
+        "9",
+        "11"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "3",
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "mixolydian",
+        "suspended_pentatonic"
+      ],
+      "symbol_examples": [
+        "C11"
+      ],
+      "notes": "In practice the third is omitted, which makes the chord sound suspended; the semantic identity still includes the third unless the symbol says otherwise.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant13",
+      "name": "Dominant thirteenth",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "b7",
+        "9",
+        "13"
+      ],
+      "extensions": [
+        "9",
+        "13"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5",
+        "9"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "mixolydian",
+        "lydian_dominant",
+        "bebop_dominant"
+      ],
+      "symbol_examples": [
+        "C13"
+      ],
+      "notes": "Retains dominant-thirteenth identity even when the fifth, ninth or eleventh is left out of the played voicing.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "minor9",
+      "name": "Minor ninth",
+      "triad": "minor",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "b3",
+        "5",
+        "b7",
+        "9"
+      ],
+      "extensions": [
+        "9"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "minor",
+      "typical_function": "predominant",
+      "typical_scales": [
+        "dorian",
+        "aeolian"
+      ],
+      "symbol_examples": [
+        "Cm9",
+        "C-9"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "minor11",
+      "name": "Minor eleventh",
+      "triad": "minor",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "b3",
+        "5",
+        "b7",
+        "9",
+        "11"
+      ],
+      "extensions": [
+        "9",
+        "11"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5",
+        "9"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "minor",
+      "typical_function": "predominant",
+      "typical_scales": [
+        "dorian",
+        "aeolian",
+        "phrygian"
+      ],
+      "symbol_examples": [
+        "Cm11",
+        "C-11"
+      ],
+      "notes": "Unlike the major family, the eleventh is a perfect fourth above the minor third and creates no clash, which is why minor 11 is a default modal colour.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "minor13",
+      "name": "Minor thirteenth",
+      "triad": "minor",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "b3",
+        "5",
+        "b7",
+        "9",
+        "13"
+      ],
+      "extensions": [
+        "9",
+        "13"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5",
+        "9"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "minor",
+      "typical_function": "predominant",
+      "typical_scales": [
+        "dorian",
+        "dorian_sharp4"
+      ],
+      "symbol_examples": [
+        "Cm13",
+        "C-13"
+      ],
+      "notes": "The natural thirteenth requires a Dorian or melodic-minor context; in Aeolian the corresponding degree is b13 and the chord is normally written m7b13 or avoided.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "minor_major9",
+      "name": "Minor-major ninth",
+      "triad": "minor",
+      "seventh": "major",
+      "degrees": [
+        "1",
+        "b3",
+        "5",
+        "7",
+        "9"
+      ],
+      "extensions": [
+        "9"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "minor",
+      "typical_function": "tonic",
+      "typical_scales": [
+        "melodic_minor"
+      ],
+      "symbol_examples": [
+        "CmMaj9",
+        "Cm(maj9)"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "half_diminished9",
+      "name": "Half-diminished ninth",
+      "triad": "diminished",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "b3",
+        "b5",
+        "b7",
+        "9"
+      ],
+      "extensions": [
+        "9"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "1"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "half_dim",
+      "typical_function": "predominant",
+      "typical_scales": [
+        "locrian_natural_2"
+      ],
+      "symbol_examples": [
+        "Cø9",
+        "Cm9b5"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant7sus4",
+      "name": "Dominant seventh suspended fourth",
+      "triad": "sus4",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "4",
+        "5",
+        "b7"
+      ],
+      "extensions": [],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "sus",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "mixolydian",
+        "suspended_pentatonic",
+        "dorian_flat2"
+      ],
+      "symbol_examples": [
+        "C7sus4",
+        "C7sus"
+      ],
+      "notes": "Distinct from C11: the third is replaced, not merely omitted.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant9sus4",
+      "name": "Dominant ninth suspended fourth",
+      "triad": "sus4",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "4",
+        "5",
+        "b7",
+        "9"
+      ],
+      "extensions": [
+        "9"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "sus",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "mixolydian",
+        "suspended_pentatonic"
+      ],
+      "symbol_examples": [
+        "C9sus4",
+        "C9sus"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant13sus4",
+      "name": "Dominant thirteenth suspended fourth",
+      "triad": "sus4",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "4",
+        "5",
+        "b7",
+        "9",
+        "13"
+      ],
+      "extensions": [
+        "9",
+        "13"
+      ],
+      "alterations": [],
+      "added": [],
+      "omissible_degrees": [
+        "5",
+        "9"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "sus",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "mixolydian"
+      ],
+      "symbol_examples": [
+        "C13sus4",
+        "C13sus"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant7_flat9",
+      "name": "Dominant seventh flat nine",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "b7",
+        "b9"
+      ],
+      "extensions": [],
+      "alterations": [
+        "b9"
+      ],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "octatonic_half_whole",
+        "phrygian_dominant",
+        "altered"
+      ],
+      "symbol_examples": [
+        "C7b9",
+        "C7(♭9)"
+      ],
+      "notes": "Standard over a resolution to a minor tonic; the b9 falls by half step into the fifth of the target chord.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant7_sharp9",
+      "name": "Dominant seventh sharp nine",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "b7",
+        "#9"
+      ],
+      "extensions": [],
+      "alterations": [
+        "#9"
+      ],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "altered",
+        "octatonic_half_whole",
+        "blues_minor"
+      ],
+      "symbol_examples": [
+        "C7#9",
+        "C7(♯9)"
+      ],
+      "notes": "The #9 is the blues minor third sounding against the major third; keep them at least a ninth apart or place the #9 on top.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant7_sharp11",
+      "name": "Dominant seventh sharp eleven",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "b7",
+        "9",
+        "#11"
+      ],
+      "extensions": [
+        "9"
+      ],
+      "alterations": [
+        "#11"
+      ],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "lydian_dominant",
+        "whole_tone"
+      ],
+      "symbol_examples": [
+        "C7#11",
+        "C9(#11)"
+      ],
+      "notes": "The default colour for a dominant that does not resolve down a fifth, including tritone substitutes and backdoor dominants.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant7_flat13",
+      "name": "Dominant seventh flat thirteen",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "b7",
+        "b13"
+      ],
+      "extensions": [],
+      "alterations": [
+        "b13"
+      ],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "mixolydian_flat6",
+        "altered",
+        "phrygian_dominant"
+      ],
+      "symbol_examples": [
+        "C7b13",
+        "C7(♭13)"
+      ],
+      "notes": "Omit the natural fifth when b13 is present; sounding both is a semitone clash rather than a colour.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant7_alt",
+      "name": "Altered dominant",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "b7"
+      ],
+      "extensions": [],
+      "alterations": [
+        "b9",
+        "#9",
+        "b5",
+        "b13"
+      ],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": true,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "altered"
+      ],
+      "symbol_examples": [
+        "C7alt",
+        "C7(alt)"
+      ],
+      "notes": "A family, not a fixed pitch set. The engine must choose which altered tones to sound based on the melody, the destination chord and the voice-leading path, and must spell them accordingly.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant13_flat9",
+      "name": "Dominant thirteenth flat nine",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "b7",
+        "b9",
+        "13"
+      ],
+      "extensions": [
+        "13"
+      ],
+      "alterations": [
+        "b9"
+      ],
+      "added": [],
+      "omissible_degrees": [
+        "5"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "octatonic_half_whole"
+      ],
+      "symbol_examples": [
+        "C13b9"
+      ],
+      "notes": "The characteristic half-whole octatonic sonority: b9 and natural 13 coexist.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "dominant13_sharp11",
+      "name": "Dominant thirteenth sharp eleven",
+      "triad": "major",
+      "seventh": "minor",
+      "degrees": [
+        "1",
+        "3",
+        "5",
+        "b7",
+        "9",
+        "#11",
+        "13"
+      ],
+      "extensions": [
+        "9",
+        "13"
+      ],
+      "alterations": [
+        "#11"
+      ],
+      "added": [],
+      "omissible_degrees": [
+        "5",
+        "9"
+      ],
+      "implies_seventh": true,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "dominant",
+      "typical_scales": [
+        "lydian_dominant"
+      ],
+      "symbol_examples": [
+        "C13#11"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "italian_sixth",
+      "name": "Italian augmented sixth",
+      "triad": "major",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "3",
+        "#4"
+      ],
+      "extensions": [],
+      "alterations": [
+        "#4"
+      ],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "predominant",
+      "typical_scales": [
+        "harmonic_minor"
+      ],
+      "symbol_examples": [
+        "It+6"
+      ],
+      "notes": "Measured from its own bass note, which is b6 of the key. Three voices only, so the third is doubled. Enharmonically a dominant seventh without a fifth, but the augmented sixth must be spelled as an augmented sixth because it expands outward to the octave on the dominant.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "french_sixth",
+      "name": "French augmented sixth",
+      "triad": "major",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "2",
+        "3",
+        "#4"
+      ],
+      "extensions": [],
+      "alterations": [
+        "#4"
+      ],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "predominant",
+      "typical_scales": [
+        "whole_tone",
+        "harmonic_minor"
+      ],
+      "symbol_examples": [
+        "Fr+6"
+      ],
+      "notes": "Contains two whole-tone-related tritones, which gives it a floating quality compared with the Italian and German forms.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "german_sixth",
+      "name": "German augmented sixth",
+      "triad": "major",
+      "seventh": "none",
+      "degrees": [
+        "1",
+        "b3",
+        "3",
+        "#4"
+      ],
+      "extensions": [],
+      "alterations": [
+        "#4"
+      ],
+      "added": [],
+      "omissible_degrees": [],
+      "implies_seventh": false,
+      "alt_dominant": false,
+      "family": "dominant",
+      "typical_function": "predominant",
+      "typical_scales": [
+        "harmonic_minor"
+      ],
+      "symbol_examples": [
+        "Ger+6"
+      ],
+      "notes": "Enharmonically identical to a dominant seventh on b6, which is exactly why it can pivot between keys. Moving to a cadential six-four avoids the parallel fifths its direct resolution to V would produce.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    }
+  ]
+}

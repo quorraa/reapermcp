@@ -1,0 +1,1013 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "major_i",
+      "key_context": "major",
+      "roman": "I",
+      "scale_degree": "1",
+      "triad_quality": "major_triad",
+      "seventh_quality": "major7",
+      "function_class": "tonic",
+      "typical_resolutions": [
+        "ii",
+        "IV",
+        "V",
+        "vi"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "1",
+      "tendency_tones": [],
+      "notes": "Point of repose. Root position with the tonic in the top voice is the only fully closed ending in a common-practice profile.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "major_ii",
+      "key_context": "major",
+      "roman": "ii",
+      "scale_degree": "2",
+      "triad_quality": "minor_triad",
+      "seventh_quality": "minor7",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "V",
+        "viio",
+        "viiø7"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "2",
+      "tendency_tones": [],
+      "notes": "The default predominant. First inversion places scale degree 4 in the bass and behaves like IV with an added sixth.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "major_iii",
+      "key_context": "major",
+      "roman": "iii",
+      "scale_degree": "3",
+      "triad_quality": "minor_triad",
+      "seventh_quality": "minor7",
+      "function_class": "tonic",
+      "typical_resolutions": [
+        "vi",
+        "IV",
+        "ii"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "3",
+      "tendency_tones": [],
+      "notes": "Weakest diatonic triad in major. Usually a passing harmony between I and IV or the first step of a descending-fifth sequence; it also carries the leading tone, which must not be doubled.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "major_iv",
+      "key_context": "major",
+      "roman": "IV",
+      "scale_degree": "4",
+      "triad_quality": "major_triad",
+      "seventh_quality": "major7",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "V",
+        "I",
+        "ii"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "4",
+      "tendency_tones": [],
+      "notes": "Predominant, and the plagal partner of I. Moving IV directly to I is a colour gesture rather than a structural cadence in common practice.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "major_v",
+      "key_context": "major",
+      "roman": "V",
+      "scale_degree": "5",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "dominant",
+      "typical_resolutions": [
+        "I",
+        "vi",
+        "IV"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "5",
+      "tendency_tones": [
+        "7",
+        "4"
+      ],
+      "notes": "The functional dominant. Its third is the leading tone and rises; the chordal seventh is scale degree 4 and falls.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "major_vi",
+      "key_context": "major",
+      "roman": "vi",
+      "scale_degree": "6",
+      "triad_quality": "minor_triad",
+      "seventh_quality": "minor7",
+      "function_class": "tonic",
+      "typical_resolutions": [
+        "ii",
+        "IV",
+        "V"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "6",
+      "tendency_tones": [],
+      "notes": "Tonic substitute and the standard deceptive target from V.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "major_vii",
+      "key_context": "major",
+      "roman": "vii°",
+      "scale_degree": "7",
+      "triad_quality": "diminished_triad",
+      "seventh_quality": "half_diminished7",
+      "function_class": "dominant",
+      "typical_resolutions": [
+        "I"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "2",
+      "tendency_tones": [
+        "7",
+        "4"
+      ],
+      "notes": "Dominant function without the root. Normally used in first inversion so the bass is scale degree 2 and the tritone resolves inward.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_i",
+      "key_context": "minor",
+      "roman": "i",
+      "scale_degree": "1",
+      "triad_quality": "minor_triad",
+      "seventh_quality": "minor7",
+      "function_class": "tonic",
+      "typical_resolutions": [
+        "iv",
+        "V",
+        "VI",
+        "bVII"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "1",
+      "tendency_tones": [],
+      "notes": "Minor tonic. A minor-major seventh belongs to melodic or harmonic minor; a plain minor seventh reads as Aeolian or Dorian and weakens functional pull.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_ii",
+      "key_context": "minor",
+      "roman": "ii°",
+      "scale_degree": "2",
+      "triad_quality": "diminished_triad",
+      "seventh_quality": "half_diminished7",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "V",
+        "i"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "4",
+      "tendency_tones": [],
+      "notes": "Predominant in minor. Prefer first inversion for the triad; the half-diminished seventh is the standard jazz form.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_iii",
+      "key_context": "minor",
+      "roman": "III",
+      "scale_degree": "b3",
+      "triad_quality": "major_triad",
+      "seventh_quality": "major7",
+      "function_class": "tonic",
+      "typical_resolutions": [
+        "VI",
+        "iv",
+        "bVII"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "b3",
+      "tendency_tones": [],
+      "notes": "Relative major. A strong tonic substitute, and the pivot for the most common minor-to-major modulation.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_iii_aug",
+      "key_context": "minor",
+      "roman": "III+",
+      "scale_degree": "b3",
+      "triad_quality": "augmented_triad",
+      "seventh_quality": "augmented_major7",
+      "function_class": "tonic",
+      "typical_resolutions": [
+        "i",
+        "iv"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "b3",
+      "tendency_tones": [
+        "7"
+      ],
+      "notes": "Arises when the raised seventh of harmonic or melodic minor is placed over the mediant. The raised fifth of the chord is the leading tone and rises.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_iv",
+      "key_context": "minor",
+      "roman": "iv",
+      "scale_degree": "4",
+      "triad_quality": "minor_triad",
+      "seventh_quality": "minor7",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "V",
+        "i",
+        "bVII"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "4",
+      "tendency_tones": [],
+      "notes": "Predominant in minor. Its raised counterpart IV signals Dorian rather than Aeolian.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_iv_major",
+      "key_context": "minor",
+      "roman": "IV",
+      "scale_degree": "4",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "i",
+        "bVII",
+        "V"
+      ],
+      "category": "modal",
+      "typical_bass_degree": "4",
+      "tendency_tones": [
+        "6"
+      ],
+      "notes": "The Dorian subdominant. Contains the natural sixth degree, which is the whole identity of Dorian and must be audible.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_v_minor",
+      "key_context": "minor",
+      "roman": "v",
+      "scale_degree": "5",
+      "triad_quality": "minor_triad",
+      "seventh_quality": "minor7",
+      "function_class": "modal",
+      "typical_resolutions": [
+        "i",
+        "bVII",
+        "iv"
+      ],
+      "category": "modal",
+      "typical_bass_degree": "5",
+      "tendency_tones": [],
+      "notes": "The natural-minor fifth. Because it has no leading tone it prolongs rather than resolves, which is exactly what an Aeolian or modal profile wants.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_v_major",
+      "key_context": "minor",
+      "roman": "V",
+      "scale_degree": "5",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "dominant",
+      "typical_resolutions": [
+        "i",
+        "VI"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "5",
+      "tendency_tones": [
+        "7",
+        "4"
+      ],
+      "notes": "The functional dominant of minor, borrowed from harmonic minor. Raising the seventh degree here is a default in common practice and optional in modal profiles.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_vi",
+      "key_context": "minor",
+      "roman": "VI",
+      "scale_degree": "b6",
+      "triad_quality": "major_triad",
+      "seventh_quality": "major7",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "iv",
+        "ii°7",
+        "bVII",
+        "V"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "b6",
+      "tendency_tones": [],
+      "notes": "Submediant of minor and the standard deceptive target from V in minor.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_vii_flat",
+      "key_context": "minor",
+      "roman": "bVII",
+      "scale_degree": "b7",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "modal",
+      "typical_resolutions": [
+        "i",
+        "VI",
+        "III"
+      ],
+      "category": "modal",
+      "typical_bass_degree": "b7",
+      "tendency_tones": [],
+      "notes": "The subtonic. Falling bVII to i is the signature Aeolian cadence and has no leading tone by design.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_vii_dim",
+      "key_context": "minor",
+      "roman": "vii°7",
+      "scale_degree": "7",
+      "triad_quality": "diminished_triad",
+      "seventh_quality": "diminished7",
+      "function_class": "dominant",
+      "typical_resolutions": [
+        "i"
+      ],
+      "category": "diatonic",
+      "typical_bass_degree": "7",
+      "tendency_tones": [
+        "7"
+      ],
+      "notes": "Fully diminished seventh built on the raised seventh degree. Fully symmetric in sound, so its spelling has to be chosen from the destination.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "applied_dominant_of_ii",
+      "key_context": "any",
+      "roman": "V7/ii",
+      "scale_degree": "6",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "applied",
+      "typical_resolutions": [
+        "ii"
+      ],
+      "category": "applied",
+      "typical_bass_degree": "6",
+      "tendency_tones": [
+        "3",
+        "b7"
+      ],
+      "notes": "Applied dominant tonicising ii. It borrows a leading tone that does not belong to the prevailing key; that raised tone must rise and the chordal seventh must fall, or the tonicisation will not read.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "applied_dominant_of_iii",
+      "key_context": "any",
+      "roman": "V7/iii",
+      "scale_degree": "7",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "applied",
+      "typical_resolutions": [
+        "iii"
+      ],
+      "category": "applied",
+      "typical_bass_degree": "7",
+      "tendency_tones": [
+        "3",
+        "b7"
+      ],
+      "notes": "Applied dominant tonicising iii. It borrows a leading tone that does not belong to the prevailing key; that raised tone must rise and the chordal seventh must fall, or the tonicisation will not read.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "applied_dominant_of_IV",
+      "key_context": "any",
+      "roman": "V7/IV",
+      "scale_degree": "1",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "applied",
+      "typical_resolutions": [
+        "IV"
+      ],
+      "category": "applied",
+      "typical_bass_degree": "1",
+      "tendency_tones": [
+        "3",
+        "b7"
+      ],
+      "notes": "Applied dominant tonicising IV. It borrows a leading tone that does not belong to the prevailing key; that raised tone must rise and the chordal seventh must fall, or the tonicisation will not read.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "applied_dominant_of_V",
+      "key_context": "any",
+      "roman": "V7/V",
+      "scale_degree": "2",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "applied",
+      "typical_resolutions": [
+        "V"
+      ],
+      "category": "applied",
+      "typical_bass_degree": "2",
+      "tendency_tones": [
+        "3",
+        "b7"
+      ],
+      "notes": "Applied dominant tonicising V. It borrows a leading tone that does not belong to the prevailing key; that raised tone must rise and the chordal seventh must fall, or the tonicisation will not read.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "applied_dominant_of_vi",
+      "key_context": "any",
+      "roman": "V7/vi",
+      "scale_degree": "3",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "applied",
+      "typical_resolutions": [
+        "vi"
+      ],
+      "category": "applied",
+      "typical_bass_degree": "3",
+      "tendency_tones": [
+        "3",
+        "b7"
+      ],
+      "notes": "Applied dominant tonicising vi. It borrows a leading tone that does not belong to the prevailing key; that raised tone must rise and the chordal seventh must fall, or the tonicisation will not read.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "applied_leading_tone_of_v",
+      "key_context": "any",
+      "roman": "vii°7/V",
+      "scale_degree": "#4",
+      "triad_quality": "diminished_triad",
+      "seventh_quality": "diminished7",
+      "function_class": "applied",
+      "typical_resolutions": [
+        "V"
+      ],
+      "category": "applied",
+      "typical_bass_degree": "#4",
+      "tendency_tones": [
+        "#4"
+      ],
+      "notes": "Applied leading-tone seventh of the dominant. Lighter than V7/V because it has no root of its own to assert.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "applied_leading_tone_of_vi",
+      "key_context": "any",
+      "roman": "vii°7/vi",
+      "scale_degree": "#5",
+      "triad_quality": "diminished_triad",
+      "seventh_quality": "diminished7",
+      "function_class": "applied",
+      "typical_resolutions": [
+        "vi"
+      ],
+      "category": "applied",
+      "typical_bass_degree": "#5",
+      "tendency_tones": [
+        "#5"
+      ],
+      "notes": "Applied leading-tone seventh of the submediant.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "applied_ii_v_of_target",
+      "key_context": "any",
+      "roman": "ii7/x - V7/x",
+      "scale_degree": null,
+      "triad_quality": "minor_triad",
+      "seventh_quality": "minor7",
+      "function_class": "applied",
+      "typical_resolutions": [
+        "any"
+      ],
+      "category": "applied",
+      "typical_bass_degree": null,
+      "tendency_tones": [],
+      "notes": "A complete applied two-chord unit rather than a single applied dominant. Preferred in jazz profiles because it supplies a predominant that prepares the borrowed leading tone.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "borrowed_iv_in_major",
+      "key_context": "major",
+      "roman": "iv",
+      "scale_degree": "4",
+      "triad_quality": "minor_triad",
+      "seventh_quality": "minor7",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "I",
+        "V"
+      ],
+      "category": "borrowed",
+      "typical_bass_degree": "4",
+      "tendency_tones": [
+        "b6"
+      ],
+      "notes": "Minor subdominant in a major key. Its flat sixth degree falls by half step to the fifth of the tonic, which is why minor plagal motion sounds like a resolution rather than a digression.",
+      "source_refs": [
+        "mt21c-mode-mixture",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "borrowed_flat_vi_in_major",
+      "key_context": "major",
+      "roman": "bVI",
+      "scale_degree": "b6",
+      "triad_quality": "major_triad",
+      "seventh_quality": "major7",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "V",
+        "I",
+        "bVII"
+      ],
+      "category": "borrowed",
+      "typical_bass_degree": "b6",
+      "tendency_tones": [
+        "b6"
+      ],
+      "notes": "Borrowed submediant. Common as a deceptive target and as the pivot into an augmented-sixth chord.",
+      "source_refs": [
+        "mt21c-mode-mixture"
+      ]
+    },
+    {
+      "id": "borrowed_flat_vii_in_major",
+      "key_context": "major",
+      "roman": "bVII",
+      "scale_degree": "b7",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "modal",
+      "typical_resolutions": [
+        "I",
+        "IV",
+        "bVI"
+      ],
+      "category": "borrowed",
+      "typical_bass_degree": "b7",
+      "tendency_tones": [],
+      "notes": "Borrowed subtonic. In rock and modal profiles this is a primary chord, not a chromatic event.",
+      "source_refs": [
+        "mt21c-mode-mixture"
+      ]
+    },
+    {
+      "id": "borrowed_flat_iii_in_major",
+      "key_context": "major",
+      "roman": "bIII",
+      "scale_degree": "b3",
+      "triad_quality": "major_triad",
+      "seventh_quality": "major7",
+      "function_class": "tonic",
+      "typical_resolutions": [
+        "bVI",
+        "IV",
+        "I"
+      ],
+      "category": "borrowed",
+      "typical_bass_degree": "b3",
+      "tendency_tones": [],
+      "notes": "Borrowed mediant. Reads as a chromatic-mediant colour when it is approached directly from I rather than through the parallel minor.",
+      "source_refs": [
+        "mt21c-mode-mixture"
+      ]
+    },
+    {
+      "id": "borrowed_ii_dim_in_major",
+      "key_context": "major",
+      "roman": "ii°",
+      "scale_degree": "2",
+      "triad_quality": "diminished_triad",
+      "seventh_quality": "half_diminished7",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "V"
+      ],
+      "category": "borrowed",
+      "typical_bass_degree": "4",
+      "tendency_tones": [
+        "b6"
+      ],
+      "notes": "Borrowed supertonic. The half-diminished form is the most common way to darken a predominant without leaving the key.",
+      "source_refs": [
+        "mt21c-mode-mixture"
+      ]
+    },
+    {
+      "id": "borrowed_minor_v_in_major",
+      "key_context": "major",
+      "roman": "v",
+      "scale_degree": "5",
+      "triad_quality": "minor_triad",
+      "seventh_quality": "minor7",
+      "function_class": "modal",
+      "typical_resolutions": [
+        "IV",
+        "bVII",
+        "I"
+      ],
+      "category": "borrowed",
+      "typical_bass_degree": "5",
+      "tendency_tones": [],
+      "notes": "Minor dominant in a major key. Removes the leading tone and therefore removes the cadence; used deliberately to defer arrival or to tonicise IV.",
+      "source_refs": [
+        "mt21c-mode-mixture"
+      ]
+    },
+    {
+      "id": "neapolitan",
+      "key_context": "any",
+      "roman": "bII6",
+      "scale_degree": "b2",
+      "triad_quality": "major_triad",
+      "seventh_quality": "none",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "V",
+        "vii°7/V",
+        "i"
+      ],
+      "category": "neapolitan",
+      "typical_bass_degree": "4",
+      "tendency_tones": [
+        "b2"
+      ],
+      "notes": "Major triad on the lowered second degree, conventionally in first inversion so the bass is the familiar predominant scale degree 4. The flat second falls to the leading tone, an expressive diminished third that is normally filled in or reassigned between voices.",
+      "source_refs": [
+        "mt21c-mode-mixture",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "italian_augmented_sixth",
+      "key_context": "any",
+      "roman": "It+6",
+      "scale_degree": "b6",
+      "triad_quality": "italian_sixth",
+      "seventh_quality": "none",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "V",
+        "V6/4"
+      ],
+      "category": "augmented_sixth",
+      "typical_bass_degree": "b6",
+      "tendency_tones": [
+        "b6",
+        "#4"
+      ],
+      "notes": "Three-voice augmented sixth; the doubled tonic degree is the standard doubling. The augmented sixth between b6 and #4 expands outward to the octave on scale degree 5.",
+      "source_refs": [
+        "mt21c-mode-mixture",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "french_augmented_sixth",
+      "key_context": "any",
+      "roman": "Fr+6",
+      "scale_degree": "b6",
+      "triad_quality": "french_sixth",
+      "seventh_quality": "none",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "V",
+        "V6/4"
+      ],
+      "category": "augmented_sixth",
+      "typical_bass_degree": "b6",
+      "tendency_tones": [
+        "b6",
+        "#4"
+      ],
+      "notes": "Four-voice augmented sixth containing scale degree 2, which makes it the smoothest of the three to lead into the dominant.",
+      "source_refs": [
+        "mt21c-mode-mixture",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "german_augmented_sixth",
+      "key_context": "any",
+      "roman": "Ger+6",
+      "scale_degree": "b6",
+      "triad_quality": "german_sixth",
+      "seventh_quality": "none",
+      "function_class": "predominant",
+      "typical_resolutions": [
+        "V6/4",
+        "V"
+      ],
+      "category": "augmented_sixth",
+      "typical_bass_degree": "b6",
+      "tendency_tones": [
+        "b6",
+        "#4"
+      ],
+      "notes": "Four-voice augmented sixth whose sound is that of a dominant seventh on the flat sixth degree. Route it through a cadential six-four to avoid parallel fifths into V.",
+      "source_refs": [
+        "mt21c-mode-mixture",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "chromatic_mediant_flat_vi_major",
+      "key_context": "major",
+      "roman": "bVI",
+      "scale_degree": "b6",
+      "triad_quality": "major_triad",
+      "seventh_quality": "major7",
+      "function_class": "chromatic",
+      "typical_resolutions": [
+        "I",
+        "IV",
+        "bIII"
+      ],
+      "category": "chromatic_mediant",
+      "typical_bass_degree": "b6",
+      "tendency_tones": [],
+      "notes": "Third-related to the tonic with one common tone and no functional obligation. Label it as a chromatic mediant rather than forcing a borrowed-chord reading when it is approached and left directly from tonic.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "chromatic_mediant_major_iii",
+      "key_context": "major",
+      "roman": "III",
+      "scale_degree": "3",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "chromatic",
+      "typical_resolutions": [
+        "vi",
+        "I",
+        "IV"
+      ],
+      "category": "chromatic_mediant",
+      "typical_bass_degree": "3",
+      "tendency_tones": [],
+      "notes": "Major triad on the mediant. Reads as an applied dominant of vi only when vi actually follows; otherwise it is a chromatic mediant.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "chromatic_mediant_flat_iii_minor_key",
+      "key_context": "minor",
+      "roman": "bIII",
+      "scale_degree": "b3",
+      "triad_quality": "major_triad",
+      "seventh_quality": "major7",
+      "function_class": "chromatic",
+      "typical_resolutions": [
+        "i",
+        "bVI",
+        "bVII"
+      ],
+      "category": "chromatic_mediant",
+      "typical_bass_degree": "b3",
+      "tendency_tones": [],
+      "notes": "In a minor key this is diatonic; it is listed here because chains of third-related major triads are a primary cinematic device and need a non-functional label.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "tritone_substitute_of_v",
+      "key_context": "any",
+      "roman": "bII7",
+      "scale_degree": "b2",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "dominant",
+      "typical_resolutions": [
+        "I",
+        "i"
+      ],
+      "category": "chromatic",
+      "typical_bass_degree": "b2",
+      "tendency_tones": [
+        "3",
+        "b7"
+      ],
+      "notes": "Dominant seventh a tritone from V. It shares the guide-tone tritone with V7, so the substitution preserves the resolution while converting the bass into a half-step descent.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "backdoor_dominant",
+      "key_context": "major",
+      "roman": "bVII7",
+      "scale_degree": "b7",
+      "triad_quality": "major_triad",
+      "seventh_quality": "dominant7",
+      "function_class": "dominant",
+      "typical_resolutions": [
+        "I",
+        "Imaj7"
+      ],
+      "category": "chromatic",
+      "typical_bass_degree": "b7",
+      "tendency_tones": [
+        "b7",
+        "b3"
+      ],
+      "notes": "Dominant seventh on the flat seventh degree resolving up a whole step to the tonic. Its seventh falls a half step to the major third of the tonic, which is the move that makes it work without a leading tone.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "passing_diminished_ascending",
+      "key_context": "any",
+      "roman": "#i°7",
+      "scale_degree": "#1",
+      "triad_quality": "diminished_triad",
+      "seventh_quality": "diminished7",
+      "function_class": "passing",
+      "typical_resolutions": [
+        "ii",
+        "ii7"
+      ],
+      "category": "chromatic",
+      "typical_bass_degree": "#1",
+      "tendency_tones": [
+        "#1"
+      ],
+      "notes": "Chromatic passing chord between I and ii. Its function is linear, so it should be spelled ascending and should not be relabelled as an applied chord.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "common_tone_diminished",
+      "key_context": "any",
+      "roman": "°7 on 1",
+      "scale_degree": "1",
+      "triad_quality": "diminished_triad",
+      "seventh_quality": "diminished7",
+      "function_class": "neighbor",
+      "typical_resolutions": [
+        "I"
+      ],
+      "category": "chromatic",
+      "typical_bass_degree": "1",
+      "tendency_tones": [],
+      "notes": "Diminished seventh sharing a tone with the chord it decorates and resolving back to it. Neighbour function, not dominant function.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "cadential_six_four",
+      "key_context": "any",
+      "roman": "V6/4-5/3",
+      "scale_degree": "5",
+      "triad_quality": "major_triad",
+      "seventh_quality": "none",
+      "function_class": "dominant",
+      "typical_resolutions": [
+        "V",
+        "V7"
+      ],
+      "category": "other",
+      "typical_bass_degree": "5",
+      "tendency_tones": [
+        "4",
+        "6"
+      ],
+      "notes": "Tonic-sounding chord over a dominant bass. It is dominant in function: the sixth and fourth above the bass are dissonances that resolve down by step to the fifth and third of V, so it must not be labelled as a tonic inversion in a strict profile.",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "modal_pedal_harmony",
+      "key_context": "any",
+      "roman": "pedal",
+      "scale_degree": "1",
+      "triad_quality": "any",
+      "seventh_quality": "none",
+      "function_class": "pedal",
+      "typical_resolutions": [
+        "any"
+      ],
+      "category": "other",
+      "typical_bass_degree": "1",
+      "tendency_tones": [],
+      "notes": "A sustained bass or drone under changing upper harmony. Chords above a pedal are evaluated for colour and voice leading rather than for root motion.",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    }
+  ]
+}

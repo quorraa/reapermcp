@@ -1,0 +1,1538 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "harmony.dominant_seventh_resolves_down_fifth",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A dominant seventh is expected to resolve down a fifth to its tonic.",
+      "trigger": {
+        "event": "chord_pair",
+        "chord_family": "dominant"
+      },
+      "conditions": [
+        "function_is_dominant",
+        "seventh_is_present"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "functional_or_modal_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "cinematic",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "chord_is_tritone_substitute",
+        "modal_center_is_active",
+        "pedal_point_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "This is the default expectation of functional tonality, and the engine rewards meeting it rather than forbidding everything else. Deceptive, backdoor and substitute resolutions are handled by their own rules.",
+      "test_ids": [
+        "dominant_resolves_down_fifth",
+        "deceptive_resolution_still_valid"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.blues_dominant_seventh_is_stable_tonic",
+      "domain": "harmony",
+      "kind": "style_sensitive_preference",
+      "summary": "In a blues context a dominant seventh on the tonic is a stable primary sonority and carries no resolution obligation.",
+      "trigger": {
+        "event": "chord_selected",
+        "chord_family": "dominant"
+      },
+      "conditions": [
+        "function_is_tonic",
+        "seventh_is_present"
+      ],
+      "effect": {
+        "score_delta": 3.0,
+        "severity": "moderate",
+        "score_component": "style_match"
+      },
+      "profiles": [
+        "blues",
+        "pop_rock",
+        "electronic_loop",
+        "neo_soul_rnb"
+      ],
+      "exceptions": [
+        "strictness_is_common_practice"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Blues harmony"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "The tonic seventh chord of the blues is not an unresolved dominant; treating it as one produces cadences that no blues musician would play.",
+      "test_ids": [
+        "blues_tonic_seventh_stable",
+        "blues_no_resolution_penalty"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.cadential_six_four_is_dominant_function",
+      "domain": "harmony",
+      "kind": "strong_theory_principle",
+      "summary": "A tonic-shaped chord over the dominant scale degree at a cadence is dominant in function, not a tonic inversion.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "cadential_six_four_present",
+        "cadence_is_expected_at_this_slot"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "functional_or_modal_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "pedal_point_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Labelling it as tonic misdescribes what the voices do: the sixth and fourth above the bass are dissonances that resolve down by step within the same bass note.",
+      "test_ids": [
+        "cadential_six_four_labeled_dominant",
+        "cadential_six_four_resolves_down"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.ii_v_i_is_preferred_cadential_path",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A predominant, dominant, tonic path is the strongest available approach to a cadence.",
+      "trigger": {
+        "event": "progression_path",
+        "progression_tag": "cadential"
+      },
+      "conditions": [
+        "function_is_predominant",
+        "cadence_is_expected_at_this_slot"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "functional_or_modal_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "jazz_standard",
+        "pop_rock",
+        "cinematic",
+        "neo_soul_rnb",
+        "blues"
+      ],
+      "exceptions": [
+        "modal_center_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Jazz progressions and ii-V-I behavior"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "The predominant is what makes the dominant sound prepared rather than abrupt; without it a cadence can arrive but rarely convinces.",
+      "test_ids": [
+        "ii_v_i_scores_above_v_i",
+        "ii_v_i_analysis_in_c_major"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.applied_dominant_requires_target",
+      "domain": "harmony",
+      "kind": "strong_theory_principle",
+      "summary": "An applied dominant is only valid when its target actually follows.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "chord_is_applied_dominant"
+      ],
+      "effect": {
+        "score_delta": -4.0,
+        "severity": "major",
+        "score_component": "functional_or_modal_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "target_chord_follows",
+        "chromaticism_target_is_high"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        },
+        {
+          "source_id": "mt21c",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Without its target the chord is simply a chromatic sonority and should be labelled as one. Calling it an applied dominant claims a tonicisation that never happens.",
+      "test_ids": [
+        "applied_dominant_needs_target",
+        "applied_dominant_identifies_tonicization"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.applied_leading_tone_resolves_up",
+      "domain": "harmony",
+      "kind": "strong_theory_principle",
+      "summary": "The borrowed leading tone of an applied chord must rise by half step into its target.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "chord_is_applied_dominant",
+        "target_chord_follows"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "cinematic",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "The raised tone is the only thing that distinguishes an applied dominant from a diatonic chord with an accidental; if it does not rise, the tonicisation does not read.",
+      "test_ids": [
+        "applied_leading_tone_rises"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.tritone_substitute_shares_tritone",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A tritone substitution is only valid when the substitute shares the original dominant's tritone.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "chord_is_tritone_substitute",
+        "guide_tones_present"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic",
+        "blues"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Modal and chromatic substitutions"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "The shared tritone is the entire mechanism. A dominant a tritone away that omits its third or seventh has nothing left to substitute with.",
+      "test_ids": [
+        "tritone_sub_shares_guide_tones",
+        "tritone_sub_db7_for_g7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.tritone_substitute_produces_chromatic_bass",
+      "domain": "harmony",
+      "kind": "style_sensitive_preference",
+      "summary": "A tritone substitution is most valuable when it converts the bass into a descending half step.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "chord_is_tritone_substitute",
+        "root_motion_is_stepwise"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "bass_quality"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "exceptions": [
+        "role_is_bass"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Modal and chromatic substitutions"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "If the bass line does not benefit, the substitution is usually just a more dissonant version of the chord it replaced.",
+      "test_ids": [
+        "tritone_sub_chromatic_bass_bonus"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.backdoor_dominant_targets_major_third",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A backdoor dominant on the flat seventh degree works because its seventh falls a half step into the major third of the tonic.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "chord_is_borrowed_from_parallel_mode",
+        "seventh_is_present",
+        "target_chord_follows"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "pop_rock",
+        "cinematic",
+        "blues"
+      ],
+      "exceptions": [
+        "key_is_minor"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c-mode-mixture",
+          "locator": "Mode Mixture"
+        },
+        {
+          "source_id": "open-music-theory",
+          "locator": "Modal and chromatic substitutions"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The resolution is by a single falling half step and has no leading tone at all, which is why it sounds softer than an authentic cadence.",
+      "test_ids": [
+        "backdoor_seventh_falls_to_third"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.borrowed_chord_comes_from_parallel_mode",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "Mixture chords are drawn from the parallel mode on the same tonic, not from an unrelated key.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "chord_is_borrowed_from_parallel_mode"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "chromaticism_target_is_high"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c-mode-mixture",
+          "locator": "Mode Mixture"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Keeping mixture tied to the parallel mode is what makes a borrowed chord sound like a colour rather than a mistake, and it is what lets the engine spell it correctly.",
+      "test_ids": [
+        "borrowed_iv_is_mixture",
+        "mixture_from_parallel_mode_only"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.minor_plagal_flat_six_falls",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "In minor plagal motion the borrowed flat sixth degree should fall by half step to the fifth of the tonic.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "chord_is_borrowed_from_parallel_mode",
+        "target_chord_follows"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "pop_rock",
+        "neo_soul_rnb",
+        "cinematic",
+        "common_practice",
+        "modal_ambient",
+        "jazz_standard"
+      ],
+      "exceptions": [
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c-mode-mixture",
+          "locator": "Mode Mixture"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "That half step is the whole effect. Voiced without it, the minor subdominant just sounds like a wrong chord.",
+      "test_ids": [
+        "minor_plagal_flat_six_resolves"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.neapolitan_defaults_to_first_inversion",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "The Neapolitan chord is conventionally used in first inversion so the bass keeps the familiar predominant scale degree.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "chord_is_borrowed_from_parallel_mode",
+        "function_is_predominant"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "cinematic"
+      ],
+      "exceptions": [
+        "chord_is_in_root_position",
+        "chromaticism_target_is_high"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c-mode-mixture",
+          "locator": "Mode Mixture"
+        },
+        {
+          "source_id": "mt21c",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Root position is possible and used, but first inversion is the default because it keeps the bass line behaving like an ordinary predominant.",
+      "test_ids": [
+        "neapolitan_first_inversion_default"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.neapolitan_flat_two_falls_to_leading_tone",
+      "domain": "harmony",
+      "kind": "strong_theory_principle",
+      "summary": "The lowered second degree of a Neapolitan falls to the leading tone, and the resulting diminished third should be filled in or split between voices.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "chord_is_borrowed_from_parallel_mode",
+        "target_chord_follows"
+      ],
+      "effect": {
+        "score_delta": -1.5,
+        "severity": "minor",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "exceptions": [
+        "voices_are_widely_spaced"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c-mode-mixture",
+          "locator": "Mode Mixture"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The diminished third is the awkward part of the chord. Handing the two pitches to different voices, or passing through the tonic degree, is the standard remedy.",
+      "test_ids": [
+        "neapolitan_diminished_third_handled"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.augmented_sixth_expands_outward",
+      "domain": "harmony",
+      "kind": "strong_theory_principle",
+      "summary": "The augmented sixth between the lowered sixth and raised fourth degrees expands outward by half step onto the dominant.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "chord_has_altered_tones",
+        "function_is_predominant",
+        "target_chord_follows"
+      ],
+      "effect": {
+        "score_delta": 3.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "mt21c-mode-mixture",
+          "locator": "Mode Mixture"
+        },
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "The outward expansion to an octave is what defines the chord; spelled or resolved as a minor seventh it becomes a different chord with a different destination.",
+      "test_ids": [
+        "augmented_sixth_expands_to_octave",
+        "augmented_sixth_spelling_preserved"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.german_sixth_routes_through_six_four",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A German augmented sixth normally moves to a cadential six-four rather than directly to the dominant triad.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "chord_has_altered_tones",
+        "function_is_predominant"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "exceptions": [
+        "cadential_six_four_present",
+        "quartal_or_planing_context"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c-mode-mixture",
+          "locator": "Mode Mixture"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Direct resolution produces parallel fifths between the chord's fifth and the dominant. Passing through the six-four delays one voice and removes them.",
+      "test_ids": [
+        "german_sixth_avoids_parallel_fifths"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.chromatic_mediant_is_not_diatonic",
+      "domain": "harmony",
+      "kind": "strong_theory_principle",
+      "summary": "A third-related chord sharing only one tone with the tonic must be labelled as a chromatic mediant rather than forced into a diatonic roman numeral.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "root_motion_is_third_related",
+        "note_is_chromatic_to_active_scale"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "cinematic",
+        "modal_ambient",
+        "pop_rock",
+        "electronic_loop",
+        "common_practice"
+      ],
+      "exceptions": [
+        "chord_is_applied_dominant",
+        "chord_is_borrowed_from_parallel_mode"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Chromatic mediants have no functional obligation. An analysis that invents one produces explanations that contradict what the music does next.",
+      "test_ids": [
+        "chromatic_mediant_not_forced_diatonic",
+        "chromatic_mediant_common_tone_reported"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.passing_diminished_is_linear",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A diminished seventh chord filling a chromatic step in the bass is a linear connector, not a dominant.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "root_motion_is_stepwise",
+        "chord_is_symmetric_collection"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "common_practice",
+        "blues",
+        "cinematic"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Jazz embellishing chords"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Its spelling must follow the direction of the bass motion. An ascending passing chord spelled with flats reads as descending and confuses every later step.",
+      "test_ids": [
+        "passing_diminished_linear_label",
+        "passing_diminished_ascending_spelling"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.common_tone_diminished_is_neighbor",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A diminished seventh that shares a tone with the chord it decorates and returns to it has neighbour function.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "chord_is_symmetric_collection",
+        "common_tone_available",
+        "target_chord_follows"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "common_practice",
+        "cinematic"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Jazz embellishing chords"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Analysing it as a dominant predicts a resolution that never comes; it goes back where it came from.",
+      "test_ids": [
+        "common_tone_diminished_returns"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.diminished_seventh_spelling_follows_destination",
+      "domain": "harmony",
+      "kind": "strong_theory_principle",
+      "summary": "The spelling of a fully diminished seventh must be chosen from where it resolves, not from its pitch classes.",
+      "trigger": {
+        "event": "chord_selected",
+        "chord_family": "dim"
+      },
+      "conditions": [
+        "chord_is_symmetric_collection"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "major",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "target_chord_follows"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Altered and extended chords"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Pitch-class symmetry must not erase functional spelling. Four different spellings of the same sound imply four different resolutions.",
+      "test_ids": [
+        "dim7_spelling_destination_sensitive",
+        "dim7_enharmonic_reinterpretation"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.retrogression_penalty",
+      "domain": "harmony",
+      "kind": "style_sensitive_preference",
+      "summary": "Moving from dominant back to predominant weakens functional direction.",
+      "trigger": {
+        "event": "chord_pair"
+      },
+      "conditions": [
+        "function_is_dominant"
+      ],
+      "effect": {
+        "score_delta": -2.0,
+        "severity": "moderate",
+        "score_component": "functional_or_modal_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "jazz_standard"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "pedal_point_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "V to IV is a defining move in blues and rock, so the penalty is confined to profiles that actually claim functional direction.",
+      "test_ids": [
+        "retrogression_penalised_common_practice",
+        "retrogression_free_in_blues"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.deceptive_resolution_keeps_leading_tone",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "In a deceptive cadence the leading tone still rises even though the bass does not resolve down a fifth.",
+      "trigger": {
+        "event": "chord_pair",
+        "cadence_kind": "deceptive"
+      },
+      "conditions": [
+        "function_is_dominant",
+        "root_motion_is_stepwise"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "voice_leading"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "jazz_standard",
+        "pop_rock"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "The disappointment of a deceptive cadence comes from the bass, not from abandoning the leading tone. Letting the leading tone fall instead makes it sound like an error.",
+      "test_ids": [
+        "deceptive_leading_tone_rises",
+        "deceptive_doubles_third"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.modal_vamp_avoids_leading_tone",
+      "domain": "harmony",
+      "kind": "style_sensitive_preference",
+      "summary": "In a modal context the raised seventh degree destroys the mode and should be avoided unless explicitly requested.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "modal_center_is_active",
+        "note_is_chromatic_to_active_scale"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "moderate",
+        "score_component": "functional_or_modal_coherence"
+      },
+      "profiles": [
+        "modal_ambient",
+        "electronic_loop",
+        "drum_and_bass",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "exceptions": [
+        "chromaticism_target_is_high",
+        "cadence_is_expected_at_this_slot"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Chord-scale theory"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "One leading tone converts a modal passage into ordinary minor. This is the single most common way a generated modal vamp stops sounding modal.",
+      "test_ids": [
+        "modal_vamp_no_leading_tone",
+        "modal_profile_rejects_v7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.planing_suspends_function",
+      "domain": "harmony",
+      "kind": "style_sensitive_preference",
+      "summary": "In a planing passage chords are evaluated as colour and parallel motion, not as functional progressions.",
+      "trigger": {
+        "event": "progression_path",
+        "progression_tag": "planing"
+      },
+      "conditions": [
+        "quartal_or_planing_context"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "style_match"
+      },
+      "profiles": [
+        "modal_ambient",
+        "neo_soul_rnb",
+        "cinematic",
+        "electronic_loop",
+        "jazz_standard"
+      ],
+      "exceptions": [
+        "strictness_is_common_practice"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Modal and chromatic substitutions"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Functional scoring actively penalises the thing that makes planing work, so it must be switched off rather than merely reduced for these schemas.",
+      "test_ids": [
+        "planing_scores_well_modal_profile",
+        "planing_disables_function_scoring"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.harmonic_rhythm_is_independent_of_tempo",
+      "domain": "harmony",
+      "kind": "style_sensitive_preference",
+      "summary": "Fast rhythmic activity does not imply fast harmonic rhythm.",
+      "trigger": {
+        "event": "harmonic_grid"
+      },
+      "conditions": [
+        "harmonic_rhythm_is_slow"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "style_match"
+      },
+      "profiles": [
+        "drum_and_bass",
+        "electronic_loop",
+        "modal_ambient",
+        "neo_soul_rnb"
+      ],
+      "exceptions": [
+        "harmonic_rhythm_is_fast"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Chord-scale theory"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Drum and bass runs at high tempo over harmony that often changes once every two bars. Deriving the chord grid from the drum grid is a category error.",
+      "test_ids": [
+        "dnb_slow_harmonic_rhythm",
+        "harmonic_rhythm_not_from_tempo"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.pedal_slows_harmonic_rhythm",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "Under a pedal point the harmony above may change freely without implying real root motion.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "pedal_point_is_active"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Chords over a pedal are decoration of one sustained harmony. Scoring their root motion as if the bass were moving produces nonsense.",
+      "test_ids": [
+        "pedal_chords_not_scored_as_root_motion"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.diatonic_default_at_low_chromaticism",
+      "domain": "harmony",
+      "kind": "implementation_heuristic",
+      "summary": "When the chromaticism control is low, non-diatonic candidates are filtered out before path search rather than merely penalised.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "chord_is_diatonic_to_key"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "minor",
+        "score_component": "chromaticism_target"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "chromaticism_target_is_high"
+      ],
+      "source_refs": [],
+      "confidence": 0.7,
+      "rationale": "Filtering rather than penalising keeps the search space small and makes the control audibly effective rather than a slight tilt in the scores.",
+      "test_ids": [
+        "low_chromaticism_filters_candidates",
+        "chromaticism_control_changes_pool"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.root_position_at_cadence",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "The final two chords of an authentic cadence are normally in root position.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "cadence_is_expected_at_this_slot",
+        "chord_is_in_root_position"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "functional_or_modal_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "pop_rock",
+        "jazz_standard"
+      ],
+      "exceptions": [
+        "modal_center_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Inversion at the cadence is what distinguishes an imperfect authentic cadence from a perfect one, so the engine must treat it as a deliberate choice.",
+      "test_ids": [
+        "pac_requires_root_position",
+        "iac_when_inverted"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.diminished_triad_avoids_root_position",
+      "domain": "harmony",
+      "kind": "style_sensitive_preference",
+      "summary": "A diminished triad is normally used in first inversion in strict tonal writing.",
+      "trigger": {
+        "event": "chord_selected",
+        "chord_family": "dim"
+      },
+      "conditions": [
+        "chord_is_in_root_position"
+      ],
+      "effect": {
+        "score_delta": -2.0,
+        "severity": "minor",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint"
+      ],
+      "exceptions": [
+        "seventh_is_present",
+        "modal_center_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Voice leading"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "The tritone against the bass is what makes root position unstable; adding a seventh changes the chord into one that is used in root position freely.",
+      "test_ids": [
+        "dim_triad_prefers_first_inversion"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.minor_key_dominant_raises_seventh",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A functional dominant in a minor key raises the seventh degree.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "key_is_minor",
+        "function_is_dominant"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "functional_or_modal_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "cinematic",
+        "pop_rock"
+      ],
+      "exceptions": [
+        "modal_center_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Natural minor has no leading tone, so a minor v cannot cadence. Raising the seventh is the default in tonal profiles and optional everywhere else.",
+      "test_ids": [
+        "minor_dominant_raised_seventh",
+        "aeolian_keeps_minor_v"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.descending_fifth_sequence_bonus",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A chain of descending-fifth root motions with resolving sevenths is a strong, self-justifying progression.",
+      "trigger": {
+        "event": "progression_path",
+        "progression_tag": "descending_fifths"
+      },
+      "conditions": [
+        "root_motion_is_descending_fifth",
+        "chordal_seventh_resolves_down_by_step"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "jazz_standard",
+        "cinematic",
+        "pop_rock",
+        "neo_soul_rnb"
+      ],
+      "exceptions": [
+        "modal_center_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Introduction to harmony"
+        },
+        {
+          "source_id": "mt21c",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "The sequence is held together by the chain of resolving sevenths rather than by the individual chords, which is why it tolerates chords that would be weak in isolation.",
+      "test_ids": [
+        "circle_of_fifths_sequence_bonus",
+        "sequence_sevenths_chain"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.chord_scale_membership_supports_melody",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A chord whose chord scale contains every melody note in its slot fits that slot better than one that does not.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "melody_is_chord_tone"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Chord-scale theory"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Chord-scale compatibility is a good generator of options and a poor arbiter of them; it contributes one score component and never decides a slot on its own.",
+      "test_ids": [
+        "chord_scale_membership_bonus",
+        "chord_scale_does_not_decide_alone"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.melody_note_must_be_chord_tone_or_classified",
+      "domain": "harmony",
+      "kind": "strong_theory_principle",
+      "summary": "Every structural melody note must be either a chord tone of its slot or carry an explicit non-chord-tone classification.",
+      "trigger": {
+        "event": "chord_selected"
+      },
+      "conditions": [
+        "melody_note_is_structural"
+      ],
+      "effect": {
+        "score_delta": -5.0,
+        "severity": "major",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "melody_is_extension",
+        "melody_is_altered_tone",
+        "melody_is_chord_tone"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Embellishing and non-chord tones"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "An unexplained clash on a structural note is the clearest possible sign that the harmonisation is wrong, so it is scored as a major fault rather than a small penalty.",
+      "test_ids": [
+        "structural_melody_note_explained",
+        "unexplained_clash_penalised"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.bass_led_chromatic_descent",
+      "domain": "harmony",
+      "kind": "style_sensitive_preference",
+      "summary": "A smooth chromatic or stepwise bass can justify chords that are weak as isolated harmonies.",
+      "trigger": {
+        "event": "progression_path",
+        "progression_tag": "bass_led"
+      },
+      "conditions": [
+        "root_motion_is_stepwise"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "bass_quality"
+      },
+      "profiles": [
+        "cinematic",
+        "pop_rock",
+        "jazz_standard",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "common_practice"
+      ],
+      "exceptions": [
+        "strictness_is_common_practice"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Harmonic function"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The lament bass and its relatives work because the line is convincing, not because the chords are. Bass-led candidates are one of the three default diversity strategies.",
+      "test_ids": [
+        "bass_led_strategy_produces_stepwise_bass",
+        "bass_led_candidate_is_distinct"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.tonicization_window_before_modulation",
+      "domain": "harmony",
+      "kind": "implementation_heuristic",
+      "summary": "A new tonal centre is reported as a tonicisation until it is confirmed over a minimum window, after which it becomes a key region.",
+      "trigger": {
+        "event": "progression_path"
+      },
+      "conditions": [
+        "chord_is_applied_dominant"
+      ],
+      "effect": {
+        "score_delta": 0.0,
+        "severity": "info",
+        "score_component": "functional_or_modal_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [],
+      "confidence": 0.65,
+      "rationale": "The boundary between tonicisation and modulation is genuinely a judgement call, so the engine exposes a threshold instead of pretending there is a fact of the matter.",
+      "test_ids": [
+        "tonicization_reported_as_region",
+        "modulation_needs_confirmation_window"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.candidate_strategies_must_differ_structurally",
+      "domain": "harmony",
+      "kind": "implementation_heuristic",
+      "summary": "Multiple requested candidates must differ in root motion, functional path, modal source or bass contour, not only in extensions.",
+      "trigger": {
+        "event": "progression_path"
+      },
+      "conditions": [
+        "chord_is_diatonic_to_key"
+      ],
+      "effect": {
+        "score_delta": 0.0,
+        "severity": "moderate",
+        "score_component": "candidate_diversity"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [],
+      "confidence": 0.7,
+      "rationale": "Adding a ninth to the same progression three times is not three candidates. Diversity is enforced after generation by clustering on structural features.",
+      "test_ids": [
+        "candidates_differ_structurally",
+        "three_candidates_distinct_strategies"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.suspension_resolves_to_third",
+      "domain": "harmony",
+      "kind": "theory_default",
+      "summary": "A suspended fourth resolving down to the third is a strong tonal pattern.",
+      "trigger": {
+        "event": "chord_pair",
+        "chord_family": "sus"
+      },
+      "conditions": [
+        "third_is_suspended",
+        "suspension_resolves_down_by_step"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "pop_rock",
+        "cinematic",
+        "blues"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "intentional_cluster"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Non-chord tones"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "The resolution is a default rather than a requirement: modal, neo-soul and ambient profiles treat the suspended sonority as stable and may never resolve it.",
+      "test_ids": [
+        "sus4_resolves_to_third",
+        "sus4_stable_in_modal_profile"
+      ],
+      "version": 1
+    },
+    {
+      "id": "harmony.constant_structure_keeps_voicing_shape",
+      "domain": "harmony",
+      "kind": "style_sensitive_preference",
+      "summary": "In constant-structure harmony every chord keeps the same voicing shape and quality regardless of key.",
+      "trigger": {
+        "event": "progression_path",
+        "progression_tag": "constant_structure"
+      },
+      "conditions": [
+        "quartal_or_planing_context"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "style_match"
+      },
+      "profiles": [
+        "modal_ambient",
+        "cinematic",
+        "neo_soul_rnb",
+        "electronic_loop",
+        "jazz_standard"
+      ],
+      "exceptions": [
+        "strictness_is_common_practice"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Modal and chromatic substitutions"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Correcting a constant-structure passage toward diatonic qualities removes the only thing that makes it coherent.",
+      "test_ids": [
+        "constant_structure_preserves_quality"
+      ],
+      "version": 1
+    }
+  ]
+}
