@@ -667,7 +667,11 @@ mod tests {
     fn transposition_spelling_table() {
         let cases = [
             ("C4", Interval::M3, "E4"),
-            ("C4", Interval::new(4, crate::interval::IntervalQuality::Diminished(1)).unwrap(), "Fb4"),
+            (
+                "C4",
+                Interval::new(4, crate::interval::IntervalQuality::Diminished(1)).unwrap(),
+                "Fb4",
+            ),
             ("F#4", Interval::m3, "A4"),
             ("Bb3", Interval::A4, "E4"),
             ("C4", Interval::P5, "G4"),
@@ -771,7 +775,7 @@ mod tests {
         let c4 = SpelledPitch::parse("C4").unwrap();
         assert!(bs3 < c4);
         assert!(SpelledPitch::parse("C4").unwrap() < SpelledPitch::parse("D4").unwrap());
-        let mut v = vec![
+        let mut v = [
             SpelledPitch::parse("G4").unwrap(),
             SpelledPitch::parse("C4").unwrap(),
             SpelledPitch::parse("E4").unwrap(),

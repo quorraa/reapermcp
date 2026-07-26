@@ -80,7 +80,12 @@ impl ScaleDef {
         m.insert("aliases", str_array(&self.aliases));
         m.insert(
             "semitones",
-            Json::Arr(self.semitones.iter().map(|s| Json::Int(*s as i64)).collect()),
+            Json::Arr(
+                self.semitones
+                    .iter()
+                    .map(|s| Json::Int(*s as i64))
+                    .collect(),
+            ),
         );
         m.insert("degree_spelling", str_array(&self.degree_spelling));
         m.insert(
@@ -196,7 +201,12 @@ impl ScaleInstance {
         let tonic_pitch = SpelledPitch::new(self.tonic.0, self.tonic.1, 4);
         let mut out = Vec::with_capacity(self.def.semitones.len());
         for (i, semi) in self.def.semitones.iter().enumerate() {
-            let number = match self.def.degree_spelling.get(i).and_then(|s| degree_number(s)) {
+            let number = match self
+                .def
+                .degree_spelling
+                .get(i)
+                .and_then(|s| degree_number(s))
+            {
                 Some(n) => n,
                 None => fallback_degree_number(*semi, self.def.semitones.len(), i),
             };
@@ -298,7 +308,7 @@ fn fallback_degree_number(semi: i32, len: usize, index: usize) -> i32 {
     if len == 7 {
         return index as i32 + 1;
     }
-    const TABLE: [i32; 12] = [1, 2, 2, 3, 3, 4, 4, 5, 6, 6, 7, 7];
+    const TABLE: [i32; 12] = [1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 7, 7];
     TABLE[semi.rem_euclid(12) as usize]
 }
 
@@ -389,7 +399,12 @@ pub mod builtin {
     }
     /// Whole-tone.
     pub fn whole_tone() -> ScaleDef {
-        def("whole_tone", "Whole tone", &[0, 2, 4, 6, 8, 10], "symmetric")
+        def(
+            "whole_tone",
+            "Whole tone",
+            &[0, 2, 4, 6, 8, 10],
+            "symmetric",
+        )
     }
     /// The altered scale (seventh mode of melodic minor).
     pub fn altered() -> ScaleDef {

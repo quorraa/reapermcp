@@ -118,6 +118,15 @@ impl BeatTime {
             num /= g;
             den /= g;
         }
+        // Saturate at the documented bound so a runaway computation can never
+        // wrap around into a negative position.
+        let bound = MAX_QUARTERS as i128;
+        if num > bound * den {
+            return BeatTime::MAX;
+        }
+        if num < -bound * den {
+            return BeatTime::MIN;
+        }
         let limit = i64::MAX as i128;
         if num.abs() <= limit && den <= limit {
             return BeatTime {
@@ -644,11 +653,7 @@ impl TimeMap {
             tempos.insert(0, TempoEvent::new(BeatTime::ZERO, first, false));
         }
         if meters.is_empty() {
-            meters.push(MeterEvent::new(
-                BeatTime::ZERO,
-                TimeSignature::default(),
-                0,
-            ));
+            meters.push(MeterEvent::new(BeatTime::ZERO, TimeSignature::default(), 0));
         } else if meters[0].qn > BeatTime::ZERO {
             let first = meters[0].sig;
             meters.insert(0, MeterEvent::new(BeatTime::ZERO, first, 0));
@@ -1052,7 +1057,10 @@ mod tests {
         assert_eq!(six_eight.bar_length_qn(), BeatTime::from_quarters(3));
         assert_eq!(six_eight.beat_unit_qn(), bt(1, 2));
         assert_eq!(TimeSignature::new(7, 8).bar_length_qn(), bt(7, 2));
-        assert_eq!(TimeSignature::new(3, 4).bar_length_qn(), BeatTime::from_quarters(3));
+        assert_eq!(
+            TimeSignature::new(3, 4).bar_length_qn(),
+            BeatTime::from_quarters(3)
+        );
     }
 
     #[test]
@@ -1070,7 +1078,10 @@ mod tests {
     #[test]
     fn time_signature_parse_and_display() {
         assert_eq!(TimeSignature::parse("4/4"), Some(TimeSignature::new(4, 4)));
-        assert_eq!(TimeSignature::parse(" 6/8 "), Some(TimeSignature::new(6, 8)));
+        assert_eq!(
+            TimeSignature::parse(" 6/8 "),
+            Some(TimeSignature::new(6, 8))
+        );
         assert_eq!(TimeSignature::parse("4"), None);
         assert_eq!(TimeSignature::parse("0/4"), None);
         assert_eq!(TimeSignature::parse("4/0"), None);
@@ -1160,7 +1171,10 @@ mod tests {
         assert_eq!(tm.bar_of(BeatTime::from_quarters(9)), 2);
         assert_eq!(tm.bar_of(bt(-1, 2)), -1);
         assert_eq!(tm.bar_start(2), BeatTime::from_quarters(8));
-        assert_eq!(tm.position_in_bar(BeatTime::from_quarters(9)), BeatTime::ONE);
+        assert_eq!(
+            tm.position_in_bar(BeatTime::from_quarters(9)),
+            BeatTime::ONE
+        );
     }
 
     #[test]
@@ -1185,8 +1199,14 @@ mod tests {
         assert_eq!(tm.bar_start(2), BeatTime::from_quarters(8));
         assert_eq!(tm.bar_start(5), BeatTime::from_quarters(17));
         assert_eq!(tm.bar_start(6), BeatTime::from_quarters(20));
-        assert_eq!(tm.meter_at(BeatTime::from_quarters(18)), TimeSignature::new(6, 8));
-        assert_eq!(tm.meter_at(BeatTime::from_quarters(9)), TimeSignature::new(3, 4));
+        assert_eq!(
+            tm.meter_at(BeatTime::from_quarters(18)),
+            TimeSignature::new(6, 8)
+        );
+        assert_eq!(
+            tm.meter_at(BeatTime::from_quarters(9)),
+            TimeSignature::new(3, 4)
+        );
     }
 
     #[test]
@@ -1329,10 +1349,7 @@ mod tests {
 
     #[test]
     fn invalid_tempo_values_are_repaired() {
-        let tm = TimeMap::new(
-            vec![TempoEvent::new(BeatTime::ZERO, 0.0, false)],
-            vec![],
-        );
+        let tm = TimeMap::new(vec![TempoEvent::new(BeatTime::ZERO, 0.0, false)], vec![]);
         assert_eq!(tm.tempos[0].bpm, 120.0);
         let nan = TimeMap::new(
             vec![TempoEvent::new(BeatTime::ZERO, f64::NAN, false)],

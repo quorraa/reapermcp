@@ -79,6 +79,9 @@ impl Default for Interval {
     }
 }
 
+// The frozen contract names these constants exactly as intervals are written
+// in text — `m3`, `d5`, `M7` — so the lower-case forms are deliberate.
+#[allow(non_upper_case_globals)]
 impl Interval {
     /// Perfect unison.
     pub const P1: Interval = Interval {
@@ -365,10 +368,7 @@ impl Interval {
 
     /// Drops all octaves, keeping number and quality.
     pub fn simple(self) -> Interval {
-        Interval {
-            octaves: 0,
-            ..self
-        }
+        Interval { octaves: 0, ..self }
     }
 
     /// A descending version of this interval.

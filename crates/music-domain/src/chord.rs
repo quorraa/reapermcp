@@ -337,7 +337,7 @@ impl ChordSpec {
     pub fn chord_tones(&self) -> Vec<(ChordDegree, (Letter, Accidental))> {
         let mut degrees: Vec<ChordDegree> = Vec::new();
         let mut push = |d: ChordDegree| {
-            if !degrees.iter().any(|e| *e == d) {
+            if !degrees.contains(&d) {
                 degrees.push(d);
             }
         };
@@ -582,6 +582,9 @@ impl ChordSpec {
         let six_nine = sixth && ninth_added && !self.seventh.is_present();
         let mut core_consumed_six = false;
         let mut core_consumed_nine = false;
+        // The extensions the core text actually expressed; anything else has to
+        // be spelled out in parentheses so the symbol still round-trips.
+        let mut core_stack: Option<u8> = None;
 
         // Core: triad marker plus the highest expressible seventh/extension.
         match self.triad {
@@ -589,12 +592,8 @@ impl ChordSpec {
             TriadQuality::Diminished => {
                 match self.seventh {
                     SeventhQuality::Diminished => s.push_str("dim7"),
-                    SeventhQuality::Minor => {
-                        s.push_str(&format!("m7{}5", acc(Accidental::FLAT)))
-                    }
-                    SeventhQuality::Major | SeventhQuality::AugmentedMajor => {
-                        s.push_str("dimMaj7")
-                    }
+                    SeventhQuality::Minor => s.push_str(&format!("m7{}5", acc(Accidental::FLAT))),
+                    SeventhQuality::Major | SeventhQuality::AugmentedMajor => s.push_str("dimMaj7"),
                     SeventhQuality::None => s.push_str("dim"),
                 };
             }
@@ -604,10 +603,12 @@ impl ChordSpec {
                     SeventhQuality::Minor => {
                         s.push_str("aug");
                         s.push_str(&stack_text(stack, ""));
+                        core_stack = stack;
                     }
                     SeventhQuality::Major | SeventhQuality::AugmentedMajor => {
                         s.push_str("aug");
                         s.push_str(&stack_text(stack, "maj"));
+                        core_stack = stack;
                     }
                     SeventhQuality::Diminished => s.push_str("aug(bb7)"),
                 };
@@ -615,9 +616,13 @@ impl ChordSpec {
             TriadQuality::Sus2 | TriadQuality::Sus4 => {
                 match self.seventh {
                     SeventhQuality::None => {}
-                    SeventhQuality::Minor => s.push_str(&stack_text(stack, "")),
+                    SeventhQuality::Minor => {
+                        s.push_str(&stack_text(stack, ""));
+                        core_stack = stack;
+                    }
                     SeventhQuality::Major | SeventhQuality::AugmentedMajor => {
-                        s.push_str(&stack_text(stack, "maj"))
+                        s.push_str(&stack_text(stack, "maj"));
+                        core_stack = stack;
                     }
                     SeventhQuality::Diminished => s.push_str("(bb7)"),
                 };
@@ -640,9 +645,13 @@ impl ChordSpec {
                             core_consumed_six = true;
                         }
                     }
-                    SeventhQuality::Minor => s.push_str(&stack_text(stack, "")),
+                    SeventhQuality::Minor => {
+                        s.push_str(&stack_text(stack, ""));
+                        core_stack = stack;
+                    }
                     SeventhQuality::Major | SeventhQuality::AugmentedMajor => {
-                        s.push_str(&stack_text(stack, "Maj"))
+                        s.push_str(&stack_text(stack, "Maj"));
+                        core_stack = stack;
                     }
                     SeventhQuality::Diminished => s.push_str("(bb7)"),
                 }
@@ -658,9 +667,13 @@ impl ChordSpec {
                         core_consumed_six = true;
                     }
                 }
-                SeventhQuality::Minor => s.push_str(&stack_text(stack, "")),
+                SeventhQuality::Minor => {
+                    s.push_str(&stack_text(stack, ""));
+                    core_stack = stack;
+                }
                 SeventhQuality::Major | SeventhQuality::AugmentedMajor => {
-                    s.push_str(&stack_text(stack, "maj"))
+                    s.push_str(&stack_text(stack, "maj"));
+                    core_stack = stack;
                 }
                 SeventhQuality::Diminished => s.push_str("(bb7)"),
             },
@@ -671,7 +684,7 @@ impl ChordSpec {
         }
 
         // Extensions the core could not express, e.g. a 13 with no 9 below it.
-        let top = stack.unwrap_or(0);
+        let top = core_stack.unwrap_or(0);
         let mut leftover: Vec<ChordDegree> = self
             .extensions
             .iter()
@@ -880,7 +893,10 @@ impl HarmonicFunction {
 
     /// Parses the identifier produced by [`HarmonicFunction::id`].
     pub fn parse(s: &str) -> Option<Self> {
-        HarmonicFunction::all().iter().copied().find(|f| f.id() == s)
+        HarmonicFunction::all()
+            .iter()
+            .copied()
+            .find(|f| f.id() == s)
     }
 
     /// Every variant, in declaration order.
@@ -1160,7 +1176,10 @@ impl ChordEvent {
             _ => None,
         };
         Ok(ChordEvent {
-            id: v.opt_i64_field("id")?.unwrap_or(0).clamp(0, u32::MAX as i64) as u32,
+            id: v
+                .opt_i64_field("id")?
+                .unwrap_or(0)
+                .clamp(0, u32::MAX as i64) as u32,
             spec: ChordSpec::from_json(v.field("spec")?)?,
             onset: BeatTime::from_json(v.field("onset")?)?,
             duration: BeatTime::from_json(v.field("duration")?)?,
@@ -1473,7 +1492,10 @@ mod tests {
         assert!(!c13.has_degree(6));
         assert_eq!(c13.degree_of_pc(10), Some(ChordDegree::new(7, -1)));
         assert_eq!(c13.degree_of_pc(1), None);
-        assert_eq!(symbol::parse("C").unwrap().degree_of_pc(4).unwrap().number, 3);
+        assert_eq!(
+            symbol::parse("C").unwrap().degree_of_pc(4).unwrap().number,
+            3
+        );
     }
 
     #[test]
@@ -1604,10 +1626,7 @@ mod tests {
     #[test]
     fn display_uses_the_canonical_symbol() {
         assert_eq!(symbol::parse("Cmaj7").unwrap().to_string(), "Cmaj7");
-        assert_eq!(
-            symbol::parse("Cmaj7").unwrap().render_unicode(),
-            "Cmaj7"
-        );
+        assert_eq!(symbol::parse("Cmaj7").unwrap().render_unicode(), "Cmaj7");
         assert_eq!(symbol::parse("C#m7b5").unwrap().render_unicode(), "C♯m7♭5");
     }
 

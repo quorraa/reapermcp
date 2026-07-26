@@ -49,7 +49,10 @@ impl DomainError {
 
     /// Reads back the JSON form produced by [`DomainError::to_json`].
     pub fn from_json(v: &qjson::Json) -> Result<DomainError, DomainError> {
-        Ok(DomainError::new(v.str_field("code")?, v.str_field("message")?))
+        Ok(DomainError::new(
+            v.str_field("code")?,
+            v.str_field("message")?,
+        ))
     }
 }
 
