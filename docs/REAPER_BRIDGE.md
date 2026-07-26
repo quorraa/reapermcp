@@ -36,8 +36,13 @@ the prose companion: design, rationale, operations, failure modes.
 
 Pure Lua 5.4, no external packages, no `require` outside `reaper/lib`. The lib
 directory is located from `debug.getinfo(1,"S").source`, and the IPC directory
-from `reaper.GetResourcePath()`-relative install location or an explicit
-`config.json` override — never from a hardcoded `%APPDATA%` path, because
+defaults to `<script dir>/ipc`, overridable by `ipc_dir` in `config.json`.
+Deriving it from the script's own location rather than from a hardcoded
+`%APPDATA%\REAPER` path is what makes portable installations work: the scripts
+are normally installed under `reaper.GetResourcePath()/Scripts/QLabs-Reaper-MCP/`,
+so the default lands in the resource tree, but the bridge keeps working
+unchanged if the whole directory is moved. Never a hardcoded `%APPDATA%` path,
+because
 portable REAPER installations are a supported configuration.
 
 ---
