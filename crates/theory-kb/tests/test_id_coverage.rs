@@ -55,12 +55,62 @@ fn ledger_path() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/test_id_coverage.json")
 }
 
+/// The other crates' claims, read back off the committed ledger.
+///
+/// `theory-kb` cannot see the downstream crates' test files, so it cannot
+/// derive their entries — it can only carry them. Every other key under
+/// `by_crate` is preserved verbatim, which is what lets a later crate record
+/// the ids it discharges without this crate having to know about it. The claims
+/// are still policed: `implemented ∪ pending` must equal the knowledge base's
+/// declared ids, and `every_claimed_test_id_has_a_test_of_that_name` proves each
+/// claim corresponds to a real test function in the claiming crate.
+fn foreign_claims() -> Vec<(String, Vec<String>)> {
+    let Ok(text) = std::fs::read_to_string(ledger_path()) else {
+        return Vec::new();
+    };
+    let Ok(ledger) = Json::parse(&text) else {
+        return Vec::new();
+    };
+    let Some(by_crate) = ledger.get("by_crate").and_then(Json::as_obj) else {
+        return Vec::new();
+    };
+    let mut out: Vec<(String, Vec<String>)> = by_crate
+        .iter()
+        .filter(|(name, _)| *name != "theory-kb")
+        .map(|(name, v)| {
+            let mut ids: Vec<String> = v
+                .as_arr()
+                .map(|a| {
+                    a.iter()
+                        .filter_map(Json::as_str)
+                        .map(str::to_string)
+                        .collect()
+                })
+                .unwrap_or_default();
+            ids.sort();
+            ids.dedup();
+            (name.to_string(), ids)
+        })
+        .collect();
+    out.sort_by(|a, b| a.0.cmp(&b.0));
+    out
+}
+
 /// Builds the ledger the current tree implies.
 fn expected_ledger() -> Json {
     let kb = KnowledgeBase::embedded();
     let all = kb.test_ids();
 
-    let mut implemented: Vec<String> = THEORY_KB_TESTS.iter().map(|s| (*s).to_string()).collect();
+    let mut own: Vec<String> = THEORY_KB_TESTS.iter().map(|s| (*s).to_string()).collect();
+    own.sort();
+    own.dedup();
+
+    let foreign = foreign_claims();
+
+    let mut implemented: Vec<String> = own.clone();
+    for (_, ids) in &foreign {
+        implemented.extend(ids.iter().cloned());
+    }
     implemented.sort();
     implemented.dedup();
 
@@ -71,7 +121,10 @@ fn expected_ledger() -> Json {
         .collect();
 
     let mut by_crate = JsonMap::new();
-    by_crate.insert("theory-kb", strings(&implemented));
+    by_crate.insert("theory-kb", strings(&own));
+    for (name, ids) in &foreign {
+        by_crate.insert(name.clone(), strings(ids));
+    }
 
     let mut m = JsonMap::new();
     m.insert("schema_version", Json::Str("1.0.0".into()));
@@ -263,5 +316,56 @@ fn each_test_this_crate_claims_exists_as_a_rust_test() {
             source.contains(&format!("fn {t}()")),
             "{t} is claimed but tests/rule_engine.rs has no `fn {t}()`"
         );
+    }
+}
+
+#[test]
+fn every_foreign_claim_has_a_test_of_that_name_in_the_claiming_crate() {
+    // `expected_ledger` carries downstream crates' entries verbatim, so the drift
+    // check alone cannot catch a stale or invented claim. This does: for every id
+    // another crate claims, a test function of exactly that name must exist
+    // somewhere under that crate's `tests/` directory.
+    let workspace = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .and_then(Path::parent)
+        .expect("workspace root")
+        .to_path_buf();
+
+    for (crate_name, ids) in foreign_claims() {
+        let tests_dir = workspace.join("crates").join(&crate_name).join("tests");
+        assert!(
+            tests_dir.is_dir(),
+            "{crate_name} claims {} test ids but has no tests/ directory at {}",
+            ids.len(),
+            tests_dir.display()
+        );
+        let mut source = String::new();
+        collect_rust_sources(&tests_dir, &mut source);
+        for id in &ids {
+            assert!(
+                source.contains(&format!("fn {id}(")),
+                "{crate_name} claims {id} but no `fn {id}()` exists under {}",
+                tests_dir.display()
+            );
+        }
+    }
+}
+
+/// Concatenates every `.rs` file under `dir`, recursively.
+fn collect_rust_sources(dir: &Path, out: &mut String) {
+    let Ok(entries) = std::fs::read_dir(dir) else {
+        return;
+    };
+    let mut paths: Vec<PathBuf> = entries.filter_map(Result::ok).map(|e| e.path()).collect();
+    paths.sort();
+    for p in paths {
+        if p.is_dir() {
+            collect_rust_sources(&p, out);
+        } else if p.extension().is_some_and(|e| e == "rs") {
+            if let Ok(text) = std::fs::read_to_string(&p) {
+                out.push_str(&text);
+                out.push('\n');
+            }
+        }
     }
 }
