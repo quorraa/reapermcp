@@ -1,0 +1,22 @@
+{
+  "bridge_version": "1.0.0",
+  "command": "stage_candidate",
+  "completed_at": "2026-07-26T18:51:19Z",
+  "duration_ms": 4.2,
+  "error": {
+    "code": "STALE_SNAPSHOT",
+    "details": {
+      "actual": "fnv1a64:0000000000000000",
+      "expected": "fnv1a64:3e7bf035037bcf4f"
+    },
+    "message": "the project no longer matches the snapshot this plan was generated from; re-inspect and re-generate rather than writing stale material"
+  },
+  "ok": false,
+  "protocol_version": "qlabs-reaper-ipc/1",
+  "reaper_version": "7.22/linux-x86_64",
+  "request_id": "err-stale-snapshot",
+  "result": null,
+  "started_at": "2026-07-26T18:51:19Z",
+  "transaction_id": "00000000-0000-4000-8000-0000000000d1",
+  "warnings": []
+}

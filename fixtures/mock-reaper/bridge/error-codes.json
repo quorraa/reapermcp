@@ -1,0 +1,70 @@
+{
+  "client_only": [
+    "BRIDGE_OFFLINE",
+    "IPC_TIMEOUT"
+  ],
+  "codes": [
+    "AMBIGUOUS_MELODY",
+    "BRIDGE_OFFLINE",
+    "BRIDGE_VERSION_MISMATCH",
+    "DUPLICATE_REQUEST",
+    "EXPIRED_REQUEST",
+    "INTERNAL_BRIDGE_ERROR",
+    "INVALID_EDIT_PLAN",
+    "INVALID_INSTANCE_TOKEN",
+    "IPC_PROTOCOL_MISMATCH",
+    "IPC_TIMEOUT",
+    "KNOWLEDGE_INVALID",
+    "MALFORMED_REQUEST",
+    "MIDI_CHANGED",
+    "MULTIPLE_MIDI_SOURCES",
+    "NO_ACTIVE_PROJECT",
+    "NO_MIDI_SOURCE",
+    "PAYLOAD_TOO_LARGE",
+    "PROJECT_CHANGED",
+    "RESULT_TOO_LARGE",
+    "SOURCE_ITEM_MISSING",
+    "SOURCE_TAKE_MISSING",
+    "STALE_SNAPSHOT",
+    "TEMPO_MAP_CHANGED",
+    "TRANSACTION_NOT_FOUND",
+    "UNDO_NOT_OWNED",
+    "UNKNOWN_COMMAND",
+    "UNSUPPORTED_REAPER_VERSION"
+  ],
+  "commands": [
+    "commit_candidate",
+    "discard_candidate",
+    "inspect_selection",
+    "ping",
+    "stage_candidate",
+    "status",
+    "undo_last_generation"
+  ],
+  "description": "Every structured error code. BRIDGE_OFFLINE and IPC_TIMEOUT are produced by the Rust client only.",
+  "operations": [
+    "create_folder_track",
+    "create_midi_item",
+    "create_midi_send",
+    "create_region",
+    "create_track",
+    "insert_notes",
+    "set_track_mute"
+  ],
+  "tag_keys": [
+    "QLABS_CANDIDATE_ID",
+    "QLABS_COMMITTED_AT",
+    "QLABS_CREATED_AT",
+    "QLABS_KNOWLEDGE_VERSION",
+    "QLABS_OBJECT_KIND",
+    "QLABS_OWNER",
+    "QLABS_PLAN_ID",
+    "QLABS_PREVIEW_MUTED",
+    "QLABS_ROLE",
+    "QLABS_SOURCE_SNAPSHOT",
+    "QLABS_STATUS",
+    "QLABS_TEMP_ID",
+    "QLABS_TRANSACTION_ID",
+    "QLABS_UNDO_LABEL"
+  ]
+}

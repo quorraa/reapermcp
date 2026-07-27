@@ -1,0 +1,405 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "mode_lydian",
+      "scale_id": "lydian",
+      "mode_family": "diatonic",
+      "brightness_rank": 1,
+      "characteristic_degree": "#4",
+      "typical_tonic_chord": "major7_sharp11",
+      "typical_cadential_gesture": "II -> I: the major supertonic triad falling to the tonic keeps #4 in play and avoids the leading-tone pull of a real dominant.",
+      "character": "Brightest diatonic mode; the raised fourth removes the tonic-defining tritone with 7 and replaces it with a tritone against the tonic itself.",
+      "contrast_with": [
+        "major",
+        "ionian"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ],
+      "notes": "Do not harmonise #4 with a plain IV triad; that instantly re-reads the passage as the major scale of the subdominant."
+    },
+    {
+      "id": "mode_ionian",
+      "scale_id": "ionian",
+      "mode_family": "diatonic",
+      "brightness_rank": 2,
+      "characteristic_degree": "7",
+      "typical_tonic_chord": "major7",
+      "typical_cadential_gesture": "V7 -> I authentic cadence.",
+      "character": "The reference bright mode. Functional rather than colouristic: its leading tone makes true cadences available.",
+      "contrast_with": [
+        "lydian",
+        "mixolydian"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_mixolydian",
+      "scale_id": "mixolydian",
+      "mode_family": "diatonic",
+      "brightness_rank": 3,
+      "characteristic_degree": "b7",
+      "typical_tonic_chord": "dominant7",
+      "typical_cadential_gesture": "bVII -> I: the flat-seventh triad falling to the tonic is the mode's signature cadence.",
+      "character": "Major third with a lowered seventh. Stable dominant-seventh tonic colour without any obligation to resolve.",
+      "contrast_with": [
+        "ionian",
+        "dorian"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ],
+      "notes": "The natural 4 is a tension over the tonic chord; treat it as a passing or suspended tone rather than a chord member unless the profile wants sus harmony."
+    },
+    {
+      "id": "mode_dorian",
+      "scale_id": "dorian",
+      "mode_family": "diatonic",
+      "brightness_rank": 4,
+      "characteristic_degree": "6",
+      "typical_tonic_chord": "minor7",
+      "typical_cadential_gesture": "IV -> i: the major subdominant triad falling to the minor tonic exposes the natural 6.",
+      "character": "Minor mode with a raised sixth. The brightest of the common minor modes and the default modal-vamp colour for jazz, funk and neo-soul.",
+      "contrast_with": [
+        "aeolian",
+        "phrygian"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_aeolian",
+      "scale_id": "aeolian",
+      "mode_family": "diatonic",
+      "brightness_rank": 5,
+      "characteristic_degree": "b6",
+      "typical_tonic_chord": "minor7",
+      "typical_cadential_gesture": "bVII -> i or bVI -> bVII -> i.",
+      "character": "The reference dark mode. Without a raised seventh it has no dominant of its own, which is exactly what makes it read as modal rather than tonal minor.",
+      "contrast_with": [
+        "dorian",
+        "phrygian"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_phrygian",
+      "scale_id": "phrygian",
+      "mode_family": "diatonic",
+      "brightness_rank": 6,
+      "characteristic_degree": "b2",
+      "typical_tonic_chord": "minor_triad",
+      "typical_cadential_gesture": "bII -> i: the flat-second triad descending by step to the tonic (Phrygian cadence).",
+      "character": "Very dark. The half step above the tonic is the whole identity of the mode and must be audible in the bass or the top voice.",
+      "contrast_with": [
+        "aeolian",
+        "locrian"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_locrian",
+      "scale_id": "locrian",
+      "mode_family": "diatonic",
+      "brightness_rank": 7,
+      "characteristic_degree": "b5",
+      "typical_tonic_chord": "half_diminished7",
+      "typical_cadential_gesture": "There is no stable cadence to a Locrian tonic; the mode is used as a chord scale over iiø7 rather than as a key.",
+      "character": "Darkest diatonic mode and the only one whose tonic triad is diminished, so it cannot prolong a tonic without external support such as a pedal.",
+      "contrast_with": [
+        "phrygian",
+        "locrian_natural_2"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ],
+      "notes": "Prefer locrian_natural_2 as the practical chord scale for a half-diminished chord, because b2 clashes with the chord root."
+    },
+    {
+      "id": "mode_melodic_minor",
+      "scale_id": "melodic_minor",
+      "mode_family": "melodic_minor",
+      "brightness_rank": 3,
+      "characteristic_degree": "7",
+      "typical_tonic_chord": "minor_major7",
+      "typical_cadential_gesture": "V7 -> i with the raised sixth and seventh retained through the cadence.",
+      "character": "Minor tonic with both upper degrees raised. In common practice the raised degrees are an ascending melodic device and the descending form reverts to natural minor; in jazz the collection is used in both directions as a fixed chord scale.",
+      "contrast_with": [
+        "natural_minor",
+        "harmonic_minor"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ],
+      "notes": "Ascending-versus-descending interpretation: analysis treats a descending 6 and 7 as natural-minor degrees rather than a modulation, while generation over a minor-major seventh chord uses the fixed ascending collection."
+    },
+    {
+      "id": "mode_harmonic_minor",
+      "scale_id": "harmonic_minor",
+      "mode_family": "harmonic_minor",
+      "brightness_rank": 4,
+      "characteristic_degree": "7",
+      "typical_tonic_chord": "minor_major7",
+      "typical_cadential_gesture": "V7 -> i, with the augmented second between b6 and 7 handled by leaping only in inner voices or by filling it in.",
+      "character": "Minor tonic with a real leading tone. Supplies the dominant that natural minor lacks, at the cost of an augmented second in the upper tetrachord.",
+      "contrast_with": [
+        "natural_minor",
+        "melodic_minor"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_lydian_dominant",
+      "scale_id": "lydian_dominant",
+      "mode_family": "melodic_minor",
+      "brightness_rank": 2,
+      "characteristic_degree": "#4",
+      "typical_tonic_chord": "dominant7_sharp11",
+      "typical_cadential_gesture": "Used as a colour over a non-resolving or tritone-substitute dominant rather than as a cadential key.",
+      "character": "Dominant seventh with a raised eleventh and a natural thirteenth. The default chord scale for a dominant that does not want to resolve down a fifth.",
+      "contrast_with": [
+        "mixolydian",
+        "altered"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_altered",
+      "scale_id": "altered",
+      "mode_family": "melodic_minor",
+      "brightness_rank": 7,
+      "characteristic_degree": "b5",
+      "typical_tonic_chord": "dominant7_alt",
+      "typical_cadential_gesture": "V7alt -> I or i, with every altered tone resolving by step into the target chord.",
+      "character": "Every tension above the guide tones is altered. Maximum instability, so it needs a destination; it is a resolution device, not a resting place.",
+      "contrast_with": [
+        "lydian_dominant",
+        "mixolydian"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_locrian_natural_2",
+      "scale_id": "locrian_natural_2",
+      "mode_family": "melodic_minor",
+      "brightness_rank": 6,
+      "characteristic_degree": "2",
+      "typical_tonic_chord": "half_diminished7",
+      "typical_cadential_gesture": "iiø7 -> V7alt -> i in minor.",
+      "character": "Half-diminished chord scale with a natural ninth, which removes the b9 clash that plain Locrian creates against the chord root.",
+      "contrast_with": [
+        "locrian",
+        "aeolian"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_phrygian_dominant",
+      "scale_id": "phrygian_dominant",
+      "mode_family": "harmonic_minor",
+      "brightness_rank": 5,
+      "characteristic_degree": "b2",
+      "typical_tonic_chord": "dominant7_flat9",
+      "typical_cadential_gesture": "V7b9 -> i, or the Andalusian descent bVII - bVI - V.",
+      "character": "Major third over a Phrygian lower tetrachord. The dominant of harmonic minor treated as a mode in its own right.",
+      "contrast_with": [
+        "phrygian",
+        "mixolydian"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_dorian_sharp4",
+      "scale_id": "dorian_sharp4",
+      "mode_family": "harmonic_minor",
+      "brightness_rank": 4,
+      "characteristic_degree": "#4",
+      "typical_tonic_chord": "minor6",
+      "typical_cadential_gesture": "i - IV#11 - i vamp; the raised fourth is a colour, not a leading tone.",
+      "character": "Dorian with a raised fourth. Reads as folk or cinematic minor rather than functional harmony.",
+      "contrast_with": [
+        "dorian",
+        "harmonic_minor"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_lydian_augmented",
+      "scale_id": "lydian_augmented",
+      "mode_family": "melodic_minor",
+      "brightness_rank": 1,
+      "characteristic_degree": "#5",
+      "typical_tonic_chord": "augmented_major7",
+      "typical_cadential_gesture": "Prolonged by common tone rather than cadence; typically resolves upward by step from #5 to 6 into a plain major chord.",
+      "character": "Brightest collection in common use: both the fourth and the fifth are raised, so the tonic chord is an augmented major seventh.",
+      "contrast_with": [
+        "lydian",
+        "whole_tone"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_mixolydian_flat6",
+      "scale_id": "mixolydian_flat6",
+      "mode_family": "melodic_minor",
+      "brightness_rank": 4,
+      "characteristic_degree": "b6",
+      "typical_tonic_chord": "dominant7_flat13",
+      "typical_cadential_gesture": "V7b13 -> i in minor.",
+      "character": "Dominant colour with a flat thirteenth. The standard chord scale for a dominant resolving to a minor tonic.",
+      "contrast_with": [
+        "mixolydian",
+        "phrygian_dominant"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_major_pentatonic",
+      "scale_id": "major_pentatonic",
+      "mode_family": "pentatonic",
+      "brightness_rank": 2,
+      "characteristic_degree": "6",
+      "typical_tonic_chord": "six_nine",
+      "typical_cadential_gesture": "No cadential obligation; the collection has no half steps and therefore no tendency tones.",
+      "character": "Five-note major subset with the fourth and seventh removed, which deletes every half step and every avoid note.",
+      "contrast_with": [
+        "major",
+        "blues_major"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_minor_pentatonic",
+      "scale_id": "minor_pentatonic",
+      "mode_family": "pentatonic",
+      "brightness_rank": 5,
+      "characteristic_degree": "b7",
+      "typical_tonic_chord": "minor7",
+      "typical_cadential_gesture": "No cadential obligation; used over static minor or dominant vamps.",
+      "character": "Five-note minor subset. Freely usable over minor seventh, dominant seventh and suspended harmony because it contains no leading tone.",
+      "contrast_with": [
+        "natural_minor",
+        "blues_minor"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_blues_minor",
+      "scale_id": "blues_minor",
+      "mode_family": "blues",
+      "brightness_rank": 5,
+      "characteristic_degree": "b5",
+      "typical_tonic_chord": "dominant7",
+      "typical_cadential_gesture": "Cadence is rhetorical rather than functional: the b3 and b5 bend into 3 and 5 over a stable dominant-seventh tonic.",
+      "character": "Minor pentatonic plus the flat fifth used as a passing inflection. Deliberately conflicts with the major third of the underlying dominant chords, which is the point.",
+      "contrast_with": [
+        "minor_pentatonic",
+        "blues_major"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_whole_tone",
+      "scale_id": "whole_tone",
+      "mode_family": "symmetric",
+      "brightness_rank": 1,
+      "characteristic_degree": "#5",
+      "typical_tonic_chord": "dominant7_sharp5",
+      "typical_cadential_gesture": "Slides chromatically into a target chord; it has no internal cadence because every step is identical.",
+      "character": "Fully symmetric, so it has no tonic and only two transpositions. Used for suspension of tonal gravity.",
+      "contrast_with": [
+        "lydian_augmented",
+        "altered"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_octatonic_half_whole",
+      "scale_id": "octatonic_half_whole",
+      "mode_family": "symmetric",
+      "brightness_rank": 4,
+      "characteristic_degree": "b9",
+      "typical_tonic_chord": "dominant13_flat9",
+      "typical_cadential_gesture": "Resolves down a fifth like any dominant; the symmetry supplies four possible roots.",
+      "character": "Alternating half and whole steps starting with a half step. Supplies b9, #9, #11 and natural 13 over a dominant chord simultaneously.",
+      "contrast_with": [
+        "altered",
+        "mixolydian"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mode_octatonic_whole_half",
+      "scale_id": "octatonic_whole_half",
+      "mode_family": "symmetric",
+      "brightness_rank": 5,
+      "characteristic_degree": "b5",
+      "typical_tonic_chord": "diminished7",
+      "typical_cadential_gesture": "Any of its four diminished-seventh chords can resolve up by half step; the spelling chosen must reflect the intended destination.",
+      "character": "Alternating whole and half steps. The scale of the fully diminished seventh chord and of common-tone diminished motion.",
+      "contrast_with": [
+        "octatonic_half_whole",
+        "harmonic_minor"
+      ],
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    }
+  ]
+}

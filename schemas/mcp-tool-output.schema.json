@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qlabs.dev/schemas/mcp-tool-output.schema.json",
+  "title": "QLabs REAPER MCP tool output envelope",
+  "description": "The shape shared by every tool result this server produces, in both directions. A successful `tools/call` returns `structuredContent` satisfying the success branch — `ok: true` plus a `warnings` array — and each tool additionally declares its own outputSchema, which the server enforces before serving the result. A failed call returns `isError: true` and `structuredContent` satisfying the failure branch: `ok: false`, a machine-readable `error_code`, a human `message`, and advisory `details`. Callers branch on `error_code` and never on `details`. This schema is the contract that lets a client handle any tool's reply without knowing which tool it called.",
+  "oneOf": [
+    { "$ref": "#/$defs/success" },
+    { "$ref": "#/$defs/failure" }
+  ],
+  "$defs": {
+    "success": {
+      "title": "Successful tool output",
+      "type": "object",
+      "required": ["ok", "warnings"],
+      "additionalProperties": true,
+      "properties": {
+        "ok": { "const": true },
+        "warnings": {
+          "description": "Non-fatal findings. A tool may succeed and still have something to say.",
+          "type": "array",
+          "maxItems": 1000,
+          "items": { "$ref": "#/$defs/warning" }
+        }
+      }
+    },
+    "failure": {
+      "title": "Failed tool output",
+      "description": "Returned as a tools/call result with isError: true, never as a JSON-RPC transport error: a chord that cannot be voiced is not a protocol problem.",
+      "type": "object",
+      "required": ["ok", "error_code", "message", "details"],
+      "additionalProperties": false,
+      "properties": {
+        "ok": { "const": false },
+        "error_code": { "$ref": "#/$defs/error_code" },
+        "message": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "details": {
+          "description": "Advisory structure whose shape depends on the code. Never branch on it.",
+          "type": "object"
+        },
+        "remedy": {
+          "description": "What the caller can do about it, when there is something useful to say.",
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "warning": {
+      "type": "object",
+      "required": ["code", "message"],
+      "additionalProperties": true,
+      "properties": {
+        "code": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "message": { "type": "string", "maxLength": 2000 },
+        "severity": { "type": "string", "enum": ["info", "minor", "moderate", "major"] }
+      }
+    },
+    "error_code": {
+      "description": "The union of the server's own vocabulary and the bridge's brief-19 codes. An unknown code must be treated as a generic failure rather than crashing the client.",
+      "type": "string",
+      "enum": [
+        "ANALYSIS_FAILED",
+        "ARRANGEMENT_FAILED",
+        "CANCELLED",
+        "EXPIRED_ID",
+        "GENERATION_FAILED",
+        "INTERNAL_ERROR",
+        "INVALID_ARGUMENT",
+        "INVALID_ARGUMENTS",
+        "KNOWLEDGE_INVALID",
+        "LOOP_AUDIT_FAILED",
+        "OUTPUT_SCHEMA_VIOLATION",
+        "STORE_FULL",
+        "UNKNOWN_ID",
+        "UNKNOWN_PROFILE",
+        "UNKNOWN_PROMPT",
+        "UNKNOWN_RESOURCE",
+        "UNKNOWN_TOOL",
+        "UNKNOWN_TRANSACTION",
+
+        "BRIDGE_OFFLINE",
+        "IPC_TIMEOUT",
+        "IPC_CANCELLED",
+        "IPC_IO_ERROR",
+        "BRIDGE_VERSION_MISMATCH",
+        "IPC_PROTOCOL_MISMATCH",
+        "INVALID_INSTANCE_TOKEN",
+        "EXPIRED_REQUEST",
+        "PAYLOAD_TOO_LARGE",
+        "NO_ACTIVE_PROJECT",
+        "NO_MIDI_SOURCE",
+        "MULTIPLE_MIDI_SOURCES",
+        "AMBIGUOUS_MELODY",
+        "SOURCE_ITEM_MISSING",
+        "SOURCE_TAKE_MISSING",
+        "STALE_SNAPSHOT",
+        "SNAPSHOT_HASH_MISMATCH",
+        "PROJECT_CHANGED",
+        "MIDI_CHANGED",
+        "TEMPO_MAP_CHANGED",
+        "INVALID_EDIT_PLAN",
+        "UNSUPPORTED_REAPER_VERSION",
+        "UNDO_NOT_OWNED",
+        "INTERNAL_BRIDGE_ERROR",
+        "MALFORMED_REQUEST",
+        "UNKNOWN_COMMAND",
+        "DUPLICATE_REQUEST",
+        "RESULT_TOO_LARGE",
+        "TRANSACTION_NOT_FOUND"
+      ]
+    }
+  }
+}

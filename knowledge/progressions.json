@@ -1,0 +1,4831 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "prog_ii_v_i_major",
+      "name": "ii-V-I in major",
+      "degrees": [
+        "ii7",
+        "V7",
+        "Imaj7"
+      ],
+      "function_path": [
+        "predominant",
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major",
+        "dorian",
+        "mixolydian"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "common_practice",
+        "pop_rock",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "ii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        }
+      ],
+      "bass_implications": "Root motion by descending fifth twice. A stepwise alternative puts the third of ii in the bass so the bass walks 4-5-1.",
+      "voice_leading_notes": "The seventh of ii falls a half step to the third of V; the third of V rises to the tonic and the seventh of V falls to the third of I. Holding those two guide-tone lines is what makes the progression sound inevitable.",
+      "expected_destination": "Imaj7 or a tonic substitute such as vi7 or iii7.",
+      "explanation_template": "ii-V-I in {key}: {slot0} prepares the dominant, {slot1} supplies the tritone, and {slot2} resolves it. Guide tones move by step throughout.",
+      "tags": [
+        "functional",
+        "cadential",
+        "descending_fifths"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_ii_v_i_minor",
+      "name": "ii-V-i in minor",
+      "degrees": [
+        "iiø7",
+        "V7",
+        "i7"
+      ],
+      "function_path": [
+        "predominant",
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "harmonic_minor",
+        "locrian_natural_2",
+        "altered",
+        "natural_minor"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "common_practice",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "iiø7",
+          "quality": "half_diminished7",
+          "chord_tones": [
+            "2",
+            "4",
+            "b6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4"
+          ],
+          "avoid_degrees": [
+            "b2"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        }
+      ],
+      "bass_implications": "Same descending-fifth bass as the major form; the flat sixth degree in iiø7 is what marks the minor version.",
+      "voice_leading_notes": "The dominant normally carries b9 or b13 so its alterations resolve inward to chord tones of the minor tonic. Avoid the natural 13 on the dominant here.",
+      "expected_destination": "i7, imMaj7 or i6 depending on how tonic the arrival should sound.",
+      "explanation_template": "Minor ii-V-i in {key}: {slot0} darkens the predominant with a flat fifth, {slot1} adds altered tension, and {slot2} resolves to the minor tonic.",
+      "tags": [
+        "functional",
+        "cadential",
+        "minor"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_turnaround_i_vi_ii_v",
+      "name": "I-vi-ii-V turnaround",
+      "degrees": [
+        "Imaj7",
+        "vi7",
+        "ii7",
+        "V7"
+      ],
+      "function_path": [
+        "tonic",
+        "tonic",
+        "predominant",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "major"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "pop_rock",
+        "common_practice",
+        "blues"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "vi7",
+          "quality": "minor7",
+          "chord_tones": [
+            "6",
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "ii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Bass descends by third then moves in fifths. Substituting VI7 for vi7 makes the bass identical but adds an applied leading tone.",
+      "voice_leading_notes": "Every adjacent pair shares two common tones, so a four-part setting can move almost entirely by step.",
+      "expected_destination": "Back to the top of the form, normally I.",
+      "explanation_template": "Standard turnaround in {key}: two tonic-region chords lead through the predominant to the dominant so the form can repeat.",
+      "tags": [
+        "turnaround",
+        "loop_friendly",
+        "functional"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_turnaround_iii_vi_ii_v",
+      "name": "iii-VI7-ii-V turnaround",
+      "degrees": [
+        "iii7",
+        "VI7",
+        "ii7",
+        "V7"
+      ],
+      "function_path": [
+        "tonic",
+        "applied",
+        "predominant",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "major",
+        "altered"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "iii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "3",
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "VI7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "6",
+            "#1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "ii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Bass falls in fifths from the mediant.",
+      "voice_leading_notes": "VI7 is an applied dominant of ii, so its third must rise into the root of ii. Altering VI7 with b9 or b13 strengthens the pull.",
+      "expected_destination": "I or Imaj7 at the top of the next chorus.",
+      "explanation_template": "Applied turnaround in {key}: the mediant substitutes for tonic and each chord becomes the dominant of the next.",
+      "tags": [
+        "turnaround",
+        "applied",
+        "descending_fifths"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_circle_of_fifths_diatonic",
+      "name": "Diatonic circle of fifths",
+      "degrees": [
+        "Imaj7",
+        "IVmaj7",
+        "viiø7",
+        "iii7",
+        "vi7",
+        "ii7",
+        "V7",
+        "Imaj7"
+      ],
+      "function_path": [
+        "tonic",
+        "predominant",
+        "dominant",
+        "tonic",
+        "tonic",
+        "predominant",
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "jazz_standard",
+        "cinematic",
+        "pop_rock"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "IVmaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "viiø7",
+          "quality": "half_diminished7",
+          "chord_tones": [
+            "7",
+            "2",
+            "4",
+            "6"
+          ],
+          "color_tones": [
+            "2",
+            "4"
+          ],
+          "avoid_degrees": [
+            "b2"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "iii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "3",
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        },
+        {
+          "roman": "vi7",
+          "quality": "minor7",
+          "chord_tones": [
+            "6",
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 4
+        },
+        {
+          "roman": "ii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 5
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 6
+        },
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 7
+        }
+      ],
+      "bass_implications": "Bass alternates falling fifths and rising fourths so it stays inside one octave.",
+      "voice_leading_notes": "Sevenths chain: each chordal seventh becomes the third of the next chord and falls by step. Alternate complete and incomplete voicings to avoid parallel fifths.",
+      "expected_destination": "Tonic.",
+      "explanation_template": "Descending-fifth sequence through every diatonic degree of {key}; the chain of resolving sevenths is the mechanism, not the individual chords.",
+      "tags": [
+        "sequence",
+        "functional"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_descending_fifths_minor",
+      "name": "Descending fifths in minor",
+      "degrees": [
+        "i7",
+        "iv7",
+        "bVII7",
+        "IIImaj7",
+        "bVImaj7",
+        "iiø7",
+        "V7",
+        "i7"
+      ],
+      "function_path": [
+        "tonic",
+        "predominant",
+        "modal",
+        "tonic",
+        "predominant",
+        "predominant",
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "natural_minor",
+        "harmonic_minor"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "cinematic",
+        "common_practice",
+        "neo_soul_rnb"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "iv7",
+          "quality": "minor7",
+          "chord_tones": [
+            "4",
+            "b6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "bVII7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "b7",
+            "2",
+            "4",
+            "b6"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "IIImaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "b3",
+            "5",
+            "b7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        },
+        {
+          "roman": "bVImaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "b6",
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 4
+        },
+        {
+          "roman": "iiø7",
+          "quality": "half_diminished7",
+          "chord_tones": [
+            "2",
+            "4",
+            "b6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4"
+          ],
+          "avoid_degrees": [
+            "b2"
+          ],
+          "slot": 5
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 6
+        },
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 7
+        }
+      ],
+      "bass_implications": "Continuous falling fifths; the flat sixth degree appears as a bass note twice.",
+      "voice_leading_notes": "As in the major sequence, the sevenths chain downward by step. The raised seventh appears only in the final dominant.",
+      "expected_destination": "Minor tonic.",
+      "explanation_template": "Minor descending-fifth sequence in {key}, ending with the only functional dominant in the chain.",
+      "tags": [
+        "sequence",
+        "minor"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_lament_bass",
+      "name": "Lament bass",
+      "degrees": [
+        "i",
+        "V6/4",
+        "i",
+        "iv"
+      ],
+      "function_path": [
+        "tonic",
+        "dominant",
+        "tonic",
+        "predominant"
+      ],
+      "applicable_scales": [
+        "natural_minor",
+        "harmonic_minor",
+        "phrygian"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "cinematic",
+        "pop_rock",
+        "modal_ambient"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "i",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "V6/4",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "i",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "iv",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "4",
+            "b6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "The defining feature is the chromatic descent 1 - 7 - b7 - 6 - b6 - 5 in the bass; the chords above it are whatever harmonises that line.",
+      "voice_leading_notes": "Upper voices should stay as static as possible so the descending bass is the only thing that moves. Common tones do most of the work.",
+      "expected_destination": "The dominant, or a Phrygian arrival on bII.",
+      "explanation_template": "Lament bass in {key}: a stepwise chromatic descent from tonic to dominant in the bass, harmonised above.",
+      "tags": [
+        "bass_led",
+        "chromatic",
+        "descending"
+      ],
+      "notes": "Encoded here by its bass line rather than by fixed roman numerals, because the harmonisation varies widely while the bass does not.",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_line_cliche_minor",
+      "name": "Minor line cliche",
+      "degrees": [
+        "i",
+        "imMaj7",
+        "i7",
+        "i6"
+      ],
+      "function_path": [
+        "tonic",
+        "tonic",
+        "tonic",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "harmonic_minor",
+        "melodic_minor",
+        "natural_minor",
+        "dorian"
+      ],
+      "style_profiles": [
+        "cinematic",
+        "pop_rock",
+        "jazz_standard",
+        "neo_soul_rnb",
+        "common_practice"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "i",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "imMaj7",
+          "quality": "minor_major7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6"
+          ],
+          "avoid_degrees": [
+            "b6"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "i6",
+          "quality": "minor6",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "6"
+          ],
+          "color_tones": [
+            "2",
+            "4"
+          ],
+          "avoid_degrees": [
+            "b6"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Static bass on the tonic throughout. The motion is entirely in an inner voice.",
+      "voice_leading_notes": "One voice descends 1 - 7 - b7 - 6 while the others hold. Give that line to a single voice and do not let it jump registers.",
+      "expected_destination": "iv, or a dominant.",
+      "explanation_template": "Line cliche over a static {key} minor tonic: one inner voice descends chromatically while the chord root stays put.",
+      "tags": [
+        "prolongation",
+        "chromatic",
+        "inner_voice"
+      ],
+      "notes": "",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_line_cliche_major",
+      "name": "Major line cliche",
+      "degrees": [
+        "I",
+        "Imaj7",
+        "I7",
+        "I6"
+      ],
+      "function_path": [
+        "tonic",
+        "tonic",
+        "tonic",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major",
+        "mixolydian"
+      ],
+      "style_profiles": [
+        "pop_rock",
+        "cinematic",
+        "jazz_standard",
+        "common_practice"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "I6",
+          "quality": "major6",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "6"
+          ],
+          "color_tones": [
+            "2",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Static tonic bass.",
+      "voice_leading_notes": "The descending line 1 - 7 - b7 - 6 sits in an upper or inner voice. When it reaches b7 the chord becomes an applied dominant of IV, which is usually where it goes.",
+      "expected_destination": "IV or IVmaj7.",
+      "explanation_template": "Major line cliche in {key}: a descending chromatic voice turns the tonic into an applied dominant of the subdominant.",
+      "tags": [
+        "prolongation",
+        "chromatic",
+        "applied"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_twelve_bar_blues",
+      "name": "Twelve-bar blues",
+      "degrees": [
+        "I7",
+        "I7",
+        "I7",
+        "I7",
+        "IV7",
+        "IV7",
+        "I7",
+        "I7",
+        "V7",
+        "IV7",
+        "I7",
+        "V7"
+      ],
+      "function_path": [
+        "tonic",
+        "tonic",
+        "tonic",
+        "tonic",
+        "predominant",
+        "predominant",
+        "tonic",
+        "tonic",
+        "dominant",
+        "predominant",
+        "tonic",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "blues_minor",
+        "mixolydian",
+        "blues_major",
+        "minor_pentatonic"
+      ],
+      "style_profiles": [
+        "blues",
+        "pop_rock",
+        "jazz_standard",
+        "electronic_loop"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        },
+        {
+          "roman": "IV7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 4
+        },
+        {
+          "roman": "IV7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 5
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 6
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 7
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 8
+        },
+        {
+          "roman": "IV7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 9
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 10
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 11
+        }
+      ],
+      "bass_implications": "Roots only in the classic form; the bass may add the sixth and flat seventh as a boogie figure.",
+      "voice_leading_notes": "Dominant sevenths do not resolve here. The seventh of I7 is a stable chord member, and parallel motion between I7 and IV7 is idiomatic rather than an error.",
+      "expected_destination": "Back to bar one, or a tonic ending in place of the final V7.",
+      "explanation_template": "Twelve-bar blues in {key}: all three primary chords are dominant sevenths and none of them carries a resolution obligation.",
+      "tags": [
+        "blues",
+        "loop_friendly",
+        "form"
+      ],
+      "notes": "The last bar is the turnaround; replace V7 with I7 for a closed ending.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_quick_change_blues",
+      "name": "Quick-change blues",
+      "degrees": [
+        "I7",
+        "IV7",
+        "I7",
+        "I7",
+        "IV7",
+        "IV7",
+        "I7",
+        "VI7",
+        "ii7",
+        "V7",
+        "I7",
+        "V7"
+      ],
+      "function_path": [
+        "tonic",
+        "predominant",
+        "tonic",
+        "tonic",
+        "predominant",
+        "predominant",
+        "tonic",
+        "applied",
+        "predominant",
+        "dominant",
+        "tonic",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "blues_minor",
+        "mixolydian",
+        "bebop_dominant"
+      ],
+      "style_profiles": [
+        "blues",
+        "jazz_standard",
+        "pop_rock"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "IV7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        },
+        {
+          "roman": "IV7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 4
+        },
+        {
+          "roman": "IV7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 5
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 6
+        },
+        {
+          "roman": "VI7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "6",
+            "#1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 7
+        },
+        {
+          "roman": "ii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 8
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 9
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 10
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 11
+        }
+      ],
+      "bass_implications": "Same root plan as the plain blues but with a ii-V in bars nine and ten.",
+      "voice_leading_notes": "From bar seven onward the guide tones start behaving functionally again, so the chordal sevenths should resolve down by step through the turnaround.",
+      "expected_destination": "Top of the next chorus.",
+      "explanation_template": "Quick-change blues in {key}: the subdominant arrives a bar early and the last four bars are a functional turnaround.",
+      "tags": [
+        "blues",
+        "form",
+        "turnaround"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_jazz_blues",
+      "name": "Jazz blues",
+      "degrees": [
+        "I7",
+        "IV7",
+        "I7",
+        "v7",
+        "IV7",
+        "#ivo7",
+        "I7",
+        "VI7",
+        "ii7",
+        "V7",
+        "iii7",
+        "VI7"
+      ],
+      "function_path": [
+        "tonic",
+        "predominant",
+        "tonic",
+        "predominant",
+        "predominant",
+        "passing",
+        "tonic",
+        "applied",
+        "predominant",
+        "dominant",
+        "tonic",
+        "applied"
+      ],
+      "applicable_scales": [
+        "mixolydian",
+        "bebop_dominant",
+        "altered",
+        "blues_minor"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "blues",
+        "neo_soul_rnb"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "IV7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "v7",
+          "quality": "minor7",
+          "chord_tones": [
+            "5",
+            "b7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        },
+        {
+          "roman": "IV7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 4
+        },
+        {
+          "roman": "#ivo7",
+          "quality": "diminished7",
+          "chord_tones": [
+            "#4",
+            "6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 5
+        },
+        {
+          "roman": "I7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 6
+        },
+        {
+          "roman": "VI7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "6",
+            "#1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 7
+        },
+        {
+          "roman": "ii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 8
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 9
+        },
+        {
+          "roman": "iii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "3",
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 10
+        },
+        {
+          "roman": "VI7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "6",
+            "#1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 11
+        }
+      ],
+      "bass_implications": "Bar four introduces an applied ii-V into IV; bar six uses a chromatic passing diminished chord that keeps the bass moving by half step.",
+      "voice_leading_notes": "The passing diminished chord in bar six is linear: spell it ascending and resolve it into the first inversion of the tonic.",
+      "expected_destination": "The turnaround repeats the form.",
+      "explanation_template": "Jazz blues in {key}: the blues skeleton with applied dominants, a passing diminished chord and a full turnaround.",
+      "tags": [
+        "blues",
+        "jazz",
+        "form",
+        "applied"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_minor_blues",
+      "name": "Minor blues",
+      "degrees": [
+        "i7",
+        "i7",
+        "i7",
+        "i7",
+        "iv7",
+        "iv7",
+        "i7",
+        "i7",
+        "bVImaj7",
+        "V7",
+        "i7",
+        "V7"
+      ],
+      "function_path": [
+        "tonic",
+        "tonic",
+        "tonic",
+        "tonic",
+        "predominant",
+        "predominant",
+        "tonic",
+        "tonic",
+        "predominant",
+        "dominant",
+        "tonic",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "natural_minor",
+        "minor_pentatonic",
+        "blues_minor",
+        "harmonic_minor"
+      ],
+      "style_profiles": [
+        "blues",
+        "jazz_standard",
+        "neo_soul_rnb",
+        "drum_and_bass"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        },
+        {
+          "roman": "iv7",
+          "quality": "minor7",
+          "chord_tones": [
+            "4",
+            "b6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 4
+        },
+        {
+          "roman": "iv7",
+          "quality": "minor7",
+          "chord_tones": [
+            "4",
+            "b6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 5
+        },
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 6
+        },
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 7
+        },
+        {
+          "roman": "bVImaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "b6",
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 8
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 9
+        },
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 10
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 11
+        }
+      ],
+      "bass_implications": "Roots throughout; the flat sixth in bar nine is the only chromatic bass note.",
+      "voice_leading_notes": "Unlike the major blues, the dominant in bars ten and twelve is functional and its alterations should resolve into the minor tonic.",
+      "expected_destination": "Top of the form.",
+      "explanation_template": "Minor blues in {key}: minor sevenths on i and iv, with a real altered dominant in the last four bars.",
+      "tags": [
+        "blues",
+        "minor",
+        "form"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_backdoor",
+      "name": "Backdoor cadence progression",
+      "degrees": [
+        "iv7",
+        "bVII7",
+        "Imaj7"
+      ],
+      "function_path": [
+        "predominant",
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "mixolydian",
+        "natural_minor",
+        "lydian_dominant",
+        "major"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "pop_rock",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "iv7",
+          "quality": "minor7",
+          "chord_tones": [
+            "4",
+            "b6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "bVII7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "b7",
+            "2",
+            "4",
+            "b6"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        }
+      ],
+      "bass_implications": "Bass rises a whole step into the tonic instead of falling a fifth.",
+      "voice_leading_notes": "The seventh of bVII7 lies a half step above the major third of the tonic and falls into it. That single voice is the whole mechanism.",
+      "expected_destination": "Imaj7.",
+      "explanation_template": "Backdoor approach in {key}: a borrowed subdominant pair resolves upward by whole step, with the flat seventh degree falling into the major third of tonic.",
+      "tags": [
+        "borrowed",
+        "cadential",
+        "jazz"
+      ],
+      "notes": "",
+      "source_refs": [
+        "mt21c-mode-mixture",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_tritone_sub_ii_v",
+      "name": "Tritone-substitute ii-V",
+      "degrees": [
+        "ii7",
+        "bII7",
+        "Imaj7"
+      ],
+      "function_path": [
+        "predominant",
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "lydian_dominant",
+        "altered",
+        "major"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "ii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "bII7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "b2",
+            "4",
+            "b6",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        }
+      ],
+      "bass_implications": "Bass descends chromatically 2 - b2 - 1, which is the main reason to make the substitution.",
+      "voice_leading_notes": "bII7 shares its tritone with V7, so the guide tones barely move; the ninth of bII7 is the leading tone of the key.",
+      "expected_destination": "Imaj7.",
+      "explanation_template": "Tritone substitution in {key}: the dominant is replaced by a dominant seventh a tritone away, converting the bass into a chromatic descent while keeping the same tritone resolution.",
+      "tags": [
+        "substitution",
+        "chromatic",
+        "jazz"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_modal_vamp_dorian",
+      "name": "Dorian vamp",
+      "degrees": [
+        "i7",
+        "IV"
+      ],
+      "function_path": [
+        "tonic",
+        "modal"
+      ],
+      "applicable_scales": [
+        "dorian"
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "jazz_standard",
+        "neo_soul_rnb",
+        "electronic_loop",
+        "drum_and_bass",
+        "pop_rock"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "i7",
+          "quality": "minor7",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "IV",
+          "quality": "major_triad",
+          "chord_tones": [
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Two roots a fourth apart, repeated. Keep the tonic in the bass on the strong bar so the mode does not flip to the relative major.",
+      "voice_leading_notes": "Hold common tones between the two chords and let only the natural sixth degree move. Any leading tone destroys the mode.",
+      "expected_destination": "Itself: the vamp is a loop, not a progression toward a cadence.",
+      "explanation_template": "Dorian vamp on {key}: the major subdominant exposes the natural sixth degree that distinguishes Dorian from Aeolian.",
+      "tags": [
+        "modal",
+        "vamp",
+        "loop_friendly"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_modal_vamp_mixolydian",
+      "name": "Mixolydian vamp",
+      "degrees": [
+        "I",
+        "bVII"
+      ],
+      "function_path": [
+        "tonic",
+        "modal"
+      ],
+      "applicable_scales": [
+        "mixolydian"
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "pop_rock",
+        "blues",
+        "cinematic",
+        "electronic_loop"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "bVII",
+          "quality": "major_triad",
+          "chord_tones": [
+            "b7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Root motion down a whole step and back.",
+      "voice_leading_notes": "The two triads share no tones, so contrary motion between outer voices keeps the loop from lurching.",
+      "expected_destination": "Itself.",
+      "explanation_template": "Mixolydian vamp on {key}: the flat seventh triad falls to the tonic without any leading tone.",
+      "tags": [
+        "modal",
+        "vamp",
+        "loop_friendly"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_modal_vamp_lydian",
+      "name": "Lydian vamp",
+      "degrees": [
+        "Imaj7",
+        "II"
+      ],
+      "function_path": [
+        "tonic",
+        "modal"
+      ],
+      "applicable_scales": [
+        "lydian"
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "neo_soul_rnb",
+        "electronic_loop"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "II",
+          "quality": "major_triad",
+          "chord_tones": [
+            "2",
+            "#4",
+            "6"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Roots a whole step apart with the tonic returning on strong bars.",
+      "voice_leading_notes": "The raised fourth degree is the common thread; place it in an upper voice so it is audible and never harmonise it with a plain IV triad.",
+      "expected_destination": "Itself.",
+      "explanation_template": "Lydian vamp on {key}: the major supertonic triad keeps the raised fourth degree in play without implying a modulation.",
+      "tags": [
+        "modal",
+        "vamp",
+        "loop_friendly"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_modal_vamp_phrygian",
+      "name": "Phrygian vamp",
+      "degrees": [
+        "i",
+        "bII"
+      ],
+      "function_path": [
+        "tonic",
+        "modal"
+      ],
+      "applicable_scales": [
+        "phrygian",
+        "phrygian_dominant"
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "drum_and_bass",
+        "electronic_loop"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "i",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "bII",
+          "quality": "major_triad",
+          "chord_tones": [
+            "b2",
+            "4",
+            "b6"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Bass alternates by half step, which is the entire identity of the mode.",
+      "voice_leading_notes": "Keep the flat second in the bass or the top voice. Buried in an inner voice it just sounds like a wrong note.",
+      "expected_destination": "Itself, or an Andalusian descent.",
+      "explanation_template": "Phrygian vamp on {key}: the half step above the tonic is the defining colour.",
+      "tags": [
+        "modal",
+        "vamp",
+        "loop_friendly"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_planing_diatonic",
+      "name": "Diatonic planing",
+      "degrees": [
+        "Imaj7",
+        "ii7",
+        "iii7",
+        "IVmaj7"
+      ],
+      "function_path": [
+        "modal",
+        "modal",
+        "modal",
+        "modal"
+      ],
+      "applicable_scales": [
+        "major",
+        "lydian",
+        "dorian"
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "neo_soul_rnb",
+        "cinematic",
+        "jazz_standard",
+        "electronic_loop"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "ii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "iii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "3",
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "IVmaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "The bass moves in parallel with every other voice; it carries no independent line.",
+      "voice_leading_notes": "All voices move in strict parallel motion. Parallel fifths and octaves are the texture, so those penalties must be suppressed for this schema.",
+      "expected_destination": "Any chord; planing is a texture rather than a functional path.",
+      "explanation_template": "Diatonic planing in {key}: a single voicing shape moved stepwise through the scale, so colour rather than function drives the passage.",
+      "tags": [
+        "planing",
+        "nonfunctional",
+        "texture"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_planing_chromatic",
+      "name": "Chromatic planing",
+      "degrees": [
+        "Imaj7",
+        "bIImaj7",
+        "IIImaj7",
+        "IVmaj7"
+      ],
+      "function_path": [
+        "chromatic",
+        "chromatic",
+        "chromatic",
+        "chromatic"
+      ],
+      "applicable_scales": [
+        "chromatic",
+        "major"
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "neo_soul_rnb",
+        "electronic_loop"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "bIImaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "b2",
+            "4",
+            "b6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "IIImaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "b3",
+            "5",
+            "b7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "IVmaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Parallel bass with the rest of the texture.",
+      "voice_leading_notes": "Constant structure: the identical voicing is transposed bodily. Do not correct the parallel perfect intervals; correcting them destroys the effect.",
+      "expected_destination": "Any chord.",
+      "explanation_template": "Chromatic planing from {key}: one voicing shape transposed without regard to key, producing constant-structure harmony.",
+      "tags": [
+        "planing",
+        "nonfunctional",
+        "chromatic",
+        "constant_structure"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_andalusian",
+      "name": "Andalusian cadence progression",
+      "degrees": [
+        "i",
+        "bVII",
+        "bVI",
+        "V"
+      ],
+      "function_path": [
+        "tonic",
+        "modal",
+        "predominant",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "natural_minor",
+        "phrygian",
+        "phrygian_dominant",
+        "harmonic_minor"
+      ],
+      "style_profiles": [
+        "cinematic",
+        "pop_rock",
+        "modal_ambient",
+        "blues",
+        "electronic_loop"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "i",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "bVII",
+          "quality": "major_triad",
+          "chord_tones": [
+            "b7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "bVI",
+          "quality": "major_triad",
+          "chord_tones": [
+            "b6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Stepwise descending bass 1 - b7 - b6 - 5.",
+      "voice_leading_notes": "Upper voices should also descend so the whole texture falls; the arrival on V usually carries a major third, which turns the mode Phrygian dominant.",
+      "expected_destination": "The Phrygian arrival on V is itself the goal; the figure then repeats.",
+      "explanation_template": "Andalusian descent in {key}: a four-step stepwise fall from the minor tonic to a major dominant.",
+      "tags": [
+        "descending",
+        "modal",
+        "loop_friendly"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_doo_wop",
+      "name": "Doo-wop changes",
+      "degrees": [
+        "I",
+        "vi",
+        "IV",
+        "V"
+      ],
+      "function_path": [
+        "tonic",
+        "tonic",
+        "predominant",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "major"
+      ],
+      "style_profiles": [
+        "pop_rock",
+        "common_practice",
+        "blues",
+        "cinematic",
+        "electronic_loop"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "vi",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "6",
+            "1",
+            "3"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "IV",
+          "quality": "major_triad",
+          "chord_tones": [
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Roots; the bass may descend 1 - 6 - 4 - 5 or invert IV to keep the line stepwise.",
+      "voice_leading_notes": "Adjacent chords share two, one and one common tones respectively, so an upper-voice setting can be almost entirely stepwise.",
+      "expected_destination": "Back to I.",
+      "explanation_template": "Doo-wop loop in {key}: tonic, tonic substitute, predominant, dominant - a complete functional circuit designed to repeat.",
+      "tags": [
+        "loop_friendly",
+        "functional",
+        "pop"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_axis_pop",
+      "name": "Axis loop",
+      "degrees": [
+        "vi7",
+        "IVmaj7",
+        "Imaj7",
+        "V"
+      ],
+      "function_path": [
+        "tonic",
+        "predominant",
+        "tonic",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "major",
+        "aeolian"
+      ],
+      "style_profiles": [
+        "pop_rock",
+        "electronic_loop",
+        "cinematic",
+        "neo_soul_rnb",
+        "drum_and_bass"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "vi7",
+          "quality": "minor7",
+          "chord_tones": [
+            "6",
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "IVmaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "4",
+            "6",
+            "1",
+            "3"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "Imaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Bass falls a third, then a fourth, then rises a fifth. Starting on vi makes the loop ambiguous between the major key and its relative minor.",
+      "voice_leading_notes": "Every adjacent pair shares two common tones, which is why the loop tolerates almost any melody over it.",
+      "expected_destination": "Back to vi.",
+      "explanation_template": "Axis loop in {key}: four chords with maximal common-tone connection and a deliberately ambiguous tonic.",
+      "tags": [
+        "loop_friendly",
+        "pop",
+        "ambiguous_tonic"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_pachelbel",
+      "name": "Descending-third sequence",
+      "degrees": [
+        "I",
+        "V",
+        "vi",
+        "iii",
+        "IV",
+        "I",
+        "IV",
+        "V"
+      ],
+      "function_path": [
+        "tonic",
+        "dominant",
+        "tonic",
+        "tonic",
+        "predominant",
+        "tonic",
+        "predominant",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "major"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "pop_rock",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "vi",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "6",
+            "1",
+            "3"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "iii",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "3",
+            "5",
+            "7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        },
+        {
+          "roman": "IV",
+          "quality": "major_triad",
+          "chord_tones": [
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 4
+        },
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 5
+        },
+        {
+          "roman": "IV",
+          "quality": "major_triad",
+          "chord_tones": [
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 6
+        },
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 7
+        }
+      ],
+      "bass_implications": "Bass descends by step through the scale for the first six chords, then rises to the dominant.",
+      "voice_leading_notes": "The sequence works because every second chord is in root position while the pattern alternates falling fourths and rising seconds; suspensions on the strong beats are the usual decoration.",
+      "expected_destination": "Cadence on V or back to I.",
+      "explanation_template": "Descending sequence in {key}: alternating fifth and step root motion produces a stepwise descending bass.",
+      "tags": [
+        "sequence",
+        "descending",
+        "functional"
+      ],
+      "notes": "",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_minor_plagal_loop",
+      "name": "Minor plagal loop",
+      "degrees": [
+        "I",
+        "iv",
+        "I"
+      ],
+      "function_path": [
+        "tonic",
+        "predominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major",
+        "harmonic_major"
+      ],
+      "style_profiles": [
+        "pop_rock",
+        "neo_soul_rnb",
+        "cinematic",
+        "modal_ambient",
+        "common_practice"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "iv",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "4",
+            "b6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        }
+      ],
+      "bass_implications": "Bass moves up a fourth and back, or stays on a tonic pedal while the upper voices supply iv.",
+      "voice_leading_notes": "The borrowed flat sixth degree falls by half step back to the fifth of the tonic. That half step is the entire effect, so keep it in an exposed voice.",
+      "expected_destination": "Tonic.",
+      "explanation_template": "Minor plagal motion in {key}: the borrowed minor subdominant colours the tonic without any dominant.",
+      "tags": [
+        "borrowed",
+        "plagal",
+        "loop_friendly"
+      ],
+      "notes": "",
+      "source_refs": [
+        "mt21c-mode-mixture",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_chromatic_mediant_chain",
+      "name": "Chromatic mediant chain",
+      "degrees": [
+        "I",
+        "bVI",
+        "bIII",
+        "I"
+      ],
+      "function_path": [
+        "tonic",
+        "chromatic",
+        "chromatic",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "chromatic",
+        "major",
+        "natural_minor"
+      ],
+      "style_profiles": [
+        "cinematic",
+        "modal_ambient",
+        "electronic_loop",
+        "pop_rock"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "bVI",
+          "quality": "major_triad",
+          "chord_tones": [
+            "b6",
+            "1",
+            "b3"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "bIII",
+          "quality": "major_triad",
+          "chord_tones": [
+            "b3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Bass falls by major third each time, returning to the tonic after three moves.",
+      "voice_leading_notes": "Each pair shares exactly one common tone; hold it and move the other voices by step or half step. Do not try to justify these chords functionally.",
+      "expected_destination": "Tonic, by symmetry after three moves.",
+      "explanation_template": "Chromatic mediant chain from {key}: major triads related by major third, connected by common tone rather than by function.",
+      "tags": [
+        "chromatic_mediant",
+        "nonfunctional",
+        "cinematic"
+      ],
+      "notes": "",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_dnb_two_chord_loop",
+      "name": "Two-chord drum-and-bass loop",
+      "degrees": [
+        "i9",
+        "bVImaj7"
+      ],
+      "function_path": [
+        "tonic",
+        "predominant"
+      ],
+      "applicable_scales": [
+        "natural_minor",
+        "dorian",
+        "minor_pentatonic"
+      ],
+      "style_profiles": [
+        "drum_and_bass",
+        "electronic_loop",
+        "modal_ambient",
+        "neo_soul_rnb"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "i9",
+          "quality": "minor9",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5",
+            "b7",
+            "2"
+          ],
+          "color_tones": [
+            "4",
+            "6"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "bVImaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "b6",
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "Two roots only, each held for a full bar or longer. The bass part is rhythmically busy but harmonically static; harmonic rhythm and drum tempo are independent.",
+      "voice_leading_notes": "Maximum common-tone retention so the pad never re-articulates. The ninth of the tonic chord is the third of the flat sixth chord, so one voice can hold throughout.",
+      "expected_destination": "Itself.",
+      "explanation_template": "Two-chord loop in {key}: slow harmonic rhythm underneath fast rhythmic activity, held together by a retained common tone.",
+      "tags": [
+        "loop_friendly",
+        "modal",
+        "slow_harmonic_rhythm"
+      ],
+      "notes": "Explicitly encoded to demonstrate that harmonic rhythm must not be inferred from tempo.",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_neo_soul_descent",
+      "name": "Neo-soul mediant descent",
+      "degrees": [
+        "Imaj9",
+        "iii7",
+        "bIIImaj7",
+        "ii9"
+      ],
+      "function_path": [
+        "tonic",
+        "tonic",
+        "chromatic",
+        "predominant"
+      ],
+      "applicable_scales": [
+        "major",
+        "dorian",
+        "lydian"
+      ],
+      "style_profiles": [
+        "neo_soul_rnb",
+        "jazz_standard",
+        "electronic_loop"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "Imaj9",
+          "quality": "major9",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "iii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "3",
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "bIIImaj7",
+          "quality": "major7",
+          "chord_tones": [
+            "b3",
+            "5",
+            "b7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "ii9",
+          "quality": "minor9",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1",
+            "3"
+          ],
+          "color_tones": [
+            "4",
+            "6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Bass steps down 1 - 3 - b3 - 2 with a chromatic passing root.",
+      "voice_leading_notes": "The major seventh chord on the lowered third degree is a passing sonority between iii7 and ii7; keep the upper voices nearly static and let the bass carry the chromaticism.",
+      "expected_destination": "V7, V7sus4 or straight back to the tonic.",
+      "explanation_template": "Mediant descent in {key}: a chromatic passing chord smooths the step from the mediant to the supertonic.",
+      "tags": [
+        "chromatic",
+        "neo_soul",
+        "bass_led"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_secondary_dominant_chain",
+      "name": "Applied dominant chain",
+      "degrees": [
+        "I",
+        "V/vi",
+        "vi",
+        "V/V",
+        "V",
+        "I"
+      ],
+      "function_path": [
+        "tonic",
+        "applied",
+        "tonic",
+        "applied",
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "jazz_standard",
+        "pop_rock",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "V/vi",
+          "quality": "dominant7",
+          "chord_tones": [
+            "3",
+            "#5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "vi",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "6",
+            "1",
+            "3"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "V/V",
+          "quality": "dominant7",
+          "chord_tones": [
+            "2",
+            "#4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        },
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 4
+        },
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 5
+        }
+      ],
+      "bass_implications": "Each applied dominant sits a fifth above its target, so the bass alternates leaps and steps.",
+      "voice_leading_notes": "Every applied chord introduces a raised tone that must rise and a seventh that must fall. Failing either resolution makes the tonicisation read as a wrong note.",
+      "expected_destination": "Tonic.",
+      "explanation_template": "Applied dominant chain in {key}: each target degree is briefly tonicised before the real dominant arrives.",
+      "tags": [
+        "applied",
+        "functional",
+        "tonicization"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_pedal_tonic_prolongation",
+      "name": "Tonic pedal prolongation",
+      "degrees": [
+        "I",
+        "IV",
+        "V",
+        "I"
+      ],
+      "function_path": [
+        "pedal",
+        "pedal",
+        "pedal",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "major",
+        "mixolydian",
+        "lydian"
+      ],
+      "style_profiles": [
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "pop_rock",
+        "common_practice"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "IV",
+          "quality": "major_triad",
+          "chord_tones": [
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "V",
+          "quality": "major_triad",
+          "chord_tones": [
+            "5",
+            "7",
+            "2"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "The bass holds the tonic under all four chords; only the upper voices change.",
+      "voice_leading_notes": "Chords above a pedal are judged on colour and smoothness rather than root motion. Dissonances against the pedal need no preparation as long as they move by step.",
+      "expected_destination": "A real cadence once the pedal releases.",
+      "explanation_template": "Tonic pedal in {key}: the bass never moves, so the upper harmony becomes decoration of a single sustained chord.",
+      "tags": [
+        "pedal",
+        "prolongation",
+        "loop_friendly"
+      ],
+      "notes": "",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_passing_diminished_ascent",
+      "name": "Ascending passing diminished",
+      "degrees": [
+        "I",
+        "#io7",
+        "ii7",
+        "V7"
+      ],
+      "function_path": [
+        "tonic",
+        "passing",
+        "predominant",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "major",
+        "octatonic_whole_half"
+      ],
+      "style_profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "common_practice",
+        "blues"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "#io7",
+          "quality": "diminished7",
+          "chord_tones": [
+            "#1",
+            "3",
+            "5",
+            "b7"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "ii7",
+          "quality": "minor7",
+          "chord_tones": [
+            "2",
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "6",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Chromatic ascent 1 - #1 - 2 in the bass. The diminished chord exists to fill that half step.",
+      "voice_leading_notes": "Purely linear. Spell the diminished chord with a raised root ascending, not with a flat second, or the resolution will look like a descent.",
+      "expected_destination": "The predominant it leads to.",
+      "explanation_template": "Passing diminished chord in {key}: a chromatic connector between tonic and supertonic with no functional claim of its own.",
+      "tags": [
+        "passing",
+        "chromatic",
+        "linear"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_neapolitan_approach",
+      "name": "Neapolitan approach",
+      "degrees": [
+        "iv",
+        "bII6",
+        "V7",
+        "i"
+      ],
+      "function_path": [
+        "predominant",
+        "predominant",
+        "dominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "harmonic_minor",
+        "phrygian",
+        "natural_minor"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "iv",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "4",
+            "b6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "bII6",
+          "quality": "major_triad",
+          "chord_tones": [
+            "b2",
+            "4",
+            "b6"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 2
+        },
+        {
+          "roman": "i",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "1",
+            "b3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "First inversion puts scale degree 4 in the bass, so the bass line is unchanged from an ordinary predominant.",
+      "voice_leading_notes": "The flat second falls to the leading tone, an awkward diminished third. Either fill it in with a passing tone or hand the two notes to different voices.",
+      "expected_destination": "The dominant, then tonic.",
+      "explanation_template": "Neapolitan approach in {key}: a major triad on the lowered second degree intensifies the predominant before the dominant.",
+      "tags": [
+        "neapolitan",
+        "chromatic",
+        "cadential"
+      ],
+      "notes": "",
+      "source_refs": [
+        "mt21c-mode-mixture",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_augmented_sixth_approach",
+      "name": "Augmented sixth approach",
+      "degrees": [
+        "iv",
+        "Ger+6",
+        "V6/4",
+        "V7"
+      ],
+      "function_path": [
+        "predominant",
+        "predominant",
+        "dominant",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "harmonic_minor",
+        "natural_minor"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "cinematic"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "iv",
+          "quality": "minor_triad",
+          "chord_tones": [
+            "4",
+            "b6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "4",
+            "b7"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "Ger+6",
+          "quality": "german_sixth",
+          "chord_tones": [
+            "b6",
+            "1",
+            "b3",
+            "#4"
+          ],
+          "color_tones": [],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "V6/4",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Bass sits on the flat sixth degree and falls a half step to the dominant.",
+      "voice_leading_notes": "The augmented sixth between b6 and #4 expands outward to an octave on scale degree 5. Routing the German form through a cadential six-four avoids the parallel fifths a direct resolution would create.",
+      "expected_destination": "The dominant.",
+      "explanation_template": "Augmented sixth approach in {key}: two voices expand outward by half step onto the dominant from opposite directions.",
+      "tags": [
+        "augmented_sixth",
+        "chromatic",
+        "cadential"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_sus_pedal_vamp",
+      "name": "Suspended pedal vamp",
+      "degrees": [
+        "V7sus4",
+        "V7"
+      ],
+      "function_path": [
+        "dominant",
+        "dominant"
+      ],
+      "applicable_scales": [
+        "mixolydian",
+        "suspended_pentatonic"
+      ],
+      "style_profiles": [
+        "neo_soul_rnb",
+        "electronic_loop",
+        "modal_ambient",
+        "jazz_standard",
+        "pop_rock"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "V7sus4",
+          "quality": "dominant7sus4",
+          "chord_tones": [
+            "5",
+            "1",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3"
+          ],
+          "avoid_degrees": [],
+          "slot": 0
+        },
+        {
+          "roman": "V7",
+          "quality": "dominant7",
+          "chord_tones": [
+            "5",
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6",
+            "b3",
+            "b2",
+            "#4",
+            "b6"
+          ],
+          "avoid_degrees": [],
+          "slot": 1
+        }
+      ],
+      "bass_implications": "One static bass note for both chords.",
+      "voice_leading_notes": "The fourth resolves to the third when the suspension releases, but in modal and neo-soul profiles it can simply alternate without ever resolving.",
+      "expected_destination": "Tonic, or nothing at all if the vamp is the whole section.",
+      "explanation_template": "Suspended vamp on the dominant of {key}: the fourth alternates with the third over an unchanging bass.",
+      "tags": [
+        "sus",
+        "pedal",
+        "loop_friendly"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "prog_stepwise_ascending_bass",
+      "name": "Stepwise ascending bass",
+      "degrees": [
+        "I",
+        "viio6",
+        "I6",
+        "IV"
+      ],
+      "function_path": [
+        "tonic",
+        "passing",
+        "tonic",
+        "predominant"
+      ],
+      "applicable_scales": [
+        "major"
+      ],
+      "style_profiles": [
+        "common_practice",
+        "cinematic",
+        "pop_rock"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "viio6",
+          "quality": "diminished_triad",
+          "chord_tones": [
+            "7",
+            "2",
+            "4"
+          ],
+          "color_tones": [],
+          "avoid_degrees": [],
+          "slot": 1
+        },
+        {
+          "roman": "I6",
+          "quality": "major6",
+          "chord_tones": [
+            "1",
+            "3",
+            "5",
+            "6"
+          ],
+          "color_tones": [
+            "2",
+            "#4"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "IV",
+          "quality": "major_triad",
+          "chord_tones": [
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Bass ascends 1 - 2 - 3 - 4 by step; the inverted chords exist to support that line.",
+      "voice_leading_notes": "The passing chord is in first inversion so the bass stays stepwise; its tritone resolves inward into the tonic sixth chord.",
+      "expected_destination": "The predominant and then a cadence.",
+      "explanation_template": "Stepwise ascent in {key}: inversions chosen so the bass walks up the scale rather than leaping between roots.",
+      "tags": [
+        "bass_led",
+        "passing",
+        "stepwise"
+      ],
+      "notes": "",
+      "source_refs": [
+        "mt21c"
+      ]
+    },
+    {
+      "id": "prog_riff_power_loop",
+      "name": "Power-chord riff loop",
+      "degrees": [
+        "I",
+        "bVII",
+        "IV",
+        "I"
+      ],
+      "function_path": [
+        "tonic",
+        "modal",
+        "predominant",
+        "tonic"
+      ],
+      "applicable_scales": [
+        "mixolydian",
+        "minor_pentatonic",
+        "blues_minor"
+      ],
+      "style_profiles": [
+        "pop_rock",
+        "blues",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "melody_compatibility": [
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 0
+        },
+        {
+          "roman": "bVII",
+          "quality": "major_triad",
+          "chord_tones": [
+            "b7",
+            "2",
+            "4"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 1
+        },
+        {
+          "roman": "IV",
+          "quality": "major_triad",
+          "chord_tones": [
+            "4",
+            "6",
+            "1"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 2
+        },
+        {
+          "roman": "I",
+          "quality": "major_triad",
+          "chord_tones": [
+            "1",
+            "3",
+            "5"
+          ],
+          "color_tones": [
+            "2",
+            "6"
+          ],
+          "avoid_degrees": [
+            "4"
+          ],
+          "slot": 3
+        }
+      ],
+      "bass_implications": "Roots doubled at the octave; the bass is the riff.",
+      "voice_leading_notes": "Voiced as bare fifths, so successive chords are parallel fifths by construction. The parallel-perfect penalty must be disabled for this schema.",
+      "expected_destination": "Itself.",
+      "explanation_template": "Power-chord loop in {key}: modally neutral fifths moved in parallel, with the riff rather than voice leading carrying the music.",
+      "tags": [
+        "power",
+        "planing",
+        "loop_friendly",
+        "riff"
+      ],
+      "notes": "",
+      "source_refs": [
+        "open-music-theory"
+      ]
+    }
+  ]
+}

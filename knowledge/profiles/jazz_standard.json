@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "jazz_standard",
+      "name": "Jazz standard",
+      "parent": "common_practice",
+      "summary": "Guide-tone continuity, extensions, ii-V relationships, substitutions, shell and rootless voicings, and destination-aware alterations.",
+      "harmonic_vocabulary": {
+        "core": [
+          "major7",
+          "dominant7",
+          "minor7",
+          "half_diminished7",
+          "major9",
+          "minor9",
+          "dominant9",
+          "dominant13",
+          "six_nine",
+          "minor11",
+          "dominant7sus4"
+        ],
+        "occasional": [
+          "dominant7_alt",
+          "dominant7_flat9",
+          "dominant7_sharp9",
+          "dominant7_sharp11",
+          "dominant7_flat13",
+          "diminished7",
+          "minor_major7",
+          "major7_sharp11",
+          "minor6",
+          "minor13"
+        ],
+        "avoided": [
+          "power",
+          "add2"
+        ]
+      },
+      "functional_strength": 0.8,
+      "modal_tolerance": 0.55,
+      "chromaticism_preference": 0.6,
+      "extension_density": 0.7,
+      "alteration_preference": 0.7,
+      "harmonic_rhythm": {
+        "default_slots_per_bar": 2,
+        "min_slot_qn": "1",
+        "max_slot_qn": "8",
+        "coupled_to_tempo": true
+      },
+      "voice_leading_strictness": 0.55,
+      "parallel_motion_treatment": "penalised",
+      "dissonance_treatment": "free",
+      "register_spacing": {
+        "open_voicing_bias": 0.55,
+        "low_interval_limit_source": "instrument_profile",
+        "min_top_spacing_semitones": 2,
+        "max_outer_voice_span_semitones": 26
+      },
+      "bass_behavior": {
+        "allowed_modes": [
+          "roots",
+          "inversions",
+          "stepwise",
+          "ostinato",
+          "contrary_motion"
+        ],
+        "default_mode": "stepwise",
+        "octave_folding": true,
+        "ornamentation": "chromatic_approach"
+      },
+      "countermelody_density": 0.4,
+      "arrangement_density": 0.5,
+      "loop_preference": {
+        "default_intent": "closed_tonic",
+        "allowed_intents": [
+          "closed_tonic",
+          "open_dominant",
+          "modal_drone",
+          "seamless_color",
+          "transition_ready",
+          "one_shot_ending"
+        ],
+        "wrap_weight": 0.7,
+        "tail_policy": "turnaround"
+      },
+      "candidate_diversity": 0.65,
+      "default_complexity": 0.65,
+      "score_weights": {
+        "melody_fit": 1.3,
+        "harmonic_coherence": 1.3,
+        "functional_or_modal_coherence": 1.2,
+        "voice_leading": 1.4,
+        "extension_appropriateness": 1.6,
+        "style_match": 1.3,
+        "phrase_direction": 1.0,
+        "bass_quality": 1.1,
+        "arrangement_clarity": 1.0,
+        "loop_compatibility": 0.6,
+        "complexity_target": 1.0,
+        "chromaticism_target": 1.0,
+        "candidate_diversity": 0.9
+      },
+      "rule_overrides": {
+        "extensions.major_natural_11_close_register": 1.0,
+        "extensions.alteration_requires_destination": 1.5,
+        "extensions.guide_tones_have_highest_retention_priority": 1.5,
+        "extensions.root_omitted_when_bass_supplies_it": 1.4,
+        "harmony.ii_v_i_is_preferred_cadential_path": 1.4,
+        "harmony.tritone_substitute_shares_tritone": 1.3,
+        "voice_leading.direct_perfect_in_outer_voices": "disabled",
+        "counterpoint.strong_beats_are_consonant": "disabled",
+        "counterpoint.dissonance_is_prepared": 0.3,
+        "harmony.diminished_triad_avoids_root_position": 0.3
+      },
+      "notes": "Keeps common-practice functional expectations but replaces its dissonance treatment entirely: extensions and alterations are colours that must connect to a destination rather than dissonances that must be prepared."
+    }
+  ]
+}

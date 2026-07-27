@@ -1,0 +1,12 @@
+/target
+**/*.rs.bk
+*.pdb
+
+# Local runtime state (never committed)
+/ipc/
+*.log
+.DS_Store
+Thumbs.db
+
+# Packaging output
+/dist/

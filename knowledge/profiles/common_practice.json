@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "common_practice",
+      "name": "Common practice",
+      "parent": null,
+      "summary": "Functional tonal harmony with resolved tendency tones, prepared dissonance and root-position cadences. The base profile from which the strict, jazz and cinematic profiles inherit.",
+      "harmonic_vocabulary": {
+        "core": [
+          "major_triad",
+          "minor_triad",
+          "diminished_triad",
+          "dominant7",
+          "major7",
+          "minor7",
+          "half_diminished7",
+          "diminished7",
+          "sus4"
+        ],
+        "occasional": [
+          "augmented_triad",
+          "minor_major7",
+          "italian_sixth",
+          "french_sixth",
+          "german_sixth",
+          "major6",
+          "minor6"
+        ],
+        "avoided": [
+          "dominant7_alt",
+          "dominant13_sharp11",
+          "six_nine",
+          "minor13"
+        ]
+      },
+      "functional_strength": 0.9,
+      "modal_tolerance": 0.2,
+      "chromaticism_preference": 0.35,
+      "extension_density": 0.15,
+      "alteration_preference": 0.15,
+      "harmonic_rhythm": {
+        "default_slots_per_bar": 1,
+        "min_slot_qn": "1",
+        "max_slot_qn": "4",
+        "coupled_to_tempo": true
+      },
+      "voice_leading_strictness": 0.8,
+      "parallel_motion_treatment": "penalised",
+      "dissonance_treatment": "prepared_and_resolved",
+      "register_spacing": {
+        "open_voicing_bias": 0.5,
+        "low_interval_limit_source": "instrument_profile",
+        "min_top_spacing_semitones": 1,
+        "max_outer_voice_span_semitones": 24
+      },
+      "bass_behavior": {
+        "allowed_modes": [
+          "roots",
+          "inversions",
+          "stepwise"
+        ],
+        "default_mode": "inversions",
+        "octave_folding": false,
+        "ornamentation": "passing_tones"
+      },
+      "countermelody_density": 0.3,
+      "arrangement_density": 0.4,
+      "loop_preference": {
+        "default_intent": "closed_tonic",
+        "allowed_intents": [
+          "closed_tonic",
+          "open_dominant",
+          "modal_drone",
+          "seamless_color",
+          "transition_ready",
+          "one_shot_ending"
+        ],
+        "wrap_weight": 0.8,
+        "tail_policy": "resolve"
+      },
+      "candidate_diversity": 0.5,
+      "default_complexity": 0.4,
+      "score_weights": {
+        "melody_fit": 1.3,
+        "harmonic_coherence": 1.3,
+        "functional_or_modal_coherence": 1.6,
+        "voice_leading": 1.5,
+        "extension_appropriateness": 0.6,
+        "style_match": 0.9,
+        "phrase_direction": 1.1,
+        "bass_quality": 1.0,
+        "arrangement_clarity": 1.0,
+        "loop_compatibility": 0.5,
+        "complexity_target": 1.0,
+        "chromaticism_target": 0.7,
+        "candidate_diversity": 0.6
+      },
+      "rule_overrides": {
+        "harmony.blues_dominant_seventh_is_stable_tonic": "disabled",
+        "harmony.planing_suspends_function": 0.2,
+        "voice_leading.power_chord_parallels_are_idiomatic": "disabled",
+        "extensions.avoid_tone_is_profile_sensitive": 1.2
+      },
+      "notes": "Chosen as the root of the inheritance graph because its rules are the ones other tonal profiles selectively relax. It is not treated as more correct than the others, only as the most constrained tonal starting point."
+    }
+  ]
+}

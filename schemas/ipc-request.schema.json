@@ -1,0 +1,489 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qlabs.dev/schemas/ipc-request.schema.json",
+  "title": "QLabs REAPER MCP IPC request envelope",
+  "description": "The JSON document written to <ipc-dir>/commands/<request-id>.command.json. Authoritative prose specification: docs/REAPER_BRIDGE.md and the IPC wire spec. The bridge validates in the order: size, JSON shape, protocol version, bridge version, instance token, request id, replay, expiry, command allowlist, payload, expected_project.",
+  "type": "object",
+  "required": ["protocol_version", "request_id", "instance_token", "expires_at", "command"],
+  "additionalProperties": true,
+  "properties": {
+    "protocol_version": {
+      "description": "Must equal the bridge's IPC protocol version exactly.",
+      "const": "qlabs-reaper-ipc/1"
+    },
+    "request_id": {
+      "description": "Must equal the filename stem. The only caller-controlled value that reaches a filesystem path.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "instance_token": {
+      "description": "The installation token from config.json. Compared byte for byte.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "created_at": {
+      "$ref": "#/$defs/timestamp",
+      "description": "Optional. When the server built the request."
+    },
+    "expires_at": {
+      "$ref": "#/$defs/timestamp",
+      "description": "After this instant plus CLOCK_SKEW_SECONDS (5) the bridge returns EXPIRED_REQUEST."
+    },
+    "require_bridge_version": {
+      "description": "Optional. When present the bridge version must match exactly, else BRIDGE_VERSION_MISMATCH.",
+      "type": ["string", "null"],
+      "maxLength": 64
+    },
+    "command": {
+      "description": "The complete allowlist. Nothing else is executable.",
+      "enum": [
+        "ping",
+        "status",
+        "inspect_selection",
+        "stage_candidate",
+        "commit_candidate",
+        "discard_candidate",
+        "undo_last_generation"
+      ]
+    },
+    "expected_project": {
+      "description": "Optional preconditions on live project state. Every field is individually optional; absent or null means 'not enforced'.",
+      "type": ["object", "null"],
+      "additionalProperties": true,
+      "properties": {
+        "project_uuid": {
+          "type": ["string", "null"],
+          "maxLength": 128,
+          "description": "Mismatch -> PROJECT_CHANGED."
+        },
+        "state_change_count": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Mismatch -> PROJECT_CHANGED. Increments on any edit including selection changes."
+        },
+        "source_item_guid": {
+          "type": ["string", "null"],
+          "maxLength": 128,
+          "description": "Absent from the project -> SOURCE_ITEM_MISSING."
+        },
+        "source_take_guid": {
+          "type": ["string", "null"],
+          "maxLength": 128,
+          "description": "Absent from the project -> SOURCE_TAKE_MISSING."
+        },
+        "midi_hash": {
+          "$ref": "#/$defs/hash",
+          "description": "Mismatch -> MIDI_CHANGED. Requires source_take_guid."
+        },
+        "tempo_map_hash": {
+          "$ref": "#/$defs/hash",
+          "description": "Mismatch -> TEMPO_MAP_CHANGED."
+        },
+        "snapshot_hash": {
+          "$ref": "#/$defs/hash",
+          "description": "Mismatch -> STALE_SNAPSHOT."
+        }
+      }
+    },
+    "payload": {
+      "description": "Command arguments. Absent or null is treated as {}. An array here is MALFORMED_REQUEST.",
+      "type": ["object", "null"]
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "command": { "const": "inspect_selection" } }, "required": ["command"] },
+      "then": {
+        "properties": { "payload": { "$ref": "#/$defs/inspectPayload" } }
+      }
+    },
+    {
+      "if": { "properties": { "command": { "const": "stage_candidate" } }, "required": ["command"] },
+      "then": {
+        "properties": { "payload": { "$ref": "#/$defs/stagePayload" } },
+        "required": ["payload"]
+      }
+    },
+    {
+      "if": { "properties": { "command": { "const": "commit_candidate" } }, "required": ["command"] },
+      "then": {
+        "properties": { "payload": { "$ref": "#/$defs/transactionPayload" } },
+        "required": ["payload"]
+      }
+    },
+    {
+      "if": { "properties": { "command": { "const": "discard_candidate" } }, "required": ["command"] },
+      "then": {
+        "properties": { "payload": { "$ref": "#/$defs/transactionPayload" } },
+        "required": ["payload"]
+      }
+    },
+    {
+      "if": { "properties": { "command": { "const": "undo_last_generation" } }, "required": ["command"] },
+      "then": {
+        "properties": { "payload": { "$ref": "#/$defs/undoPayload" } }
+      }
+    }
+  ],
+  "$defs": {
+    "timestamp": {
+      "description": "ISO-8601. YYYY-MM-DDTHH:MM:SS, optional fractional seconds, optional zone (Z, +HH:MM, -HH:MM, +HHMM, -HHMM). A missing zone means UTC.",
+      "type": "string",
+      "minLength": 19,
+      "maxLength": 40,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt ][0-9]{2}:[0-9]{2}:[0-9]{2}"
+    },
+    "hash": {
+      "description": "FNV-1a 64-bit over a canonical string, lowercase hex, prefixed. Non-cryptographic.",
+      "type": ["string", "null"],
+      "pattern": "^fnv1a64:[0-9a-f]{16}$"
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "safeIdentifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "tempId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "quarterNote": {
+      "type": "number",
+      "minimum": -100000,
+      "maximum": 1000000
+    },
+    "melodyExtraction": {
+      "type": ["object", "null"],
+      "additionalProperties": true,
+      "properties": {
+        "mode": {
+          "enum": [
+            "auto",
+            "selected_notes",
+            "highest_voice",
+            "lowest_voice",
+            "midi_channel",
+            "monophonic_voice",
+            "all_notes_as_harmony"
+          ]
+        },
+        "channel": { "type": ["integer", "null"], "minimum": 0, "maximum": 15 }
+      }
+    },
+    "inspectPayload": {
+      "type": ["object", "null"],
+      "additionalProperties": true,
+      "properties": {
+        "source_mode": { "enum": ["auto", "active_editor", "selected_item"] },
+        "note_scope": { "enum": ["selected_or_all", "selected_only", "all"] },
+        "melody_extraction": { "$ref": "#/$defs/melodyExtraction" }
+      }
+    },
+    "transactionPayload": {
+      "type": "object",
+      "required": ["transaction_id"],
+      "additionalProperties": true,
+      "properties": {
+        "transaction_id": { "$ref": "#/$defs/safeIdentifier" },
+        "undo_label": {
+          "type": ["string", "null"],
+          "maxLength": 200,
+          "pattern": "^QLabs MCP: ",
+          "description": "Optional override. Must carry the owned prefix."
+        }
+      }
+    },
+    "undoPayload": {
+      "type": ["object", "null"],
+      "additionalProperties": true,
+      "properties": {
+        "transaction_id": {
+          "type": ["string", "null"],
+          "maxLength": 128,
+          "description": "Optional. When present it must be the bridge's last owned transaction, else UNDO_NOT_OWNED."
+        }
+      }
+    },
+    "stagePayload": {
+      "type": "object",
+      "required": ["plan"],
+      "additionalProperties": true,
+      "properties": {
+        "plan": { "$ref": "#/$defs/editPlan" },
+        "verify_snapshot": { "type": ["boolean", "null"] },
+        "source_mode": { "enum": ["auto", "active_editor", "selected_item"] },
+        "note_scope": { "enum": ["selected_or_all", "selected_only", "all"] },
+        "melody_extraction": { "$ref": "#/$defs/melodyExtraction" }
+      }
+    },
+    "editPlan": {
+      "description": "Mirrors music_domain::plan::EditPlan. Validated in full before any undo block is opened.",
+      "type": "object",
+      "required": [
+        "plan_id",
+        "candidate_id",
+        "transaction_id",
+        "base_snapshot_id",
+        "base_snapshot_hash",
+        "project_uuid",
+        "knowledge_version",
+        "undo_label",
+        "operations"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "plan_id": { "$ref": "#/$defs/identifier" },
+        "candidate_id": { "$ref": "#/$defs/identifier" },
+        "transaction_id": { "$ref": "#/$defs/safeIdentifier" },
+        "base_snapshot_id": { "$ref": "#/$defs/identifier" },
+        "base_snapshot_hash": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "project_uuid": { "$ref": "#/$defs/identifier" },
+        "knowledge_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9._+-]+$",
+          "description": "A violation here is KNOWLEDGE_INVALID, not INVALID_EDIT_PLAN."
+        },
+        "undo_label": {
+          "type": "string",
+          "minLength": 12,
+          "maxLength": 200,
+          "pattern": "^QLabs MCP: ",
+          "description": "The owned-label prefix is what makes undo ownership decidable."
+        },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 512,
+          "items": { "$ref": "#/$defs/editOperation" }
+        },
+        "preconditions": {
+          "type": "array",
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/precondition" }
+        },
+        "expected_outputs": {
+          "type": "array",
+          "maxItems": 128,
+          "items": { "$ref": "#/$defs/expectedOutput" }
+        }
+      }
+    },
+    "tagList": {
+      "description": "Array of [key, value] pairs. Only allowlisted QLABS_* keys are accepted.",
+      "type": ["array", "null"],
+      "maxItems": 16,
+      "items": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "prefixItems": [
+          {
+            "enum": [
+              "QLABS_OWNER",
+              "QLABS_CANDIDATE_ID",
+              "QLABS_TRANSACTION_ID",
+              "QLABS_PLAN_ID",
+              "QLABS_STATUS",
+              "QLABS_SOURCE_SNAPSHOT",
+              "QLABS_KNOWLEDGE_VERSION",
+              "QLABS_ROLE",
+              "QLABS_TEMP_ID",
+              "QLABS_OBJECT_KIND",
+              "QLABS_PREVIEW_MUTED",
+              "QLABS_CREATED_AT",
+              "QLABS_COMMITTED_AT",
+              "QLABS_UNDO_LABEL"
+            ]
+          },
+          { "type": "string", "maxLength": 512 }
+        ]
+      }
+    },
+    "plannedNote": {
+      "type": "object",
+      "required": ["start_qn", "end_qn", "pitch", "velocity", "channel"],
+      "additionalProperties": true,
+      "properties": {
+        "start_qn": { "$ref": "#/$defs/quarterNote" },
+        "end_qn": { "$ref": "#/$defs/quarterNote" },
+        "pitch": { "type": "integer", "minimum": 0, "maximum": 127 },
+        "velocity": { "type": "integer", "minimum": 1, "maximum": 127 },
+        "channel": { "type": "integer", "minimum": 0, "maximum": 15 },
+        "muted": { "type": ["boolean", "null"] },
+        "spelling": {
+          "type": ["string", "null"],
+          "maxLength": 16,
+          "description": "Carried for provenance only; MIDI stores the pitch number."
+        }
+      }
+    },
+    "editOperation": {
+      "type": "object",
+      "required": ["op"],
+      "additionalProperties": true,
+      "properties": {
+        "op": {
+          "enum": [
+            "create_folder_track",
+            "create_track",
+            "create_midi_item",
+            "insert_notes",
+            "set_track_mute",
+            "create_region",
+            "create_midi_send"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "op": { "const": "create_folder_track" } }, "required": ["op"] },
+          "then": {
+            "required": ["temp_id", "name"],
+            "properties": {
+              "temp_id": { "$ref": "#/$defs/tempId" },
+              "name": { "type": "string", "maxLength": 200 },
+              "tags": { "$ref": "#/$defs/tagList" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "op": { "const": "create_track" } }, "required": ["op"] },
+          "then": {
+            "required": ["temp_id", "name"],
+            "properties": {
+              "temp_id": { "$ref": "#/$defs/tempId" },
+              "parent": {
+                "type": ["string", "null"],
+                "maxLength": 64,
+                "description": "temp_id of a create_folder_track declared EARLIER in the array."
+              },
+              "name": { "type": "string", "maxLength": 200 },
+              "tags": { "$ref": "#/$defs/tagList" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "op": { "const": "create_midi_item" } }, "required": ["op"] },
+          "then": {
+            "required": ["temp_id", "track", "start_qn", "end_qn"],
+            "properties": {
+              "temp_id": { "$ref": "#/$defs/tempId" },
+              "track": { "$ref": "#/$defs/tempId" },
+              "start_qn": { "$ref": "#/$defs/quarterNote" },
+              "end_qn": { "$ref": "#/$defs/quarterNote" },
+              "muted": { "type": ["boolean", "null"] },
+              "tags": { "$ref": "#/$defs/tagList" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "op": { "const": "insert_notes" } }, "required": ["op"] },
+          "then": {
+            "required": ["item", "notes"],
+            "properties": {
+              "item": { "$ref": "#/$defs/tempId" },
+              "notes": {
+                "type": "array",
+                "maxItems": 8000,
+                "items": { "$ref": "#/$defs/plannedNote" }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "op": { "const": "set_track_mute" } }, "required": ["op"] },
+          "then": {
+            "required": ["track", "muted"],
+            "properties": {
+              "track": { "$ref": "#/$defs/tempId" },
+              "muted": { "type": "boolean" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "op": { "const": "create_region" } }, "required": ["op"] },
+          "then": {
+            "required": ["name", "start_qn", "end_qn"],
+            "properties": {
+              "temp_id": { "type": ["string", "null"], "maxLength": 64 },
+              "name": { "type": "string", "maxLength": 200 },
+              "start_qn": { "$ref": "#/$defs/quarterNote" },
+              "end_qn": { "$ref": "#/$defs/quarterNote" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "op": { "const": "create_midi_send" } }, "required": ["op"] },
+          "then": {
+            "required": ["from_track", "to_track_guid"],
+            "properties": {
+              "temp_id": { "type": ["string", "null"], "maxLength": 64 },
+              "from_track": { "$ref": "#/$defs/tempId" },
+              "to_track_guid": {
+                "type": "string",
+                "minLength": 36,
+                "maxLength": 40,
+                "description": "A REAPER GUID, with or without braces. The track must exist right now."
+              }
+            }
+          }
+        }
+      ]
+    },
+    "precondition": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "enum": [
+            "project_uuid",
+            "state_change_count",
+            "item_guid_exists",
+            "take_guid_exists",
+            "midi_hash",
+            "tempo_map_hash",
+            "item_bounds"
+          ]
+        },
+        "value": { "type": ["string", "integer"] },
+        "start_qn": { "$ref": "#/$defs/quarterNote" },
+        "end_qn": { "$ref": "#/$defs/quarterNote" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "item_bounds" } }, "required": ["type"] },
+          "then": { "required": ["start_qn", "end_qn"] },
+          "else": { "required": ["value"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "state_change_count" } }, "required": ["type"] },
+          "then": { "properties": { "value": { "type": "integer", "minimum": 0 } } }
+        }
+      ]
+    },
+    "expectedOutput": {
+      "type": "object",
+      "required": ["temp_id", "kind"],
+      "additionalProperties": true,
+      "properties": {
+        "temp_id": { "$ref": "#/$defs/tempId" },
+        "kind": { "enum": ["track", "folder_track", "midi_item", "region", "send"] },
+        "note_count": { "type": ["integer", "null"], "minimum": 0, "maximum": 8000 }
+      }
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "blues",
+      "name": "Blues",
+      "parent": null,
+      "summary": "Dominant sevenths are stable primary harmony. Blues-scale material interacts freely with major-third chords and no seventh is under any obligation to resolve.",
+      "harmonic_vocabulary": {
+        "core": [
+          "dominant7",
+          "dominant9",
+          "dominant13",
+          "minor7",
+          "power",
+          "major_triad",
+          "minor_triad",
+          "dominant7_sharp9"
+        ],
+        "occasional": [
+          "diminished7",
+          "half_diminished7",
+          "six_nine",
+          "minor6",
+          "dominant7sus4",
+          "major6"
+        ],
+        "avoided": [
+          "major7",
+          "minor_major7",
+          "augmented_major7",
+          "major9"
+        ]
+      },
+      "functional_strength": 0.55,
+      "modal_tolerance": 0.6,
+      "chromaticism_preference": 0.5,
+      "extension_density": 0.45,
+      "alteration_preference": 0.4,
+      "harmonic_rhythm": {
+        "default_slots_per_bar": 1,
+        "min_slot_qn": "2",
+        "max_slot_qn": "8",
+        "coupled_to_tempo": true
+      },
+      "voice_leading_strictness": 0.3,
+      "parallel_motion_treatment": "neutral",
+      "dissonance_treatment": "stable_color",
+      "register_spacing": {
+        "open_voicing_bias": 0.45,
+        "low_interval_limit_source": "instrument_profile",
+        "min_top_spacing_semitones": 1,
+        "max_outer_voice_span_semitones": 24
+      },
+      "bass_behavior": {
+        "allowed_modes": [
+          "roots",
+          "stepwise",
+          "ostinato",
+          "inversions"
+        ],
+        "default_mode": "ostinato",
+        "octave_folding": true,
+        "ornamentation": "chromatic_approach"
+      },
+      "countermelody_density": 0.45,
+      "arrangement_density": 0.45,
+      "loop_preference": {
+        "default_intent": "closed_tonic",
+        "allowed_intents": [
+          "closed_tonic",
+          "open_dominant",
+          "modal_drone",
+          "seamless_color",
+          "transition_ready",
+          "one_shot_ending"
+        ],
+        "wrap_weight": 0.75,
+        "tail_policy": "turnaround"
+      },
+      "candidate_diversity": 0.6,
+      "default_complexity": 0.45,
+      "score_weights": {
+        "melody_fit": 1.3,
+        "harmonic_coherence": 1.0,
+        "functional_or_modal_coherence": 0.5,
+        "voice_leading": 0.7,
+        "extension_appropriateness": 0.9,
+        "style_match": 1.7,
+        "phrase_direction": 1.0,
+        "bass_quality": 1.2,
+        "arrangement_clarity": 1.0,
+        "loop_compatibility": 0.9,
+        "complexity_target": 1.0,
+        "chromaticism_target": 0.8,
+        "candidate_diversity": 0.8
+      },
+      "rule_overrides": {
+        "harmony.blues_dominant_seventh_is_stable_tonic": 2.0,
+        "harmony.dominant_seventh_resolves_down_fifth": "disabled",
+        "voice_leading.chordal_seventh_resolves_down": 0.2,
+        "harmony.retrogression_penalty": "disabled",
+        "voice_leading.parallel_perfect_fifths": 0.25,
+        "voice_leading.parallel_octaves": 0.25,
+        "voice_leading.power_chord_parallels_are_idiomatic": 1.5,
+        "extensions.sharp_nine_separated_from_major_third": 0.5,
+        "extensions.major_seventh_not_over_dominant_function": 1.5,
+        "harmony.modal_vamp_avoids_leading_tone": 0.3
+      },
+      "notes": "Deliberately not a child of common_practice. The single most important thing this profile does is switch off the dominant-resolution expectation; inheriting it and then cancelling it would be less honest than starting from a clean root."
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "fixture_version": "1.0.0",
+  "id": "melodies/two_voice_polyphony",
+  "title": "Two independent voices in one take",
+  "description": "Genuinely polyphonic material used to check that auto melody extraction reports its assumption and confidence rather than silently flattening the texture, and that highest_voice/lowest_voice modes work.",
+  "tempo_bpm": 100.0,
+  "time_signature": "4/4",
+  "tempo_map": [
+    {
+      "qn": "0",
+      "bpm": 100.0,
+      "linear": false
+    }
+  ],
+  "meter_map": [
+    {
+      "qn": "0",
+      "sig": "4/4",
+      "measure": 0
+    }
+  ],
+  "loop": {
+    "start_qn": "0",
+    "end_qn": "8",
+    "intent": "closed_tonic"
+  },
+  "key_hint": {
+    "tonic": "C",
+    "scale_id": "major"
+  },
+  "notes": [
+    {
+      "pitch": "E5",
+      "onset": "0",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F5",
+      "onset": "1",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G5",
+      "onset": "2",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F5",
+      "onset": "4",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E5",
+      "onset": "5",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D5",
+      "onset": "6",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "C4",
+      "onset": "0",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 1,
+      "role": "bass"
+    },
+    {
+      "pitch": "B3",
+      "onset": "2",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 1,
+      "role": "bass"
+    },
+    {
+      "pitch": "A3",
+      "onset": "4",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 1,
+      "role": "bass"
+    },
+    {
+      "pitch": "G3",
+      "onset": "6",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 1,
+      "role": "bass"
+    }
+  ]
+}

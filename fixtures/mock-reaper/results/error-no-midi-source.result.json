@@ -1,0 +1,21 @@
+{
+  "bridge_version": "1.0.0",
+  "command": "inspect_selection",
+  "completed_at": "2026-07-26T18:51:19Z",
+  "duration_ms": 0.9,
+  "error": {
+    "code": "NO_MIDI_SOURCE",
+    "details": {
+      "selected_item_count": 0
+    },
+    "message": "no MIDI source: open a MIDI editor or select exactly one MIDI item"
+  },
+  "ok": false,
+  "protocol_version": "qlabs-reaper-ipc/1",
+  "reaper_version": "7.22/linux-x86_64",
+  "request_id": "err-no-midi-source",
+  "result": null,
+  "started_at": "2026-07-26T18:51:19Z",
+  "transaction_id": null,
+  "warnings": []
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qlabs.local/schemas/source-record.schema.json",
+  "title": "QLabs knowledge source registry",
+  "description": "Validates knowledge/sources.json. The document is an object with a schema version and an ordered list of source records. Every source_id referenced anywhere else in the knowledge bundle must resolve to an id declared here.",
+  "type": "object",
+  "required": ["schema_version", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "description": "Semantic version of the knowledge file format.",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "items": {
+      "description": "Source records, in a stable authoring order.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/source_record" }
+    }
+  },
+  "$defs": {
+    "source_record": {
+      "title": "Source record",
+      "description": "One bibliographic entry. Licence values that could not be confirmed offline use the literal 'unverified-reference-only', and the reason is recorded in notes.",
+      "type": "object",
+      "required": ["id", "title", "authors", "publisher", "url", "license", "accessed_at", "source_type", "relevant_sections", "usage", "notes"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Stable identifier cited by rules and other knowledge records.",
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 300
+        },
+        "authors": {
+          "description": "May be empty when authorship could not be confirmed. An empty array is an honest statement of uncertainty, never a placeholder to be filled with a guess.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 200 }
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "url": {
+          "description": "Canonical URL.",
+          "type": "string",
+          "format": "uri",
+          "minLength": 8,
+          "maxLength": 500,
+          "pattern": "^https?://"
+        },
+        "license": {
+          "description": "A verified licence identifier, or 'unverified-reference-only' when it could not be confirmed. 'restricted-reference-only' marks a source known to prohibit redistribution.",
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        "accessed_at": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "source_type": {
+          "type": "string",
+          "enum": ["official_docs", "open_textbook", "academic_paper", "course_material"]
+        },
+        "relevant_sections": {
+          "description": "Chapter or section titles, never page numbers.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/section" }
+        },
+        "usage": {
+          "description": "How this source is used by the bundle.",
+          "type": "string",
+          "enum": ["paraphrased-rule-source", "technical-contract", "reference-only"]
+        },
+        "notes": {
+          "description": "Licensing, interpretation and verification notes. Required, because every source in this build carries at least a statement about offline verification.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      }
+    },
+    "section": {
+      "title": "Relevant section",
+      "type": "object",
+      "required": ["locator", "topics"],
+      "additionalProperties": false,
+      "properties": {
+        "locator": {
+          "description": "A chapter or section title. Page numbers are forbidden by policy because they cannot be verified offline and are edition-dependent.",
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 200
+        },
+        "topics": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 2, "maxLength": 80 }
+        }
+      }
+    }
+  }
+}

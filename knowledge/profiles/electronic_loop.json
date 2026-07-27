@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "electronic_loop",
+      "name": "Electronic loop",
+      "parent": "pop_rock",
+      "summary": "Repeatability first: layer compatibility, register separation, bass impact and final-to-first continuity dominate the score.",
+      "harmonic_vocabulary": {
+        "core": [
+          "minor_triad",
+          "major_triad",
+          "minor7",
+          "minor9",
+          "sus2",
+          "sus4",
+          "power",
+          "add9",
+          "minor11"
+        ],
+        "occasional": [
+          "major7",
+          "major9",
+          "six_nine",
+          "dominant7sus4",
+          "minor6",
+          "half_diminished7"
+        ],
+        "avoided": [
+          "dominant7_alt",
+          "german_sixth",
+          "diminished_major7",
+          "augmented_major7",
+          "dominant13_flat9"
+        ]
+      },
+      "functional_strength": 0.35,
+      "modal_tolerance": 0.85,
+      "chromaticism_preference": 0.3,
+      "extension_density": 0.4,
+      "alteration_preference": 0.2,
+      "harmonic_rhythm": {
+        "default_slots_per_bar": 1,
+        "min_slot_qn": "4",
+        "max_slot_qn": "16",
+        "coupled_to_tempo": false
+      },
+      "voice_leading_strictness": 0.35,
+      "parallel_motion_treatment": "idiomatic",
+      "dissonance_treatment": "stable_color",
+      "register_spacing": {
+        "open_voicing_bias": 0.75,
+        "low_interval_limit_source": "instrument_profile",
+        "min_top_spacing_semitones": 2,
+        "max_outer_voice_span_semitones": 34
+      },
+      "bass_behavior": {
+        "allowed_modes": [
+          "roots",
+          "ostinato",
+          "pedal",
+          "stepwise"
+        ],
+        "default_mode": "ostinato",
+        "octave_folding": true,
+        "ornamentation": "none"
+      },
+      "countermelody_density": 0.2,
+      "arrangement_density": 0.5,
+      "loop_preference": {
+        "default_intent": "seamless_color",
+        "allowed_intents": [
+          "closed_tonic",
+          "open_dominant",
+          "modal_drone",
+          "seamless_color",
+          "transition_ready",
+          "one_shot_ending"
+        ],
+        "wrap_weight": 1.0,
+        "tail_policy": "wrap"
+      },
+      "candidate_diversity": 0.6,
+      "default_complexity": 0.4,
+      "score_weights": {
+        "melody_fit": 1.0,
+        "harmonic_coherence": 0.9,
+        "functional_or_modal_coherence": 0.5,
+        "voice_leading": 0.8,
+        "extension_appropriateness": 0.6,
+        "style_match": 1.4,
+        "phrase_direction": 0.6,
+        "bass_quality": 1.3,
+        "arrangement_clarity": 1.6,
+        "loop_compatibility": 2.0,
+        "complexity_target": 0.7,
+        "chromaticism_target": 1.0,
+        "candidate_diversity": 1.0
+      },
+      "rule_overrides": {
+        "looping.no_hanging_note_past_loop_end": 1.5,
+        "looping.exact_length_is_preserved": 1.5,
+        "looping.seamless_color_uses_common_tones": 1.6,
+        "looping.harmonic_rhythm_stable_at_wrap": 1.5,
+        "looping.bass_continuity_across_wrap": 1.4,
+        "looping.layer_removal_at_wrap_preserves_harmony": 1.5,
+        "arrangement.roles_occupy_separate_registers": 1.6,
+        "arrangement.layer_removal_preserves_chord_identity": 1.5,
+        "harmony.harmonic_rhythm_is_independent_of_tempo": 1.5,
+        "harmony.ii_v_i_is_preferred_cadential_path": 0.3,
+        "voice_leading.parallel_perfect_fifths": "disabled"
+      },
+      "notes": "Inherits pop_rock's slow harmonic rhythm and parallel tolerance, then roughly doubles every loop-integrity weight. This is the profile where loop_compatibility outweighs harmonic coherence."
+    }
+  ]
+}

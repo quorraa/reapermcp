@@ -1,0 +1,1578 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "major",
+      "name": "Major",
+      "aliases": [
+        "Ionian",
+        "major scale"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        9,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "3",
+        "7"
+      ],
+      "parent": null,
+      "mode_of": null,
+      "common_chords": [
+        "major_triad",
+        "major7",
+        "major6",
+        "six_nine",
+        "major9"
+      ],
+      "tension_degrees": [
+        "4"
+      ],
+      "family": "diatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "ionian",
+      "name": "Ionian",
+      "aliases": [
+        "major mode"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        9,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "3",
+        "7"
+      ],
+      "parent": "major",
+      "mode_of": [
+        "major",
+        0
+      ],
+      "common_chords": [
+        "major_triad",
+        "major7",
+        "major9"
+      ],
+      "tension_degrees": [
+        "4"
+      ],
+      "family": "diatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "dorian",
+      "name": "Dorian",
+      "aliases": [
+        "minor with natural 6"
+      ],
+      "semitones": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "b3",
+        "4",
+        "5",
+        "6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "6"
+      ],
+      "parent": "major",
+      "mode_of": [
+        "major",
+        1
+      ],
+      "common_chords": [
+        "minor7",
+        "minor6",
+        "minor9",
+        "minor11",
+        "minor13"
+      ],
+      "tension_degrees": [
+        "b2"
+      ],
+      "family": "diatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "phrygian",
+      "name": "Phrygian",
+      "aliases": [
+        "Spanish minor mode"
+      ],
+      "semitones": [
+        0,
+        1,
+        3,
+        5,
+        7,
+        8,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "b2",
+        "b3",
+        "4",
+        "5",
+        "b6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b2"
+      ],
+      "parent": "major",
+      "mode_of": [
+        "major",
+        2
+      ],
+      "common_chords": [
+        "minor7",
+        "minor_triad",
+        "sus4"
+      ],
+      "tension_degrees": [
+        "b2"
+      ],
+      "family": "diatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "lydian",
+      "name": "Lydian",
+      "aliases": [
+        "major with raised fourth"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "#4",
+        "5",
+        "6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "#4"
+      ],
+      "parent": "major",
+      "mode_of": [
+        "major",
+        3
+      ],
+      "common_chords": [
+        "major7",
+        "major7_sharp11",
+        "major9",
+        "six_nine"
+      ],
+      "tension_degrees": [],
+      "family": "diatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mixolydian",
+      "name": "Mixolydian",
+      "aliases": [
+        "dominant mode"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        9,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b7"
+      ],
+      "parent": "major",
+      "mode_of": [
+        "major",
+        4
+      ],
+      "common_chords": [
+        "dominant7",
+        "dominant9",
+        "dominant13",
+        "dominant7sus4"
+      ],
+      "tension_degrees": [
+        "4"
+      ],
+      "family": "diatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "aeolian",
+      "name": "Aeolian",
+      "aliases": [
+        "natural minor mode"
+      ],
+      "semitones": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        8,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "b3",
+        "4",
+        "5",
+        "b6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b6"
+      ],
+      "parent": "major",
+      "mode_of": [
+        "major",
+        5
+      ],
+      "common_chords": [
+        "minor7",
+        "minor9",
+        "minor11",
+        "minor_triad"
+      ],
+      "tension_degrees": [
+        "b6"
+      ],
+      "family": "diatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "locrian",
+      "name": "Locrian",
+      "aliases": [
+        "half-diminished mode"
+      ],
+      "semitones": [
+        0,
+        1,
+        3,
+        5,
+        6,
+        8,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "b2",
+        "b3",
+        "4",
+        "b5",
+        "b6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b2",
+        "b5"
+      ],
+      "parent": "major",
+      "mode_of": [
+        "major",
+        6
+      ],
+      "common_chords": [
+        "half_diminished7",
+        "diminished_triad"
+      ],
+      "tension_degrees": [
+        "b2"
+      ],
+      "family": "diatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "natural_minor",
+      "name": "Natural minor",
+      "aliases": [
+        "Aeolian",
+        "pure minor"
+      ],
+      "semitones": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        8,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "b3",
+        "4",
+        "5",
+        "b6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b3",
+        "b6"
+      ],
+      "parent": null,
+      "mode_of": null,
+      "common_chords": [
+        "minor_triad",
+        "minor7",
+        "minor9",
+        "minor11"
+      ],
+      "tension_degrees": [
+        "b6"
+      ],
+      "family": "diatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "harmonic_minor",
+      "name": "Harmonic minor",
+      "aliases": [
+        "minor with raised seventh"
+      ],
+      "semitones": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        8,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "b3",
+        "4",
+        "5",
+        "b6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "b6",
+        "7"
+      ],
+      "parent": null,
+      "mode_of": null,
+      "common_chords": [
+        "minor_major7",
+        "dominant7_flat9",
+        "diminished7",
+        "augmented_major7"
+      ],
+      "tension_degrees": [
+        "b6"
+      ],
+      "family": "minor",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "melodic_minor",
+      "name": "Melodic minor (ascending)",
+      "aliases": [
+        "jazz minor",
+        "melodic minor ascending"
+      ],
+      "semitones": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        9,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "b3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "b3",
+        "6",
+        "7"
+      ],
+      "parent": null,
+      "mode_of": null,
+      "common_chords": [
+        "minor_major7",
+        "minor6",
+        "minor6_9",
+        "minor_major9"
+      ],
+      "tension_degrees": [],
+      "family": "minor",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "major_pentatonic",
+      "name": "Major pentatonic",
+      "aliases": [
+        "pentatonic major"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        7,
+        9
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "6"
+      ],
+      "characteristic_degrees": [
+        "3",
+        "6"
+      ],
+      "parent": "major",
+      "mode_of": null,
+      "common_chords": [
+        "major_triad",
+        "six_nine",
+        "major6",
+        "add9"
+      ],
+      "tension_degrees": [],
+      "family": "pentatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "minor_pentatonic",
+      "name": "Minor pentatonic",
+      "aliases": [
+        "pentatonic minor"
+      ],
+      "semitones": [
+        0,
+        3,
+        5,
+        7,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "b3",
+        "4",
+        "5",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b3",
+        "b7"
+      ],
+      "parent": "natural_minor",
+      "mode_of": null,
+      "common_chords": [
+        "minor7",
+        "minor_triad",
+        "minor11"
+      ],
+      "tension_degrees": [],
+      "family": "pentatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "suspended_pentatonic",
+      "name": "Suspended pentatonic",
+      "aliases": [
+        "Egyptian",
+        "sus pentatonic"
+      ],
+      "semitones": [
+        0,
+        2,
+        5,
+        7,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "4",
+        "5",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "4",
+        "b7"
+      ],
+      "parent": "major_pentatonic",
+      "mode_of": [
+        "major_pentatonic",
+        1
+      ],
+      "common_chords": [
+        "dominant7sus4",
+        "sus4",
+        "sus2",
+        "minor11"
+      ],
+      "tension_degrees": [],
+      "family": "pentatonic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "blues_minor",
+      "name": "Minor blues scale",
+      "aliases": [
+        "blues scale",
+        "hexatonic blues"
+      ],
+      "semitones": [
+        0,
+        3,
+        5,
+        6,
+        7,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "b3",
+        "4",
+        "b5",
+        "5",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b3",
+        "b5",
+        "b7"
+      ],
+      "parent": "minor_pentatonic",
+      "mode_of": null,
+      "common_chords": [
+        "dominant7",
+        "dominant7_sharp9",
+        "minor7"
+      ],
+      "tension_degrees": [],
+      "family": "blues",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "blues_major",
+      "name": "Major blues scale",
+      "aliases": [
+        "major blues"
+      ],
+      "semitones": [
+        0,
+        2,
+        3,
+        4,
+        7,
+        9
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "b3",
+        "3",
+        "5",
+        "6"
+      ],
+      "characteristic_degrees": [
+        "b3",
+        "3"
+      ],
+      "parent": "major_pentatonic",
+      "mode_of": null,
+      "common_chords": [
+        "dominant7",
+        "major6",
+        "six_nine"
+      ],
+      "tension_degrees": [],
+      "family": "blues",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "whole_tone",
+      "name": "Whole-tone",
+      "aliases": [
+        "whole tone scale"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "#4",
+        "#5",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "#4",
+        "#5"
+      ],
+      "parent": null,
+      "mode_of": null,
+      "common_chords": [
+        "dominant7_sharp5",
+        "augmented_triad",
+        "dominant7_flat5"
+      ],
+      "tension_degrees": [],
+      "family": "symmetric",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "octatonic_half_whole",
+      "name": "Octatonic (half-whole)",
+      "aliases": [
+        "diminished scale",
+        "dominant diminished"
+      ],
+      "semitones": [
+        0,
+        1,
+        3,
+        4,
+        6,
+        7,
+        9,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "b2",
+        "b3",
+        "3",
+        "#4",
+        "5",
+        "6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b2",
+        "b3",
+        "#4",
+        "6"
+      ],
+      "parent": null,
+      "mode_of": null,
+      "common_chords": [
+        "dominant7_flat9",
+        "dominant13_flat9",
+        "dominant7_sharp9",
+        "dominant13_sharp11"
+      ],
+      "tension_degrees": [],
+      "family": "symmetric",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "octatonic_whole_half",
+      "name": "Octatonic (whole-half)",
+      "aliases": [
+        "diminished scale (whole-half)"
+      ],
+      "semitones": [
+        0,
+        2,
+        3,
+        5,
+        6,
+        8,
+        9,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "b3",
+        "4",
+        "b5",
+        "b6",
+        "6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "b5",
+        "6"
+      ],
+      "parent": null,
+      "mode_of": null,
+      "common_chords": [
+        "diminished7"
+      ],
+      "tension_degrees": [],
+      "family": "symmetric",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "altered",
+      "name": "Altered scale",
+      "aliases": [
+        "super Locrian",
+        "diminished whole-tone"
+      ],
+      "semitones": [
+        0,
+        1,
+        3,
+        4,
+        6,
+        8,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b2",
+        "b3",
+        "b5",
+        "b6"
+      ],
+      "parent": "melodic_minor",
+      "mode_of": [
+        "melodic_minor",
+        6
+      ],
+      "common_chords": [
+        "dominant7_alt",
+        "dominant7_sharp9",
+        "dominant7_flat13",
+        "dominant7_flat5"
+      ],
+      "tension_degrees": [],
+      "family": "melodic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "lydian_dominant",
+      "name": "Lydian dominant",
+      "aliases": [
+        "Lydian b7",
+        "acoustic scale",
+        "overtone scale"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "#4",
+        "5",
+        "6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "#4",
+        "b7"
+      ],
+      "parent": "melodic_minor",
+      "mode_of": [
+        "melodic_minor",
+        3
+      ],
+      "common_chords": [
+        "dominant7_sharp11",
+        "dominant13_sharp11",
+        "dominant9"
+      ],
+      "tension_degrees": [],
+      "family": "melodic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "locrian_natural_2",
+      "name": "Locrian natural 2",
+      "aliases": [
+        "half-diminished scale",
+        "Locrian #2"
+      ],
+      "semitones": [
+        0,
+        2,
+        3,
+        5,
+        6,
+        8,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "b3",
+        "4",
+        "b5",
+        "b6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "2",
+        "b5"
+      ],
+      "parent": "melodic_minor",
+      "mode_of": [
+        "melodic_minor",
+        5
+      ],
+      "common_chords": [
+        "half_diminished7",
+        "half_diminished9"
+      ],
+      "tension_degrees": [
+        "b6"
+      ],
+      "family": "melodic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "dorian_flat2",
+      "name": "Dorian b2",
+      "aliases": [
+        "Phrygian natural 6",
+        "Phrygian #6"
+      ],
+      "semitones": [
+        0,
+        1,
+        3,
+        5,
+        7,
+        9,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "b2",
+        "b3",
+        "4",
+        "5",
+        "6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b2",
+        "6"
+      ],
+      "parent": "melodic_minor",
+      "mode_of": [
+        "melodic_minor",
+        1
+      ],
+      "common_chords": [
+        "minor7",
+        "dominant7sus4",
+        "minor6"
+      ],
+      "tension_degrees": [],
+      "family": "melodic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "lydian_augmented",
+      "name": "Lydian augmented",
+      "aliases": [
+        "Lydian #5"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        9,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "#4",
+        "#5",
+        "6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "#4",
+        "#5"
+      ],
+      "parent": "melodic_minor",
+      "mode_of": [
+        "melodic_minor",
+        2
+      ],
+      "common_chords": [
+        "augmented_major7",
+        "major7_sharp11"
+      ],
+      "tension_degrees": [],
+      "family": "melodic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "mixolydian_flat6",
+      "name": "Mixolydian b6",
+      "aliases": [
+        "Hindu scale",
+        "melodic major",
+        "Aeolian dominant"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        8,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "b6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b6",
+        "b7"
+      ],
+      "parent": "melodic_minor",
+      "mode_of": [
+        "melodic_minor",
+        4
+      ],
+      "common_chords": [
+        "dominant7_flat13",
+        "dominant9"
+      ],
+      "tension_degrees": [
+        "4"
+      ],
+      "family": "melodic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "locrian_natural_6",
+      "name": "Locrian natural 6",
+      "aliases": [
+        "Locrian #6"
+      ],
+      "semitones": [
+        0,
+        1,
+        3,
+        5,
+        6,
+        9,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "b2",
+        "b3",
+        "4",
+        "b5",
+        "6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b2",
+        "6"
+      ],
+      "parent": "harmonic_minor",
+      "mode_of": [
+        "harmonic_minor",
+        1
+      ],
+      "common_chords": [
+        "half_diminished7",
+        "diminished_triad"
+      ],
+      "tension_degrees": [],
+      "family": "harmonic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "ionian_sharp5",
+      "name": "Ionian #5",
+      "aliases": [
+        "Ionian augmented"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        5,
+        8,
+        9,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "#5",
+        "6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "#5"
+      ],
+      "parent": "harmonic_minor",
+      "mode_of": [
+        "harmonic_minor",
+        2
+      ],
+      "common_chords": [
+        "augmented_major7"
+      ],
+      "tension_degrees": [
+        "4"
+      ],
+      "family": "harmonic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "dorian_sharp4",
+      "name": "Dorian #4",
+      "aliases": [
+        "Ukrainian Dorian",
+        "Romanian minor"
+      ],
+      "semitones": [
+        0,
+        2,
+        3,
+        6,
+        7,
+        9,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "b3",
+        "#4",
+        "5",
+        "6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "#4",
+        "6"
+      ],
+      "parent": "harmonic_minor",
+      "mode_of": [
+        "harmonic_minor",
+        3
+      ],
+      "common_chords": [
+        "minor7",
+        "minor6",
+        "minor13"
+      ],
+      "tension_degrees": [],
+      "family": "harmonic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "phrygian_dominant",
+      "name": "Phrygian dominant",
+      "aliases": [
+        "Spanish Phrygian",
+        "Freygish",
+        "Mixolydian b2 b6"
+      ],
+      "semitones": [
+        0,
+        1,
+        4,
+        5,
+        7,
+        8,
+        10
+      ],
+      "degree_spelling": [
+        "1",
+        "b2",
+        "3",
+        "4",
+        "5",
+        "b6",
+        "b7"
+      ],
+      "characteristic_degrees": [
+        "b2",
+        "3",
+        "b6"
+      ],
+      "parent": "harmonic_minor",
+      "mode_of": [
+        "harmonic_minor",
+        4
+      ],
+      "common_chords": [
+        "dominant7_flat9",
+        "dominant7_flat13",
+        "major_triad"
+      ],
+      "tension_degrees": [
+        "4"
+      ],
+      "family": "harmonic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "lydian_sharp2",
+      "name": "Lydian #2",
+      "aliases": [
+        "Lydian augmented 2"
+      ],
+      "semitones": [
+        0,
+        3,
+        4,
+        6,
+        7,
+        9,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "#2",
+        "3",
+        "#4",
+        "5",
+        "6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "#2",
+        "#4"
+      ],
+      "parent": "harmonic_minor",
+      "mode_of": [
+        "harmonic_minor",
+        5
+      ],
+      "common_chords": [
+        "major7_sharp11",
+        "major9"
+      ],
+      "tension_degrees": [],
+      "family": "harmonic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "altered_double_flat7",
+      "name": "Altered bb7",
+      "aliases": [
+        "ultra Locrian",
+        "super Locrian bb7"
+      ],
+      "semitones": [
+        0,
+        1,
+        3,
+        4,
+        6,
+        8,
+        9
+      ],
+      "degree_spelling": [
+        "1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "bb7"
+      ],
+      "characteristic_degrees": [
+        "b4",
+        "bb7"
+      ],
+      "parent": "harmonic_minor",
+      "mode_of": [
+        "harmonic_minor",
+        6
+      ],
+      "common_chords": [
+        "diminished7"
+      ],
+      "tension_degrees": [],
+      "family": "harmonic_minor_mode",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "harmonic_major",
+      "name": "Harmonic major",
+      "aliases": [
+        "major b6"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        8,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "b6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "b6",
+        "7"
+      ],
+      "parent": null,
+      "mode_of": null,
+      "common_chords": [
+        "major7",
+        "minor6",
+        "dominant7_flat9"
+      ],
+      "tension_degrees": [
+        "4"
+      ],
+      "family": "synthetic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "bebop_dominant",
+      "name": "Bebop dominant",
+      "aliases": [
+        "Mixolydian bebop"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        9,
+        10,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "b7",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "b7",
+        "7"
+      ],
+      "parent": "mixolydian",
+      "mode_of": null,
+      "common_chords": [
+        "dominant7",
+        "dominant13"
+      ],
+      "tension_degrees": [
+        "4"
+      ],
+      "family": "synthetic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "bebop_major",
+      "name": "Bebop major",
+      "aliases": [
+        "major bebop"
+      ],
+      "semitones": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        8,
+        9,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "#5",
+        "6",
+        "7"
+      ],
+      "characteristic_degrees": [
+        "#5"
+      ],
+      "parent": "major",
+      "mode_of": null,
+      "common_chords": [
+        "major6",
+        "six_nine",
+        "major7"
+      ],
+      "tension_degrees": [
+        "4"
+      ],
+      "family": "synthetic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    },
+    {
+      "id": "chromatic",
+      "name": "Chromatic collection",
+      "aliases": [
+        "twelve-tone collection"
+      ],
+      "semitones": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "degree_spelling": [
+        "1",
+        "b2",
+        "2",
+        "b3",
+        "3",
+        "4",
+        "b5",
+        "5",
+        "b6",
+        "6",
+        "b7",
+        "7"
+      ],
+      "characteristic_degrees": [],
+      "parent": null,
+      "mode_of": null,
+      "common_chords": [],
+      "tension_degrees": [],
+      "family": "chromatic",
+      "source_refs": [
+        "open-music-theory",
+        "mt21c"
+      ]
+    }
+  ]
+}

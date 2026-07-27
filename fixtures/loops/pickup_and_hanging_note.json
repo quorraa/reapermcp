@@ -1,0 +1,165 @@
+{
+  "fixture_version": "1.0.0",
+  "id": "loops/pickup_and_hanging_note",
+  "title": "Loop with pickup and a note crossing the boundary",
+  "description": "A one-beat anacrusis before the loop start and a final note sustaining one quarter past the loop end. Exercises pickup detection, hanging-note detection and carry/split policy in the loop audit.",
+  "tempo_bpm": 120.0,
+  "time_signature": "4/4",
+  "tempo_map": [
+    {
+      "qn": "0",
+      "bpm": 120.0,
+      "linear": false
+    }
+  ],
+  "meter_map": [
+    {
+      "qn": "0",
+      "sig": "4/4",
+      "measure": 0
+    }
+  ],
+  "loop": {
+    "start_qn": "0",
+    "end_qn": "16",
+    "intent": "closed_tonic"
+  },
+  "key_hint": {
+    "tonic": "C",
+    "scale_id": "major"
+  },
+  "notes": [
+    {
+      "pitch": "G3",
+      "onset": "-1",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "C4",
+      "onset": "0",
+      "duration": "3/2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D4",
+      "onset": "3/2",
+      "duration": "1/2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E4",
+      "onset": "2",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F4",
+      "onset": "4",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E4",
+      "onset": "5",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D4",
+      "onset": "6",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "8",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F4",
+      "onset": "10",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E4",
+      "onset": "11",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D4",
+      "onset": "12",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G3",
+      "onset": "14",
+      "duration": "3",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    }
+  ]
+}

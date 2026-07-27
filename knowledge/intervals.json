@@ -1,0 +1,453 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "interval_diminished_1",
+      "short_name": "d1",
+      "name": "diminished unison",
+      "semitones": -1,
+      "diatonic_number": 1,
+      "quality": "diminished",
+      "consonance_class": "dissonance",
+      "inversion": "A8",
+      "is_compound": false,
+      "typical_treatment": "A diminished unison is a notational artefact rather than a sounding interval: it describes two voices on the same letter where the upper is lowered. It is retained here so spelling arithmetic stays total, and it carries a negative semitone size.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_perfect_1",
+      "short_name": "P1",
+      "name": "perfect unison",
+      "semitones": 0,
+      "diatonic_number": 1,
+      "quality": "perfect",
+      "consonance_class": "perfect_consonance",
+      "inversion": "P8",
+      "is_compound": false,
+      "typical_treatment": "Unison. Used for doubling and reinforcement; in independent counterpoint it collapses two voices into one and is normally reserved for arrivals.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_augmented_1",
+      "short_name": "A1",
+      "name": "augmented unison",
+      "semitones": 1,
+      "diatonic_number": 1,
+      "quality": "augmented",
+      "consonance_class": "dissonance",
+      "inversion": "d8",
+      "is_compound": false,
+      "typical_treatment": "Augmented interval. Melodically awkward in strict profiles; harmonically it signals an altered or applied chord and resolves outward by step.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_diminished_2",
+      "short_name": "d2",
+      "name": "diminished second",
+      "semitones": 0,
+      "diatonic_number": 2,
+      "quality": "diminished",
+      "consonance_class": "dissonance",
+      "inversion": "A7",
+      "is_compound": false,
+      "typical_treatment": "Diminished interval. Usually the inversion or contraction of an augmented interval; resolves inward by step and requires a spelling that reflects its destination.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_minor_2",
+      "short_name": "m2",
+      "name": "minor second",
+      "semitones": 1,
+      "diatonic_number": 2,
+      "quality": "minor",
+      "consonance_class": "dissonance",
+      "inversion": "M7",
+      "is_compound": false,
+      "typical_treatment": "Dissonance. Prepare on a weak position and resolve by step in strict profiles; usable unprepared as chordal colour in jazz, neo-soul and ambient profiles.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_major_2",
+      "short_name": "M2",
+      "name": "major second",
+      "semitones": 2,
+      "diatonic_number": 2,
+      "quality": "major",
+      "consonance_class": "dissonance",
+      "inversion": "m7",
+      "is_compound": false,
+      "typical_treatment": "Dissonance. Prepare on a weak position and resolve by step in strict profiles; usable unprepared as chordal colour in jazz, neo-soul and ambient profiles.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_augmented_2",
+      "short_name": "A2",
+      "name": "augmented second",
+      "semitones": 3,
+      "diatonic_number": 2,
+      "quality": "augmented",
+      "consonance_class": "dissonance",
+      "inversion": "d7",
+      "is_compound": false,
+      "typical_treatment": "Augmented interval. Melodically awkward in strict profiles; harmonically it signals an altered or applied chord and resolves outward by step.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_diminished_3",
+      "short_name": "d3",
+      "name": "diminished third",
+      "semitones": 2,
+      "diatonic_number": 3,
+      "quality": "diminished",
+      "consonance_class": "dissonance",
+      "inversion": "A6",
+      "is_compound": false,
+      "typical_treatment": "Diminished interval. Usually the inversion or contraction of an augmented interval; resolves inward by step and requires a spelling that reflects its destination.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_minor_3",
+      "short_name": "m3",
+      "name": "minor third",
+      "semitones": 3,
+      "diatonic_number": 3,
+      "quality": "minor",
+      "consonance_class": "imperfect_consonance",
+      "inversion": "M6",
+      "is_compound": false,
+      "typical_treatment": "Imperfect consonance. The workhorse interval for parallel harmonisation, thickening and doubled lines in every profile.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_major_3",
+      "short_name": "M3",
+      "name": "major third",
+      "semitones": 4,
+      "diatonic_number": 3,
+      "quality": "major",
+      "consonance_class": "imperfect_consonance",
+      "inversion": "m6",
+      "is_compound": false,
+      "typical_treatment": "Imperfect consonance. The workhorse interval for parallel harmonisation, thickening and doubled lines in every profile.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_augmented_3",
+      "short_name": "A3",
+      "name": "augmented third",
+      "semitones": 5,
+      "diatonic_number": 3,
+      "quality": "augmented",
+      "consonance_class": "dissonance",
+      "inversion": "d6",
+      "is_compound": false,
+      "typical_treatment": "Augmented interval. Melodically awkward in strict profiles; harmonically it signals an altered or applied chord and resolves outward by step.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_diminished_4",
+      "short_name": "d4",
+      "name": "diminished fourth",
+      "semitones": 4,
+      "diatonic_number": 4,
+      "quality": "diminished",
+      "consonance_class": "dissonance",
+      "inversion": "A5",
+      "is_compound": false,
+      "typical_treatment": "Diminished interval. Usually the inversion or contraction of an augmented interval; resolves inward by step and requires a spelling that reflects its destination.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_perfect_4",
+      "short_name": "P4",
+      "name": "perfect fourth",
+      "semitones": 5,
+      "diatonic_number": 4,
+      "quality": "perfect",
+      "consonance_class": "contextual",
+      "inversion": "P5",
+      "is_compound": false,
+      "typical_treatment": "Consonant between upper voices, dissonant when it is the interval above the bass. Prepare and resolve it against the bass in strict profiles; treat it as free colour in quartal and modal profiles.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_augmented_4",
+      "short_name": "A4",
+      "name": "augmented fourth",
+      "semitones": 6,
+      "diatonic_number": 4,
+      "quality": "augmented",
+      "consonance_class": "dissonance",
+      "inversion": "d5",
+      "is_compound": false,
+      "typical_treatment": "Tritone. As the 3-to-7 frame of a dominant seventh it drives resolution outward to a sixth; as a melodic interval it is avoided in strict profiles.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_diminished_5",
+      "short_name": "d5",
+      "name": "diminished fifth",
+      "semitones": 6,
+      "diatonic_number": 5,
+      "quality": "diminished",
+      "consonance_class": "dissonance",
+      "inversion": "A4",
+      "is_compound": false,
+      "typical_treatment": "Tritone spelled inward-resolving. Normally contracts to a third.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_perfect_5",
+      "short_name": "P5",
+      "name": "perfect fifth",
+      "semitones": 7,
+      "diatonic_number": 5,
+      "quality": "perfect",
+      "consonance_class": "perfect_consonance",
+      "inversion": "P4",
+      "is_compound": false,
+      "typical_treatment": "Perfect consonance. Approach by contrary or oblique motion in strict profiles; unrestricted in power-chord and planing profiles.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_augmented_5",
+      "short_name": "A5",
+      "name": "augmented fifth",
+      "semitones": 8,
+      "diatonic_number": 5,
+      "quality": "augmented",
+      "consonance_class": "dissonance",
+      "inversion": "d4",
+      "is_compound": false,
+      "typical_treatment": "Augmented interval. Melodically awkward in strict profiles; harmonically it signals an altered or applied chord and resolves outward by step.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_diminished_6",
+      "short_name": "d6",
+      "name": "diminished sixth",
+      "semitones": 7,
+      "diatonic_number": 6,
+      "quality": "diminished",
+      "consonance_class": "dissonance",
+      "inversion": "A3",
+      "is_compound": false,
+      "typical_treatment": "Diminished interval. Usually the inversion or contraction of an augmented interval; resolves inward by step and requires a spelling that reflects its destination.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_minor_6",
+      "short_name": "m6",
+      "name": "minor sixth",
+      "semitones": 8,
+      "diatonic_number": 6,
+      "quality": "minor",
+      "consonance_class": "imperfect_consonance",
+      "inversion": "M3",
+      "is_compound": false,
+      "typical_treatment": "Imperfect consonance. The workhorse interval for parallel harmonisation, thickening and doubled lines in every profile.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_major_6",
+      "short_name": "M6",
+      "name": "major sixth",
+      "semitones": 9,
+      "diatonic_number": 6,
+      "quality": "major",
+      "consonance_class": "imperfect_consonance",
+      "inversion": "m3",
+      "is_compound": false,
+      "typical_treatment": "Imperfect consonance. The workhorse interval for parallel harmonisation, thickening and doubled lines in every profile.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_augmented_6",
+      "short_name": "A6",
+      "name": "augmented sixth",
+      "semitones": 10,
+      "diatonic_number": 6,
+      "quality": "augmented",
+      "consonance_class": "dissonance",
+      "inversion": "d3",
+      "is_compound": false,
+      "typical_treatment": "Augmented interval. Melodically awkward in strict profiles; harmonically it signals an altered or applied chord and resolves outward by step.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_diminished_7",
+      "short_name": "d7",
+      "name": "diminished seventh",
+      "semitones": 9,
+      "diatonic_number": 7,
+      "quality": "diminished",
+      "consonance_class": "dissonance",
+      "inversion": "A2",
+      "is_compound": false,
+      "typical_treatment": "Diminished interval. Usually the inversion or contraction of an augmented interval; resolves inward by step and requires a spelling that reflects its destination.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_minor_7",
+      "short_name": "m7",
+      "name": "minor seventh",
+      "semitones": 10,
+      "diatonic_number": 7,
+      "quality": "minor",
+      "consonance_class": "dissonance",
+      "inversion": "M2",
+      "is_compound": false,
+      "typical_treatment": "Dissonance. Prepare on a weak position and resolve by step in strict profiles; usable unprepared as chordal colour in jazz, neo-soul and ambient profiles.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_major_7",
+      "short_name": "M7",
+      "name": "major seventh",
+      "semitones": 11,
+      "diatonic_number": 7,
+      "quality": "major",
+      "consonance_class": "dissonance",
+      "inversion": "m2",
+      "is_compound": false,
+      "typical_treatment": "Dissonance. Prepare on a weak position and resolve by step in strict profiles; usable unprepared as chordal colour in jazz, neo-soul and ambient profiles.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_augmented_7",
+      "short_name": "A7",
+      "name": "augmented seventh",
+      "semitones": 12,
+      "diatonic_number": 7,
+      "quality": "augmented",
+      "consonance_class": "dissonance",
+      "inversion": "d2",
+      "is_compound": false,
+      "typical_treatment": "Augmented interval. Melodically awkward in strict profiles; harmonically it signals an altered or applied chord and resolves outward by step.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_diminished_8",
+      "short_name": "d8",
+      "name": "diminished octave",
+      "semitones": 11,
+      "diatonic_number": 8,
+      "quality": "diminished",
+      "consonance_class": "dissonance",
+      "inversion": "A1",
+      "is_compound": false,
+      "typical_treatment": "Diminished interval. Usually the inversion or contraction of an augmented interval; resolves inward by step and requires a spelling that reflects its destination.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_perfect_8",
+      "short_name": "P8",
+      "name": "perfect octave",
+      "semitones": 12,
+      "diatonic_number": 8,
+      "quality": "perfect",
+      "consonance_class": "perfect_consonance",
+      "inversion": "P1",
+      "is_compound": false,
+      "typical_treatment": "Perfect consonance. Strong for reinforcement, weak for voice independence.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    },
+    {
+      "id": "interval_augmented_8",
+      "short_name": "A8",
+      "name": "augmented octave",
+      "semitones": 13,
+      "diatonic_number": 8,
+      "quality": "augmented",
+      "consonance_class": "dissonance",
+      "inversion": "d1",
+      "is_compound": false,
+      "typical_treatment": "Augmented interval. Melodically awkward in strict profiles; harmonically it signals an altered or applied chord and resolves outward by step.",
+      "source_refs": [
+        "mt21c",
+        "open-music-theory"
+      ]
+    }
+  ]
+}

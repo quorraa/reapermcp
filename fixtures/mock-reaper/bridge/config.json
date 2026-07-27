@@ -1,0 +1,8 @@
+{
+  "console_log": false,
+  "heartbeat_interval_ms": 1000,
+  "instance_token": "0123456789abcdef0123456789abcdef",
+  "ipc_dir": null,
+  "log_level": "info",
+  "poll_interval_ms": 50
+}

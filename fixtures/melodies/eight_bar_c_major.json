@@ -1,0 +1,352 @@
+{
+  "fixture_version": "1.0.0",
+  "id": "melodies/eight_bar_c_major",
+  "title": "Eight-bar diatonic melody in C major",
+  "description": "Primary acceptance-workflow fixture: 8 bars of 4/4, clear phrase structure, cadential close on tonic. Exercises key detection, phrase segmentation, harmonic grid selection and loop audit with closed_tonic intent.",
+  "tempo_bpm": 110.0,
+  "time_signature": "4/4",
+  "tempo_map": [
+    {
+      "qn": "0",
+      "bpm": 110.0,
+      "linear": false
+    }
+  ],
+  "meter_map": [
+    {
+      "qn": "0",
+      "sig": "4/4",
+      "measure": 0
+    }
+  ],
+  "loop": {
+    "start_qn": "0",
+    "end_qn": "32",
+    "intent": "closed_tonic"
+  },
+  "key_hint": {
+    "tonic": "C",
+    "scale_id": "major"
+  },
+  "notes": [
+    {
+      "pitch": "C4",
+      "onset": "0",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E4",
+      "onset": "1",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "2",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E4",
+      "onset": "3",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F4",
+      "onset": "4",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "A4",
+      "onset": "5",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "6",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D4",
+      "onset": "8",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F4",
+      "onset": "9",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "A4",
+      "onset": "10",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F4",
+      "onset": "11",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E4",
+      "onset": "12",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "13",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "C5",
+      "onset": "14",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "B4",
+      "onset": "16",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "A4",
+      "onset": "17",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "18",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F4",
+      "onset": "19",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E4",
+      "onset": "20",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D4",
+      "onset": "21",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "C4",
+      "onset": "22",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E4",
+      "onset": "24",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "25",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "C5",
+      "onset": "26",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "B4",
+      "onset": "27",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "A4",
+      "onset": "28",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F4",
+      "onset": "29",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "30",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "C4",
+      "onset": "31",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    }
+  ]
+}

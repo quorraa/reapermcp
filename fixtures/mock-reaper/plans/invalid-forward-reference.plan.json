@@ -1,0 +1,52 @@
+{
+  "base_snapshot_hash": "fnv1a64:3e7bf035037bcf4f",
+  "base_snapshot_id": "00000000-0000-4000-8000-0000000000aa",
+  "candidate_id": "00000000-0000-4000-8000-0000000000c1",
+  "expected_outputs": [],
+  "knowledge_version": "2026.07.1",
+  "operations": [
+    {
+      "end_qn": 4,
+      "op": "create_midi_item",
+      "start_qn": 0,
+      "temp_id": "i",
+      "track": "declared_later"
+    },
+    {
+      "name": "T",
+      "op": "create_track",
+      "temp_id": "declared_later"
+    }
+  ],
+  "plan_id": "00000000-0000-4000-8000-0000000000b1",
+  "preconditions": [
+    {
+      "type": "project_uuid",
+      "value": "00000000-0000-4000-8000-000000000001"
+    },
+    {
+      "type": "item_guid_exists",
+      "value": "00000002-0002-4002-8002-000000000002"
+    },
+    {
+      "type": "take_guid_exists",
+      "value": "00000003-0003-4003-8003-000000000003"
+    },
+    {
+      "type": "midi_hash",
+      "value": "fnv1a64:fac2c019eba29541"
+    },
+    {
+      "type": "tempo_map_hash",
+      "value": "fnv1a64:387bdc9bc9f1446a"
+    },
+    {
+      "end_qn": 8,
+      "start_qn": 0,
+      "type": "item_bounds"
+    }
+  ],
+  "project_uuid": "00000000-0000-4000-8000-000000000001",
+  "transaction_id": "00000000-0000-4000-8000-0000000000d1",
+  "undo_label": "QLabs MCP: Stage candidate 00000000"
+}

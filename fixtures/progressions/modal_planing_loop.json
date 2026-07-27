@@ -1,0 +1,49 @@
+{
+  "fixture_version": "1.0.0",
+  "id": "progressions/modal_planing_loop",
+  "title": "Planing major triads over a pedal",
+  "description": "Non-functional colour loop; must score well under modal_ambient and poorly under common_practice without being rejected outright.",
+  "tempo_bpm": 76.0,
+  "time_signature": "4/4",
+  "tempo_map": [
+    {
+      "qn": "0",
+      "bpm": 76.0,
+      "linear": false
+    }
+  ],
+  "meter_map": [
+    {
+      "qn": "0",
+      "sig": "4/4",
+      "measure": 0
+    }
+  ],
+  "loop": {
+    "start_qn": "0",
+    "end_qn": "16",
+    "intent": "modal_drone"
+  },
+  "chords": [
+    {
+      "symbol": "D",
+      "onset": "0",
+      "duration": "4"
+    },
+    {
+      "symbol": "C",
+      "onset": "4",
+      "duration": "4"
+    },
+    {
+      "symbol": "G",
+      "onset": "8",
+      "duration": "4"
+    },
+    {
+      "symbol": "C",
+      "onset": "12",
+      "duration": "4"
+    }
+  ]
+}

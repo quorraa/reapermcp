@@ -1,0 +1,49 @@
+{
+  "fixture_version": "1.0.0",
+  "id": "loops/dominant_wrap",
+  "title": "Loop ending on V into a tonic downbeat",
+  "description": "Checks that V-to-I across the wrap is recognised as highly compatible with closed_tonic intent and is not demanded for modal_drone intent.",
+  "tempo_bpm": 120.0,
+  "time_signature": "4/4",
+  "tempo_map": [
+    {
+      "qn": "0",
+      "bpm": 120.0,
+      "linear": false
+    }
+  ],
+  "meter_map": [
+    {
+      "qn": "0",
+      "sig": "4/4",
+      "measure": 0
+    }
+  ],
+  "loop": {
+    "start_qn": "0",
+    "end_qn": "16",
+    "intent": "closed_tonic"
+  },
+  "chords": [
+    {
+      "symbol": "C",
+      "onset": "0",
+      "duration": "4"
+    },
+    {
+      "symbol": "Am",
+      "onset": "4",
+      "duration": "4"
+    },
+    {
+      "symbol": "F",
+      "onset": "8",
+      "duration": "4"
+    },
+    {
+      "symbol": "G7",
+      "onset": "12",
+      "duration": "4"
+    }
+  ]
+}

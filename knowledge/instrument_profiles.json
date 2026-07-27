@@ -1,0 +1,526 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "melody_lead",
+      "name": "Melody lead",
+      "range": {
+        "low_midi": 55,
+        "high_midi": 91
+      },
+      "comfortable_range": {
+        "low_midi": 60,
+        "high_midi": 84
+      },
+      "polyphony": 1,
+      "low_interval_limits": [
+        {
+          "below_midi": 52,
+          "min_semitones": 7
+        }
+      ],
+      "typical_roles": [
+        "lead"
+      ],
+      "articulations": [
+        "sustain",
+        "legato",
+        "accent",
+        "staccato"
+      ],
+      "density_preference": 0.55,
+      "notes": "Monophonic by definition. Keep the structural notes of a phrase inside the comfortable range and reserve the top fifth of the range for climaxes.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "counterlead",
+      "name": "Counterlead",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 84
+      },
+      "comfortable_range": {
+        "low_midi": 55,
+        "high_midi": 76
+      },
+      "polyphony": 1,
+      "low_interval_limits": [
+        {
+          "below_midi": 48,
+          "min_semitones": 7
+        }
+      ],
+      "typical_roles": [
+        "counterlead",
+        "ornament"
+      ],
+      "articulations": [
+        "legato",
+        "staccato",
+        "sustain"
+      ],
+      "density_preference": 0.35,
+      "notes": "Sits below the lead by default and moves in the lead's gaps. Its register window should overlap the lead by no more than a fourth or the two lines fuse.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "range": {
+        "low_midi": 28,
+        "high_midi": 60
+      },
+      "comfortable_range": {
+        "low_midi": 33,
+        "high_midi": 55
+      },
+      "polyphony": 1,
+      "low_interval_limits": [
+        {
+          "below_midi": 36,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 43,
+          "min_semitones": 7
+        }
+      ],
+      "typical_roles": [
+        "bass"
+      ],
+      "articulations": [
+        "sustain",
+        "staccato",
+        "slide",
+        "accent"
+      ],
+      "density_preference": 0.4,
+      "notes": "One note at a time. Below E1 pitch definition collapses on most playback systems, so the engine should prefer the octave above rather than the written low note.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "sub_bass",
+      "name": "Sub bass",
+      "range": {
+        "low_midi": 24,
+        "high_midi": 48
+      },
+      "comfortable_range": {
+        "low_midi": 28,
+        "high_midi": 43
+      },
+      "polyphony": 1,
+      "low_interval_limits": [
+        {
+          "below_midi": 36,
+          "min_semitones": 12
+        }
+      ],
+      "typical_roles": [
+        "bass",
+        "pulse"
+      ],
+      "articulations": [
+        "sustain"
+      ],
+      "density_preference": 0.2,
+      "notes": "Sine-like sub register. Must never carry harmonic information other than the root, and must not be doubled at the third.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "piano_keys",
+      "name": "Piano or keyboard",
+      "range": {
+        "low_midi": 21,
+        "high_midi": 108
+      },
+      "comfortable_range": {
+        "low_midi": 36,
+        "high_midi": 96
+      },
+      "polyphony": 10,
+      "low_interval_limits": [
+        {
+          "below_midi": 40,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 48,
+          "min_semitones": 7
+        },
+        {
+          "below_midi": 55,
+          "min_semitones": 4
+        }
+      ],
+      "typical_roles": [
+        "comping",
+        "harmonic_bed",
+        "lead",
+        "bass"
+      ],
+      "articulations": [
+        "sustain",
+        "staccato",
+        "pedal"
+      ],
+      "density_preference": 0.6,
+      "notes": "The general-purpose harmonic instrument. Its low-interval limits are the strictest of the keyboard family because low thirds turn to mud quickly.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "pad",
+      "name": "Sustained pad",
+      "range": {
+        "low_midi": 36,
+        "high_midi": 96
+      },
+      "comfortable_range": {
+        "low_midi": 48,
+        "high_midi": 84
+      },
+      "polyphony": 6,
+      "low_interval_limits": [
+        {
+          "below_midi": 45,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 57,
+          "min_semitones": 7
+        }
+      ],
+      "typical_roles": [
+        "pad",
+        "harmonic_bed",
+        "ambience"
+      ],
+      "articulations": [
+        "sustain"
+      ],
+      "density_preference": 0.15,
+      "notes": "Long notes, few onsets. A pad that re-articulates on every chord change stops being a pad; prefer common-tone retention and let only the changing voices move.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "pluck",
+      "name": "Pluck",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 96
+      },
+      "comfortable_range": {
+        "low_midi": 55,
+        "high_midi": 88
+      },
+      "polyphony": 4,
+      "low_interval_limits": [
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        }
+      ],
+      "typical_roles": [
+        "ostinato",
+        "ear_candy",
+        "comping",
+        "texture"
+      ],
+      "articulations": [
+        "staccato",
+        "accent"
+      ],
+      "density_preference": 0.7,
+      "notes": "Short decaying notes. Density can be high because each note vacates its own space quickly; note length should not exceed the grid interval.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "strings_ensemble",
+      "name": "String ensemble",
+      "range": {
+        "low_midi": 28,
+        "high_midi": 100
+      },
+      "comfortable_range": {
+        "low_midi": 40,
+        "high_midi": 88
+      },
+      "polyphony": 8,
+      "low_interval_limits": [
+        {
+          "below_midi": 43,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 52,
+          "min_semitones": 5
+        }
+      ],
+      "typical_roles": [
+        "pad",
+        "harmonic_bed",
+        "counterlead",
+        "lead"
+      ],
+      "articulations": [
+        "legato",
+        "sustain",
+        "pizzicato",
+        "tremolo",
+        "staccato"
+      ],
+      "density_preference": 0.35,
+      "notes": "Divisi writing is assumed. Wide spacing at the bottom and close spacing at the top is the natural distribution; the reverse sounds congested.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "brass_section",
+      "name": "Brass section",
+      "range": {
+        "low_midi": 28,
+        "high_midi": 89
+      },
+      "comfortable_range": {
+        "low_midi": 40,
+        "high_midi": 82
+      },
+      "polyphony": 6,
+      "low_interval_limits": [
+        {
+          "below_midi": 45,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 55,
+          "min_semitones": 4
+        }
+      ],
+      "typical_roles": [
+        "impact",
+        "harmonic_bed",
+        "riff",
+        "lead"
+      ],
+      "articulations": [
+        "accent",
+        "sustain",
+        "staccato",
+        "fall"
+      ],
+      "density_preference": 0.3,
+      "notes": "Strong and tiring. Reserve the top of the range for arrival points, keep sustained passages short, and expect the section to dominate anything sharing its register.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "choir",
+      "name": "Choir",
+      "range": {
+        "low_midi": 40,
+        "high_midi": 81
+      },
+      "comfortable_range": {
+        "low_midi": 48,
+        "high_midi": 76
+      },
+      "polyphony": 4,
+      "low_interval_limits": [
+        {
+          "below_midi": 48,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 55,
+          "min_semitones": 5
+        }
+      ],
+      "typical_roles": [
+        "pad",
+        "harmonic_bed",
+        "texture"
+      ],
+      "articulations": [
+        "sustain",
+        "legato"
+      ],
+      "density_preference": 0.2,
+      "notes": "Four-part ranges with limited compass per voice. Chorale doubling conventions apply directly, and voice crossing is far more audible than in keyboard textures.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "guitar_comping",
+      "name": "Guitar-like comping",
+      "range": {
+        "low_midi": 40,
+        "high_midi": 88
+      },
+      "comfortable_range": {
+        "low_midi": 45,
+        "high_midi": 79
+      },
+      "polyphony": 6,
+      "low_interval_limits": [
+        {
+          "below_midi": 48,
+          "min_semitones": 5
+        }
+      ],
+      "typical_roles": [
+        "comping",
+        "riff",
+        "harmonic_bed",
+        "texture"
+      ],
+      "articulations": [
+        "staccato",
+        "accent",
+        "sustain",
+        "mute"
+      ],
+      "density_preference": 0.5,
+      "notes": "Voicings of four to five notes with the root often omitted. Drop 2, shell and power shapes fit the instrument; close four-note seventh chords below the staff do not.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "mallet",
+      "name": "Mallet percussion",
+      "range": {
+        "low_midi": 53,
+        "high_midi": 96
+      },
+      "comfortable_range": {
+        "low_midi": 60,
+        "high_midi": 91
+      },
+      "polyphony": 4,
+      "low_interval_limits": [
+        {
+          "below_midi": 60,
+          "min_semitones": 3
+        }
+      ],
+      "typical_roles": [
+        "ostinato",
+        "ear_candy",
+        "texture",
+        "lead",
+        "percussion"
+      ],
+      "articulations": [
+        "staccato",
+        "roll"
+      ],
+      "density_preference": 0.6,
+      "notes": "Bright and transient-heavy, so it cuts through dense arrangements at low velocity. Clusters remain legible high in the range.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "gm_harmony",
+      "name": "General-purpose MIDI harmony",
+      "range": {
+        "low_midi": 36,
+        "high_midi": 96
+      },
+      "comfortable_range": {
+        "low_midi": 48,
+        "high_midi": 84
+      },
+      "polyphony": 8,
+      "low_interval_limits": [
+        {
+          "below_midi": 45,
+          "min_semitones": 12
+        },
+        {
+          "below_midi": 55,
+          "min_semitones": 5
+        }
+      ],
+      "typical_roles": [
+        "harmonic_bed",
+        "comping",
+        "pad"
+      ],
+      "articulations": [
+        "sustain",
+        "staccato"
+      ],
+      "density_preference": 0.45,
+      "notes": "The neutral fallback profile used when no instrument is specified. Its limits are deliberately conservative.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    },
+    {
+      "id": "synth_lead",
+      "name": "Synth lead",
+      "range": {
+        "low_midi": 48,
+        "high_midi": 100
+      },
+      "comfortable_range": {
+        "low_midi": 60,
+        "high_midi": 91
+      },
+      "polyphony": 1,
+      "low_interval_limits": [
+        {
+          "below_midi": 52,
+          "min_semitones": 7
+        }
+      ],
+      "typical_roles": [
+        "lead",
+        "riff",
+        "ear_candy"
+      ],
+      "articulations": [
+        "sustain",
+        "glide",
+        "accent"
+      ],
+      "density_preference": 0.6,
+      "notes": "Monophonic with portamento available. Occupies the same register as the melody lead and should not run simultaneously with it without register separation.",
+      "source_refs": [
+        "mt21c",
+        "berklee-orchestration-2"
+      ]
+    }
+  ]
+}

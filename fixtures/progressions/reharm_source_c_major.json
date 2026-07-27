@@ -1,0 +1,209 @@
+{
+  "fixture_version": "1.0.0",
+  "id": "progressions/reharm_source_c_major",
+  "title": "Four-bar melody over ii-V-I in C major",
+  "description": "Melody and chords together, so reharmonisation can be exercised against material that already has harmony: the chord grid, the bass and the cadence are all present to be preserved or replaced.",
+  "tempo_bpm": 120.0,
+  "time_signature": "4/4",
+  "tempo_map": [
+    {
+      "qn": "0",
+      "bpm": 120.0,
+      "linear": false
+    }
+  ],
+  "meter_map": [
+    {
+      "qn": "0",
+      "sig": "4/4",
+      "measure": 0
+    }
+  ],
+  "loop": {
+    "start_qn": "0",
+    "end_qn": "16",
+    "intent": "closed_tonic"
+  },
+  "key_hint": {
+    "tonic": "C",
+    "scale_id": "major"
+  },
+  "notes": [
+    {
+      "pitch": "F4",
+      "onset": "0",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "A4",
+      "onset": "1",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "C5",
+      "onset": "2",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "A4",
+      "onset": "3",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "B4",
+      "onset": "4",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D5",
+      "onset": "5",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "F5",
+      "onset": "6",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D5",
+      "onset": "7",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E5",
+      "onset": "8",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "G4",
+      "onset": "10",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "C5",
+      "onset": "11",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "E5",
+      "onset": "12",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "D5",
+      "onset": "13",
+      "duration": "1",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    },
+    {
+      "pitch": "C5",
+      "onset": "14",
+      "duration": "2",
+      "velocity": 96,
+      "channel": 0,
+      "muted": false,
+      "selected": true,
+      "voice": 0,
+      "role": "melody"
+    }
+  ],
+  "chords": [
+    {
+      "symbol": "Dm7",
+      "onset": "0",
+      "duration": "4"
+    },
+    {
+      "symbol": "G7",
+      "onset": "4",
+      "duration": "4"
+    },
+    {
+      "symbol": "Cmaj7",
+      "onset": "8",
+      "duration": "4"
+    },
+    {
+      "symbol": "Cmaj7",
+      "onset": "12",
+      "duration": "4"
+    }
+  ]
+}

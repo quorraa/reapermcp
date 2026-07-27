@@ -1,0 +1,37 @@
+{
+  "description": "Each plan here must be rejected with the given error code before any mutation.",
+  "plans": [
+    {
+      "expected_error_code": "INVALID_EDIT_PLAN",
+      "file": "invalid-unowned-undo-label.plan.json"
+    },
+    {
+      "expected_error_code": "KNOWLEDGE_INVALID",
+      "file": "invalid-knowledge-version.plan.json"
+    },
+    {
+      "expected_error_code": "INVALID_EDIT_PLAN",
+      "file": "invalid-forbidden-operation.plan.json"
+    },
+    {
+      "expected_error_code": "INVALID_EDIT_PLAN",
+      "file": "invalid-note-outside-item-bounds.plan.json"
+    },
+    {
+      "expected_error_code": "INVALID_EDIT_PLAN",
+      "file": "invalid-pitch-out-of-range.plan.json"
+    },
+    {
+      "expected_error_code": "INVALID_EDIT_PLAN",
+      "file": "invalid-non-allowlisted-tag.plan.json"
+    },
+    {
+      "expected_error_code": "INVALID_EDIT_PLAN",
+      "file": "invalid-forward-reference.plan.json"
+    },
+    {
+      "expected_error_code": "STALE_SNAPSHOT",
+      "file": "invalid-stale-base-snapshot.plan.json"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "cinematic",
+      "name": "Cinematic",
+      "parent": "common_practice",
+      "summary": "Tonal grammar widened by chromatic mediants, mixture, pedals and wide orchestral spacing, with contrast built from register and density rather than from cadences.",
+      "harmonic_vocabulary": {
+        "core": [
+          "major_triad",
+          "minor_triad",
+          "major7",
+          "minor7",
+          "sus2",
+          "sus4",
+          "add9",
+          "minor9",
+          "power"
+        ],
+        "occasional": [
+          "dominant7",
+          "diminished7",
+          "half_diminished7",
+          "augmented_triad",
+          "german_sixth",
+          "italian_sixth",
+          "french_sixth",
+          "major7_sharp11",
+          "minor_major7"
+        ],
+        "avoided": [
+          "dominant13_sharp11",
+          "six_nine",
+          "minor13",
+          "add2"
+        ]
+      },
+      "functional_strength": 0.55,
+      "modal_tolerance": 0.7,
+      "chromaticism_preference": 0.7,
+      "extension_density": 0.3,
+      "alteration_preference": 0.3,
+      "harmonic_rhythm": {
+        "default_slots_per_bar": 1,
+        "min_slot_qn": "2",
+        "max_slot_qn": "16",
+        "coupled_to_tempo": false
+      },
+      "voice_leading_strictness": 0.6,
+      "parallel_motion_treatment": "penalised",
+      "dissonance_treatment": "free",
+      "register_spacing": {
+        "open_voicing_bias": 0.8,
+        "low_interval_limit_source": "instrument_profile",
+        "min_top_spacing_semitones": 2,
+        "max_outer_voice_span_semitones": 36
+      },
+      "bass_behavior": {
+        "allowed_modes": [
+          "roots",
+          "pedal",
+          "stepwise",
+          "inversions",
+          "contrary_motion"
+        ],
+        "default_mode": "pedal",
+        "octave_folding": false,
+        "ornamentation": "passing_tones"
+      },
+      "countermelody_density": 0.45,
+      "arrangement_density": 0.6,
+      "loop_preference": {
+        "default_intent": "transition_ready",
+        "allowed_intents": [
+          "closed_tonic",
+          "open_dominant",
+          "modal_drone",
+          "seamless_color",
+          "transition_ready",
+          "one_shot_ending"
+        ],
+        "wrap_weight": 0.6,
+        "tail_policy": "sustain"
+      },
+      "candidate_diversity": 0.7,
+      "default_complexity": 0.5,
+      "score_weights": {
+        "melody_fit": 1.2,
+        "harmonic_coherence": 1.2,
+        "functional_or_modal_coherence": 0.8,
+        "voice_leading": 1.2,
+        "extension_appropriateness": 0.6,
+        "style_match": 1.4,
+        "phrase_direction": 1.1,
+        "bass_quality": 1.0,
+        "arrangement_clarity": 1.5,
+        "loop_compatibility": 0.6,
+        "complexity_target": 1.0,
+        "chromaticism_target": 1.3,
+        "candidate_diversity": 1.0
+      },
+      "rule_overrides": {
+        "harmony.chromatic_mediant_is_not_diatonic": 1.8,
+        "harmony.borrowed_chord_comes_from_parallel_mode": 1.4,
+        "harmony.augmented_sixth_expands_outward": 1.2,
+        "harmony.ii_v_i_is_preferred_cadential_path": 0.6,
+        "harmony.pedal_slows_harmonic_rhythm": 1.5,
+        "arrangement.roles_occupy_separate_registers": 1.5,
+        "arrangement.contrast_beyond_dynamics": 1.6,
+        "voice_leading.upper_voices_within_an_octave": 0.4,
+        "voice_leading.direct_perfect_in_outer_voices": 0.3,
+        "counterpoint.dissonance_is_prepared": 0.4
+      },
+      "notes": "Inherits common-practice voice leading, which orchestral writing genuinely uses, then loosens spacing and harmonic grammar substantially. Contrast is scored through arrangement_clarity rather than through cadential strength."
+    }
+  ]
+}

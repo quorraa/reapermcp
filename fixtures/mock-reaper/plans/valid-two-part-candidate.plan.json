@@ -1,0 +1,202 @@
+{
+  "base_snapshot_hash": "fnv1a64:3e7bf035037bcf4f",
+  "base_snapshot_id": "00000000-0000-4000-8000-0000000000aa",
+  "candidate_id": "00000000-0000-4000-8000-0000000000c1",
+  "expected_outputs": [
+    {
+      "kind": "folder_track",
+      "temp_id": "folder"
+    },
+    {
+      "kind": "track",
+      "temp_id": "chords"
+    },
+    {
+      "kind": "track",
+      "temp_id": "bass"
+    },
+    {
+      "kind": "midi_item",
+      "note_count": 6,
+      "temp_id": "chord_item"
+    },
+    {
+      "kind": "midi_item",
+      "note_count": 2,
+      "temp_id": "bass_item"
+    }
+  ],
+  "knowledge_version": "2026.07.1",
+  "operations": [
+    {
+      "name": "QLabs Candidate 01 -- Warm Extended",
+      "op": "create_folder_track",
+      "tags": [
+        [
+          "QLABS_ROLE",
+          "candidate_folder"
+        ]
+      ],
+      "temp_id": "folder"
+    },
+    {
+      "name": "Chords",
+      "op": "create_track",
+      "parent": "folder",
+      "tags": [
+        [
+          "QLABS_ROLE",
+          "harmonic_bed"
+        ]
+      ],
+      "temp_id": "chords"
+    },
+    {
+      "name": "Bass",
+      "op": "create_track",
+      "parent": "folder",
+      "tags": [
+        [
+          "QLABS_ROLE",
+          "bass"
+        ]
+      ],
+      "temp_id": "bass"
+    },
+    {
+      "end_qn": 8,
+      "muted": true,
+      "op": "create_midi_item",
+      "start_qn": 0,
+      "tags": [],
+      "temp_id": "chord_item",
+      "track": "chords"
+    },
+    {
+      "item": "chord_item",
+      "notes": [
+        {
+          "channel": 0,
+          "end_qn": 4,
+          "pitch": 60,
+          "spelling": "C4",
+          "start_qn": 0,
+          "velocity": 84
+        },
+        {
+          "channel": 0,
+          "end_qn": 4,
+          "pitch": 64,
+          "spelling": "E4",
+          "start_qn": 0,
+          "velocity": 84
+        },
+        {
+          "channel": 0,
+          "end_qn": 4,
+          "pitch": 67,
+          "spelling": "G4",
+          "start_qn": 0,
+          "velocity": 84
+        },
+        {
+          "channel": 0,
+          "end_qn": 8,
+          "pitch": 62,
+          "spelling": "D4",
+          "start_qn": 4,
+          "velocity": 84
+        },
+        {
+          "channel": 0,
+          "end_qn": 8,
+          "pitch": 65,
+          "spelling": "F4",
+          "start_qn": 4,
+          "velocity": 84
+        },
+        {
+          "channel": 0,
+          "end_qn": 8,
+          "pitch": 69,
+          "spelling": "A4",
+          "start_qn": 4,
+          "velocity": 84
+        }
+      ],
+      "op": "insert_notes"
+    },
+    {
+      "end_qn": 8,
+      "muted": true,
+      "op": "create_midi_item",
+      "start_qn": 0,
+      "tags": [],
+      "temp_id": "bass_item",
+      "track": "bass"
+    },
+    {
+      "item": "bass_item",
+      "notes": [
+        {
+          "channel": 0,
+          "end_qn": 4,
+          "pitch": 36,
+          "spelling": "C2",
+          "start_qn": 0,
+          "velocity": 96
+        },
+        {
+          "channel": 0,
+          "end_qn": 8,
+          "pitch": 38,
+          "spelling": "D2",
+          "start_qn": 4,
+          "velocity": 96
+        }
+      ],
+      "op": "insert_notes"
+    },
+    {
+      "muted": true,
+      "op": "set_track_mute",
+      "track": "chords"
+    },
+    {
+      "muted": true,
+      "op": "set_track_mute",
+      "track": "bass"
+    }
+  ],
+  "plan_id": "00000000-0000-4000-8000-0000000000b1",
+  "preconditions": [
+    {
+      "type": "project_uuid",
+      "value": "00000000-0000-4000-8000-000000000001"
+    },
+    {
+      "type": "item_guid_exists",
+      "value": "00000002-0002-4002-8002-000000000002"
+    },
+    {
+      "type": "take_guid_exists",
+      "value": "00000003-0003-4003-8003-000000000003"
+    },
+    {
+      "type": "midi_hash",
+      "value": "fnv1a64:fac2c019eba29541"
+    },
+    {
+      "type": "tempo_map_hash",
+      "value": "fnv1a64:387bdc9bc9f1446a"
+    },
+    {
+      "end_qn": 8,
+      "start_qn": 0,
+      "type": "item_bounds"
+    }
+  ],
+  "project_uuid": "00000000-0000-4000-8000-000000000001",
+  "transaction_id": "00000000-0000-4000-8000-0000000000d1",
+  "undo_label": "QLabs MCP: Stage candidate 00000000"
+}

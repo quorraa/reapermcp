@@ -1,0 +1,589 @@
+# Testing
+
+Every test group in this repository, what it covers, and how to run it.
+
+Two things to know before reading further:
+
+1. **The in-REAPER smoke test has NOT been executed.** No REAPER host was
+   available in the build environment. See
+   [§10](#10-the-in-reaper-smoke-test--not-executed). Nothing else in this
+   document implies otherwise.
+2. **Everything else runs offline.** The workspace has zero external
+   dependencies and the knowledge bundle is compiled in, so no test needs a
+   network, a DAW, or any external package beyond `lua5.4` for the bridge suite.
+
+---
+
+## Contents
+
+- [Quick start](#quick-start)
+- [1. Rust unit tests](#1-rust-unit-tests)
+- [2. Rust integration tests](#2-rust-integration-tests)
+- [3. Golden fixture tests](#3-golden-fixture-tests)
+- [4. Knowledge, schema and fixture validation](#4-knowledge-schema-and-fixture-validation)
+- [5. The rule-to-test coverage ledger](#5-the-rule-to-test-coverage-ledger)
+- [6. IPC protocol tests](#6-ipc-protocol-tests)
+- [7. Cross-language mock-REAPER fixtures](#7-cross-language-mock-reaper-fixtures)
+- [8. The REAPER Lua bridge suite](#8-the-reaper-lua-bridge-suite)
+- [9. MCP protocol tests](#9-mcp-protocol-tests)
+- [10. The in-REAPER smoke test — NOT EXECUTED](#10-the-in-reaper-smoke-test--not-executed)
+- [Regenerating generated test data](#regenerating-generated-test-data)
+- [Continuous integration](#continuous-integration)
+- [Writing a new test](#writing-a-new-test)
+
+---
+
+## Quick start
+
+Everything, in one command, with a pass/fail summary:
+
+```powershell
+.\scripts\validate-release.ps1
+```
+
+Or, individually:
+
+```sh
+cargo fmt --all --check                              # formatting
+cargo clippy --workspace --all-targets -- -D warnings # lints
+cargo test --workspace                                # the Rust suite
+cargo run -p xtask -- check-all                       # knowledge, schemas, fixtures
+cd reaper && lua5.4 tests/run_tests.lua               # the REAPER bridge suite
+```
+
+**Measured results**, from running these in this repository:
+
+| Suite | Result |
+|---|---|
+| `cargo test --workspace` | **1926 passed, 0 failed**, across 45 test binaries and doc-test targets |
+| `lua5.4 tests/run_tests.lua` | **184 passed, 0 failed, 0 skipped**, across 8 suites |
+| In-REAPER smoke test | **not executed — no REAPER host available** |
+
+Per-crate Rust totals:
+
+| Crate | Tests |
+|---|---|
+| `reaper-ipc` | 330 |
+| `harmony-engine` | 299 |
+| `music-analysis` | 275 |
+| `music-domain` | 260 |
+| `arrangement-engine` | 218 |
+| `theory-kb` | 202 |
+| `qjson` | 169 |
+| `loop-engine` | 156 |
+| `xtask` | 17 |
+
+(Counts include each crate's unit tests, its integration test binaries and its
+doc-tests. `reaper-music-mcp` is counted with the MCP protocol tests in
+[§9](#9-mcp-protocol-tests).)
+
+---
+
+## 1. Rust unit tests
+
+Unit tests live in `#[cfg(test)] mod tests` at the bottom of each module,
+next to the code they exercise.
+
+```sh
+cargo test --workspace --lib
+cargo test -p music-domain --lib             # one crate
+cargo test -p qjson --lib json::tests        # one module
+cargo test -p harmony-engine voicing         # by name substring
+```
+
+What each crate's unit tests are for:
+
+| Crate | Focus |
+|---|---|
+| `qjson` | Parser round-trips, unicode escapes and surrogate pairs, depth-limit rejection, canonical-form stability, **SHA-256 NIST vectors**, RNG reproducibility, the regex engine, every supported JSON Schema keyword. This crate carries an unusually heavy test burden on purpose — see decision D1. |
+| `music-domain` | Pitch spelling and enharmonic distinction, interval arithmetic, `BeatTime` rational invariants and grid snapping, chord-symbol parse/render/parse stability, note and note-set invariants, JSON round-trips for every type. |
+| `theory-kb` | Loading, every validation rejection, profile inheritance and override resolution, the predicate evaluator, deterministic search scoring. |
+| `music-analysis` | Extraction modes, voice separation, phrase and salience components, key evidence sources, grid selection, NCT classification. |
+| `harmony-engine` | Option pools, path search, voicing, voice-leading audit, bass, countermelody, reharmonization, diversity. |
+| `arrangement-engine` | Role assignment, pattern realisation, density, masking, energy, section planning. |
+| `loop-engine` | Boundary detection, intent fitting, wrap scoring, carry policies, repairs. |
+| `reaper-ipc` | Envelopes, hashes, snapshot derivation, plan wire translation, heartbeat, client state machine. |
+
+---
+
+## 2. Rust integration tests
+
+Per-crate integration tests live in each crate's `tests/` directory and exercise
+the crate through its public API only.
+
+```sh
+cargo test --workspace --tests
+cargo test -p harmony-engine --test harmony_and_function
+```
+
+| File | Covers |
+|---|---|
+| `crates/music-analysis/tests/pipeline.rs` | The full analysis pipeline end to end |
+| `crates/music-analysis/tests/golden.rs` | Byte-compared golden analyses — see [§3](#3-golden-fixture-tests) |
+| `crates/music-analysis/tests/rule_coverage.rs` | The analysis crate's slice of the coverage ledger |
+| `crates/harmony-engine/tests/candidate_generation.rs` | Candidate generation, determinism, preserve-melody and preserve-rhythm |
+| `crates/harmony-engine/tests/harmony_and_function.rs` | ii–V–I analysis, dominant-to-tonic, tendency-tone resolution |
+| `crates/harmony-engine/tests/extensions.rs` | Extension and alteration semantics |
+| `crates/harmony-engine/tests/voice_leading_cases.rs` | Parallels, hidden parallels, spacing, doubling, per-profile behaviour |
+| `crates/harmony-engine/tests/invariants.rs` | Hard invariants that must never break |
+| `crates/harmony-engine/tests/performance.rs` | Generation stays within its time budget |
+| `crates/arrangement-engine/tests/catalogue.rs` | Every pattern and instrument profile is usable |
+| `crates/arrangement-engine/tests/planning.rs` | Role assignment and plan construction |
+| `crates/arrangement-engine/tests/named_behaviours.rs` | The named behaviours from the brief |
+| `crates/arrangement-engine/tests/contract.rs` | The crate's public contract |
+| `crates/arrangement-engine/tests/property.rs` | Property-style invariants over generated inputs |
+| `crates/loop-engine/tests/boundary_policies.rs` | Split, carry, truncate, rearticulate |
+| `crates/loop-engine/tests/looping_behaviours.rs` | Intent-specific wrap behaviour |
+| `crates/loop-engine/tests/determinism_and_rules.rs` | Determinism and rule firing |
+| `crates/loop-engine/tests/knowledge_test_ids.rs` | The loop crate's slice of the coverage ledger |
+| `crates/theory-kb/tests/rule_engine.rs` | Rule evaluation against contexts |
+| `crates/theory-kb/tests/validation_rejections.rs` | Every documented validation rejection actually rejects |
+| `crates/theory-kb/tests/embedded_parity.rs` | The embedded bundle matches `knowledge/` on disk |
+| `crates/theory-kb/tests/test_id_coverage.rs` | The coverage ledger itself — see [§5](#5-the-rule-to-test-coverage-ledger) |
+| `crates/reaper-ipc/tests/brief_s28_ipc.rs` | The brief's IPC test list — see [§6](#6-ipc-protocol-tests) |
+| `crates/reaper-ipc/tests/fixtures.rs` | The cross-language fixtures — see [§7](#7-cross-language-mock-reaper-fixtures) |
+| `crates/reaper-ipc/tests/round_trip.rs` | Request/result round-trips |
+
+> **Note on test layout.** The brief's suggested layout has a workspace-level
+> `tests/` directory split into `golden/`, `integration/`, `property/` and
+> `protocol/`. Every suite lives inside its owning crate instead, which keeps a
+> failing test next to the code that broke and makes `cargo test -p <crate>` a
+> complete check for that crate. The four categories are all present — they are
+> named in the table above — just located per crate rather than centrally.
+
+---
+
+## 3. Golden fixture tests
+
+The strongest regression net in the repository. `music-analysis` analyses each
+fixture and compares the canonical JSON **byte for byte** against a committed
+expected output.
+
+```sh
+cargo test -p music-analysis --test golden
+```
+
+The corpus is `fixtures/`, with **59 JSON files**:
+
+| Directory | Files | What |
+|---|---|---|
+| `fixtures/melodies/` | 7 | Melody fixtures: 8- and 16-bar C major, a Dorian vamp, a blues head, a chromatic descent, waltz suspensions, two-voice polyphony |
+| `fixtures/progressions/` | 4 | ii–V–I, a twelve-bar blues, a modal planing loop, a reharmonization source |
+| `fixtures/loops/` | 2 | A dominant wrap, and a pickup with a hanging note |
+| `fixtures/expected/` | 13 | The committed golden outputs |
+| `fixtures/mock-reaper/` | 33 | Cross-language IPC fixtures — see [§7](#7-cross-language-mock-reaper-fixtures) |
+
+Golden outputs are named after the fixture id with slashes replaced by dashes:
+`melodies/eight_bar_c_major` becomes
+`fixtures/expected/melodies-eight_bar_c_major.json`.
+
+### Regenerating the goldens
+
+A golden test failure means the analysis changed. **Read the diff before
+regenerating** — that diff is the entire value of the test.
+
+```sh
+MUSIC_ANALYSIS_WRITE_GOLDENS=1 cargo test -p music-analysis --test golden
+```
+
+```powershell
+$env:MUSIC_ANALYSIS_WRITE_GOLDENS = '1'
+cargo test -p music-analysis --test golden
+Remove-Item Env:\MUSIC_ANALYSIS_WRITE_GOLDENS
+```
+
+Then `git diff fixtures/expected/` and satisfy yourself that every change is one
+you meant to make. Commit the fixtures with the code change that caused them.
+
+The same environment variable creates a golden for a newly added fixture that
+does not have one yet.
+
+### Adding a fixture
+
+Write the JSON (the format is documented in the fixture loader and validated by
+`xtask validate-fixtures`), run `cargo run -p xtask -- validate-fixtures` to
+check it loads, then generate its golden as above. Positions are **rational
+strings** — `"0"`, `"3"`, `"1/2"`, `"7/3"` — never bare floats, and pitches are
+spelled — `"C4"`, `"Bb3"`, `"F#5"`.
+
+### Fixture-driven CLI
+
+The server binary can run the real engine against a fixture with no REAPER
+present, which is the fastest way to debug an analysis or generation problem:
+
+```sh
+qlabs-reaper-music-mcp analyze-fixture  fixtures/melodies/eight_bar_c_major.json
+qlabs-reaper-music-mcp generate-fixture fixtures/melodies/eight_bar_c_major.json
+```
+
+---
+
+## 4. Knowledge, schema and fixture validation
+
+```sh
+cargo run -p xtask -- check-all
+```
+
+Runs all of:
+
+| Command | Checks |
+|---|---|
+| `validate-knowledge` | Full `theory-kb` validation of `knowledge/` on disk **and** of the embedded bundle. Prints counts. |
+| `validate-schemas` | Compiles every `schemas/*.schema.json` and validates each knowledge and fixture file against the schema that governs it. |
+| `validate-fixtures` | Loads every `fixtures/**/*.json` through the domain fixture loader. |
+| `stamp-manifest --check` | Confirms `manifest.json`'s `content_sha256` matches the canonical JSON of every other knowledge file. |
+| `regen-embedded --check` | Confirms `crates/theory-kb/src/embedded.rs` matches what is on disk. |
+
+Individually:
+
+```sh
+cargo run -p xtask -- validate-knowledge
+cargo run -p xtask -- validate-knowledge --knowledge-dir /path/to/override
+cargo run -p xtask -- validate-schemas
+cargo run -p xtask -- validate-fixtures
+cargo run -p xtask -- stamp-manifest        # rewrite the hash after editing knowledge
+cargo run -p xtask -- regen-embedded        # rewrite embedded.rs after adding a file
+cargo run -p xtask -- check-all --write     # let check-all fix drift instead of reporting it
+```
+
+Every command takes `--json` for machine-readable output.
+
+**After editing anything under `knowledge/`**, run `stamp-manifest` and
+`regen-embedded`, then `check-all`. Skipping this is the most common way to
+break the build: validation recomputes the content hash and never trusts the
+manifest's stored value.
+
+Validation rejects, and there is a test for each: schema violations, duplicate
+ids, unresolved source references, profile-inheritance cycles, missing parents,
+rules naming unknown profiles, scales, chord qualities or score components,
+unknown predicates, unknown rule kinds, domains or events, `score_weights` not
+covering exactly the 13 score components, `rule_overrides` naming unknown rules,
+degree strings failing `^[b#]{0,2}\d+$`, empty `test_ids`, and a
+`content_sha256` mismatch.
+
+---
+
+## 5. The rule-to-test coverage ledger
+
+`crates/theory-kb/tests/test_id_coverage.json` records which of the
+`test_ids` declared by the 147 knowledge rules actually have a behavioural test
+behind them.
+
+```sh
+cargo test -p theory-kb --test test_id_coverage
+```
+
+**Current state:**
+
+| | |
+|---|---|
+| Total declared test ids | **237** |
+| Implemented | **205** (86.5%) |
+| Pending | **32** |
+
+By crate: `harmony-engine` 128, `music-analysis` 26, `arrangement-engine` 20, `theory-kb` 17, `loop-engine` 14, `reaper-music-mcp` 12. `implemented` is the **union** of those lists
+— several ids are covered from more than one crate — and that union is exactly
+205.
+
+The ledger is enforced, not decorative: `implemented + pending` must equal every
+`test_id` appearing anywhere in `knowledge/`. A rule cannot quietly lose its
+coverage, and a pending id cannot quietly disappear.
+
+**The 44 pending ids are declared, not hidden.** They are listed in the ledger's
+`pending` array. They represent behaviours the knowledge bundle asserts and the
+test suite does not yet verify — genuinely untested claims, and the honest place
+to start if you are extending this work. See
+[`KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md).
+
+### Regenerating the ledger
+
+After adding a test that covers a pending id:
+
+```sh
+THEORY_KB_WRITE_COVERAGE=1 cargo test -p theory-kb --test test_id_coverage
+```
+
+```powershell
+$env:THEORY_KB_WRITE_COVERAGE = '1'
+cargo test -p theory-kb --test test_id_coverage
+Remove-Item Env:\THEORY_KB_WRITE_COVERAGE
+```
+
+Each crate contributes its own list under `by_crate`, so a later crate adding
+coverage never has to touch another crate's entry.
+
+---
+
+## 6. IPC protocol tests
+
+```sh
+cargo test -p reaper-ipc --test brief_s28_ipc
+```
+
+The filesystem interaction sits behind a small trait, so these run against a
+temporary directory with no REAPER and no bridge. They cover the brief's IPC
+list in full:
+
+- A partial `.tmp` file is ignored.
+- A command is claimed atomically; a lost race is silent.
+- An invalid instance token is rejected.
+- An expired request is rejected.
+- An oversized request is rejected **before** it is written.
+- An unknown command is rejected, with the allowlist in the details.
+- A duplicate request id is rejected.
+- Results appear atomically and completely.
+- A timeout produces `IPC_TIMEOUT` and does not delete the command file.
+- A stale snapshot is rejected.
+- A result arriving after a timeout is read, discarded and deleted.
+- The client never writes outside `commands/` and never deletes outside
+  `results/`.
+
+---
+
+## 7. Cross-language mock-REAPER fixtures
+
+`fixtures/mock-reaper/` holds 33 generated files that pin the Rust and Lua sides
+to the same wire contract: hash vectors with their exact canonical strings,
+request envelopes valid and invalid, edit plans valid and invalid, result
+envelopes, heartbeat and lock shapes, and the published limits and error codes.
+
+They are **generated, never hand-edited**:
+
+```sh
+lua5.4 reaper/tests/gen_fixtures.lua
+```
+
+Both sides verify them:
+
+```sh
+cd reaper && lua5.4 tests/run_tests.lua      # test_fixtures.lua re-derives them all
+cargo test -p reaper-ipc --test fixtures     # the Rust client consumes them
+```
+
+`reaper/tests/test_fixtures.lua` re-derives every file from the live Lua
+implementation on each run, so the fixtures cannot silently drift from the
+bridge. If that suite fails, either the bridge changed behaviour — regenerate,
+and tell the Rust side — or a regression was introduced.
+
+The most important file is `fixtures/mock-reaper/hashes/vectors.json`. Each
+entry pairs an exact canonical string with the hash the bridge produces for it.
+The three `fnv1a64.*` entries are plain algorithm vectors (`""`, `"a"`,
+`"foobar"`); the rest exercise the real canonical layouts for `midi_hash`,
+`note_selection_hash`, `tempo_map_hash`, `timesig_map_hash`, `note_list_hash`
+and `snapshot_hash`. A Rust implementation must reproduce every one byte for
+byte.
+
+---
+
+## 8. The REAPER Lua bridge suite
+
+```sh
+cd reaper
+lua5.4 tests/run_tests.lua
+```
+
+**184 cases across 8 suites, 0 failures.** No REAPER and no external Lua package
+required.
+
+| Suite | Cases | Covers |
+|---|---|---|
+| `test_bridge` | 44 | The engine: lock, heartbeat, the IPC state machine, dispatch, garbage collection, log rotation, error containment |
+| `test_transactions` | 38 | Edit-plan validation and execution, undo blocks, rollback, ownership-scoped commit and discard |
+| `test_snapshot` | 27 | Source resolution, MIDI reading, canonical hashing, extraction filters |
+| `test_json` | 19 | The pure-Lua JSON encoder and decoder |
+| `test_protocol` | 18 | Envelope validation order, the command allowlist, limits, error codes |
+| `test_util` | 16 | Paths, time, FNV-1a-64, the swappable filesystem, bounded logging |
+| `test_tagging` | 12 | `P_EXT` ownership tags, project ext state, project UUID minting |
+| `test_fixtures` | 10 | Regeneration parity with `fixtures/mock-reaper/` |
+
+Two mocks make this possible:
+
+- **`mock_reaper.lua`** implements every `reaper.*` function the bridge calls,
+  including a real undo journal — mutations record inverse closures and
+  `Undo_DoUndo2` replays them in reverse, preserving pointer identity and
+  resurrecting deleted objects — and a `PreventUIRefresh` depth counter.
+- **`mock_fs.lua`** is an in-memory filesystem installed as `util.fs`, so the
+  atomic-IPC state machine runs through the real code path rather than a
+  simulation of it.
+
+One suite asserts that the mock host exposes every `reaper.*` function the
+bridge calls, so the mock cannot fall behind the code.
+
+**Installing Lua on Windows** is not required to use the product. If you want to
+run this suite, install Lua 5.4 and put `lua5.4` (or `lua`) on `PATH`;
+`validate-release.ps1` reports a clear **SKIP**, not a pass, when it is missing.
+
+---
+
+## 9. MCP protocol tests
+
+The MCP server's own tests live in `crates/reaper-music-mcp`:
+
+```sh
+cargo test -p reaper-music-mcp
+```
+
+They cover the JSON-RPC layer and the protocol surface: `initialize` and the
+reported protocol version, tool and resource and prompt listing, tool argument
+validation against each declared `inputSchema`, tool output validation against
+each declared `outputSchema`, structured tool errors versus transport errors,
+resource ownership and TTL enforcement, cancellation, progress notifications,
+and the invariant that `stdout` carries protocol bytes only.
+
+Because this build does not use the official MCP SDK (decision D1), **MCP
+conformance is verified here rather than inherited**. That makes this suite
+load-bearing in a way it would not otherwise be.
+
+> At the time this document was written, `crates/reaper-music-mcp` was still
+> being implemented and contributed **0** tests to the 1926 total reported
+> above. The counts in [Quick start](#quick-start) are from a run in that state.
+> Re-run `cargo test --workspace` for the current figure. `docs/MCP_API.md`
+> documents the surface these tests exercise.
+
+---
+
+## 10. The in-REAPER smoke test — NOT EXECUTED
+
+```text
+reaper/QLabs_Reaper_MCP_Smoke_Test.lua
+```
+
+### Status: NOT EXECUTED
+
+**This test has not been run.** No REAPER host was available in the build
+environment — there is no REAPER installation, no GUI, and no way to load a
+ReaScript. Nothing in this repository, this document, the README or the
+CHANGELOG claims that it passed, and it must not be described as passing until
+someone has actually run it inside REAPER and seen the output.
+
+Everything the bridge does is covered by the 184 mock-host cases in
+[§8](#8-the-reaper-lua-bridge-suite), and the mock implements a real undo
+journal rather than a stub. But a mock is a model of REAPER, and only REAPER is
+REAPER. Until this script has been run against a real host, the REAPER-facing
+behaviour is **verified against a model, not against the product**.
+
+### How to run it
+
+It is deliberately guarded, because it writes to the active project.
+
+1. **File → New Project.** The script refuses to run against a project that has
+   been saved to disk or that has unsaved changes.
+2. Register it exactly like the bridge:
+   *Actions → Show action list → New action → Load ReaScript →*
+   `QLabs_Reaper_MCP_Smoke_Test.lua`.
+3. Run it. Results print to the ReaScript console, one PASS/FAIL line per step.
+
+To run it against a project that is saved or dirty, open the script and set
+`ALLOW_MODIFY_THIS_PROJECT = true` near the top. Only do that if you understand
+that the script will create and delete tracks and items in the open project.
+
+### What it verifies
+
+- It creates its own clearly marked material (`QLABS SMOKE TEST -- SAFE TO
+  DELETE`).
+- Inspection resolves the source and produces a snapshot.
+- A fixture candidate stages cleanly.
+- **The source item is unchanged afterwards.**
+- The ownership tags exist on the staged objects.
+- One undo restores the prior state.
+- It cleans up after itself.
+
+### The manual acceptance walkthrough
+
+The smoke test is automated-ish but narrow. The full acceptance workflow from
+the brief is a manual sequence, and it has **not** been performed either, for
+the same reason. It is written down here so that whoever has a REAPER host can
+run it:
+
+1. Open REAPER.
+2. Run `QLabs_Reaper_MCP_Bridge.lua`.
+3. Select one MIDI melody item, or notes in the MIDI editor.
+4. The MCP client calls `reaper.status`.
+5. The MCP client calls `reaper.inspect_selection`.
+6. The MCP client calls `music.analyze_selection`.
+7. Ask for: *"Create three harmonizations. Preserve the melody and timing. Make
+   one warm and extended, one dark and modal, and one chromatic. Add bass and a
+   restrained countermelody. Keep the eight-bar region loopable."*
+8. Confirm the server produces three genuinely different candidates, preserves
+   the source melody, explains each candidate, reports score components, reports
+   applied theory rules and sources, and audits the loop.
+9. Select one candidate.
+10. `reaper.stage_candidate` creates new tagged tracks and MIDI items.
+11. **Confirm the original MIDI item is unchanged.**
+12. Edit the source, then try to stage again — confirm the stale snapshot is
+    rejected.
+13. `reaper.discard_candidate` removes only that candidate.
+14. Stage again and `reaper.commit_candidate` — confirm the chosen generated
+    tracks are preserved.
+15. `reaper.undo_last_generation` undoes only the owned current transaction.
+16. Perform an unrelated REAPER action, then try undo again — confirm the
+    unrelated entry is never undone.
+
+---
+
+## Regenerating generated test data
+
+Four things in this repository are generated and committed. Each has a check
+that fails if it drifts.
+
+| Artefact | Regenerate with | Checked by |
+|---|---|---|
+| `fixtures/expected/*.json` | `MUSIC_ANALYSIS_WRITE_GOLDENS=1 cargo test -p music-analysis --test golden` | the golden test itself |
+| `fixtures/mock-reaper/**` | `lua5.4 reaper/tests/gen_fixtures.lua` | `reaper/tests/test_fixtures.lua`, and `cargo test -p reaper-ipc --test fixtures` |
+| `crates/theory-kb/tests/test_id_coverage.json` | `THEORY_KB_WRITE_COVERAGE=1 cargo test -p theory-kb --test test_id_coverage` | `test_id_coverage.rs` |
+| `crates/theory-kb/src/embedded.rs` | `cargo run -p xtask -- regen-embedded` | `embedded_parity.rs`, and `xtask regen-embedded --check` |
+| `knowledge/manifest.json` `content_sha256` | `cargo run -p xtask -- stamp-manifest` | `xtask stamp-manifest --check`, and knowledge validation |
+
+Regenerating is never a fix on its own. It is what you do *after* you have read
+the diff and decided the change is correct.
+
+---
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs two jobs on every push and pull request.
+
+**Rust**, on `ubuntu-latest` and `windows-latest`, with `RUSTFLAGS: -D warnings`
+and `--offline` on every cargo invocation:
+
+```
+cargo fmt --all --check
+cargo clippy --workspace --all-targets --all-features --offline -- -D warnings
+cargo test --workspace --all-features --offline
+cargo run -p xtask --offline -- validate-knowledge
+cargo run -p xtask --offline -- validate-schemas
+cargo run -p xtask --offline -- validate-fixtures
+cargo build --workspace --release --offline
+cargo run -p reaper-music-mcp --release --offline -- doctor --json
+```
+
+`--offline` is not a workaround; it is an assertion. The build is expected to
+have no network dependency at all, and CI fails if that ever stops being true.
+
+**REAPER Lua bridge**, on `ubuntu-latest`:
+
+```
+sudo apt-get install -y lua5.4
+cd reaper && lua5.4 tests/run_tests.lua
+```
+
+CI cannot run the in-REAPER smoke test, and does not pretend to.
+
+---
+
+## Writing a new test
+
+- **Unit tests** go in `#[cfg(test)] mod tests` at the bottom of the module.
+- **Integration tests** go in the owning crate's `tests/` directory and use only
+  the public API.
+- **Name the test after the behaviour**, not the function:
+  `sus4_resolves_to_third`, not `test_voicing_3`.
+- **If the behaviour is asserted by a knowledge rule**, use the rule's declared
+  `test_id` as the test name, then move it from `pending` to your crate's list
+  in the coverage ledger and regenerate.
+- **Determinism is testable.** If your change involves ordering, add an
+  assertion that the same seed and inputs produce the same output.
+- **Do not add a fixture without a golden**, and do not add a golden without
+  reading it.
+- Run `cargo fmt` and `cargo clippy -p <your-crate> --all-targets -- -D warnings`
+  before you call it done.

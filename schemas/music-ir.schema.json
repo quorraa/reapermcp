@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qlabs.dev/schemas/music-ir.schema.json",
+  "title": "QLabs music intermediate representation",
+  "description": "The on-disk form of the musical material this system reasons about: an exact tempo and meter map, spelled notes at rational quarter-note positions, and optional chord symbols. It governs every file under fixtures/melodies, fixtures/progressions and fixtures/loops, and it is the shape music_domain::fixture::Fixture parses. Positions are rational strings rather than floats on purpose: loop-boundary equality has to be exact, and a float cannot represent a triplet exactly.",
+  "type": "object",
+  "required": ["fixture_version", "id", "title", "tempo_bpm", "time_signature"],
+  "additionalProperties": false,
+  "properties": {
+    "fixture_version": {
+      "description": "Format version of this file.",
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "id": {
+      "description": "Stable identifier, e.g. melodies/eight_bar_c_major. The path separator is part of the id, not a filesystem reference.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9][a-z0-9_-]*/[a-z0-9][a-z0-9_-]*$"
+    },
+    "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "description": { "type": "string", "maxLength": 2000 },
+    "tempo_bpm": {
+      "description": "Nominal tempo. The authoritative tempo comes from tempo_map.",
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 960
+    },
+    "time_signature": { "$ref": "#/$defs/time_signature" },
+    "tempo_map": {
+      "description": "Tempo events, ascending by position. An empty or absent map means a constant tempo_bpm.",
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "required": ["qn", "bpm"],
+        "additionalProperties": false,
+        "properties": {
+          "qn": { "$ref": "#/$defs/beat_time" },
+          "bpm": { "type": "number", "exclusiveMinimum": 0, "maximum": 960 },
+          "linear": { "type": "boolean" }
+        }
+      }
+    },
+    "meter_map": {
+      "description": "Meter events, ascending by position.",
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "required": ["qn", "sig"],
+        "additionalProperties": false,
+        "properties": {
+          "qn": { "$ref": "#/$defs/beat_time" },
+          "sig": { "$ref": "#/$defs/time_signature" },
+          "measure": { "type": "integer", "minimum": -100000, "maximum": 1000000 }
+        }
+      }
+    },
+    "loop": {
+      "description": "The loop region this material is meant to wrap over, with the intent it should be judged against.",
+      "type": "object",
+      "required": ["start_qn", "end_qn"],
+      "additionalProperties": false,
+      "properties": {
+        "start_qn": { "$ref": "#/$defs/beat_time" },
+        "end_qn": { "$ref": "#/$defs/beat_time" },
+        "intent": { "$ref": "#/$defs/loop_intent" }
+      }
+    },
+    "key_hint": {
+      "description": "A declared tonal centre. A hint overrides inference but is still scored and reported.",
+      "type": "object",
+      "required": ["tonic", "scale_id"],
+      "additionalProperties": false,
+      "properties": {
+        "tonic": { "$ref": "#/$defs/pitch_class" },
+        "scale_id": { "$ref": "#/$defs/identifier" }
+      }
+    },
+    "notes": {
+      "description": "Notes in file order. Absent for a progression-only fixture.",
+      "type": "array",
+      "maxItems": 100000,
+      "items": { "$ref": "#/$defs/note" }
+    },
+    "chords": {
+      "description": "Chord symbols in file order. Absent for a melody-only fixture.",
+      "type": "array",
+      "maxItems": 4096,
+      "items": { "$ref": "#/$defs/chord" }
+    },
+    "expected": {
+      "description": "Free-form expectations compared by the golden tests. Deliberately unconstrained.",
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "beat_time": {
+      "description": "An exact position or duration in quarter notes, as a reduced rational string: \"0\", \"3\", \"1/2\", \"7/3\", \"-1/4\". Never a bare float.",
+      "type": "string",
+      "pattern": "^-?[0-9]+(/[1-9][0-9]*)?$",
+      "maxLength": 40
+    },
+    "time_signature": {
+      "description": "A time signature, e.g. \"4/4\" or \"6/8\".",
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,1}/(1|2|4|8|16|32|64)$"
+    },
+    "pitch_class": {
+      "description": "A spelled pitch class with no octave, e.g. \"C\", \"F#\", \"Bb\".",
+      "type": "string",
+      "pattern": "^[A-G](bb|b|#|##)?$"
+    },
+    "spelled_pitch": {
+      "description": "A spelled pitch in scientific notation, e.g. \"C4\", \"Bb3\", \"F#5\".",
+      "type": "string",
+      "pattern": "^[A-G](bb|b|#|##)?-?[0-9]$",
+      "maxLength": 8
+    },
+    "identifier": {
+      "description": "A stable knowledge-base identifier.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z0-9][a-z0-9_]*$"
+    },
+    "loop_intent": {
+      "type": "string",
+      "enum": [
+        "closed_tonic",
+        "open_dominant",
+        "modal_drone",
+        "seamless_color",
+        "transition_ready",
+        "one_shot_ending"
+      ]
+    },
+    "note_role": {
+      "type": "string",
+      "enum": [
+        "melody",
+        "counter",
+        "bass",
+        "harmony",
+        "pedal",
+        "ornament",
+        "percussion",
+        "unknown"
+      ]
+    },
+    "note": {
+      "type": "object",
+      "required": ["pitch", "onset", "duration"],
+      "additionalProperties": false,
+      "properties": {
+        "pitch": { "$ref": "#/$defs/spelled_pitch" },
+        "onset": { "$ref": "#/$defs/beat_time" },
+        "duration": {
+          "description": "Strictly positive; a zero-length note is not representable.",
+          "$ref": "#/$defs/beat_time"
+        },
+        "velocity": { "type": "integer", "minimum": 1, "maximum": 127 },
+        "channel": { "type": "integer", "minimum": 0, "maximum": 15 },
+        "muted": { "type": "boolean" },
+        "selected": { "type": "boolean" },
+        "voice": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "role": { "$ref": "#/$defs/note_role" },
+        "articulation": { "type": ["string", "null"], "maxLength": 64 }
+      }
+    },
+    "chord": {
+      "type": "object",
+      "required": ["symbol", "onset", "duration"],
+      "additionalProperties": false,
+      "properties": {
+        "symbol": {
+          "description": "A chord symbol parseable by music_domain::symbol::parse.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "onset": { "$ref": "#/$defs/beat_time" },
+        "duration": { "$ref": "#/$defs/beat_time" },
+        "roman": { "type": ["string", "null"], "maxLength": 32 },
+        "function": { "type": ["string", "null"], "maxLength": 32 }
+      }
+    }
+  }
+}

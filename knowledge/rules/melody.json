@@ -1,0 +1,738 @@
+{
+  "schema_version": "1.0.0",
+  "items": [
+    {
+      "id": "melody.structural_salience_weighting",
+      "domain": "melody",
+      "kind": "implementation_heuristic",
+      "summary": "Structural salience is a transparent weighted sum of metric weight, duration, phrase position, leap-target status and registral extremity.",
+      "trigger": {
+        "event": "melody_note"
+      },
+      "conditions": [
+        "melody_note_is_on_strong_beat",
+        "melody_note_is_long"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "info",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "melody_is_pickup"
+      ],
+      "source_refs": [],
+      "confidence": 0.6,
+      "rationale": "The weighting is an engineering choice, not a theoretical claim. It is exposed in the decision trace so a user can see exactly why a note was treated as structural.",
+      "test_ids": [
+        "salience_weighted_sum_is_transparent",
+        "salience_pickup_downweighted"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.strong_beat_long_note_is_structural",
+      "domain": "melody",
+      "kind": "theory_default",
+      "summary": "A long note on a metrically strong position is very likely a structural tone that the harmony should support.",
+      "trigger": {
+        "event": "melody_note"
+      },
+      "conditions": [
+        "melody_note_is_on_strong_beat",
+        "melody_note_is_long"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "moderate",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "melody_is_pickup",
+        "note_is_chromatic_to_active_scale"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Melodic analysis"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Metric position and duration are the two strongest and cheapest cues for structural weight, and they agree with each other far more often than they conflict.",
+      "test_ids": [
+        "structural_note_long_strong_beat"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.short_weak_note_does_not_force_chord_change",
+      "domain": "melody",
+      "kind": "implementation_heuristic",
+      "summary": "A short note on a weak position must not by itself create a new harmonic slot.",
+      "trigger": {
+        "event": "harmonic_grid"
+      },
+      "conditions": [
+        "note_is_on_weak_beat"
+      ],
+      "effect": {
+        "score_delta": -3.0,
+        "severity": "moderate",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "melody_note_is_long",
+        "melody_note_is_structural"
+      ],
+      "source_refs": [],
+      "confidence": 0.75,
+      "rationale": "Mapping one chord to every note is the classic failure mode of naive harmonisers. The grid is chosen before chords are, and decorative notes are handled as non-chord tones.",
+      "test_ids": [
+        "weak_short_note_no_new_chord",
+        "grid_not_one_chord_per_note"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.leap_recovery_by_step",
+      "domain": "melody",
+      "kind": "strong_theory_principle",
+      "summary": "A leap larger than a fifth is normally answered by stepwise motion in the opposite direction.",
+      "trigger": {
+        "event": "melody_phrase"
+      },
+      "conditions": [
+        "melody_leap_exceeds_fifth"
+      ],
+      "effect": {
+        "score_delta": -2.0,
+        "severity": "moderate",
+        "score_component": "phrase_direction"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic",
+        "pop_rock",
+        "jazz_standard",
+        "neo_soul_rnb"
+      ],
+      "exceptions": [
+        "leap_is_followed_by_step_in_opposite_direction",
+        "melody_reaches_registral_peak"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Melodic analysis"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Leap recovery keeps a line singable and keeps its registral centre stable. It is a default for generated lines, not a prohibition on the input melody.",
+      "test_ids": [
+        "leap_recovered_by_contrary_step",
+        "leap_to_climax_exempt"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.avoid_augmented_melodic_interval",
+      "domain": "melody",
+      "kind": "style_sensitive_preference",
+      "summary": "Augmented melodic intervals, especially the augmented second of harmonic minor, are avoided in strict tonal writing.",
+      "trigger": {
+        "event": "melody_phrase"
+      },
+      "conditions": [
+        "melody_outlines_augmented_or_tritone_interval"
+      ],
+      "effect": {
+        "score_delta": -2.5,
+        "severity": "moderate",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "cinematic"
+      ],
+      "exceptions": [
+        "modal_center_is_active",
+        "chromaticism_target_is_high"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Melodic analysis"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "This is a common-practice convention, not an acoustic fact. Phrygian dominant and many folk idioms use the augmented second as a defining colour.",
+      "test_ids": [
+        "augmented_second_penalised_strict",
+        "augmented_second_allowed_modal"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.phrase_end_note_is_structural",
+      "domain": "melody",
+      "kind": "theory_default",
+      "summary": "The last note of a phrase carries cadential weight and should be supported by the cadence chord.",
+      "trigger": {
+        "event": "melody_note"
+      },
+      "conditions": [
+        "melody_is_at_phrase_end"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "moderate",
+        "score_component": "phrase_direction"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Motives and phrases"
+        }
+      ],
+      "confidence": 0.85,
+      "rationale": "Phrase endings are where listeners judge whether harmony and melody agree, so a mismatch there costs far more than one in the middle of a phrase.",
+      "test_ids": [
+        "phrase_end_note_structural",
+        "cadence_supports_phrase_end"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.pickup_is_not_separately_harmonized",
+      "domain": "melody",
+      "kind": "theory_default",
+      "summary": "Pickup notes belong to the phrase that follows and normally share the harmony of the downbeat they lead into.",
+      "trigger": {
+        "event": "melody_note"
+      },
+      "conditions": [
+        "melody_is_pickup"
+      ],
+      "effect": {
+        "score_delta": -1.5,
+        "severity": "minor",
+        "score_component": "harmonic_coherence"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "melody_note_is_long",
+        "harmonic_rhythm_is_fast"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Motives and phrases"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Giving an anacrusis its own chord usually produces a harmonic stutter right before the downbeat where clarity matters most.",
+      "test_ids": [
+        "pickup_shares_downbeat_harmony"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.passing_tone_hypothesis",
+      "domain": "melody",
+      "kind": "strong_theory_principle",
+      "summary": "A dissonance approached and left by step in the same direction on a weak position is a passing tone.",
+      "trigger": {
+        "event": "nct_hypothesis"
+      },
+      "conditions": [
+        "note_is_approached_by_step",
+        "note_is_left_by_step",
+        "note_is_on_weak_beat"
+      ],
+      "effect": {
+        "score_delta": 3.0,
+        "severity": "info",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "dissonance_is_on_strong_beat"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Embellishing and non-chord tones"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Classification uses the surrounding motion and the metric position, never chord membership alone; the same pitch can be a passing tone in one context and a chord tone in the next.",
+      "test_ids": [
+        "passing_tone_weak_beat_stepwise",
+        "passing_tone_not_from_pitch_alone"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.neighbor_tone_hypothesis",
+      "domain": "melody",
+      "kind": "strong_theory_principle",
+      "summary": "A dissonance approached by step and left by step back to the original pitch is a neighbour tone.",
+      "trigger": {
+        "event": "nct_hypothesis"
+      },
+      "conditions": [
+        "note_is_approached_by_step",
+        "note_is_left_by_step",
+        "note_returns_to_previous_pitch"
+      ],
+      "effect": {
+        "score_delta": 3.0,
+        "severity": "info",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Embellishing and non-chord tones"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "The return to the starting pitch is what separates a neighbour from a passing tone; both otherwise look identical to a stepwise test.",
+      "test_ids": [
+        "neighbor_tone_returns_to_origin"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.suspension_hypothesis",
+      "domain": "melody",
+      "kind": "strong_theory_principle",
+      "summary": "A dissonance held over from the previous chord on a strong position and resolved down by step is a suspension.",
+      "trigger": {
+        "event": "nct_hypothesis"
+      },
+      "conditions": [
+        "dissonance_is_prepared",
+        "dissonance_is_on_strong_beat",
+        "suspension_resolves_down_by_step"
+      ],
+      "effect": {
+        "score_delta": 3.5,
+        "severity": "info",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Non-chord tones"
+        }
+      ],
+      "confidence": 0.9,
+      "rationale": "Preparation, strong-beat placement and downward stepwise resolution are the three conditions; dropping any one of them produces a different embellishment.",
+      "test_ids": [
+        "suspension_prepared_and_resolved",
+        "suspension_without_preparation_rejected"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.retardation_hypothesis",
+      "domain": "melody",
+      "kind": "theory_default",
+      "summary": "A prepared strong-beat dissonance that resolves upward by step is a retardation rather than a suspension.",
+      "trigger": {
+        "event": "nct_hypothesis"
+      },
+      "conditions": [
+        "dissonance_is_prepared",
+        "dissonance_is_on_strong_beat",
+        "note_is_left_by_step"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "info",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "suspension_resolves_down_by_step"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Non-chord tones"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Retardations are far rarer than suspensions, so the hypothesis is offered with lower weight and both are reported when the evidence is close.",
+      "test_ids": [
+        "retardation_resolves_up"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.appoggiatura_hypothesis",
+      "domain": "melody",
+      "kind": "theory_default",
+      "summary": "An accented dissonance approached by leap and left by step is an appoggiatura.",
+      "trigger": {
+        "event": "nct_hypothesis"
+      },
+      "conditions": [
+        "dissonance_is_on_strong_beat",
+        "melody_leap_exceeds_fifth",
+        "note_is_left_by_step"
+      ],
+      "effect": {
+        "score_delta": 2.5,
+        "severity": "info",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "dissonance_is_prepared"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Embellishing and non-chord tones"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Leap in, step out, on a strong beat. If the note was prepared it is a suspension instead, so preparation is listed as an exception rather than a condition.",
+      "test_ids": [
+        "appoggiatura_leap_in_step_out"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.escape_tone_hypothesis",
+      "domain": "melody",
+      "kind": "theory_default",
+      "summary": "An unaccented dissonance approached by step and left by leap in the opposite direction is an escape tone.",
+      "trigger": {
+        "event": "nct_hypothesis"
+      },
+      "conditions": [
+        "note_is_approached_by_step",
+        "note_is_on_weak_beat",
+        "melody_leap_exceeds_fifth"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "info",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Embellishing and non-chord tones"
+        }
+      ],
+      "confidence": 0.75,
+      "rationale": "The escape tone is the mirror image of the appoggiatura and is easy to confuse with it, so metric position carries the discrimination.",
+      "test_ids": [
+        "escape_tone_step_in_leap_out"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.anticipation_hypothesis",
+      "domain": "melody",
+      "kind": "theory_default",
+      "summary": "A weak-position note that belongs to the next chord rather than the current one is an anticipation.",
+      "trigger": {
+        "event": "nct_hypothesis"
+      },
+      "conditions": [
+        "note_is_on_weak_beat",
+        "melody_is_repeated_pitch"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "info",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [
+        "dissonance_is_on_strong_beat"
+      ],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Embellishing and non-chord tones"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "The giveaway is that the pitch repeats into the following chord, where it becomes consonant.",
+      "test_ids": [
+        "anticipation_precedes_arrival"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.chromatic_approach_hypothesis",
+      "domain": "melody",
+      "kind": "theory_default",
+      "summary": "A chromatic tone a half step from the following chord tone is a chromatic approach.",
+      "trigger": {
+        "event": "nct_hypothesis"
+      },
+      "conditions": [
+        "note_is_chromatic_to_active_scale",
+        "note_is_left_by_step",
+        "note_is_on_weak_beat"
+      ],
+      "effect": {
+        "score_delta": 2.0,
+        "severity": "info",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "jazz_standard",
+        "neo_soul_rnb",
+        "blues",
+        "common_practice",
+        "cinematic",
+        "pop_rock"
+      ],
+      "exceptions": [],
+      "source_refs": [
+        {
+          "source_id": "open-music-theory",
+          "locator": "Jazz embellishing chords"
+        }
+      ],
+      "confidence": 0.8,
+      "rationale": "Chromatic approach notes are pervasive in jazz lines and must not be mistaken for evidence of modulation.",
+      "test_ids": [
+        "chromatic_approach_half_step",
+        "chromatic_approach_not_modulation"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.ambiguous_tone_keeps_multiple_hypotheses",
+      "domain": "melody",
+      "kind": "implementation_heuristic",
+      "summary": "When two non-chord-tone classifications score within a small margin, both are reported with confidence values instead of one being silently chosen.",
+      "trigger": {
+        "event": "nct_hypothesis"
+      },
+      "conditions": [
+        "dissonance_is_on_strong_beat",
+        "note_is_approached_by_step"
+      ],
+      "effect": {
+        "score_delta": 0.0,
+        "severity": "info",
+        "score_component": "melody_fit"
+      },
+      "profiles": [
+        "common_practice",
+        "strict_counterpoint",
+        "jazz_standard",
+        "blues",
+        "pop_rock",
+        "neo_soul_rnb",
+        "modal_ambient",
+        "cinematic",
+        "electronic_loop",
+        "drum_and_bass"
+      ],
+      "exceptions": [],
+      "source_refs": [],
+      "confidence": 0.7,
+      "rationale": "Forcing a single label on ambiguous material hides exactly the information a user needs in order to disagree with the analysis.",
+      "test_ids": [
+        "ambiguous_tone_multiple_hypotheses"
+      ],
+      "version": 1
+    },
+    {
+      "id": "melody.single_climax_per_phrase",
+      "domain": "melody",
+      "kind": "style_sensitive_preference",
+      "summary": "A generated phrase should reach its registral peak once.",
+      "trigger": {
+        "event": "melody_phrase"
+      },
+      "conditions": [
+        "melody_reaches_registral_peak"
+      ],
+      "effect": {
+        "score_delta": 1.5,
+        "severity": "minor",
+        "score_component": "phrase_direction"
+      },
+      "profiles": [
+        "common_practice",
+        "cinematic",
+        "pop_rock",
+        "jazz_standard",
+        "neo_soul_rnb"
+      ],
+      "exceptions": [
+        "intentional_cluster",
+        "modal_center_is_active"
+      ],
+      "source_refs": [
+        {
+          "source_id": "mt21c",
+          "locator": "Melodic analysis"
+        }
+      ],
+      "confidence": 0.65,
+      "rationale": "A single high point gives a phrase a shape; repeated peaks flatten it. This is a generation preference and is never applied to the user's own melody.",
+      "test_ids": [
+        "phrase_has_single_climax"
+      ],
+      "version": 1
+    }
+  ]
+}
