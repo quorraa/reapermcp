@@ -14,7 +14,34 @@
 local SCRIPT_PATH = debug.getinfo(1, "S").source
 if SCRIPT_PATH:sub(1, 1) == "@" then SCRIPT_PATH = SCRIPT_PATH:sub(2) end
 local SCRIPT_DIR = SCRIPT_PATH:match("^(.*)[/\\][^/\\]*$") or "."
-package.path = SCRIPT_DIR .. "/lib/?.lua;" .. package.path
+
+-- The installation directory is the one that actually holds lib/. Normally that
+-- is this script's own directory; when the script has been copied elsewhere we
+-- fall back to the installed location under REAPER's resource path. One
+-- directory is resolved rather than only the module path, because it also
+-- decides which config.json and ipc/ this script reports on — reporting on a
+-- different installation than the one it loaded would make the diagnosis wrong.
+-- Never hardcoded: portable REAPER installs are supported.
+local function qlabs_holds_lib(dir)
+  local probe = io.open(dir .. "/lib/util.lua", "r")
+  if probe then
+    probe:close()
+    return true
+  end
+  return false
+end
+
+local INSTALL_DIR
+local TRIED = { SCRIPT_DIR }
+if reaper and reaper.GetResourcePath then
+  TRIED[#TRIED + 1] = reaper.GetResourcePath() .. "/Scripts/QLabs-Reaper-MCP"
+end
+for _, dir in ipairs(TRIED) do
+  if not INSTALL_DIR and qlabs_holds_lib(dir) then INSTALL_DIR = dir end
+end
+INSTALL_DIR = INSTALL_DIR or SCRIPT_DIR
+
+package.path = INSTALL_DIR .. "/lib/?.lua;" .. package.path
 
 local ok_load, load_err = pcall(function()
   _G.QLABS_util = require("util")
@@ -49,6 +76,8 @@ w("bridge version    : %s", protocol.BRIDGE_VERSION)
 w("ipc protocol      : %s", protocol.PROTOCOL_VERSION)
 w("bridge schema     : %s", protocol.BRIDGE_SCHEMA_VERSION)
 w("script directory  : %s", SCRIPT_DIR)
+w("install directory : %s%s", INSTALL_DIR,
+  INSTALL_DIR == SCRIPT_DIR and "" or "   (this script was run from elsewhere)")
 w("resource path     : %s", tostring(reaper.GetResourcePath()))
 w("REAPER version    : %s", tostring(reaper.GetAppVersion()))
 
@@ -59,7 +88,7 @@ w("version supported : %s", verr and ("NO -- " .. verr.message) or "yes")
 -- Configuration
 --------------------------------------------------------------------------------
 
-local cfg_path = util.join(SCRIPT_DIR, bridge_mod.CONFIG_FILE)
+local cfg_path = util.join(INSTALL_DIR, bridge_mod.CONFIG_FILE)
 local cfg_raw = util.fs.read(cfg_path)
 w("")
 w("---- configuration ----")
@@ -83,7 +112,7 @@ w("instance token    : %s", token == "" and "(unset)"
   or (token:sub(1, 4) .. string.rep("*", math.max(0, #token - 8)) .. token:sub(-4)))
 
 local ipc_dir = (type(cfg.ipc_dir) == "string" and cfg.ipc_dir ~= "" and cfg.ipc_dir)
-  or util.join(SCRIPT_DIR, "ipc")
+  or util.join(INSTALL_DIR, "ipc")
 w("ipc directory     : %s", ipc_dir)
 w("poll interval     : %s ms", tostring(cfg.poll_interval_ms))
 w("heartbeat interval: %s ms", tostring(cfg.heartbeat_interval_ms))

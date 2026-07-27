@@ -36,7 +36,31 @@ local TEST_MARKER = "QLABS SMOKE TEST -- SAFE TO DELETE"
 local SCRIPT_PATH = debug.getinfo(1, "S").source
 if SCRIPT_PATH:sub(1, 1) == "@" then SCRIPT_PATH = SCRIPT_PATH:sub(2) end
 local SCRIPT_DIR = SCRIPT_PATH:match("^(.*)[/\\][^/\\]*$") or "."
-package.path = SCRIPT_DIR .. "/lib/?.lua;" .. package.path
+
+-- The installation directory is the one that actually holds lib/. Normally that
+-- is this script's own directory; when the script has been copied elsewhere we
+-- fall back to the installed location under REAPER's resource path. Never
+-- hardcoded: portable REAPER installs are supported.
+local function qlabs_holds_lib(dir)
+  local probe = io.open(dir .. "/lib/util.lua", "r")
+  if probe then
+    probe:close()
+    return true
+  end
+  return false
+end
+
+local INSTALL_DIR
+local TRIED = { SCRIPT_DIR }
+if reaper and reaper.GetResourcePath then
+  TRIED[#TRIED + 1] = reaper.GetResourcePath() .. "/Scripts/QLabs-Reaper-MCP"
+end
+for _, dir in ipairs(TRIED) do
+  if not INSTALL_DIR and qlabs_holds_lib(dir) then INSTALL_DIR = dir end
+end
+INSTALL_DIR = INSTALL_DIR or SCRIPT_DIR
+
+package.path = INSTALL_DIR .. "/lib/?.lua;" .. package.path
 
 local ok_load, load_err = pcall(function()
   _G.QLABS_util = require("util")

@@ -398,10 +398,17 @@ them reached `harmony.reharmonize`, `voicing.generate`, `arrangement.generate`,
 `theory.search` and the `candidate://{id}/trace` resource for the first time
 outside the unit suites.
 
-Two notes worth keeping. The bridge resolves `lib/` relative to its own
-location, so it only runs correctly from its installed directory. And the
-toolbar toggle works only when it is launched as an action, because
-`reaper.get_action_context()` reports command id `0` for a command-line launch.
+One note worth keeping: the toolbar toggle works only when the bridge is
+launched as an action, because `reaper.get_action_context()` reports command id
+`0` for a command-line launch.
+
+The three shipped scripts used to resolve `lib/` strictly beside themselves, so
+a copy run from anywhere else failed to load. They now fall back to the
+installed location under REAPER's resource path. That resolves the *installation
+directory*, not merely the module path — the same directory chooses which
+`config.json` and which `ipc/` are used, and a copy that loaded `lib/` from the
+installation while writing IPC state beside itself would split the installation
+in two.
 
 Running the walkthrough also uncovered a staging bug — a cached generation
 returned a candidate bound to a superseded snapshot, so staging succeeded only
