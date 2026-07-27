@@ -23,7 +23,7 @@ This is not a roadmap. It is a description of version 1.0.0 as built.
 11. [Rule-to-test coverage is 205 of 237](#11-rule-to-test-coverage-is-205-of-237)
 12. [Source licences are unverified](#12-source-licences-are-unverified)
 13. [The MCP specification version was not re-verified](#13-the-mcp-specification-version-was-not-re-verified)
-14. [One acceptance step is qualified rather than clean](#14-one-acceptance-step-is-qualified-rather-than-clean)
+14. [The acceptance walkthrough has been run in full](#14-the-acceptance-walkthrough-has-been-run-in-full)
 15. [MIDI writing limits](#15-midi-writing-limits)
 16. [Analysis limits](#16-analysis-limits)
 17. [Platform and packaging limits](#17-platform-and-packaging-limits)
@@ -368,7 +368,7 @@ than inherited from an SDK. If your MCP client behaves oddly against this
 server, a conformance gap on our side is a plausible explanation and worth
 reporting.
 
-## 14. One acceptance step is qualified rather than clean
+## 14. The acceptance walkthrough has been run in full
 
 `reaper/QLabs_Reaper_MCP_Smoke_Test.lua` **has now been run** against REAPER
 7.78/x64 on Windows 11, unmodified, in a fresh project tab: **28 passed, 0
@@ -387,18 +387,17 @@ Stale-snapshot rejection, `reaper.commit_candidate`, `undo_last_generation`
 through the MCP tool, and `UNDO_NOT_OWNED` after an unrelated REAPER action all
 behaved as documented.
 
-One step remains **qualified**, and should not be read as a clean pass:
+All sixteen steps have since been run, including the two that were qualified
+here: the bridge registered and started through REAPER's **Actions list**, and
+the brief's **natural-language request** driven from the server's own
+`harmonize-selected-melody` prompt with the countermelody enabled.
 
-- **Candidates were requested through explicit tool arguments**, not through the
-  brief's natural-language request. The countermelody option was never
-  exercised end to end.
-
-The bridge has since also been registered and started through REAPER's
-**Actions list**, which is the path users follow, so that is no longer
-outstanding. Two notes from doing it: the bridge resolves `lib/` relative to its
-own location, so it only runs correctly from its installed directory; and the
+Three notes worth keeping from doing them. The bridge resolves `lib/` relative
+to its own location, so it only runs correctly from its installed directory. The
 toolbar toggle works only when it is launched as an action, because
 `reaper.get_action_context()` reports command id `0` for a command-line launch.
+And what remains untested is not a step but a *surface*: of the nine prompts,
+only `harmonize-selected-melody` has been exercised against a real host.
 
 Running the walkthrough also uncovered a staging bug — a cached generation
 returned a candidate bound to a superseded snapshot, so staging succeeded only

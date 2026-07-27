@@ -7,9 +7,8 @@ Two things to know before reading further:
 1. **The in-REAPER smoke test has now been executed**, on Windows 11 with
    REAPER 7.78/x64: **28 passed, 0 failed**, and the manual acceptance
    walkthrough has been run alongside it. See
-   [§10](#10-the-in-reaper-smoke-test--executed). One of its sixteen steps is
-   qualified rather than clean — the natural-language request in step 7 — and is
-   marked there individually.
+   [§10](#10-the-in-reaper-smoke-test--executed). All sixteen steps have now
+   been run against a real host.
 2. **Everything else runs offline.** The workspace has zero external
    dependencies and the knowledge bundle is compiled in, so no test needs a
    network, a DAW, or any external package beyond `lua5.4` for the bridge suite.
@@ -522,9 +521,9 @@ that the script will create and delete tracks and items in the open project.
 ### The manual acceptance walkthrough
 
 The smoke test is automated-ish but narrow. The full acceptance workflow from
-the brief is a manual sequence. It has now been performed against REAPER
+the brief is a manual sequence. It has now been performed in full against REAPER
 7.78/x64, driving the real `serve` binary over stdio. Steps are marked with what
-actually happened. Two remain qualified rather than clean, and say so.
+actually happened, including where a result was a considered "no".
 
 1. **[run]** Open REAPER.
 2. **[run]** Run `QLabs_Reaper_MCP_Bridge.lua`, registered through
@@ -548,15 +547,35 @@ actually happened. Two remain qualified rather than clean, and say so.
    bridge 1.0.0, REAPER 7.78/x64.
 5. **[run]** The MCP client calls `reaper.inspect_selection`.
 6. **[run]** The MCP client calls `music.analyze_selection`.
-7. **[partial]** Three candidates were requested via explicit tool arguments
-   (`candidate_count: 3`, `loop_intent: "closed_tonic"`), **not** via the
-   natural-language request quoted in the brief. The countermelody option was
-   not exercised.
-8. **[run]** Three genuinely different candidates, melody preserved, each with
-   score components, applied rule ids and source ids; `loop.audit` returned a
-   substantive finding. Candidate ordering, scores and chord symbols were
-   **byte-identical** to the same music run through `generate-fixture` offline,
-   on two different pieces — the REAPER path and the pure-engine path agree.
+7. **[run]** The request was taken from the server's own
+   `harmonize-selected-melody` prompt rather than invented — `prompts/get`
+   returns the workflow as prose, naming each tool to call in order — and
+   followed as an MCP host would, with the brief's countermelody and loop
+   clauses included: `preserve_melody` and `preserve_rhythm` true,
+   `countermelody: {enabled: true, density: 0.3, role: "counterlead"}` and
+   `loop_intent: "closed_tonic"`.
+8. **[run]** Three genuinely different candidates — `chromatic_bass_led`,
+   `functional` and `modal_common_tone`, three distinct progressions — each
+   carrying all 13 score components, up to 30 applied rule ids and 3 source ids.
+   Every candidate carried four parts including the requested
+   `bass:Bass` and `counterlead:Countermelody`, and staging produced a fifth
+   track for the countermelody. Melody preservation was checked against the
+   source rather than trusted: a staged item carried exactly the source's 54
+   notes.
+
+   `loop.audit` did real work rather than rubber-stamping, returning
+   `compatible: false` at confidence 0.955 with two findings — *"the chordal
+   seventh of Dm9 does not fall by step across the wrap"* (minor) and *"for
+   closed_tonic intent, the wrap does not resolve to a tonic"* (moderate) — with
+   `harmonic_wrap` reading *"Dm9 (tonic) to D9 (applied): connected by common
+   tone rather than by function"*, and a proposed repair,
+   `add_a_turnaround_before_the_wrap`. That verdict is correct: the candidate
+   ends on Dm9 and opens on an applied D9, so the loop does not close as the
+   intent demands.
+
+   Candidate ordering, scores and chord symbols were **byte-identical** to the
+   same music run through `generate-fixture` offline, on two different pieces —
+   the REAPER path and the pure-engine path agree.
 9. **[run]** Select one candidate.
 10. **[run]** `reaper.stage_candidate` created a folder plus tagged
     melody/harmony/bass tracks and MIDI items.
