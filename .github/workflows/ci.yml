@@ -44,8 +44,10 @@ jobs:
       - name: Clippy
         run: cargo clippy --workspace --all-targets --all-features --offline --keep-going -- -D warnings
 
+      # --no-fail-fast so one failing test binary does not hide the results of
+      # every binary after it; one run reports the whole workspace.
       - name: Test
-        run: cargo test --workspace --all-features --offline
+        run: cargo test --workspace --all-features --offline --no-fail-fast
 
       - name: Validate knowledge bundle
         run: cargo run -p xtask --offline -- validate-knowledge

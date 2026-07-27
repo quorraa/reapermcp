@@ -639,10 +639,21 @@ fn s28_no_caller_value_can_escape_the_ipc_directory() {
         assert!(cfg.command_path(bad).is_err(), "command_path built {bad:?}");
         assert!(cfg.result_path(bad).is_err(), "result_path built {bad:?}");
     }
-    // Nothing was created anywhere.
+    // Nothing was created outside the configured IPC directory.
+    //
+    // Compared component-wise rather than by string prefix: on Windows the very
+    // same in-directory path renders as `\ipc\heartbeat.json`, so a `"/ipc/"`
+    // prefix test would fail on the separator rather than on containment. This
+    // form is just as strict — `/etc/passwd` still fails it — and it is correct
+    // on both platforms.
+    let root = std::path::Path::new("/ipc");
     for p in fs.paths() {
-        let s = p.to_string_lossy();
-        assert!(s.starts_with("/ipc/"), "escaped path {s}");
+        assert!(
+            p.starts_with(root),
+            "escaped path {} is outside {}",
+            p.display(),
+            root.display()
+        );
     }
 }
 
