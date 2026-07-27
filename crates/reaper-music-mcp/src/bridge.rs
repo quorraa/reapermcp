@@ -135,7 +135,9 @@ impl Bridge {
 
     /// `inspect_selection`, parsed and hash-verified.
     pub fn inspect(&self, payload: Json, cancel: &CancelFlag) -> Result<Snapshot, ToolError> {
-        Ok(self.read_client()?.inspect_snapshot(payload, None, cancel)?)
+        Ok(self
+            .read_client()?
+            .inspect_snapshot(payload, None, cancel)?)
     }
 
     /// `stage_candidate`.

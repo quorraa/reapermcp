@@ -206,7 +206,9 @@ pub fn str_or(args: &Json, key: &str, default: &str) -> String {
 
 /// An optional finite number argument.
 pub fn opt_f64(args: &Json, key: &str) -> Option<f64> {
-    args.get(key).and_then(Json::as_f64).filter(|v| v.is_finite())
+    args.get(key)
+        .and_then(Json::as_f64)
+        .filter(|v| v.is_finite())
 }
 
 /// A number argument with a default.
@@ -232,7 +234,9 @@ pub fn bool_or(args: &Json, key: &str, default: bool) -> bool {
 /// The seed argument, defaulting to a fixed constant so that a call made twice
 /// with no seed returns the identical candidates.
 pub fn seed_of(args: &Json) -> u64 {
-    opt_i64(args, "seed").map(|s| s as u64).unwrap_or(DEFAULT_SEED)
+    opt_i64(args, "seed")
+        .map(|s| s as u64)
+        .unwrap_or(DEFAULT_SEED)
 }
 
 /// The style profile argument, checked against the knowledge bundle.
@@ -362,10 +366,18 @@ mod tests {
     #[test]
     fn an_unknown_tool_is_a_structured_error_not_a_transport_error() {
         let core = ServerCore::offline();
-        let r = call(&core, "execute_lua", &json_obj! {}, &CallContext::detached());
+        let r = call(
+            &core,
+            "execute_lua",
+            &json_obj! {},
+            &CallContext::detached(),
+        );
         assert_eq!(r.get("isError"), Some(&Json::Bool(true)));
         let payload = r.get("structuredContent").unwrap();
-        assert_eq!(payload.str_field("error_code").unwrap(), codes::UNKNOWN_TOOL);
+        assert_eq!(
+            payload.str_field("error_code").unwrap(),
+            codes::UNKNOWN_TOOL
+        );
         assert!(!r.arr_field("content").unwrap().is_empty());
     }
 
@@ -395,7 +407,12 @@ mod tests {
     #[test]
     fn a_successful_result_carries_both_representations() {
         let core = ServerCore::offline();
-        let r = call(&core, "reaper.status", &json_obj! {}, &CallContext::detached());
+        let r = call(
+            &core,
+            "reaper.status",
+            &json_obj! {},
+            &CallContext::detached(),
+        );
         assert_eq!(r.get("isError"), Some(&Json::Bool(false)));
         let structured = r.get("structuredContent").unwrap();
         let text = r.arr_field("content").unwrap()[0]
@@ -408,8 +425,40 @@ mod tests {
     #[test]
     fn bridge_tools_report_offline_rather_than_hanging() {
         let core = ServerCore::offline();
+        let r = call(
+            &core,
+            "reaper.inspect_selection",
+            &json_obj! {},
+            &CallContext::detached(),
+        );
+        assert_eq!(r.get("isError"), Some(&Json::Bool(true)));
+        let payload = r.get("structuredContent").unwrap();
+        assert_eq!(
+            payload.str_field("error_code").unwrap(),
+            reaper_ipc::codes::BRIDGE_OFFLINE
+        );
+        assert!(payload.get("remedy").is_some());
+    }
+
+    #[test]
+    fn every_bridge_tool_fails_structurally_with_no_bridge() {
+        // The transaction tools refuse an id this session did not issue before
+        // they ever reach the bridge, which is a stricter refusal than
+        // BRIDGE_OFFLINE and is the one that matters for safety. What must hold
+        // for all of them is that they answer, quickly, with a known code.
+        let core = ServerCore::offline();
+        let known = [
+            reaper_ipc::codes::BRIDGE_OFFLINE,
+            reaper_ipc::codes::UNDO_NOT_OWNED,
+            codes::UNKNOWN_TRANSACTION,
+            codes::UNKNOWN_ID,
+        ];
         for (name, args) in [
             ("reaper.inspect_selection", json_obj! {}),
+            (
+                "reaper.stage_candidate",
+                json_obj! { "candidate_id" => "abc" },
+            ),
             (
                 "reaper.commit_candidate",
                 json_obj! { "transaction_id" => "abc" },
@@ -428,7 +477,7 @@ mod tests {
                 .str_field("error_code")
                 .unwrap()
                 .to_string();
-            assert_eq!(code, reaper_ipc::codes::BRIDGE_OFFLINE, "{name}");
+            assert!(known.contains(&code.as_str()), "{name} gave {code}");
         }
     }
 

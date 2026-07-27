@@ -1,0 +1,289 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qlabs.dev/schemas/edit-plan.schema.json",
+  "title": "QLabs REAPER MCP edit plan (wire form)",
+  "description": "The plan the MCP server sends inside stage_candidate's payload, exactly as reaper_ipc::plan::plan_to_wire emits it. This is the *wire* form, not music_domain::plan::EditPlan::to_json: preconditions are discriminated on `type` (not `kind`), quarter notes are JSON numbers (not rational strings), and tags are [KEY, VALUE] pairs (not an object). Every operation is additive; the vocabulary has no way to express deleting, renaming or editing anything that already exists in the project, which is what makes staging non-destructive by construction rather than by policy. Governs fixtures/mock-reaper/plans/*.plan.json.",
+  "type": "object",
+  "required": [
+    "plan_id",
+    "candidate_id",
+    "transaction_id",
+    "base_snapshot_id",
+    "base_snapshot_hash",
+    "project_uuid",
+    "knowledge_version",
+    "undo_label",
+    "operations"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "plan_id": { "$ref": "#/$defs/id" },
+    "candidate_id": { "$ref": "#/$defs/id" },
+    "transaction_id": {
+      "description": "Must match the safe-id pattern: it becomes an ownership tag value the bridge selects on.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "base_snapshot_id": { "$ref": "#/$defs/id" },
+    "base_snapshot_hash": {
+      "description": "The snapshot hash the plan was generated against. The bridge re-derives the snapshot and returns STALE_SNAPSHOT when this no longer matches.",
+      "$ref": "#/$defs/hash"
+    },
+    "project_uuid": { "$ref": "#/$defs/id" },
+    "knowledge_version": {
+      "description": "A bad value is KNOWLEDGE_INVALID, not INVALID_EDIT_PLAN.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9._+-]{1,64}$"
+    },
+    "undo_label": {
+      "description": "Must begin with the exact prefix 'QLabs MCP: '. The bridge refuses to open an undo block with any other label, and undo_last_generation refuses to undo an entry without it — which is what stops the MCP from ever undoing unrelated work.",
+      "type": "string",
+      "minLength": 12,
+      "maxLength": 200,
+      "pattern": "^QLabs MCP: "
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 512,
+      "items": { "$ref": "#/$defs/operation" }
+    },
+    "preconditions": {
+      "description": "Evaluated before Undo_BeginBlock2, so a plan that fails performs zero mutations. The server always sends all seven kinds.",
+      "type": "array",
+      "maxItems": 64,
+      "items": { "$ref": "#/$defs/precondition" }
+    },
+    "expected_outputs": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "required": ["temp_id", "kind"],
+        "additionalProperties": false,
+        "properties": {
+          "temp_id": { "$ref": "#/$defs/temp_id" },
+          "kind": {
+            "type": "string",
+            "enum": ["track", "folder_track", "midi_item", "region", "send"]
+          },
+          "note_count": { "type": ["integer", "null"], "minimum": 0, "maximum": 20000 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "hash": {
+      "description": "FNV-1a 64-bit over a canonical string, rendered as fnv1a64: plus 16 lowercase hex digits.",
+      "type": "string",
+      "pattern": "^fnv1a64:[0-9a-f]{16}$"
+    },
+    "temp_id": {
+      "description": "Plan-local identifier. Forward references are rejected by the bridge: an operation naming a temp_id must appear after the operation declaring it.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "qn": {
+      "description": "A position in project quarter notes, as a finite JSON number. The bridge rejects a string outright.",
+      "type": "number",
+      "minimum": -100000,
+      "maximum": 1000000
+    },
+    "name": {
+      "description": "Cosmetic only. Objects are never identified by name.",
+      "type": "string",
+      "maxLength": 200
+    },
+    "tags": {
+      "description": "Ownership tags the plan supplies. The key allowlist is closed, which is what stops the tag channel from becoming a general write primitive into REAPER object state; in practice only QLABS_ROLE is useful to send, the rest being written by the bridge itself.",
+      "type": "array",
+      "maxItems": 16,
+      "items": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "prefixItems": [
+          {
+            "type": "string",
+            "enum": [
+              "QLABS_OWNER",
+              "QLABS_TRANSACTION_ID",
+              "QLABS_CANDIDATE_ID",
+              "QLABS_PLAN_ID",
+              "QLABS_STATUS",
+              "QLABS_SOURCE_SNAPSHOT",
+              "QLABS_KNOWLEDGE_VERSION",
+              "QLABS_OBJECT_KIND",
+              "QLABS_TEMP_ID",
+              "QLABS_UNDO_LABEL",
+              "QLABS_CREATED_AT",
+              "QLABS_COMMITTED_AT",
+              "QLABS_PREVIEW_MUTED",
+              "QLABS_ROLE"
+            ]
+          },
+          { "type": "string", "maxLength": 512 }
+        ]
+      }
+    },
+    "planned_note": {
+      "type": "object",
+      "required": ["start_qn", "end_qn", "pitch"],
+      "additionalProperties": false,
+      "properties": {
+        "start_qn": { "$ref": "#/$defs/qn" },
+        "end_qn": { "$ref": "#/$defs/qn" },
+        "pitch": { "type": "integer", "minimum": 0, "maximum": 127 },
+        "velocity": { "type": "integer", "minimum": 1, "maximum": 127 },
+        "channel": { "type": "integer", "minimum": 0, "maximum": 15 },
+        "muted": { "type": "boolean" },
+        "spelling": {
+          "description": "Recorded in the plan only; MIDI stores the number.",
+          "type": "string",
+          "maxLength": 16
+        }
+      }
+    },
+    "operation": {
+      "description": "The allowlist is exactly seven operations. There is deliberately no operation that evaluates Lua, runs an action id, deletes a track, edits a project chunk or touches the source take.",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["op", "temp_id", "name"],
+          "additionalProperties": false,
+          "properties": {
+            "op": { "const": "create_folder_track" },
+            "temp_id": { "$ref": "#/$defs/temp_id" },
+            "name": { "$ref": "#/$defs/name" },
+            "tags": { "$ref": "#/$defs/tags" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["op", "temp_id", "name"],
+          "additionalProperties": false,
+          "properties": {
+            "op": { "const": "create_track" },
+            "temp_id": { "$ref": "#/$defs/temp_id" },
+            "parent": { "$ref": "#/$defs/temp_id" },
+            "name": { "$ref": "#/$defs/name" },
+            "tags": { "$ref": "#/$defs/tags" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["op", "temp_id", "track", "start_qn", "end_qn"],
+          "additionalProperties": false,
+          "properties": {
+            "op": { "const": "create_midi_item" },
+            "temp_id": { "$ref": "#/$defs/temp_id" },
+            "track": { "$ref": "#/$defs/temp_id" },
+            "start_qn": { "$ref": "#/$defs/qn" },
+            "end_qn": { "$ref": "#/$defs/qn" },
+            "muted": { "type": "boolean" },
+            "tags": { "$ref": "#/$defs/tags" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["op", "item", "notes"],
+          "additionalProperties": false,
+          "properties": {
+            "op": { "const": "insert_notes" },
+            "item": { "$ref": "#/$defs/temp_id" },
+            "notes": {
+              "type": "array",
+              "maxItems": 8000,
+              "items": { "$ref": "#/$defs/planned_note" }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["op", "track", "muted"],
+          "additionalProperties": false,
+          "properties": {
+            "op": { "const": "set_track_mute" },
+            "track": { "$ref": "#/$defs/temp_id" },
+            "muted": { "type": "boolean" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["op", "name", "start_qn", "end_qn"],
+          "additionalProperties": false,
+          "properties": {
+            "op": { "const": "create_region" },
+            "temp_id": { "$ref": "#/$defs/temp_id" },
+            "name": { "$ref": "#/$defs/name" },
+            "start_qn": { "$ref": "#/$defs/qn" },
+            "end_qn": { "$ref": "#/$defs/qn" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["op", "from_track", "to_track_guid"],
+          "additionalProperties": false,
+          "properties": {
+            "op": { "const": "create_midi_send" },
+            "temp_id": { "$ref": "#/$defs/temp_id" },
+            "from_track": { "$ref": "#/$defs/temp_id" },
+            "to_track_guid": { "type": "string", "minLength": 1, "maxLength": 128 }
+          }
+        }
+      ]
+    },
+    "precondition": {
+      "description": "Discriminated on `type`. The MCP server always sends all seven kinds; omitting any of them silently removes stale-write rejection.",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["type", "value"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["project_uuid", "item_guid_exists", "take_guid_exists"]
+            },
+            "value": { "type": "string", "minLength": 1, "maxLength": 128 }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["type", "value"],
+          "additionalProperties": false,
+          "properties": {
+            "type": { "const": "state_change_count" },
+            "value": { "type": "integer", "minimum": -1, "maximum": 1000000000 }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["type", "value"],
+          "additionalProperties": false,
+          "properties": {
+            "type": { "type": "string", "enum": ["midi_hash", "tempo_map_hash"] },
+            "value": { "$ref": "#/$defs/hash" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["type", "start_qn", "end_qn"],
+          "additionalProperties": false,
+          "properties": {
+            "type": { "const": "item_bounds" },
+            "start_qn": { "$ref": "#/$defs/qn" },
+            "end_qn": { "$ref": "#/$defs/qn" }
+          }
+        }
+      ]
+    }
+  }
+}

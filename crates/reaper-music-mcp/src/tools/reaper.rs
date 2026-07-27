@@ -88,7 +88,11 @@ pub fn status_body(core: &ServerCore) -> Json {
 
     // Project detail needs a real round trip; only attempt it when the
     // heartbeat says the bridge is there, so an offline server never blocks.
-    let project = if online { core.bridge.status().ok() } else { None };
+    let project = if online {
+        core.bridge.status().ok()
+    } else {
+        None
+    };
     let field = |key: &str, fallback: Json| -> Json {
         project
             .as_ref()
@@ -131,7 +135,10 @@ pub fn status_body(core: &ServerCore) -> Json {
         "uptime_seconds",
         Json::Int(qjson::time::unix_now() - core.started_at),
     );
-    session.insert("knowledge_origin", Json::Str(core.knowledge.origin().to_string()));
+    session.insert(
+        "knowledge_origin",
+        Json::Str(core.knowledge.origin().to_string()),
+    );
     m.insert("session", Json::Obj(session));
     m.insert("warnings", Json::Arr(warnings));
     Json::Obj(m)
@@ -149,7 +156,9 @@ pub fn scope_of(args: &Json) -> ScopeEcho {
             .and_then(Json::as_str)
             .unwrap_or("auto")
             .to_string(),
-        extraction_channel: extraction.and_then(|e| e.get("channel")).and_then(Json::as_i64),
+        extraction_channel: extraction
+            .and_then(|e| e.get("channel"))
+            .and_then(Json::as_i64),
     }
 }
 
@@ -206,7 +215,10 @@ pub fn inspect_selection(
     let mut m = JsonMap::new();
     m.insert("ok", Json::Bool(true));
     m.insert("snapshot_id", Json::Str(id.clone()));
-    m.insert("resource_uri", Json::Str("reaper://selection/current".into()));
+    m.insert(
+        "resource_uri",
+        Json::Str("reaper://selection/current".into()),
+    );
     m.insert("project_uuid", opt_string(&snapshot.project_uuid));
     m.insert(
         "project_state_change_count",

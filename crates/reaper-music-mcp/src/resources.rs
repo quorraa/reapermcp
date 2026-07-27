@@ -478,7 +478,7 @@ fn catalog_body(core: &ServerCore) -> Json {
         Json::Arr(
             kb.chord_symbols()
                 .iter()
-                .map(|a| Json::Str(a.symbol.clone()))
+                .map(|a| Json::Str(a.written.clone()))
                 .collect(),
         ),
     );
@@ -691,7 +691,10 @@ mod tests {
             let body = read(&core, &format!("theory://rules/{d}")).unwrap();
             total += body.i64_field("count").unwrap();
         }
-        assert!(total >= 100, "the bundle must carry 100+ rules, saw {total}");
+        assert!(
+            total >= 100,
+            "the bundle must carry 100+ rules, saw {total}"
+        );
     }
 
     #[test]

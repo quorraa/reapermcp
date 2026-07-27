@@ -216,7 +216,10 @@ impl From<music_analysis::AnalysisError> for ToolError {
 
 impl From<harmony_engine::HarmonyError> for ToolError {
     fn from(e: harmony_engine::HarmonyError) -> ToolError {
-        ToolError::new(map_engine_code(&e.code, codes::GENERATION_FAILED), e.message)
+        ToolError::new(
+            map_engine_code(&e.code, codes::GENERATION_FAILED),
+            e.message,
+        )
     }
 }
 
@@ -231,7 +234,10 @@ impl From<arrangement_engine::ArrangementError> for ToolError {
 
 impl From<loop_engine::LoopError> for ToolError {
     fn from(e: loop_engine::LoopError) -> ToolError {
-        ToolError::new(map_engine_code(&e.code, codes::LOOP_AUDIT_FAILED), e.message)
+        ToolError::new(
+            map_engine_code(&e.code, codes::LOOP_AUDIT_FAILED),
+            e.message,
+        )
     }
 }
 

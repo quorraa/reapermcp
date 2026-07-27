@@ -520,10 +520,7 @@ pub fn tool_specs() -> Vec<ToolSpec> {
                 "Reports whether the REAPER bridge is running and what project it is attached to, \
                  plus this server's version and knowledge bundle. Works with no bridge running: \
                  the reply then says so rather than failing.",
-            input_schema: root(
-                "reaper.status arguments",
-                object(vec![], &[], false),
-            ),
+            input_schema: root("reaper.status arguments", object(vec![], &[], false)),
             output_schema: output(
                 "reaper.status result",
                 vec![
@@ -575,8 +572,7 @@ pub fn tool_specs() -> Vec<ToolSpec> {
         ToolSpec {
             name: "reaper.inspect_selection",
             title: "Inspect the REAPER selection",
-            description:
-                "Takes an immutable snapshot of the selected MIDI material and returns a \
+            description: "Takes an immutable snapshot of the selected MIDI material and returns a \
                  snapshot id every later tool refers to. Reads only; never modifies the project.",
             input_schema: root(
                 "reaper.inspect_selection arguments",
@@ -661,7 +657,10 @@ pub fn tool_specs() -> Vec<ToolSpec> {
                 "theory.search arguments",
                 object(
                     vec![
-                        ("query", json_obj! { "type" => "string", "minLength" => 1, "maxLength" => 512 }),
+                        (
+                            "query",
+                            json_obj! { "type" => "string", "minLength" => 1, "maxLength" => 512 },
+                        ),
                         ("domains", arr_of(enum_of(RULE_DOMAINS))),
                         ("profile", enum_of(PROFILE_IDS)),
                         ("kinds", arr_of(enum_of(RULE_KINDS))),
@@ -691,7 +690,15 @@ pub fn tool_specs() -> Vec<ToolSpec> {
                                 ("source_ids", arr_of(typed("string"))),
                                 ("detail", typed("object")),
                             ],
-                            &["kind", "id", "title", "summary", "score", "source_ids", "detail"],
+                            &[
+                                "kind",
+                                "id",
+                                "title",
+                                "summary",
+                                "score",
+                                "source_ids",
+                                "detail",
+                            ],
                             false,
                         )),
                     ),

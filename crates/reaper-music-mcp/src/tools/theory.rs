@@ -90,10 +90,9 @@ mod tests {
         let body = run(json_obj! { "query" => "tritone substitution" });
         assert!(body.i64_field("result_count").unwrap() > 0);
         let hits = body.arr_field("hits").unwrap();
-        assert!(hits.iter().any(|h| !h
-            .arr_field("source_ids")
-            .unwrap()
-            .is_empty()));
+        assert!(hits
+            .iter()
+            .any(|h| !h.arr_field("source_ids").unwrap().is_empty()));
     }
 
     #[test]

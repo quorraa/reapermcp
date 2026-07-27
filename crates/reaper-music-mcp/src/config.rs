@@ -66,7 +66,11 @@ impl ConfigSource {
             ConfigSource::IpcDir {
                 dir,
                 config: Some(c),
-            } => format!("ipc directory {} with token from {}", dir.display(), c.display()),
+            } => format!(
+                "ipc directory {} with token from {}",
+                dir.display(),
+                c.display()
+            ),
             ConfigSource::Unconfigured => "not configured".to_string(),
         }
     }
@@ -302,7 +306,8 @@ mod tests {
 
     #[test]
     fn a_missing_config_file_is_reported_not_fatal() {
-        let resolved = ServerConfig::resolve(Some(Path::new("/nonexistent/config.json")), None, None);
+        let resolved =
+            ServerConfig::resolve(Some(Path::new("/nonexistent/config.json")), None, None);
         assert!(resolved.ipc.is_none());
         assert!(resolved.ipc_problem.is_some());
         assert_ne!(resolved.to_json().get("problem"), Some(&Json::Null));

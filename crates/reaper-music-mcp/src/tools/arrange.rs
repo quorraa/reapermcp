@@ -170,7 +170,10 @@ pub fn generate(core: &ServerCore, args: &Json, ctx: &CallContext) -> Result<Jso
 
     let id = qjson::uuid::uuid_from_name(
         "qlabs.mcp.arrangement",
-        &format!("{}|{}|{}", source.candidate.id, params.profile_id, params.seed),
+        &format!(
+            "{}|{}|{}",
+            source.candidate.id, params.profile_id, params.seed
+        ),
     );
     let mut trace = source.candidate.trace.clone();
     trace.candidate_id = id.clone();

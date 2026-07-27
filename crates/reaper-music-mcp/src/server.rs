@@ -463,7 +463,8 @@ impl Server {
                         if value.get("method").and_then(Json::as_str)
                             == Some("notifications/cancelled")
                         {
-                            if let Some(rid) = value.get("params").and_then(|p| p.get("requestId")) {
+                            if let Some(rid) = value.get("params").and_then(|p| p.get("requestId"))
+                            {
                                 Server::cancel_request(&cancels, rid);
                             }
                         }
@@ -774,7 +775,10 @@ mod tests {
     #[test]
     fn syslog_levels_map_onto_our_own() {
         assert_eq!(map_syslog_level("debug"), Some(crate::log::Level::Debug));
-        assert_eq!(map_syslog_level("emergency"), Some(crate::log::Level::Error));
+        assert_eq!(
+            map_syslog_level("emergency"),
+            Some(crate::log::Level::Error)
+        );
         assert_eq!(map_syslog_level("shouty"), None);
     }
 }

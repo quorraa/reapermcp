@@ -101,8 +101,7 @@ generate harmony and do not stage anything.",
         PromptSpec {
             name: "harmonize-selected-melody",
             title: "Harmonize the selected melody",
-            description:
-                "The full workflow: status, inspect, analyze, generate several genuinely \
+            description: "The full workflow: status, inspect, analyze, generate several genuinely \
                  different harmonizations, explain the differences, stage only on request.",
             arguments: &[STYLE_ARG, COUNT_ARG, FOCUS_ARG],
             template: "\
@@ -124,8 +123,7 @@ that one candidate id and nothing else.",
         PromptSpec {
             name: "reharmonize-selected-region",
             title: "Reharmonize the selected region",
-            description:
-                "Reharmonize existing chords under explicit preservation constraints.",
+            description: "Reharmonize existing chords under explicit preservation constraints.",
             arguments: &[
                 STYLE_ARG,
                 COUNT_ARG,
@@ -150,8 +148,7 @@ that weakened a cadence. Stage nothing until I choose.",
         PromptSpec {
             name: "extend-selected-chords",
             title: "Add extensions to the selected chords",
-            description:
-                "Raise extension density and complexity on an existing progression while \
+            description: "Raise extension density and complexity on an existing progression while \
                  keeping its function.",
             arguments: &[STYLE_ARG, FOCUS_ARG],
             template: "\
@@ -232,8 +229,7 @@ gives up.",
         PromptSpec {
             name: "audit-harmony-and-voice-leading",
             title: "Audit harmony and voice leading",
-            description:
-                "Critique existing material against a style profile without changing it.",
+            description: "Critique existing material against a style profile without changing it.",
             arguments: &[STYLE_ARG],
             template: "\
 Audit what I have selected. Change nothing.
@@ -402,9 +398,8 @@ pub fn get_request(params: &Json) -> Result<Json, RpcError> {
         )
     })?;
     let args = params.get("arguments").cloned().unwrap_or(Json::Null);
-    render(&spec, &args).map_err(|e| {
-        RpcError::with_data(rpc_codes::INVALID_PARAMS, e.message.clone(), e.to_json())
-    })
+    render(&spec, &args)
+        .map_err(|e| RpcError::with_data(rpc_codes::INVALID_PARAMS, e.message.clone(), e.to_json()))
 }
 
 #[cfg(test)]
@@ -446,7 +441,11 @@ mod tests {
                     .str_field("text")
                     .unwrap()
                     .to_string();
-                assert!(!text.contains('{'), "{} left a placeholder: {text}", spec.name);
+                assert!(
+                    !text.contains('{'),
+                    "{} left a placeholder: {text}",
+                    spec.name
+                );
             }
         }
     }
@@ -553,6 +552,8 @@ mod tests {
     #[test]
     fn the_loop_prompt_does_not_force_a_tonic_resolution() {
         let spec = get("create-loopable-variants").unwrap();
-        assert!(spec.template.contains("does not need a dominant resolution"));
+        assert!(spec
+            .template
+            .contains("does not need a dominant resolution"));
     }
 }

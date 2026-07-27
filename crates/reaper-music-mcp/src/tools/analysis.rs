@@ -10,7 +10,7 @@
 //! The full report is stored and served as `analysis://{id}`; the tool result
 //! is a summary sized for a conversation.
 
-use super::{opt_f64, opt_str, profile_of, require_snapshot};
+use super::{opt_str, profile_of, require_snapshot};
 use crate::error::{codes, ToolError};
 use crate::server::{CallContext, ServerCore};
 use crate::store::SnapshotRecord;
@@ -480,7 +480,8 @@ mod tests {
     fn grid_arguments_are_parsed_and_validated() {
         assert_eq!(grid_of(&json_obj! {}).unwrap(), GridMode::Auto);
         assert_eq!(
-            grid_of(&json_obj! { "harmonic_rhythm" => json_obj! { "mode" => "existing" } }).unwrap(),
+            grid_of(&json_obj! { "harmonic_rhythm" => json_obj! { "mode" => "existing" } })
+                .unwrap(),
             GridMode::Existing
         );
         assert_eq!(

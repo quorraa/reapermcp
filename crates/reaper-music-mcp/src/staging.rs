@@ -110,11 +110,9 @@ pub const REQUIRED_PRECONDITIONS: &[&str] = &[
 
 /// True when `plan` carries every one of [`REQUIRED_PRECONDITIONS`].
 pub fn has_all_preconditions(plan: &EditPlan) -> bool {
-    REQUIRED_PRECONDITIONS.iter().all(|want| {
-        plan.preconditions
-            .iter()
-            .any(|p| p.kind_id() == *want)
-    })
+    REQUIRED_PRECONDITIONS
+        .iter()
+        .all(|want| plan.preconditions.iter().any(|p| p.kind_id() == *want))
 }
 
 /// Every precondition kind a plan carries, in plan order.
@@ -200,7 +198,11 @@ pub fn build_plan(
         .clone()
         .ok_or_else(|| missing("snapshot_hash"))?;
 
-    let parts: Vec<&Part> = candidate.parts.iter().filter(|p| !p.notes.is_empty()).collect();
+    let parts: Vec<&Part> = candidate
+        .parts
+        .iter()
+        .filter(|p| !p.notes.is_empty())
+        .collect();
     if parts.is_empty() {
         return Err(ToolError::invalid_argument(format!(
             "candidate {} has no notes to stage",
@@ -272,7 +274,10 @@ pub fn build_plan(
             first_track = Some(track_id.clone());
         }
         let role = part.role.id().to_string();
-        let track_name = clean_name(&format!("{prefix}{}", part.name), &format!("{prefix}{role}"));
+        let track_name = clean_name(
+            &format!("{prefix}{}", part.name),
+            &format!("{prefix}{role}"),
+        );
         operations.push(EditOperation::CreateTrack {
             temp_id: track_id.clone(),
             parent: Some("f0".to_string()),
@@ -409,7 +414,9 @@ fn planned_note(n: &Note, start: BeatTime, end: BeatTime) -> Result<PlannedNote,
         // A note the item cannot hold would be rejected by the bridge as
         // INVALID_EDIT_PLAN; nudge it to the smallest representable span
         // inside the item instead of dropping music the user asked for.
-        a = a.min(end - BeatTime::new(1, crate::convert::QN_GRID)).max(start);
+        a = a
+            .min(end - BeatTime::new(1, crate::convert::QN_GRID))
+            .max(start);
         b = a + BeatTime::new(1, crate::convert::QN_GRID);
     }
     Ok(PlannedNote {
@@ -561,9 +568,11 @@ mod tests {
     #[test]
     fn items_start_muted_by_default() {
         let built = build();
-        let muted = built.plan.operations.iter().any(|op| {
-            matches!(op, EditOperation::CreateMidiItem { muted, .. } if *muted)
-        });
+        let muted = built
+            .plan
+            .operations
+            .iter()
+            .any(|op| matches!(op, EditOperation::CreateMidiItem { muted, .. } if *muted));
         assert!(muted, "a preview must start muted");
     }
 
@@ -573,7 +582,9 @@ mod tests {
         let mut bounds = None;
         for op in &built.plan.operations {
             match op {
-                EditOperation::CreateMidiItem { start_qn, end_qn, .. } => {
+                EditOperation::CreateMidiItem {
+                    start_qn, end_qn, ..
+                } => {
                     bounds = Some((*start_qn, *end_qn));
                 }
                 EditOperation::InsertNotes { notes, .. } => {

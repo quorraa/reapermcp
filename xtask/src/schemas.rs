@@ -36,25 +36,46 @@ fn collect(dir: &Path, out: &mut Vec<std::path::PathBuf>) {
     }
 }
 
+/// Directories under `fixtures/` whose `*.json` files are the music IR.
+const MUSIC_IR_DIRS: &[&str] = &["melodies", "progressions", "loops"];
+
 /// Which schema governs a fixture path, if any.
 fn fixture_schema(path: &Path) -> Option<&'static str> {
     let name = path.file_name()?.to_str()?;
     if name.ends_with(".command.json") {
-        Some("ipc-request.schema.json")
-    } else if name.ends_with(".result.json") {
-        Some("ipc-result.schema.json")
-    } else {
-        None
+        return Some("ipc-request.schema.json");
     }
+    if name.ends_with(".result.json") {
+        return Some("ipc-result.schema.json");
+    }
+    if name.ends_with(".plan.json") {
+        return Some("edit-plan.schema.json");
+    }
+    // The music IR lives one directory below `fixtures/`, so route on the
+    // parent rather than on the file name: a fixture is just `<name>.json`.
+    let parent = path.parent()?.file_name()?.to_str()?;
+    if MUSIC_IR_DIRS.contains(&parent) {
+        return Some("music-ir.schema.json");
+    }
+    None
 }
 
 /// Negative fixtures whose invalidity is **semantic**, not structural.
 ///
 /// An expired deadline and a wrong instance token are perfectly well-formed
-/// envelopes; only the bridge can reject them, at request time. They are
-/// listed here rather than being silently exempted by a looser rule, so
-/// adding a genuinely structural negative fixture still gets checked.
-const SEMANTIC_NEGATIVES: &[&str] = &["invalid-expired.command.json", "invalid-token.command.json"];
+/// envelopes; only the bridge can reject them, at request time. The three plan
+/// negatives are the same story: a forward reference, a note outside its item
+/// and a stale base-snapshot hash are all well-formed JSON that only the
+/// bridge, holding the live project, can reject. They are listed here rather
+/// than being silently exempted by a looser rule, so adding a genuinely
+/// structural negative fixture still gets checked.
+const SEMANTIC_NEGATIVES: &[&str] = &[
+    "invalid-expired.command.json",
+    "invalid-token.command.json",
+    "invalid-forward-reference.plan.json",
+    "invalid-note-outside-item-bounds.plan.json",
+    "invalid-stale-base-snapshot.plan.json",
+];
 
 /// True when a fixture's name declares it as a structural negative case.
 fn expects_failure(path: &Path) -> bool {

@@ -92,7 +92,10 @@ impl Incoming {
             Some(other) => {
                 return Err(RpcError::new(
                     rpc_codes::INVALID_REQUEST,
-                    format!("id must be a string or an integer, not {}", other.type_name()),
+                    format!(
+                        "id must be a string or an integer, not {}",
+                        other.type_name()
+                    ),
                 ))
             }
         };

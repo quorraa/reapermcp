@@ -59,9 +59,10 @@ pub fn analysis_for(
         return Ok(analysis);
     }
     let params = crate::tools::analysis::params_of(core, args)?;
-    if let Some(existing) =
-        core.with_store(|s| s.analysis_for_snapshot(&record.snapshot.snapshot_id, ctx.now).cloned())
-    {
+    if let Some(existing) = core.with_store(|s| {
+        s.analysis_for_snapshot(&record.snapshot.snapshot_id, ctx.now)
+            .cloned()
+    }) {
         if existing.profile_id == params.profile_id {
             return Ok(existing);
         }
@@ -242,8 +243,11 @@ pub fn generate_candidates(
     );
 
     if let Some(ids) = core.with_store(|s| s.cached(&key, ctx.now)) {
-        let records: Vec<CandidateRecord> =
-            core.with_store(|s| ids.iter().filter_map(|id| s.candidate(id, ctx.now).ok().cloned()).collect());
+        let records: Vec<CandidateRecord> = core.with_store(|s| {
+            ids.iter()
+                .filter_map(|id| s.candidate(id, ctx.now).ok().cloned())
+                .collect()
+        });
         if records.len() == ids.len() {
             crate::log::debug("serving candidates from the generation cache");
             return Ok(candidate_list_body(
@@ -478,7 +482,8 @@ pub fn voicing_generate(
     let mut records = Vec::new();
     for family_id in requested.iter().take(wanted) {
         ctx.check_cancelled()?;
-        let family = VoicingFamily::parse(family_id).ok_or_else(|| bad_enum("families", family_id))?;
+        let family =
+            VoicingFamily::parse(family_id).ok_or_else(|| bad_enum("families", family_id))?;
         let params = VoicingParams {
             voice_count: i64_or(args, "voice_count", defaults.voice_count as i64).clamp(2, 8)
                 as usize,
@@ -502,8 +507,12 @@ pub fn voicing_generate(
             melody.as_ref(),
             &params,
         )?;
-        let report =
-            audit_voice_leading(core.knowledge.kb(), &profile, &voicings, &source.candidate.chords);
+        let report = audit_voice_leading(
+            core.knowledge.kb(),
+            &profile,
+            &voicings,
+            &source.candidate.chords,
+        );
 
         let variant = build_voicing_candidate(&source, family, &voicings, &report, seed, ctx.now)?;
         let record = CandidateRecord {
@@ -560,11 +569,7 @@ fn build_voicing_candidate(
             next_id += 1;
             note.midi = pitch.midi();
             note.velocity = 72;
-            note.voice = voicing
-                .voices
-                .get(v)
-                .copied()
-                .unwrap_or(VoiceId(v as u16));
+            note.voice = voicing.voices.get(v).copied().unwrap_or(VoiceId(v as u16));
             note.role = NoteRole::Harmony;
             notes.push(note);
         }
@@ -668,7 +673,10 @@ mod tests {
         let candidates = body.arr_field("candidates").unwrap();
         assert_eq!(candidates.len(), 3);
         for c in candidates {
-            assert!(c.str_field("resource_uri").unwrap().starts_with("candidate://"));
+            assert!(c
+                .str_field("resource_uri")
+                .unwrap()
+                .starts_with("candidate://"));
             assert!(c.str_field("trace_uri").unwrap().ends_with("/trace"));
             assert!(!c.arr_field("chords").unwrap().is_empty());
             assert!(!c.arr_field("score_components").unwrap().is_empty());
@@ -739,7 +747,11 @@ mod tests {
     #[test]
     fn candidates_use_genuinely_different_strategies() {
         let (core, id) = core_with_snapshot("melodies/eight_bar_c_major");
-        let body = generate(&core, &id, &[("style_profile", Json::Str("jazz_standard".into()))]);
+        let body = generate(
+            &core,
+            &id,
+            &[("style_profile", Json::Str("jazz_standard".into()))],
+        );
         let strategies: Vec<String> = body
             .arr_field("candidates")
             .unwrap()
@@ -755,7 +767,9 @@ mod tests {
     #[test]
     fn preserve_melody_keeps_every_source_pitch() {
         let (core, id) = core_with_snapshot("melodies/eight_bar_c_major");
-        let record = core.with_store(|s| s.snapshot(&id, qjson::time::unix_now()).cloned()).unwrap();
+        let record = core
+            .with_store(|s| s.snapshot(&id, qjson::time::unix_now()).cloned())
+            .unwrap();
         let body = generate(&core, &id, &[("preserve_melody", Json::Bool(true))]);
         let first = body.arr_field("candidates").unwrap()[0]
             .str_field("candidate_id")
@@ -830,7 +844,7 @@ mod tests {
 
     #[test]
     fn reharmonize_validates_against_its_declared_schema() {
-        let (core, id) = core_with_snapshot("progressions/ii_v_i_c_major");
+        let (core, id) = core_with_snapshot("melodies/eight_bar_c_major");
         let tool = core.tools.get("harmony.reharmonize").unwrap();
         let generated = generate(&core, &id, &[]);
         let candidate_id = generated.arr_field("candidates").unwrap()[0]

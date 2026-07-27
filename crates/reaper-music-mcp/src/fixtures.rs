@@ -331,7 +331,8 @@ mod tests {
             for entry in entries.flatten() {
                 let p = entry.path();
                 if p.extension().is_some_and(|e| e == "json") {
-                    let fixture = load(&p).expect(&p.display().to_string());
+                    let fixture =
+                        load(&p).unwrap_or_else(|e| panic!("{}: {}", p.display(), e.message));
                     let record = snapshot_record(&fixture).expect(&fixture.id);
                     record.snapshot.verify().expect(&fixture.id);
                     seen += 1;
@@ -376,13 +377,15 @@ mod tests {
         let path = fixtures_dir().join("melodies/eight_bar_c_major.json");
         let out = analyze_fixture(&core, &path, "common_practice").unwrap();
         let analysis = out.get("analysis").unwrap();
-        assert!(analysis
-            .get("key")
-            .unwrap()
-            .arr_field("candidates")
-            .unwrap()
-            .len()
-            > 1);
+        assert!(
+            analysis
+                .get("key")
+                .unwrap()
+                .arr_field("candidates")
+                .unwrap()
+                .len()
+                > 1
+        );
         assert!(!analysis.arr_field("phrases").unwrap().is_empty());
     }
 
