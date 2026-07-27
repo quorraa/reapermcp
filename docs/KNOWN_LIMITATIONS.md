@@ -23,7 +23,7 @@ This is not a roadmap. It is a description of version 1.0.0 as built.
 11. [Rule-to-test coverage is 205 of 237](#11-rule-to-test-coverage-is-205-of-237)
 12. [Source licences are unverified](#12-source-licences-are-unverified)
 13. [The MCP specification version was not re-verified](#13-the-mcp-specification-version-was-not-re-verified)
-14. [The manual acceptance walkthrough is only partly executed](#14-the-manual-acceptance-walkthrough-is-only-partly-executed)
+14. [Two acceptance steps are qualified rather than clean](#14-two-acceptance-steps-are-qualified-rather-than-clean)
 15. [MIDI writing limits](#15-midi-writing-limits)
 16. [Analysis limits](#16-analysis-limits)
 17. [Platform and packaging limits](#17-platform-and-packaging-limits)
@@ -368,7 +368,7 @@ than inherited from an SDK. If your MCP client behaves oddly against this
 server, a conformance gap on our side is a plausible explanation and worth
 reporting.
 
-## 14. The manual acceptance walkthrough is only partly executed
+## 14. Two acceptance steps are qualified rather than clean
 
 `reaper/QLabs_Reaper_MCP_Smoke_Test.lua` **has now been run** against REAPER
 7.78/x64 on Windows 11, unmodified, in a fresh project tab: **28 passed, 0
@@ -382,16 +382,26 @@ closures, replays them in reverse, preserves pointer identity and resurrects
 deleted objects. A suite asserts the mock cannot fall behind the code. The smoke
 test run is what establishes that the model and the product agree.
 
-What is **still unverified against a real host** is part of the manual acceptance
-walkthrough:
+The manual acceptance walkthrough has since been run against the same host.
+Stale-snapshot rejection, `reaper.commit_candidate`, `undo_last_generation`
+through the MCP tool, and `UNDO_NOT_OWNED` after an unrelated REAPER action all
+behaved as documented.
 
-- **stale-snapshot rejection** after editing the source and re-staging;
-- **`reaper.commit_candidate`**, which has not been exercised at all;
-- **`UNDO_NOT_OWNED`** protection after an unrelated REAPER action;
-- `undo_last_generation` **through the MCP tool** (it is covered at the bridge
-  level by the smoke test, but not end to end);
-- registering the bridge through REAPER's **Actions list** — it was started from
-  the command line instead.
+Two steps remain **qualified**, and should not be read as clean passes:
+
+- **The bridge was started from the command line**
+  (`reaper.exe -nonewinst <script>`), not by registering it through REAPER's
+  **Actions list**. The registration path is the one users follow, and it is
+  still unexercised. Note also that the bridge resolves `lib/` relative to its
+  own location, so it only runs correctly from its installed directory.
+- **Candidates were requested through explicit tool arguments**, not through the
+  brief's natural-language request. The countermelody option was never
+  exercised end to end.
+
+Running the walkthrough also uncovered a staging bug — a cached generation
+returned a candidate bound to a superseded snapshot, so staging succeeded only
+once per (music, profile, seed) per server process. That is fixed; the history is
+in [`TESTING.md` §10](TESTING.md#10-the-in-reaper-smoke-test--executed).
 
 Both procedures are written out in
 [`TESTING.md` §10](TESTING.md#10-the-in-reaper-smoke-test--executed).

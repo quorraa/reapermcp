@@ -5,9 +5,11 @@ Every test group in this repository, what it covers, and how to run it.
 Two things to know before reading further:
 
 1. **The in-REAPER smoke test has now been executed**, on Windows 11 with
-   REAPER 7.78/x64: **28 passed, 0 failed**. See
-   [§10](#10-the-in-reaper-smoke-test--executed). Parts of the manual acceptance
-   walkthrough in that section remain unrun, and are marked there individually.
+   REAPER 7.78/x64: **28 passed, 0 failed**, and the manual acceptance
+   walkthrough has been run alongside it. See
+   [§10](#10-the-in-reaper-smoke-test--executed). Two of its sixteen steps are
+   qualified rather than clean — the natural-language request in step 7 and the
+   Actions-list registration in step 2 — and are marked there individually.
 2. **Everything else runs offline.** The workspace has zero external
    dependencies and the knowledge bundle is compiled in, so no test needs a
    network, a DAW, or any external package beyond `lua5.4` for the bridge suite.
@@ -60,7 +62,7 @@ cd reaper && lua5.4 tests/run_tests.lua               # the REAPER bridge suite
 
 | Suite | Result |
 |---|---|
-| `cargo test --workspace` | **2239 passed, 0 failed**, across 50 test binaries and doc-test targets |
+| `cargo test --workspace` | **2241 passed, 0 failed**, across 50 test binaries and doc-test targets |
 | `lua5.4 tests/run_tests.lua` | **184 passed, 0 failed, 0 skipped**, across 8 suites |
 | In-REAPER smoke test | **28 passed, 0 failed** on REAPER 7.78/x64 (Windows 11) |
 
@@ -69,7 +71,7 @@ Per-crate Rust totals:
 | Crate | Tests |
 |---|---|
 | `reaper-ipc` | 330 |
-| `reaper-music-mcp` | 306 |
+| `reaper-music-mcp` | 308 |
 | `harmony-engine` | 299 |
 | `music-analysis` | 275 |
 | `music-domain` | 260 |
@@ -78,10 +80,10 @@ Per-crate Rust totals:
 | `qjson` | 169 |
 | `loop-engine` | 156 |
 | `xtask` | 17 |
-| **total** | **2239** |
+| **total** | **2241** |
 
 (Counts include each crate's unit tests, its integration test binaries and its
-doc-tests. `reaper-music-mcp`'s 306 are the MCP protocol tests described in
+doc-tests. `reaper-music-mcp`'s 308 are the MCP protocol tests described in
 [§9](#9-mcp-protocol-tests); they are listed here too, because
 `cargo test --workspace` runs them and the table has to add up to what that
 command reports.)
@@ -454,7 +456,7 @@ load-bearing in a way it would not otherwise be.
 
 > When this document was first written, `crates/reaper-music-mcp` was still
 > being implemented and contributed **0** tests, which is why the total then
-> read 1926. It now contributes **306** across 7 binaries, and the counts in
+> read 1926. It now contributes **308** across 7 binaries, and the counts in
 > [Quick start](#quick-start) have been re-measured to include them.
 > `docs/MCP_API.md` documents the surface these tests exercise.
 
@@ -520,10 +522,9 @@ that the script will create and delete tracks and items in the open project.
 ### The manual acceptance walkthrough
 
 The smoke test is automated-ish but narrow. The full acceptance workflow from
-the brief is a manual sequence. It has now been **partially** performed against
-REAPER 7.78/x64, driving the real `serve` binary over stdio. Steps are marked
-with what actually happened; the unmarked ones are still unrun and must not be
-described as passing.
+the brief is a manual sequence. It has now been performed against REAPER
+7.78/x64, driving the real `serve` binary over stdio. Steps are marked with what
+actually happened. Two remain qualified rather than clean, and say so.
 
 1. **[run]** Open REAPER.
 2. **[run]** Run `QLabs_Reaper_MCP_Bridge.lua`. *(Started via
@@ -547,16 +548,41 @@ described as passing.
 10. **[run]** `reaper.stage_candidate` created a folder plus tagged
     melody/harmony/bass tracks and MIDI items.
 11. **[run]** The original MIDI item was unchanged.
-12. **[NOT RUN]** Edit the source, then try to stage again — stale-snapshot
-    rejection is **not** yet verified against a real host.
+12. **[run]** A note was inserted into the source take, then the already-issued
+    candidate was staged again. Refused with `PROJECT_CHANGED`: *"plan
+    precondition state_change_count 25 does not match live 26"*. Note that
+    `state_change_count` is the strictest of the seven and trips first, so this
+    exercises the precondition machinery but does **not** isolate `midi_hash` —
+    no edit can change the MIDI without also incrementing the counter.
 13. **[run]** `reaper.discard_candidate` removed only that candidate's objects
     (3 items, 4 tracks, 0 retained).
-14. **[NOT RUN]** `reaper.commit_candidate` has **not** been exercised against a
-    real host.
-15. **[partial]** `undo_last_generation` was verified inside the smoke test at
-    the bridge level, but **not** through the MCP tool against a real host.
-16. **[NOT RUN]** Unrelated-action undo protection (`UNDO_NOT_OWNED`) is **not**
-    yet verified against a real host.
+14. **[run]** `reaper.commit_candidate` kept all 4 tracks and 3 items, flipped
+    `status` from `preview` to `committed`, unmuted the preview-muted items
+    (`B_MUTE` 1.0 -> 0.0) and cleared the `QLABS_PREVIEW_MUTED` marker tag.
+15. **[run]** `undo_last_generation` through the MCP tool removed all 4 staged
+    tracks in one undo, leaving nothing tagged behind.
+16. **[run]** After staging, an unrelated user action (inserting a track inside
+    its own undo block) was performed. `undo_last_generation` refused with
+    `UNDO_NOT_OWNED`: *"the top undo entry is 'Acceptance: an unrelated user
+    action', which was not created by this MCP"*. The unrelated entry was not
+    undone.
+
+> **A bug this walkthrough uncovered, since fixed.** On the first run, steps 12
+> and 14–16 each needed a *distinct* `seed`, because staging succeeded only once
+> per (music, profile, seed) per server process. `harmony.generate_candidates`
+> caches by music, profile and seed; on a cache hit it echoed back the
+> `snapshot_id` the caller passed but returned the candidate built against the
+> *original* snapshot. `reaper.stage_candidate` takes only a `candidate_id`, so
+> it derived the plan's preconditions from that original snapshot — and since
+> staging itself increments `state_change_count`, every later attempt failed with
+> `PROJECT_CHANGED`. The error's own remedy ("call `reaper.inspect_selection`
+> again and regenerate") could not break the loop, because regenerating returned
+> the same stale candidate.
+>
+> A cache hit now re-binds the cached candidates to the snapshot the caller
+> actually holds, which is sound because the hit proves the snapshot hashes are
+> equal. The steps above were re-run sharing a single seed, which the old build
+> could not survive, and step 12 still rejects an edited source.
 
 ---
 
