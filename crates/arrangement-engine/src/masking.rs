@@ -189,12 +189,7 @@ pub fn window_overlap(a: (i32, i32), b: (i32, i32)) -> i32 {
 /// ever moved inside its own instrument limit, which is passed as `bounds`.
 /// `spread` is the caller's `register_spread`: at `0.0` nothing moves, at `1.0`
 /// the engine insists on a full fourth of clear air between neighbours.
-pub fn separate(
-    windows: &mut [(i32, i32)],
-    bounds: &[(i32, i32)],
-    order: &[usize],
-    spread: f64,
-) {
+pub fn separate(windows: &mut [(i32, i32)], bounds: &[(i32, i32)], order: &[usize], spread: f64) {
     let spread = spread.clamp(0.0, 1.0);
     if spread <= 0.0 || windows.len() < 2 {
         return;
@@ -222,7 +217,9 @@ pub fn separate(
         let below = windows[sorted[k - 1]];
         let i = sorted[k];
         let bound = bounds[i];
-        let smaller = (below.1 - below.0 + 1).min(windows[i].1 - windows[i].0 + 1).max(1);
+        let smaller = (below.1 - below.0 + 1)
+            .min(windows[i].1 - windows[i].0 + 1)
+            .max(1);
         // How much overlap this spread still tolerates, and the clear air it
         // insists on beyond that.
         let tolerated = ((1.0 - spread) * f64::from(smaller)).round() as i32;
@@ -239,9 +236,8 @@ pub fn separate(
         let want_low = want_low.min(home[i] + MAX_DISPLACEMENT_SEMITONES);
         if windows[i].0 < want_low {
             let headroom = (bound.1 - windows[i].1).max(0);
-            let ceiling = (home[i] + MAX_DISPLACEMENT_SEMITONES
-                - (windows[i].0 + windows[i].1) / 2)
-                .max(0);
+            let ceiling =
+                (home[i] + MAX_DISPLACEMENT_SEMITONES - (windows[i].0 + windows[i].1) / 2).max(0);
             let shift = (want_low - windows[i].0).min(headroom).min(ceiling);
             if shift > 0 {
                 windows[i] = (windows[i].0 + shift, windows[i].1 + shift);
@@ -324,7 +320,10 @@ mod tests {
         let parts = vec![part("a", &[60]), part("b", &[61])];
         let json = masking_report(&parts).to_json();
         assert!(json.get("collisions").is_some());
-        assert_eq!(json.get("collision_count").and_then(qjson::Json::as_i64), Some(1));
+        assert_eq!(
+            json.get("collision_count").and_then(qjson::Json::as_i64),
+            Some(1)
+        );
     }
 
     #[test]

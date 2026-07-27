@@ -81,10 +81,7 @@ pub fn substitutes(role: ArrangementRole) -> &'static [&'static str] {
 }
 
 /// Every pattern whose `role` field matches, in catalogue order.
-pub fn patterns_for_role(
-    kb: &KnowledgeBase,
-    role: ArrangementRole,
-) -> Vec<&ArrangementPattern> {
+pub fn patterns_for_role(kb: &KnowledgeBase, role: ArrangementRole) -> Vec<&ArrangementPattern> {
     kb.arrangement_patterns()
         .iter()
         .filter(|p| p.role == role.id())

@@ -46,7 +46,10 @@ impl PhraseFrame {
             .filter(|qn| *qn >= span.0 && *qn < span.1)
             .collect();
         for p in &an.phrases.phrases {
-            if p.cadence.is_some() && p.end > span.0 && p.end <= span.1 && !cadences.contains(&p.end)
+            if p.cadence.is_some()
+                && p.end > span.0
+                && p.end <= span.1
+                && !cadences.contains(&p.end)
             {
                 cadences.push(p.end);
             }
@@ -317,6 +320,9 @@ mod tests {
     fn the_frame_serialises() {
         let json = frame().to_json();
         assert!(json.get("phrases").is_some());
-        assert_eq!(json.get("lead_onsets").and_then(qjson::Json::as_i64), Some(2));
+        assert_eq!(
+            json.get("lead_onsets").and_then(qjson::Json::as_i64),
+            Some(2)
+        );
     }
 }

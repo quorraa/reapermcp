@@ -94,7 +94,10 @@ impl LoopPlan {
 ///
 /// A gentle rise across the span, anchored on the profile's own
 /// `arrangement_density`, so an ambient profile does not receive a pop build.
-pub fn default_curve(span: (BeatTime, BeatTime), profile: &ResolvedProfile) -> Vec<(BeatTime, f64)> {
+pub fn default_curve(
+    span: (BeatTime, BeatTime),
+    profile: &ResolvedProfile,
+) -> Vec<(BeatTime, f64)> {
     let base = profile
         .field_f64("arrangement_density")
         .unwrap_or(0.5)
@@ -102,11 +105,7 @@ pub fn default_curve(span: (BeatTime, BeatTime), profile: &ResolvedProfile) -> V
     let low = (base - 0.15).clamp(0.0, 1.0);
     let high = (base + 0.15).clamp(0.0, 1.0);
     let middle = span.0 + (span.1 - span.0).scale(1, 2);
-    vec![
-        (span.0, low),
-        (middle, base),
-        (span.1, high),
-    ]
+    vec![(span.0, low), (middle, base), (span.1, high)]
 }
 
 /// The curve the plan will actually use.
@@ -231,8 +230,10 @@ pub fn plan_loop(
 
     // The loop transition: the last bar, where a fill belongs — unless the
     // loop is meant to be seamless, in which case nothing announces the seam.
-    let transition_qn = if matches!(intent, Some(LoopIntent::SeamlessColor) | Some(LoopIntent::ModalDrone))
-    {
+    let transition_qn = if matches!(
+        intent,
+        Some(LoopIntent::SeamlessColor) | Some(LoopIntent::ModalDrone)
+    ) {
         None
     } else {
         let last_bar = tm.bar_start(tm.bar_of(span.1 - BeatTime::new(1, 8)));
@@ -402,7 +403,14 @@ mod tests {
             Some(LoopIntent::SeamlessColor),
         );
         assert_eq!(plan.transition_qn, None);
-        let other = plan_loop(&[], &chords(), span(), &tm(), &[], Some(LoopIntent::ClosedTonic));
+        let other = plan_loop(
+            &[],
+            &chords(),
+            span(),
+            &tm(),
+            &[],
+            Some(LoopIntent::ClosedTonic),
+        );
         assert_eq!(other.transition_qn, Some(BeatTime::from_quarters(12)));
     }
 
@@ -414,7 +422,10 @@ mod tests {
             (BeatTime::from_quarters(16), 0.9),
         ];
         let plan = plan_loop(&curve, &chords(), span(), &tm(), &[], None);
-        assert_eq!(plan.silence, vec![(BeatTime::from_quarters(8), BeatTime::from_quarters(12))]);
+        assert_eq!(
+            plan.silence,
+            vec![(BeatTime::from_quarters(8), BeatTime::from_quarters(12))]
+        );
         assert!(plan.is_silent(BeatTime::from_quarters(9)));
         assert!(!plan.is_silent(BeatTime::ZERO));
     }

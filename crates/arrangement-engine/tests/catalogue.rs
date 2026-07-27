@@ -53,7 +53,11 @@ fn every_pattern_declares_every_field_the_brief_requires() {
     for p in kb().arrangement_patterns() {
         assert!(!p.role.is_empty(), "{} has no role", p.id);
         assert!(!p.register.is_empty(), "{} has no register", p.id);
-        assert!(p.range.low_midi < p.range.high_midi, "{} has no range", p.id);
+        assert!(
+            p.range.low_midi < p.range.high_midi,
+            "{} has no range",
+            p.id
+        );
         assert!((0.0..=1.0).contains(&p.density), "{} density", p.id);
         assert!(!p.rhythmic_activity.is_empty(), "{} activity", p.id);
         assert!(!p.harmonic_responsibility.is_empty(), "{} harmony", p.id);
@@ -62,7 +66,11 @@ fn every_pattern_declares_every_field_the_brief_requires() {
         assert!(!p.articulation_tendency.is_empty(), "{} articulation", p.id);
         assert!(!p.note_length_tendency.is_empty(), "{} note length", p.id);
         assert!(!p.section_participation.is_empty(), "{} sections", p.id);
-        assert!((0.0..=1.0).contains(&p.energy_contribution), "{} energy", p.id);
+        assert!(
+            (0.0..=1.0).contains(&p.energy_contribution),
+            "{} energy",
+            p.id
+        );
         assert!(!p.loop_behavior.is_empty(), "{} loop behaviour", p.id);
         assert!(!p.rhythm.onsets.is_empty(), "{} onsets", p.id);
         assert!(p.rhythm.grid_qn.is_positive(), "{} grid", p.id);
@@ -87,7 +95,12 @@ fn every_pattern_realises_inside_its_instrument_profile() {
                 inst.range.low_midi,
                 inst.range.high_midi
             );
-            assert!((0..=127).contains(&n.midi), "{} wrote MIDI {}", p.id, n.midi);
+            assert!(
+                (0..=127).contains(&n.midi),
+                "{} wrote MIDI {}",
+                p.id,
+                n.midi
+            );
             assert!((1..=127).contains(&n.velocity), "{} velocity", p.id);
             assert!(n.duration.is_positive(), "{} duration", p.id);
             assert_eq!(n.pitch.midi(), n.midi, "{} spelling", p.id);
@@ -426,8 +439,7 @@ fn every_instrument_profile_is_usable() {
             .iter()
             .find(|p| p.id == "arr_block_chords")
             .expect("a pattern");
-        let notes =
-            realize_pattern(kb(), p, &chords, &tm(), inst, 0.8, 1).expect("a realisation");
+        let notes = realize_pattern(kb(), p, &chords, &tm(), inst, 0.8, 1).expect("a realisation");
         assert!(!notes.is_empty(), "{} played nothing", inst.id);
         for n in &notes {
             assert!(inst.range.contains(n.midi), "{} escaped its range", inst.id);

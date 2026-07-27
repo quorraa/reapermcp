@@ -139,8 +139,9 @@ pub fn harness_seeded(fixture_id: &str, profile_id: &str, seed: u64) -> Harness 
         seed,
         ..GenerateParams::default().with_profile(profile_id)
     };
-    let candidates = generate_candidates(kb, &analysis, &params, &CancelFlag::new(), &mut |_, _| {})
-        .unwrap_or_else(|e| panic!("{fixture_id} under {profile_id}: {e}"));
+    let candidates =
+        generate_candidates(kb, &analysis, &params, &CancelFlag::new(), &mut |_, _| {})
+            .unwrap_or_else(|e| panic!("{fixture_id} under {profile_id}: {e}"));
     let candidate = candidates
         .into_iter()
         .next()
@@ -205,7 +206,10 @@ mod tests {
         let chords = chords_from(&["Cmaj7", "A7", "Dm7", "G7"], 4);
         assert_eq!(chords.len(), 4);
         assert_eq!(chords[3].onset, BeatTime::from_quarters(12));
-        let h = with_chords(harness("melodies/eight_bar_c_major", "jazz_standard"), chords);
+        let h = with_chords(
+            harness("melodies/eight_bar_c_major", "jazz_standard"),
+            chords,
+        );
         assert_eq!(h.candidate.chords.len(), 4);
     }
 

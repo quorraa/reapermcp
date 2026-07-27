@@ -371,10 +371,7 @@ mod tests {
 
     #[test]
     fn a_continuous_part_has_no_rest() {
-        let notes = vec![
-            note(0, 60, (0, 1), (2, 1)),
-            note(1, 62, (2, 1), (2, 1)),
-        ];
+        let notes = vec![note(0, 60, (0, 1), (2, 1)), note(1, 62, (2, 1), (2, 1))];
         let m = measure(&notes, span());
         assert_eq!(m.rest_ratio, 0.0);
         assert_eq!(m.onsets, 2);
@@ -396,19 +393,13 @@ mod tests {
 
     #[test]
     fn rest_ratio_ignores_overlap_double_counting() {
-        let notes = vec![
-            note(0, 60, (0, 1), (2, 1)),
-            note(1, 64, (0, 1), (2, 1)),
-        ];
+        let notes = vec![note(0, 60, (0, 1), (2, 1)), note(1, 64, (0, 1), (2, 1))];
         assert!((rest_ratio(&notes, span()) - 0.5).abs() < 1e-9);
     }
 
     #[test]
     fn ensure_rest_shortens_the_last_note() {
-        let mut notes = vec![
-            note(0, 60, (0, 1), (2, 1)),
-            note(1, 62, (2, 1), (2, 1)),
-        ];
+        let mut notes = vec![note(0, 60, (0, 1), (2, 1)), note(1, 62, (2, 1), (2, 1))];
         let changed = ensure_rest(&mut notes, &[span()], BeatTime::new(1, 2));
         assert_eq!(changed, 1);
         assert!(rest_ratio(&notes, span()) > 0.0);

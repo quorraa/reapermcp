@@ -8,7 +8,6 @@
 
 use arrangement_engine::density;
 use arrangement_engine::patterns::realize_pattern;
-use arrangement_engine::roles;
 use arrangement_engine::testing::{chords_from, harness, harness_seeded, FIXTURES, PROFILE_IDS};
 use arrangement_engine::{ArrangementParams, ArrangementPlan};
 use music_domain::prelude::*;
@@ -122,7 +121,10 @@ fn check(plan: &ArrangementPlan, label: &str) {
             "{label}: the score vector is missing {component}"
         );
     }
-    assert!(plan.score.total().is_finite(), "{label}: score is not finite");
+    assert!(
+        plan.score.total().is_finite(),
+        "{label}: score is not finite"
+    );
 }
 
 #[test]
@@ -131,7 +133,11 @@ fn every_profile_produces_a_valid_plan() {
         let h = harness("melodies/eight_bar_c_major", profile);
         for roles in role_sets() {
             let plan = h
-                .arrange(&ArrangementParams::default().with_profile(profile).with_roles(&roles))
+                .arrange(
+                    &ArrangementParams::default()
+                        .with_profile(profile)
+                        .with_roles(&roles),
+                )
                 .unwrap_or_else(|e| panic!("{profile}: {e}"));
             check(&plan, profile);
         }
@@ -208,10 +214,7 @@ fn every_energy_level_produces_a_valid_plan() {
     let h = harness("melodies/eight_bar_c_major", "modal_ambient");
     for step in 0..=10 {
         let e = f64::from(step) / 10.0;
-        let curve = [
-            (BeatTime::ZERO, e),
-            (BeatTime::from_quarters(32), e),
-        ];
+        let curve = [(BeatTime::ZERO, e), (BeatTime::from_quarters(32), e)];
         let plan = h
             .arrange(
                 &ArrangementParams::default()
@@ -363,7 +366,10 @@ fn plan_json_round_trips_through_the_parts_it_describes() {
         .arrange(&ArrangementParams::default().with_roles(&role_sets()[2]))
         .expect("a plan");
     let json = plan.to_json();
-    let parts = json.get("parts").and_then(qjson::Json::as_arr).expect("parts");
+    let parts = json
+        .get("parts")
+        .and_then(qjson::Json::as_arr)
+        .expect("parts");
     assert_eq!(parts.len(), plan.parts.len());
     for (i, v) in parts.iter().enumerate() {
         let decoded = Part::from_json(v).expect("a decodable part");

@@ -219,9 +219,9 @@ pub fn arrange(
     cancel: &CancelFlag,
 ) -> Result<ArrangementPlan, ArrangementError> {
     p.validate()?;
-    let profile = kb
-        .resolve_profile(&p.profile_id)
-        .map_err(|e| ArrangementError::invalid_argument(format!("profile {}: {e}", p.profile_id)))?;
+    let profile = kb.resolve_profile(&p.profile_id).map_err(|e| {
+        ArrangementError::invalid_argument(format!("profile {}: {e}", p.profile_id))
+    })?;
     let chords = &candidate.chords;
     if chords.is_empty() {
         return Err(ArrangementError::no_harmony(
@@ -257,14 +257,8 @@ pub fn arrange(
 
     let curve = energy::resolve_curve(&p.energy_curve, &p.sections, span, &profile);
     let loop_plan = energy::plan_loop(&curve, chords, span, &tm, &requested, p.loop_intent);
-    let section_plans = sections::plan_sections(
-        &p.sections,
-        span,
-        &tm,
-        &curve,
-        requested.len(),
-        p.density,
-    );
+    let section_plans =
+        sections::plan_sections(&p.sections, span, &tm, &curve, requested.len(), p.density);
     let frame = PhraseFrame::from_analysis(an, span);
     cancel.check()?;
 
@@ -570,8 +564,24 @@ fn realize_all(
         let channel = (index % 16) as u8;
 
         if builds[index].role == ArrangementRole::Lead && p.preserve_melody {
-            let notes = preserved_lead(an, candidate, span, id_base, channel);
+            let mut notes = preserved_lead(an, candidate, span, id_base, channel);
             if !notes.is_empty() {
+                // Preserved material keeps its pitches and its timing, but it
+                // still belongs to a part, so it carries that part's timbre
+                // metadata where it has none of its own.
+                let label =
+                    patterns::articulation_label(builds[index].pattern, builds[index].instrument);
+                for n in notes.iter_mut() {
+                    if n.articulation.is_none() {
+                        n.articulation = label.clone();
+                    }
+                }
+                enforce(
+                    &mut notes,
+                    builds[index].instrument,
+                    span,
+                    builds[index].instrument.polyphony.max(1) as usize,
+                );
                 builds[index].notes = notes;
                 continue;
             }
@@ -862,7 +872,10 @@ fn shift_window(window: (i32, i32), catalogue: (i32, i32), shift: i32) -> (i32, 
 }
 
 /// Intersects a set of windows with a span.
-fn clip_windows(windows: &[(BeatTime, BeatTime)], span: (BeatTime, BeatTime)) -> Vec<(BeatTime, BeatTime)> {
+fn clip_windows(
+    windows: &[(BeatTime, BeatTime)],
+    span: (BeatTime, BeatTime),
+) -> Vec<(BeatTime, BeatTime)> {
     windows
         .iter()
         .copied()
@@ -915,7 +928,8 @@ pub fn enforce(
             octaves -= 1;
         }
         if octaves != 0 {
-            n.pitch = SpelledPitch::new(n.pitch.letter, n.pitch.accidental, n.pitch.octave + octaves);
+            n.pitch =
+                SpelledPitch::new(n.pitch.letter, n.pitch.accidental, n.pitch.octave + octaves);
         }
         n.midi = midi.clamp(low, high).clamp(0, 127);
         if n.onset < span.0 {
@@ -1031,7 +1045,10 @@ fn build_assignments(
                 .map(|s| s.section.id.clone())
                 .collect();
             let rationale = if parts.get(i).map(|p| p.notes.is_empty()).unwrap_or(true) {
-                format!("{} — withheld: the energy curve left no layer budget", b.rationale)
+                format!(
+                    "{} — withheld: the energy curve left no layer budget",
+                    b.rationale
+                )
             } else {
                 b.rationale.clone()
             };
@@ -1092,7 +1109,10 @@ fn evaluate(
             f64::from(max_register_overlap(i, parts)),
         );
         ctx.set_num(facts::PART_POLYPHONY, m.max_polyphony as f64);
-        ctx.set_num(facts::INSTRUMENT_POLYPHONY, build.instrument.polyphony as f64);
+        ctx.set_num(
+            facts::INSTRUMENT_POLYPHONY,
+            build.instrument.polyphony as f64,
+        );
         if let Some((lo, hi)) = m.register {
             ctx.set_num(facts::MIN_SOUNDING_MIDI, f64::from(lo));
             ctx.set_num(facts::MAX_SOUNDING_MIDI, f64::from(hi));
@@ -1156,7 +1176,10 @@ fn evaluate(
         "role_is_pad_or_sustained",
         builds.iter().all(|b| patterns::is_sustained(b.pattern)),
     );
-    ctx.set_bool("contrast_is_dynamics_only", contrast_is_dynamics_only(section_plans));
+    ctx.set_bool(
+        "contrast_is_dynamics_only",
+        contrast_is_dynamics_only(section_plans),
+    );
     ctx.set_bool(
         "cadence_is_expected_at_this_slot",
         !frame.cadences.is_empty(),
@@ -1184,9 +1207,13 @@ fn evaluate(
     score.set(
         "loop_compatibility",
         if parts.iter().all(|part| {
-            part.notes
-                .iter()
-                .all(|n| n.end() <= section_plans.last().map(|s| s.section.end).unwrap_or(n.end()))
+            part.notes.iter().all(|n| {
+                n.end()
+                    <= section_plans
+                        .last()
+                        .map(|s| s.section.end)
+                        .unwrap_or(n.end())
+            })
         }) {
             1.0
         } else {
@@ -1238,7 +1265,11 @@ fn collision_ratio(part: &Part, frame: &PhraseFrame, parts: &[Part]) -> f64 {
     if busy.is_empty() {
         return 0.0;
     }
-    let hits = part.notes.iter().filter(|n| busy.contains(&n.onset)).count();
+    let hits = part
+        .notes
+        .iter()
+        .filter(|n| busy.contains(&n.onset))
+        .count();
     hits as f64 / part.notes.len() as f64
 }
 

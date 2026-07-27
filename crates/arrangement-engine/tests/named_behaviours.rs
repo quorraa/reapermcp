@@ -22,16 +22,14 @@ fn kb() -> &'static KnowledgeBase {
 }
 
 fn pattern(id: &str) -> &'static ArrangementPattern {
-    kb()
-        .arrangement_patterns()
+    kb().arrangement_patterns()
         .iter()
         .find(|p| p.id == id)
         .unwrap_or_else(|| panic!("{id} is not in the catalogue"))
 }
 
 fn instrument(id: &str) -> &'static InstrumentProfile {
-    kb()
-        .instrument_profile(id)
+    kb().instrument_profile(id)
         .unwrap_or_else(|| panic!("{id} is not an instrument profile"))
 }
 
@@ -120,7 +118,11 @@ fn bass_octave_folded_when_too_low() {
             before[i],
             "folding changed the pitch class"
         );
-        assert_eq!(n.pitch.midi(), n.midi, "the spelling drifted from the pitch");
+        assert_eq!(
+            n.pitch.midi(),
+            n.midi,
+            "the spelling drifted from the pitch"
+        );
     }
 }
 
@@ -204,7 +206,11 @@ fn background_avoids_lead_onsets() {
             continue;
         }
         checked += 1;
-        let shared = part.notes.iter().filter(|n| lead.contains(&n.onset)).count();
+        let shared = part
+            .notes
+            .iter()
+            .filter(|n| lead.contains(&n.onset))
+            .count();
         let ratio = shared as f64 / part.notes.len() as f64;
         assert!(
             ratio <= 0.5,
@@ -213,7 +219,10 @@ fn background_avoids_lead_onsets() {
             ratio * 100.0
         );
     }
-    assert!(checked > 0, "the request produced no part the rule applies to");
+    assert!(
+        checked > 0,
+        "the request produced no part the rule applies to"
+    );
 }
 
 #[test]
@@ -315,7 +324,10 @@ fn strategic_silence_present() {
         .iter()
         .filter(|p| plan.assignment(p.role).map(|a| a.priority) == Some(2))
         .collect();
-    assert!(!background.is_empty(), "the request included background roles");
+    assert!(
+        !background.is_empty(),
+        "the request included background roles"
+    );
     for part in background {
         assert!(
             part.notes.iter().all(|n| n.onset < start || n.onset >= end),
@@ -418,8 +430,7 @@ fn every_catalogued_grid_is_respected() {
         }
         let role = ArrangementRole::parse(&p.role).expect("a known role");
         let inst = roles::select_instrument(kb(), p, role).expect("an instrument");
-        let notes =
-            realize_pattern(kb(), p, &chords, &tm, inst, 1.0, 1).expect("a realisation");
+        let notes = realize_pattern(kb(), p, &chords, &tm, inst, 1.0, 1).expect("a realisation");
         for n in &notes {
             let in_bar = tm.position_in_bar(n.onset);
             assert!(
@@ -451,7 +462,9 @@ fn density_setting_changes_note_density() {
     let quiet = h
         .arrange(&full_request().with_density(0.05))
         .expect("a plan");
-    let busy = h.arrange(&full_request().with_density(1.0)).expect("a plan");
+    let busy = h
+        .arrange(&full_request().with_density(1.0))
+        .expect("a plan");
     let count = |p: &arrangement_engine::ArrangementPlan| p.notes().len();
     assert!(
         count(&busy) > count(&quiet),
@@ -753,12 +766,7 @@ fn sub_bass_root_only() {
 #[test]
 fn energy_curve_changes_layer_count() {
     let h = harness("melodies/eight_bar_c_major", "pop_rock");
-    let flat = |v: f64| {
-        [
-            (BeatTime::ZERO, v),
-            (BeatTime::from_quarters(32), v),
-        ]
-    };
+    let flat = |v: f64| [(BeatTime::ZERO, v), (BeatTime::from_quarters(32), v)];
     let quiet = h
         .arrange(&full_request().with_energy_curve(&flat(0.0)))
         .expect("a plan");
@@ -802,9 +810,8 @@ fn foreground_priority_resolves_conflict() {
         let i = instrument(&counter.instrument_profile);
         roles::base_window(p, i)
     };
-    let displacement = ((counter.register.0 + counter.register.1) / 2
-        - (catalogue.0 + catalogue.1) / 2)
-        .abs();
+    let displacement =
+        ((counter.register.0 + counter.register.1) / 2 - (catalogue.0 + catalogue.1) / 2).abs();
     assert!(
         displacement <= 12,
         "the foreground part was displaced by {displacement} semitones"
@@ -930,10 +937,10 @@ fn contrast_uses_more_than_velocity() {
 fn transition_fill_before_boundary() {
     let h = harness("melodies/eight_bar_c_major", "pop_rock");
     let plan = h
-        .arrange(&ArrangementParams::default().with_roles(&[
-            ArrangementRole::Bass,
-            ArrangementRole::Transition,
-        ]))
+        .arrange(
+            &ArrangementParams::default()
+                .with_roles(&[ArrangementRole::Bass, ArrangementRole::Transition]),
+        )
         .expect("a plan");
     let fill = plan.part(ArrangementRole::Transition).expect("a fill");
     assert!(!fill.notes.is_empty(), "the transition wrote nothing");
