@@ -343,27 +343,20 @@ fn every_arrangement_role_realises_end_to_end() {
 }
 
 #[test]
-fn substituted_roles_say_so() {
-    let h = arrangement_engine::testing::harness("melodies/eight_bar_c_major", "electronic_loop");
-    for role in [
-        ArrangementRole::Pulse,
-        ArrangementRole::Percussion,
-        ArrangementRole::Ornament,
-        ArrangementRole::EarCandy,
-    ] {
-        let plan = h
-            .arrange(&ArrangementParams::default().with_roles(&[role]))
-            .expect("a plan");
-        let assignment = plan.assignment(role).expect("an assignment");
-        assert!(
-            assignment.rationale.contains("substituted"),
-            "{} borrowed a pattern without saying so",
-            role.id()
-        );
-        assert!(plan
-            .warnings
+fn the_substitution_fallback_resolves_for_every_role_that_declares_one() {
+    // No shipped role needs substitution any more, so this exercises the
+    // fallback itself rather than a gap: every declared substitute chain must
+    // name roles the catalogue actually has, or the fallback would be a dead
+    // end the first time a knowledge directory arrived without some pattern.
+    for (role_id, chain) in roles::ROLE_SUBSTITUTES {
+        assert!(!chain.is_empty(), "{role_id} declares an empty chain");
+        let resolves = chain
             .iter()
-            .any(|w| w.code == "ROLE_SUBSTITUTED" && w.message.contains(role.id())));
+            .any(|sub| kb().arrangement_patterns().iter().any(|p| p.role == **sub));
+        assert!(
+            resolves,
+            "{role_id}'s substitute chain {chain:?} names no role the catalogue has"
+        );
     }
 }
 
@@ -468,4 +461,64 @@ fn instrument_profiles_declare_their_own_spacing() {
         distinct > 1,
         "every instrument declares the same spacing table, so the limit is universal after all"
     );
+}
+
+#[test]
+fn placement_never_changes_the_pitch_class() {
+    // A window narrower than an octave need not contain a given pitch class.
+    // Clamping into it silently returned a boundary note of a *different*
+    // class, so the note's spelling and its sounding MIDI disagreed and the
+    // corruption flowed into staged MIDI. The class is invariant now, whatever
+    // the window.
+    use arrangement_engine::patterns::{place_single, spelled_at};
+    use music_domain::pitch::{Accidental, Letter};
+
+    let classes = [
+        (Letter::C, Accidental::NATURAL),
+        (Letter::E, Accidental::FLAT),
+        (Letter::F, Accidental::SHARP),
+        (Letter::B, Accidental::NATURAL),
+        (Letter::G, Accidental::SHARP),
+    ];
+    for class in classes {
+        for low in 0..=115 {
+            for width in [0, 1, 2, 5, 11, 12, 24] {
+                let window = (low, (low + width).min(127));
+                for anchor in [0, 40, 60, 72, 127] {
+                    let midi = place_single(class, window, anchor);
+                    assert!(
+                        (0..=127).contains(&midi),
+                        "{class:?} in {window:?} from {anchor} left MIDI range: {midi}"
+                    );
+                    let spelled = spelled_at(class, midi);
+                    assert_eq!(
+                        spelled.midi(),
+                        midi,
+                        "{class:?} in {window:?} from {anchor} placed {midi} but spelled {}",
+                        spelled.to_ascii()
+                    );
+                }
+            }
+        }
+    }
+}
+
+#[test]
+fn a_normalized_window_can_hold_every_pitch_class() {
+    // place_single can only stay inside its window if the window spans an
+    // octave; anything narrower forces it out of register.
+    for inst in kb().instrument_profiles() {
+        for width in [0, 1, 4, 11] {
+            let low = inst.range.low_midi;
+            let w = arrangement_engine::patterns::normalize_window((low, low + width), inst);
+            let span = w.1 - w.0;
+            let room = inst.range.high_midi - inst.range.low_midi;
+            assert!(
+                span >= 12.min(room),
+                "{}: window {w:?} spans {span}, too narrow for a full octave",
+                inst.id
+            );
+            assert!(w.0 >= inst.range.low_midi && w.1 <= inst.range.high_midi);
+        }
+    }
 }

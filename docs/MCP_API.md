@@ -2278,7 +2278,7 @@ elided; the real body is ~24 kB):
   "manifest_sha256": "ad393aa7c3c1250fac38afa29d0b8425e372b605e6300af6bc538cd2aaad03cb",
   "generated_at": "2026-07-26T00:00:00Z",
   "counts": {
-    "arrangement_patterns": 28, "cadences": 14, "chord_qualities": 51,
+    "arrangement_patterns": 32, "cadences": 14, "chord_qualities": 51,
     "chord_symbols": 65, "functions": 45, "instrument_profiles": 14,
     "intervals": 28, "modes": 22, "profiles": 10, "progression_schemas": 51,
     "progressions": 37, "rules": 147, "scales": 35, "sources": 9,

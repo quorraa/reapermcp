@@ -56,13 +56,16 @@ impl Priority {
     }
 }
 
-/// Roles the pattern catalogue does not name, and what stands in for them.
+/// What stands in for a role the pattern catalogue does not name.
 ///
-/// Role substitution is one of the contrast levers the brief lists, and it is
-/// also the honest answer to a role with no pattern: rather than fabricate a
-/// rhythm, the engine borrows a catalogued pattern from a musically adjacent
-/// role and says so in the assignment's rationale. The first substitute that
-/// resolves wins, so the order is the preference order.
+/// Every one of the sixteen roles now has at least one catalogued pattern, so
+/// nothing here fires against the shipped bundle — `every_role_has_its_own_patterns`
+/// asserts exactly that. The table is kept because the fallback is the honest
+/// answer to a role that loses its patterns, whether through a future role being
+/// added or an external `--knowledge-dir` supplying a thinner catalogue: rather
+/// than fabricate a rhythm, the engine borrows from a musically adjacent role and
+/// says so in the assignment rationale and a `ROLE_SUBSTITUTED` warning. The first
+/// substitute that resolves wins, so the order is the preference order.
 pub const ROLE_SUBSTITUTES: &[(&str, &[&str])] = &[
     ("pulse", &["ostinato", "bass", "comping"]),
     ("percussion", &["pulse", "ostinato", "riff"]),
@@ -334,15 +337,17 @@ mod tests {
     }
 
     #[test]
-    fn only_four_roles_need_substitution() {
+    fn every_role_has_its_own_patterns() {
+        // The catalogue names all sixteen roles, so substitution is a fallback
+        // for a future role rather than something four roles rely on today.
         let needing: Vec<&str> = ArrangementRole::all()
             .iter()
             .filter(|r| patterns_for_role(kb(), **r).is_empty())
             .map(|r| r.id())
             .collect();
-        assert_eq!(
-            needing,
-            vec!["pulse", "percussion", "ornament", "ear_candy"]
+        assert!(
+            needing.is_empty(),
+            "these roles still have no catalogued pattern: {needing:?}"
         );
     }
 

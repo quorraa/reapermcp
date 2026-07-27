@@ -629,11 +629,12 @@ chosen instrument profile, the allocated register window, the measured density
 and polyphony, the priority tier (0 foreground, 1 midground, 2 background), the
 sections it sounds in, and a rationale.
 
-Four roles — `Pulse`, `Percussion`, `Ornament` and `EarCandy` — have **no
-pattern of their own** in the 28-entry catalogue. Rather than fabricate a
-rhythm, the engine substitutes a catalogued pattern from an adjacent role along
-a fixed preference chain (`ROLE_SUBSTITUTES`) and discloses the substitution in
-the assignment's rationale.
+Every one of the 16 roles has at least one pattern in the 32-entry catalogue.
+Should a role have none — a future role, or an external `--knowledge-dir` with a
+thinner catalogue — the engine substitutes a catalogued pattern from an adjacent
+role along a fixed preference chain (`ROLE_SUBSTITUTES`) rather than fabricating
+a rhythm, and discloses the substitution in the assignment's rationale and a
+`ROLE_SUBSTITUTED` warning.
 
 ### Energy curve
 

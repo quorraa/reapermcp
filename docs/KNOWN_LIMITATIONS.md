@@ -19,8 +19,8 @@ This is not a roadmap. It is a description of version 1.0.0 as built.
 7. [The bridge must be running](#7-the-bridge-must-be-running)
 8. [FNV-1a-64 is a change-detection hash](#8-fnv-1a-64-is-a-change-detection-hash)
 9. [Commit, discard and undo are transaction-scoped](#9-commit-discard-and-undo-are-transaction-scoped)
-10. [Four arrangement roles have no catalogue pattern](#10-four-arrangement-roles-have-no-catalogue-pattern)
-11. [Rule-to-test coverage is 193 of 237](#11-rule-to-test-coverage-is-193-of-237)
+10. [Percussion is not a drum-programming feature](#10-percussion-is-not-a-drum-programming-feature)
+11. [Rule-to-test coverage is 205 of 237](#11-rule-to-test-coverage-is-205-of-237)
 12. [Source licences are unverified](#12-source-licences-are-unverified)
 13. [The MCP specification version was not re-verified](#13-the-mcp-specification-version-was-not-re-verified)
 14. [The in-REAPER smoke test has not been executed](#14-the-in-reaper-smoke-test-has-not-been-executed)
@@ -268,52 +268,45 @@ a source check to protect — but it has consequences worth stating:
 The practical rule: **commit is about keeping tracks, not about re-validating
 music.** If you have changed the source significantly, discard and regenerate.
 
-## 10. Four arrangement roles have no catalogue pattern
+## 10. Percussion is not a drum-programming feature
 
-There are 16 arrangement roles. The pattern catalogue has 28 patterns covering
-12 of them. These four have **no pattern of their own**:
+All 16 arrangement roles now have at least one catalogued pattern (32 patterns
+in total), so no role relies on borrowing one from a neighbour. The substitution
+mechanism is retained as a fallback — for a future role, or for an external
+`--knowledge-dir` supplying a thinner catalogue — and when it fires it discloses
+itself in the assignment's rationale and a `ROLE_SUBSTITUTED` warning, naming the
+role whose pattern was borrowed. Role substitution is also a legitimate contrast
+lever in its own right, which is why the mechanism exists at all.
 
-```
-pulse       percussion       ornament       ear_candy
-```
+The `percussion` role is the one to set expectations about. `arr_percussive_ostinato`
+carries no harmony at all — it writes a fixed rhythmic contour rather than chord
+tones — but version one writes ordinary pitched MIDI in a narrow band, **not** a
+General MIDI drum map. Route it to a percussion or mallet instrument yourself, and
+expect the written pitches to select articulations rather than to sound as pitches.
+It is not a groove library, it does not know about drum maps, and it will not
+produce an idiomatic drum part. If you want drums, program them.
 
-Rather than fabricate a rhythm for them, the engine borrows a catalogued pattern
-from a musically adjacent role along a fixed preference chain:
-
-| Role | Substitutes, in preference order |
-|---|---|
-| `pulse` | `ostinato`, `bass`, `comping` |
-| `percussion` | `pulse`, `ostinato`, `riff` |
-| `ornament` | `counterlead`, `riff`, `lead` |
-| `ear_candy` | `texture`, `ornament`, `counterlead` |
-
-The substitution is **disclosed in the assignment's rationale** — a part written
-for `percussion` says which role's pattern it borrowed. Role substitution is
-also a legitimate contrast lever in its own right, which is why the mechanism
-exists at all.
-
-What this means in practice: `percussion` in particular is not a drum-programming
-feature. It writes pitched note data using a borrowed rhythmic pattern within an
-instrument profile's range. It is not a groove library, it does not know about
-General MIDI drum maps, and it will not produce an idiomatic drum part. If you
-want drums, program them.
+Similarly, `arr_ear_candy_accent` is deliberately very sparse — one bright detail
+per bar. Raising the density control turns it into an ostinato and destroys the
+effect it exists for; the same is true of pushing `arr_ornamental_fill` past
+roughly 0.3, which turns an ornament into a countermelody.
 
 A test asserts that exactly these four roles need substitution, so if the
 catalogue grows to cover one of them, the test will say so.
 
-## 11. Rule-to-test coverage is 193 of 237
+## 11. Rule-to-test coverage is 205 of 237
 
 The knowledge bundle's 147 rules declare **237 distinct `test_id`s** — named
-behaviours the rules assert. **193 of them (81.4%) have a behavioural test
-behind them. 44 do not.**
+behaviours the rules assert. **205 of them (86.5%) have a behavioural test
+behind them. 32 do not.**
 
-The pending 44 are listed explicitly in
+The pending 32 are listed explicitly in
 `crates/theory-kb/tests/test_id_coverage.json` under `pending`. They are
 declared, not hidden, and the ledger is enforced: `implemented + pending` must
 equal every `test_id` appearing anywhere in `knowledge/`, so a rule cannot
 quietly lose coverage.
 
-**What this means: 44 named behaviours that the knowledge bundle asserts are not
+**What this means: 32 named behaviours that the knowledge bundle asserts are not
 verified by the test suite.** Among them are augmented-sixth handling,
 backdoor-dominant resolution, cadential six-four resolution, applied
 leading-tone motion, and several ambiguity-reporting behaviours. Those rules

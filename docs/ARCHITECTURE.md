@@ -210,7 +210,7 @@ competence. Version `1.0.0`.
 | `voicings.json` | Voicing templates | 38 |
 | `progressions.json` | Progression schemas | 37 |
 | `cadences.json` | Cadence schemas | 14 |
-| `arrangement_patterns.json` | Arrangement patterns | 28 |
+| `arrangement_patterns.json` | Arrangement patterns | 32 |
 | `instrument_profiles.json` | Instrument profiles | 14 |
 | `modes.json` | Mode records | 22 |
 | `intervals.json` | Interval records | 28 |
@@ -338,7 +338,7 @@ points; it is not note-for-note parallel motion unless that is what you asked
 for.
 
 **Stage 9 — arrangement.** `arrangement-engine` assigns roles from the
-16-member `ArrangementRole` set, selects a pattern from the 28-entry catalogue
+16-member `ArrangementRole` set, selects a pattern from the 32-entry catalogue
 and an instrument from the 14 instrument profiles, allocates a register window,
 realises the pattern's rational rhythm spec at the requested density, and
 measures the result. Contrast is achieved through register, rhythm, density,

@@ -278,13 +278,12 @@ cargo test -p theory-kb --test test_id_coverage
 | | |
 |---|---|
 | Total declared test ids | **237** |
-| Implemented | **193** (81.4%) |
-| Pending | **44** |
+| Implemented | **205** (86.5%) |
+| Pending | **32** |
 
-By crate: `harmony-engine` 128, `music-analysis` 26, `arrangement-engine` 20,
-`theory-kb` 17, `loop-engine` 14. `implemented` is the **union** of those lists
+By crate: `harmony-engine` 128, `music-analysis` 26, `arrangement-engine` 20, `theory-kb` 17, `loop-engine` 14, `reaper-music-mcp` 12. `implemented` is the **union** of those lists
 — several ids are covered from more than one crate — and that union is exactly
-193.
+205.
 
 The ledger is enforced, not decorative: `implemented + pending` must equal every
 `test_id` appearing anywhere in `knowledge/`. A rule cannot quietly lose its

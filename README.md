@@ -170,7 +170,7 @@ action id, or names an arbitrary filesystem path. See
 - Bass generation (roots, inversions, stepwise, pedal, ostinato, contrary).
 - Restrained countermelody generation that considers complementary rhythm,
   register separation, phrase gaps, motive relationship and rests.
-- Arrangement-role generation over 16 roles with a 28-pattern catalogue,
+- Arrangement-role generation over 16 roles with a 32-pattern catalogue,
   14 instrument profiles, density and register control, masking analysis and an
   energy curve.
 - Loop auditing against a declared loop intent, with repair suggestions.
@@ -190,7 +190,7 @@ action id, or names an arbitrary filesystem path. See
 | Chord-symbol aliases | **65** |
 | Voicing templates | **38** |
 | Progression schemas | **37** progressions + **14** cadences |
-| Arrangement patterns | **28** |
+| Arrangement patterns | **32** |
 | Instrument profiles | **14** |
 | Modes | **22** |
 | Intervals | **28** |
@@ -601,12 +601,12 @@ The short version. The honest, complete version is
   collision-proof and is not a security control.
 - **`commit`, `discard` and `undo` are transaction-scoped** and deliberately do
   not re-check the source snapshot.
-- **Four of the 16 arrangement roles** (`pulse`, `percussion`, `ornament`,
-  `ear_candy`) have no pattern of their own in the catalogue and are served by
-  documented substitution from adjacent roles, which is disclosed in the
-  assignment's rationale.
-- **The rule-to-test coverage ledger stands at 193 of 237 test ids** (81.4%);
-  the remaining 44 are declared pending, not silently missing.
+- **`percussion` is not drum programming.** All 16 arrangement roles have
+  catalogued patterns, but the percussion pattern writes pitched MIDI in a
+  narrow band rather than a General MIDI drum map — route it to a percussion or
+  mallet instrument yourself.
+- **The rule-to-test coverage ledger stands at 205 of 237 test ids** (86.5%);
+  the remaining 32 are declared pending, not silently missing.
 - **Source licences are marked `unverified-reference-only`**, because the build
   had no network access to verify them.
 - **The in-REAPER smoke test has not been executed**, because no REAPER host was

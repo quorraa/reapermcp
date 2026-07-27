@@ -2,7 +2,7 @@
   "knowledge_version": "1.0.0",
   "schema_version": "1.0.0",
   "generated_at": "2026-07-26T00:00:00Z",
-  "content_sha256": "ad393aa7c3c1250fac38afa29d0b8425e372b605e6300af6bc538cd2aaad03cb",
+  "content_sha256": "0d070b1dad89e963825e6e3eb58b69917cc725fc144286ea66626a73a5493e13",
   "counts": {
     "sources": 9,
     "scales": 35,
@@ -11,7 +11,7 @@
     "profiles": 10,
     "voicing_templates": 38,
     "progression_schemas": 51,
-    "arrangement_patterns": 28,
+    "arrangement_patterns": 32,
     "modes": 22,
     "intervals": 28,
     "chord_symbols": 65,

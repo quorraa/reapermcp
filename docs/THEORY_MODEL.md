@@ -501,7 +501,7 @@ explicitly not omissible.
 
 ## 8. Arrangement model
 
-`arrangement_patterns.json` holds 28 patterns, each declaring role, register, range, density,
+`arrangement_patterns.json` holds 32 patterns covering all 16 arrangement roles, each declaring role, register, range, density,
 rhythmic activity, harmonic responsibility, foreground/background priority, allowed doubling,
 polyphony, articulation tendency, note-length tendency, section participation, energy
 contribution and loop behaviour — plus a machine-usable `rhythm` block:

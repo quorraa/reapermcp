@@ -442,17 +442,30 @@ pub fn realize_with(
 }
 
 /// Clips a requested window to what the instrument can play, never empty.
+///
+/// The result spans at least an octave wherever the instrument allows it, so
+/// every pitch class has a representative to be placed on. A narrower window
+/// would force [`place_single`] to answer outside it, putting notes in a
+/// register the pattern did not ask for.
 pub fn normalize_window(window: (i32, i32), inst: &InstrumentProfile) -> (i32, i32) {
-    let low = window.0.max(inst.range.low_midi).clamp(0, 127);
-    let high = window.1.min(inst.range.high_midi).clamp(0, 127);
-    if low >= high {
-        (
-            inst.range.low_midi.clamp(0, 127),
-            inst.range.high_midi.clamp(0, 127),
-        )
+    let inst_low = inst.range.low_midi.clamp(0, 127);
+    let inst_high = inst.range.high_midi.clamp(0, 127);
+    let low = window.0.max(inst_low).clamp(0, 127);
+    let high = window.1.min(inst_high).clamp(0, 127);
+    let (mut low, mut high) = if low >= high {
+        (inst_low, inst_high)
     } else {
         (low, high)
+    };
+    // Widen to an octave when the instrument has the room, preferring to grow
+    // upward only as far as needed.
+    if high - low < 12 {
+        high = (low + 12).min(inst_high);
+        if high - low < 12 {
+            low = (high - 12).max(inst_low);
+        }
     }
+    (low, high)
 }
 
 /// The onsets a realisation will write, after the density control.
@@ -825,6 +838,14 @@ fn double_top(
 }
 
 /// Places one pitch class in the octave nearest an anchor, inside the window.
+///
+/// The pitch class is invariant: the returned MIDI number always belongs to
+/// `class`. A window narrower than an octave may not contain the class at all,
+/// and in that case the nearest octave outside the window is returned rather
+/// than a boundary value of some other class — a note in the wrong octave is a
+/// register problem the caller can see and score, whereas a note whose sounding
+/// pitch disagrees with its spelling is corrupt data that would flow all the way
+/// into the staged MIDI.
 pub fn place_single(class: (Letter, Accidental), window: (i32, i32), anchor: i32) -> i32 {
     let pc = class_pc(class);
     let mut best = lowest_at_or_above(pc, window.0);
@@ -838,7 +859,22 @@ pub fn place_single(class: (Letter, Accidental), window: (i32, i32), anchor: i32
             best = candidate;
         }
     }
-    best.clamp(window.0.max(0), window.1.min(127))
+    // No representative of the class fits: step whole octaves toward the window
+    // so the class survives and the register is as close as it can be.
+    while best > window.1
+        && best - 12 >= 0
+        && (best - 12 - window.1).abs() < (best - window.1).abs()
+    {
+        best -= 12;
+    }
+    // Legal MIDI, still in whole octaves.
+    while best < 0 {
+        best += 12;
+    }
+    while best > 127 {
+        best -= 12;
+    }
+    best
 }
 
 /// The lowest MIDI number at or above `floor` with the given pitch class.

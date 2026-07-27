@@ -693,7 +693,7 @@ mod tests {
         assert_eq!(kb.scales().len(), 35);
         assert_eq!(kb.chord_qualities().len(), 51);
         assert_eq!(kb.voicing_templates().len(), 38);
-        assert_eq!(kb.arrangement_patterns().len(), 28);
+        assert_eq!(kb.arrangement_patterns().len(), 32);
         assert_eq!(kb.instrument_profiles().len(), 14);
         assert_eq!(kb.progressions().len() + kb.cadences().len(), 51);
     }
