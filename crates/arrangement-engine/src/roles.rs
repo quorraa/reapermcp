@@ -81,10 +81,10 @@ pub fn substitutes(role: ArrangementRole) -> &'static [&'static str] {
 }
 
 /// Every pattern whose `role` field matches, in catalogue order.
-pub fn patterns_for_role<'k>(
-    kb: &'k KnowledgeBase,
+pub fn patterns_for_role(
+    kb: &KnowledgeBase,
     role: ArrangementRole,
-) -> Vec<&'k ArrangementPattern> {
+) -> Vec<&ArrangementPattern> {
     kb.arrangement_patterns()
         .iter()
         .filter(|p| p.role == role.id())
@@ -96,10 +96,7 @@ pub fn patterns_for_role<'k>(
 /// The returned vector is in a deterministic order — catalogue order within
 /// each tier, tiers in preference order — so selection never depends on hash
 /// iteration.
-pub fn pattern_pool<'k>(
-    kb: &'k KnowledgeBase,
-    role: ArrangementRole,
-) -> Vec<&'k ArrangementPattern> {
+pub fn pattern_pool(kb: &KnowledgeBase, role: ArrangementRole) -> Vec<&ArrangementPattern> {
     let mut pool = patterns_for_role(kb, role);
     if pool.is_empty() {
         for sub in substitutes(role) {
@@ -116,16 +113,18 @@ pub fn pattern_pool<'k>(
 
 /// How well a pattern suits a request, higher is better.
 ///
-/// Four terms, all reading data: whether the profile chain names the pattern,
+/// Five terms, all reading data: whether the profile chain names the pattern,
 /// how close the pattern's own density sits to the requested density, how close
-/// its energy contribution sits to the section's energy, and whether the
-/// section role is one the pattern participates in.
+/// its energy contribution sits to the section's energy, whether the section
+/// role is one the pattern participates in, and how much its grid collides with
+/// the onsets already spoken for — `contested` holds positions within a bar.
 pub fn pattern_fit(
     pattern: &ArrangementPattern,
     profile: &ResolvedProfile,
     density_target: f64,
     energy_target: f64,
     section_role: Option<&str>,
+    contested: &[BeatTime],
 ) -> f64 {
     let style = if pattern
         .style_profiles
@@ -148,7 +147,11 @@ pub fn pattern_fit(
     };
     let density_fit = 1.0 - (pattern.density - density_target).abs();
     let energy_fit = 1.0 - (pattern.energy_contribution - energy_target).abs();
-    2.0 * style + 1.0 * participates + 1.0 * density_fit + 0.75 * energy_fit
+    // Contrary rhythmic activity, chosen rather than repaired: a pattern whose
+    // grid lands where the lead already plays is worth less than one that fits
+    // between the lead's attacks.
+    let conflict = crate::patterns::onset_conflict(pattern, contested);
+    2.0 * style + participates + density_fit + 0.75 * energy_fit - 1.5 * conflict
 }
 
 /// Chooses the pattern for a role.
@@ -156,8 +159,9 @@ pub fn pattern_fit(
 /// An explicit `texture_pattern` wins whenever it exists and its role matches
 /// the requested role — that is the caller overriding the engine, which the
 /// brief requires the texture lever to be able to do. Otherwise the best
-/// [`pattern_fit`] wins, with the pattern id as the tie-break so the choice is
-/// deterministic.
+/// [`pattern_fit`] wins, with catalogue order as the tie-break so the choice is
+/// deterministic and the catalogue's own ordering expresses preference.
+#[allow(clippy::too_many_arguments)] // Every argument is one axis of the selection the brief specifies.
 pub fn select_pattern<'k>(
     kb: &'k KnowledgeBase,
     role: ArrangementRole,
@@ -166,6 +170,7 @@ pub fn select_pattern<'k>(
     density_target: f64,
     energy_target: f64,
     section_role: Option<&str>,
+    contested: &[BeatTime],
 ) -> Option<&'k ArrangementPattern> {
     if let Some(id) = forced {
         if let Some(p) = kb.arrangement_patterns().iter().find(|p| p.id == id) {
@@ -177,10 +182,16 @@ pub fn select_pattern<'k>(
     let pool = pattern_pool(kb, role);
     let mut best: Option<(&ArrangementPattern, f64)> = None;
     for p in pool {
-        let fit = pattern_fit(p, profile, density_target, energy_target, section_role);
+        let fit = pattern_fit(
+            p,
+            profile,
+            density_target,
+            energy_target,
+            section_role,
+            contested,
+        );
         match best {
-            Some((current, score))
-                if score > fit || (score == fit && current.id.as_str() <= p.id.as_str()) => {}
+            Some((_, score)) if score >= fit => {}
             _ => best = Some((p, fit)),
         }
     }
@@ -195,7 +206,7 @@ pub fn instrument_fit(
 ) -> f64 {
     let affinity = if inst.typical_roles.iter().any(|r| r == role.id()) {
         2.0
-    } else if inst.typical_roles.iter().any(|r| *r == pattern.role) {
+    } else if inst.typical_roles.contains(&pattern.role) {
         1.5
     } else {
         0.0
@@ -215,8 +226,9 @@ pub fn instrument_fit(
 
 /// Chooses the instrument profile a role is written for.
 ///
-/// Ties break on the profile id, so the same request always names the same
-/// instrument.
+/// Ties break on catalogue order, so the same request always names the same
+/// instrument and the more specific profile — which is listed first — wins over
+/// the general-purpose one.
 pub fn select_instrument<'k>(
     kb: &'k KnowledgeBase,
     pattern: &ArrangementPattern,
@@ -226,8 +238,7 @@ pub fn select_instrument<'k>(
     for inst in kb.instrument_profiles() {
         let fit = instrument_fit(inst, pattern, role);
         match best {
-            Some((current, score))
-                if score > fit || (score == fit && current.id.as_str() <= inst.id.as_str()) => {}
+            Some((_, score)) if score >= fit => {}
             _ => best = Some((inst, fit)),
         }
     }
@@ -342,7 +353,7 @@ mod tests {
     fn every_role_resolves_to_an_instrument() {
         let profile = kb().resolve_profile("pop_rock").expect("profile");
         for role in ArrangementRole::all() {
-            let pattern = select_pattern(kb(), *role, &profile, None, 0.5, 0.5, None)
+            let pattern = select_pattern(kb(), *role, &profile, None, 0.5, 0.5, None, &[])
                 .unwrap_or_else(|| panic!("pattern for {}", role.id()));
             let inst = select_instrument(kb(), pattern, *role)
                 .unwrap_or_else(|| panic!("instrument for {}", role.id()));
@@ -356,8 +367,8 @@ mod tests {
     fn selection_is_deterministic() {
         let profile = kb().resolve_profile("jazz_standard").expect("profile");
         for role in ArrangementRole::all() {
-            let a = select_pattern(kb(), *role, &profile, None, 0.4, 0.6, Some("verse"));
-            let b = select_pattern(kb(), *role, &profile, None, 0.4, 0.6, Some("verse"));
+            let a = select_pattern(kb(), *role, &profile, None, 0.4, 0.6, Some("verse"), &[]);
+            let b = select_pattern(kb(), *role, &profile, None, 0.4, 0.6, Some("verse"), &[]);
             assert_eq!(a.map(|p| &p.id), b.map(|p| &p.id));
         }
     }
@@ -373,6 +384,7 @@ mod tests {
             0.9,
             0.9,
             None,
+            &[],
         )
         .expect("a pattern");
         assert_eq!(chosen.id, "arr_chorale_voicing");
@@ -389,6 +401,7 @@ mod tests {
             0.5,
             0.5,
             None,
+            &[],
         )
         .expect("a pattern");
         assert_eq!(chosen.role, "bass");

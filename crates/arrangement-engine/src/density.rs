@@ -122,10 +122,16 @@ pub fn rest_ratio(notes: &[Note], span: (BeatTime, BeatTime)) -> f64 {
 }
 
 /// The greatest number of notes sounding simultaneously.
+///
+/// Measured at each attack instant, which is where polyphony can only ever
+/// increase. Counting pairwise overlaps instead would over-report: one long
+/// held note overlaps every short note under it without those short notes ever
+/// sounding together.
 pub fn max_polyphony(notes: &[Note]) -> usize {
     let mut best = 0usize;
     for a in notes {
-        let count = notes.iter().filter(|b| b.overlaps(a) || b.id == a.id).count();
+        let at = a.onset;
+        let count = notes.iter().filter(|b| b.contains(at)).count();
         best = best.max(count);
     }
     best
@@ -176,30 +182,39 @@ pub fn ensure_rest(
     changed
 }
 
-/// Drops notes whose onsets a higher-priority part already occupies.
+/// Drops whole attacks that a higher-priority part already occupies.
 ///
 /// Onset-density control, applied after the fact: the part keeps its shape but
-/// stops articulating in unison with whoever outranks it. Returns how many
-/// notes were removed.
+/// stops articulating in unison with whoever outranks it. Attacks are removed
+/// *whole* — every note sharing the onset goes together — because dropping one
+/// note out of a four-voice chord would change the harmony rather than the
+/// texture. `keep_at_least` is a floor on surviving attacks, so a part is never
+/// silenced in the name of clarity. Returns how many notes were removed.
 pub fn thin_against(notes: &mut Vec<Note>, busy: &[BeatTime], keep_at_least: usize) -> usize {
-    if busy.is_empty() {
+    if busy.is_empty() || notes.is_empty() {
+        return 0;
+    }
+    let mut onsets: Vec<BeatTime> = notes.iter().map(|n| n.onset).collect();
+    onsets.sort();
+    onsets.dedup();
+    let droppable = onsets.len().saturating_sub(keep_at_least.max(1));
+    if droppable == 0 {
+        return 0;
+    }
+    // Latest first: the part keeps its entrance and gives up its tail.
+    let doomed: Vec<BeatTime> = onsets
+        .iter()
+        .rev()
+        .filter(|qn| busy.contains(qn))
+        .take(droppable)
+        .copied()
+        .collect();
+    if doomed.is_empty() {
         return 0;
     }
     let before = notes.len();
-    let mut kept: Vec<Note> = Vec::with_capacity(before);
-    for n in notes.drain(..) {
-        if busy.contains(&n.onset) && kept.len() + 1 > keep_at_least {
-            continue;
-        }
-        kept.push(n);
-    }
-    if kept.len() < keep_at_least.min(before) {
-        // Never silence a part entirely in the name of clarity.
-        return 0;
-    }
-    let removed = before - kept.len();
-    *notes = kept;
-    removed
+    notes.retain(|n| !doomed.contains(&n.onset));
+    before - notes.len()
 }
 
 /// Shortens every note by a factor, keeping durations strictly positive.

@@ -170,14 +170,66 @@ pub fn articulation_label(
         .cloned()
 }
 
+/// Where in its window a pattern sits, from its declared `register`.
+///
+/// A root pulse marked `"low"` belongs at the bottom of the window it was
+/// given; a `"mid_high"` answering figure belongs near the top. Reading the
+/// field rather than always centring is what stops every part converging on the
+/// middle of its range.
+pub fn register_anchor(pattern: &ArrangementPattern, window: (i32, i32)) -> i32 {
+    let span = (window.1 - window.0).max(0);
+    let at = |numerator: i32, denominator: i32| window.0 + span * numerator / denominator;
+    match pattern.register.as_str() {
+        "low" => at(1, 6),
+        "low_mid" => at(1, 3),
+        "mid_high" => at(2, 3),
+        "high" => at(5, 6),
+        _ => at(1, 2),
+    }
+}
+
+/// How much a low density shortens a note as well as thinning the onsets.
+///
+/// Density is not only how often a part speaks but how much of the time it
+/// occupies; a part asked to be sparse that filled every gap with a long note
+/// would not sound sparse at all. Genuinely sustained textures — a pad, a
+/// drone, a chorale, anything whose note length tendency is the whole harmonic
+/// slot — are exempt, because sustaining is the whole of what they do.
+pub fn density_length_scale(pattern: &ArrangementPattern, density: f64) -> f64 {
+    if is_sustained(pattern) {
+        return 1.0;
+    }
+    0.55 + 0.45 * density.clamp(0.0, 1.0)
+}
+
+/// The share of a pattern's onsets that land where another part already plays.
+///
+/// `contested` holds positions *within a bar*, so a pattern can be judged
+/// against a lead's rhythm before either has been realised. This is what lets
+/// role selection prefer contrary rhythmic activity rather than discovering the
+/// collision afterwards.
+pub fn onset_conflict(pattern: &ArrangementPattern, contested: &[BeatTime]) -> f64 {
+    if pattern.rhythm.onsets.is_empty() || contested.is_empty() {
+        return 0.0;
+    }
+    let hits = pattern
+        .rhythm
+        .onsets
+        .iter()
+        .filter(|o| contested.contains(o))
+        .count();
+    hits as f64 / pattern.rhythm.onsets.len() as f64
+}
+
 /// True when the pattern is a sustained texture — a pad, a drone, a chorale.
 ///
-/// Sustained parts are exempt from the rest requirement and are the ones whose
-/// common tones are tied across a harmony change.
+/// Sustained parts are exempt from the rest requirement, are the ones whose
+/// common tones are tied across a harmony change, and are the ones the
+/// collision rules leave alone: a pad that stops sounding under the lead is no
+/// longer a pad. Note that holding a note *to the next onset* is not the same
+/// thing as sustaining — a legato counterline does that and is still a line.
 pub fn is_sustained(pattern: &ArrangementPattern) -> bool {
-    pattern.rhythmic_activity == "sustained"
-        || pattern.rhythm.sustain == "full_slot"
-        || pattern.rhythm.sustain == "to_next"
+    pattern.rhythmic_activity == "sustained" || pattern.note_length_tendency == "full_slot"
 }
 
 /// Everything a realisation needs beyond the pattern itself.
@@ -320,6 +372,8 @@ pub fn realize_with(
     let label = articulation_label(pattern, inst);
     let max_voices = opts.max_polyphony.clamp(1, inst.polyphony.max(1) as usize);
     let sustained = is_sustained(pattern);
+    let density_scale = density_length_scale(pattern, opts.density);
+    let home = register_anchor(pattern, window);
 
     let mut notes: Vec<Note> = Vec::new();
     let mut previous_top: Option<i32> = None;
@@ -328,7 +382,7 @@ pub fn realize_with(
         let slot_end = chord.onset + chord.duration;
         let next = onsets.get(i + 1).copied();
         let length = note_length(pattern, *onset, next, slot_end, end, tm);
-        let length = scale_length(length, art_scale * opts.note_length_scale);
+        let length = scale_length(length, art_scale * opts.note_length_scale * density_scale);
         if !length.is_positive() {
             continue;
         }
@@ -336,7 +390,9 @@ pub fn realize_with(
         if material.is_empty() {
             continue;
         }
-        let pitches = if figure == Figure::Block {
+        // More than one voice means a stack, whatever the figure: a two-voice
+        // pedal is a root and its declared octave, not a root on its own.
+        let pitches = if max_voices > 1 {
             let mut stack = place_stack(&material, window, inst, max_voices);
             if opts.max_polyphony > material.len() && allows_doubling(pattern) {
                 double_top(&mut stack, &material, window, inst, opts.max_polyphony);
@@ -345,7 +401,12 @@ pub fn realize_with(
         } else {
             let idx = figure.index(i, material.len());
             let (degree, class) = material[idx.min(material.len() - 1)];
-            let anchor = previous_top.unwrap_or((window.0 + window.1) / 2);
+            // A root figure stays put; every other figure follows the line it
+            // has been drawing, so an arpeggio does not jump octaves mid-bar.
+            let anchor = match figure {
+                Figure::Root => home,
+                _ => previous_top.unwrap_or(home),
+            };
             let midi = place_single(class, window, anchor);
             vec![(degree, spelled_at(class, midi), midi)]
         };
@@ -450,9 +511,78 @@ pub fn plan_onsets(
         }
     }
     raw.sort();
-    let kept = thin(&raw, pattern, tm, opts);
+    raw = displace_from_contested(raw, pattern, opts, start, end);
+    // A part that carries harmony must articulate every chord change, however
+    // low the density control goes: thinning is allowed to make a part sparse,
+    // never to make it wrong.
+    let changes: Vec<BeatTime> = chords
+        .iter()
+        .map(|c| c.onset)
+        .filter(|qn| *qn >= start && *qn < end)
+        .collect();
+    let floor = if pattern.harmonic_responsibility == "none" {
+        1
+    } else {
+        changes.len().max(1)
+    };
+    let kept = thin(&raw, pattern, tm, opts, &changes, floor);
     Ok(kept)
 }
+
+/// Moves a whole figure off the beats a more important part already occupies.
+///
+/// This is *contrary rhythmic activity* as an action rather than a hope: when
+/// more than half a pattern's attacks would land on the lead's, the figure is
+/// displaced by half its own grid so it answers between the tune's notes
+/// instead of doubling them. Sustained textures are exempt — they are supposed
+/// to be underneath — and the displacement is half the pattern's declared grid,
+/// so the figure keeps its own rhythmic identity.
+pub fn displace_from_contested(
+    raw: Vec<BeatTime>,
+    pattern: &ArrangementPattern,
+    opts: &RealizeOptions,
+    start: BeatTime,
+    end: BeatTime,
+) -> Vec<BeatTime> {
+    if opts.avoid_onsets.is_empty() || raw.is_empty() || is_sustained(pattern) {
+        return raw;
+    }
+    let hits = raw
+        .iter()
+        .filter(|qn| opts.avoid_onsets.contains(qn))
+        .count();
+    if hits * 2 <= raw.len() {
+        return raw;
+    }
+    // Half the grid first, then quarter, then eighth: the smallest displacement
+    // that actually clears the contested attacks is the one that keeps the
+    // figure closest to what the catalogue wrote.
+    for divisor in DISPLACEMENT_DIVISORS {
+        let step = pattern.rhythm.grid_qn.scale(1, *divisor);
+        if !step.is_positive() {
+            continue;
+        }
+        let moved: Vec<BeatTime> = raw
+            .iter()
+            .map(|qn| *qn + step)
+            .filter(|qn| *qn >= start && *qn < end)
+            .collect();
+        if moved.is_empty() {
+            continue;
+        }
+        let after = moved
+            .iter()
+            .filter(|qn| opts.avoid_onsets.contains(qn))
+            .count();
+        if after * 2 <= moved.len() {
+            return moved;
+        }
+    }
+    raw
+}
+
+/// The fractions of its own grid a displaced figure is offset by, in order.
+pub const DISPLACEMENT_DIVISORS: &[i64] = &[2, 4, 8, 3];
 
 /// The share of a pattern's onsets a density setting keeps.
 ///
@@ -470,6 +600,8 @@ fn thin(
     pattern: &ArrangementPattern,
     tm: &TimeMap,
     opts: &RealizeOptions,
+    changes: &[BeatTime],
+    floor: usize,
 ) -> Vec<BeatTime> {
     let active: Vec<BeatTime> = raw
         .iter()
@@ -480,7 +612,10 @@ fn thin(
         return active;
     }
     let ratio = keep_ratio(pattern, opts.density);
-    let want = ((active.len() as f64) * ratio).ceil().max(1.0) as usize;
+    let want = ((active.len() as f64) * ratio)
+        .ceil()
+        .max(1.0)
+        .max(floor as f64) as usize;
     if want >= active.len() && opts.avoid_onsets.is_empty() {
         return active;
     }
@@ -492,6 +627,9 @@ fn thin(
         .enumerate()
         .map(|(i, qn)| {
             let mut score = tm.metric_weight(*qn);
+            if changes.contains(qn) {
+                score += 2.0;
+            }
             if opts.avoid_onsets.contains(qn) {
                 score -= 0.75;
             }
@@ -531,8 +669,11 @@ fn note_length(
     };
     let cap = slot_end.min(span_end);
     let raw = match pattern.rhythm.sustain.as_str() {
-        "full_slot" => cap,
-        "to_next" => match next {
+        // A note holds until the harmony changes — or until this part next
+        // articulates, whichever comes first. Without the second cap a pattern
+        // with two onsets inside one harmonic slot would stack its own voices
+        // on top of each other and blow past the instrument's polyphony.
+        "full_slot" | "to_next" => match next {
             Some(n) => n.min(cap),
             None => cap,
         },
@@ -749,20 +890,13 @@ pub fn velocity_for(
 /// of re-striking it, which is exactly what
 /// `arrangement.pad_sustains_common_tones` asks for.
 pub fn tie_common_tones(notes: &mut Vec<Note>) {
-    notes.sort_by(|a, b| {
-        a.voice
-            .cmp(&b.voice)
-            .then_with(|| a.onset.cmp(&b.onset))
-            .then_with(|| a.midi.cmp(&b.midi))
-    });
+    notes.sort_by(|a, b| a.midi.cmp(&b.midi).then_with(|| a.onset.cmp(&b.onset)));
     let mut out: Vec<Note> = Vec::with_capacity(notes.len());
     for note in notes.drain(..) {
         let merged = match out.last_mut() {
-            Some(prev)
-                if prev.voice == note.voice
-                    && prev.midi == note.midi
-                    && prev.end() == note.onset =>
-            {
+            // Same sounding pitch, picked up exactly where the last one left
+            // off: one held note, whatever voice index the stack gave it.
+            Some(prev) if prev.midi == note.midi && prev.end() == note.onset => {
                 prev.duration = prev.duration + note.duration;
                 true
             }

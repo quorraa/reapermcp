@@ -14,6 +14,12 @@ use crate::energy::layer_budget;
 use crate::patterns::sample_curve;
 use music_domain::prelude::*;
 
+/// How far a section displaces its non-foreground layers.
+///
+/// A perfect fifth: unmistakable as a change of register, small enough that a
+/// part stays recognisably itself and inside the range the catalogue gave it.
+pub const REGISTER_CONTRAST_SEMITONES: i32 = 7;
+
 /// Everything one section asks of the parts written inside it.
 #[derive(Clone, Debug, PartialEq)]
 pub struct SectionPlan {
@@ -168,7 +174,11 @@ pub fn enforce_contrast(plans: &mut [SectionPlan]) {
         let previous = plans[i - 1].clone();
         let plan = &mut plans[i];
         let rising = plan.section.energy >= previous.section.energy;
-        plan.register_shift = if rising { 12 } else { -12 };
+        plan.register_shift = if rising {
+            REGISTER_CONTRAST_SEMITONES
+        } else {
+            -REGISTER_CONTRAST_SEMITONES
+        };
         if (plan.density - previous.density).abs() < 0.05 {
             plan.density = if rising {
                 (previous.density + 0.2).clamp(0.0, 1.0)
@@ -198,7 +208,7 @@ fn mark_transitions(plans: &mut [SectionPlan]) {
 }
 
 /// The section covering a position, or the last one before it.
-pub fn section_at<'a>(plans: &'a [SectionPlan], qn: BeatTime) -> Option<&'a SectionPlan> {
+pub fn section_at(plans: &[SectionPlan], qn: BeatTime) -> Option<&SectionPlan> {
     let mut best: Option<&SectionPlan> = None;
     for p in plans {
         if p.contains(qn) {

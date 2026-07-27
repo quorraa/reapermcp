@@ -95,14 +95,16 @@ impl PhraseFrame {
     ///
     /// Entrances are staggered by priority: the foreground starts at the top,
     /// midground one phrase in, background two — which is what makes the first
-    /// phrases build rather than arrive all at once. A part never enters after
-    /// the halfway point, because a layer that only appears at the end is not
-    /// an arrangement, it is an afterthought.
+    /// phrases build rather than arrive all at once. A part never enters later
+    /// than a third of the way through, because a layer that only appears at
+    /// the end is not an arrangement, it is an afterthought; and a form with
+    /// fewer than three phrases has no room to stagger at all, so every part
+    /// starts together.
     pub fn entrance(&self, stagger: usize) -> BeatTime {
         if stagger == 0 || self.phrases.is_empty() {
             return self.span.0;
         }
-        let limit = self.phrases.len() / 2;
+        let limit = self.phrases.len() / 3;
         let index = stagger.min(limit);
         self.phrases
             .get(index)
@@ -239,12 +241,18 @@ mod tests {
     }
 
     #[test]
-    fn entrances_stagger_but_never_past_halfway() {
+    fn entrances_stagger_but_never_past_a_third() {
         let f = frame();
         assert_eq!(f.entrance(0), BeatTime::ZERO);
         assert_eq!(f.entrance(1), BeatTime::from_quarters(8));
-        assert_eq!(f.entrance(2), BeatTime::from_quarters(16));
-        assert_eq!(f.entrance(9), BeatTime::from_quarters(16));
+        assert_eq!(f.entrance(9), BeatTime::from_quarters(8));
+    }
+
+    #[test]
+    fn a_two_phrase_form_has_no_room_to_stagger() {
+        let mut f = frame();
+        f.phrases.truncate(2);
+        assert_eq!(f.entrance(3), BeatTime::ZERO);
     }
 
     #[test]

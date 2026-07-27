@@ -20,6 +20,12 @@ pub const MASKING_WINDOW_SEMITONES: i32 = 5;
 /// truncated.
 pub const MAX_RECORDED_COLLISIONS: usize = 4096;
 
+/// How far separation may move a part from the register the catalogue gave it.
+pub const MAX_DISPLACEMENT_SEMITONES: i32 = 12;
+
+/// The narrowest window separation will ever leave a part.
+pub const MIN_WINDOW_SEMITONES: i32 = 12;
+
 /// What masking measurement found.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct MaskingReport {
@@ -207,6 +213,9 @@ pub fn separate(
             (centre + half).min(bound.1).max(bound.0 + 1),
         );
     }
+    // No part is displaced more than an octave from where the catalogue put it:
+    // separation is meant to clear space, not to rewrite the orchestration.
+    let home: Vec<i32> = windows.iter().map(|(lo, hi)| (lo + hi) / 2).collect();
     let mut sorted: Vec<usize> = order.to_vec();
     sorted.sort_by_key(|i| ((windows[*i].0 + windows[*i].1) / 2, *i));
     for k in 1..sorted.len() {
@@ -227,13 +236,19 @@ pub fn separate(
         } else {
             windows[i].0
         };
+        let want_low = want_low.min(home[i] + MAX_DISPLACEMENT_SEMITONES);
         if windows[i].0 < want_low {
             let headroom = (bound.1 - windows[i].1).max(0);
-            let shift = (want_low - windows[i].0).min(headroom);
+            let ceiling = (home[i] + MAX_DISPLACEMENT_SEMITONES
+                - (windows[i].0 + windows[i].1) / 2)
+                .max(0);
+            let shift = (want_low - windows[i].0).min(headroom).min(ceiling);
             if shift > 0 {
                 windows[i] = (windows[i].0 + shift, windows[i].1 + shift);
             }
-            if windows[i].0 < want_low && want_low < windows[i].1 {
+            // Narrowing is the last resort, and never below an octave of room:
+            // a part squeezed into a few semitones cannot spell its chord.
+            if windows[i].0 < want_low && want_low <= windows[i].1 - MIN_WINDOW_SEMITONES {
                 windows[i] = (want_low, windows[i].1);
             }
         }

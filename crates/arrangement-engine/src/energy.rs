@@ -137,13 +137,15 @@ pub fn resolve_curve(
 /// How many layers an energy level can afford, out of `available`.
 ///
 /// Monotone and never zero: even the quietest moment keeps the part that
-/// carries the tune.
+/// carries the tune. Half energy affords every requested layer, so a caller who
+/// asks for roles and says nothing about energy gets all of them; below that
+/// the arrangement genuinely thins out, down to half the layers at silence.
 pub fn layer_budget(energy: f64, available: usize) -> usize {
     if available == 0 {
         return 0;
     }
     let e = energy.clamp(0.0, 1.0);
-    let scaled = (available as f64 * (0.35 + 0.65 * e)).round() as usize;
+    let scaled = (available as f64 * (0.5 + e)).round() as usize;
     scaled.clamp(1, available)
 }
 
