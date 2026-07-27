@@ -21,8 +21,14 @@
     default install location, then in the repository's target\release, then on
     PATH.
 
+.PARAMETER ConfigPath
+    The bridge's config.json. When omitted the script looks for the one the
+    installer wrote under the REAPER resource path. Without it doctor has no
+    installation token and every bridge check is skipped.
+
 .PARAMETER IpcDirectory
-    The IPC directory to check. Passed through to doctor when given.
+    The IPC directory to check. Passed through to doctor when given, and takes
+    precedence over the ipc_dir in config.json.
 
 .PARAMETER Json
     Ask doctor for machine-readable JSON output instead of a human report.
@@ -41,6 +47,10 @@ param(
     [Parameter()]
     [ValidateNotNullOrEmpty()]
     [string] $ExecutablePath,
+
+    [Parameter()]
+    [ValidateNotNullOrEmpty()]
+    [string] $ConfigPath,
 
     [Parameter()]
     [ValidateNotNullOrEmpty()]
@@ -87,14 +97,52 @@ function Resolve-Executable {
            "install it with scripts\install.ps1, or pass -ExecutablePath.")
 }
 
-$exe = Resolve-Executable -Explicit $ExecutablePath
+function Resolve-ConfigPath {
+    <#
+        Finds the config.json the installer wrote, so that a bare
+        .\run-doctor.ps1 can check the bridge instead of skipping every
+        bridge-dependent check. Returns $null when there is nothing to find;
+        that is not an error, because the REAPER-free checks still run.
+    #>
+    [CmdletBinding()]
+    param([string] $Explicit)
+
+    if ($Explicit) {
+        if (-not (Test-Path -LiteralPath $Explicit -PathType Leaf)) {
+            throw "No config.json at '$Explicit'."
+        }
+        return (Resolve-Path -LiteralPath $Explicit).ProviderPath
+    }
+
+    if ($env:QLABS_MCP_CONFIG) { return $null }   # doctor reads it itself
+
+    $resourceRoots = @()
+    if ($env:APPDATA)      { $resourceRoots += (Join-Path $env:APPDATA 'REAPER') }
+    if ($env:LOCALAPPDATA) { $resourceRoots += (Join-Path $env:LOCALAPPDATA 'REAPER') }
+
+    foreach ($root in $resourceRoots) {
+        $candidate = Join-Path (Join-Path (Join-Path $root 'Scripts') 'QLabs-Reaper-MCP') 'config.json'
+        if (Test-Path -LiteralPath $candidate -PathType Leaf) {
+            return (Resolve-Path -LiteralPath $candidate).ProviderPath
+        }
+    }
+
+    return $null
+}
+
+$exe    = Resolve-Executable -Explicit $ExecutablePath
+$config = Resolve-ConfigPath -Explicit $ConfigPath
 
 if (-not $Json) {
     Write-Host ''
     Write-Host '  QLabs REAPER Music Intelligence MCP - doctor' -ForegroundColor White
     Write-Host '  ---------------------------------------------------------------'
     Write-Host "  executable : $exe"
+    if ($config)       { Write-Host "  config     : $config" }
     if ($IpcDirectory) { Write-Host "  ipc dir    : $IpcDirectory" }
+    if (-not $config -and -not $IpcDirectory -and -not $env:QLABS_MCP_CONFIG -and -not $env:QLABS_MCP_IPC_DIR) {
+        Write-Host '  config     : none found; the bridge checks will be skipped'
+    }
     Write-Host ''
 }
 
@@ -103,6 +151,7 @@ if (-not $Json) {
 # it there, the call is retried without it rather than reported as a failure.
 $baseArgs = @('doctor')
 if ($Json) { $baseArgs += '--json' }
+if ($config) { $baseArgs += @('--config', $config) }
 
 $argsWithIpc = $baseArgs
 if ($IpcDirectory) { $argsWithIpc = $baseArgs + @('--ipc-dir', $IpcDirectory) }
