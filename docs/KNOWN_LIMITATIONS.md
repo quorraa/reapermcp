@@ -392,12 +392,16 @@ here: the bridge registered and started through REAPER's **Actions list**, and
 the brief's **natural-language request** driven from the server's own
 `harmonize-selected-melody` prompt with the countermelody enabled.
 
-Three notes worth keeping from doing them. The bridge resolves `lib/` relative
-to its own location, so it only runs correctly from its installed directory. The
+All **nine prompts** have since been driven against a real host too, each
+followed as an MCP client would rather than scripted in advance, which between
+them reached `harmony.reharmonize`, `voicing.generate`, `arrangement.generate`,
+`theory.search` and the `candidate://{id}/trace` resource for the first time
+outside the unit suites.
+
+Two notes worth keeping. The bridge resolves `lib/` relative to its own
+location, so it only runs correctly from its installed directory. And the
 toolbar toggle works only when it is launched as an action, because
 `reaper.get_action_context()` reports command id `0` for a command-line launch.
-And what remains untested is not a step but a *surface*: of the nine prompts,
-only `harmonize-selected-melody` has been exercised against a real host.
 
 Running the walkthrough also uncovered a staging bug — a cached generation
 returned a candidate bound to a superseded snapshot, so staging succeeded only

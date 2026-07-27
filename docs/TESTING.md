@@ -599,6 +599,39 @@ actually happened, including where a result was a considered "no".
     action', which was not created by this MCP"*. The unrelated entry was not
     undone.
 
+### The prompt surface, against a real host
+
+All **nine** prompts have been driven against REAPER 7.78/x64. Each was fetched
+with `prompts/get` and then followed as an MCP client would — the tool sequence
+came from the prompt's own prose rather than from a script written in advance.
+
+| Prompt | What it reached |
+|---|---|
+| `analyze-selected-melody` | D dorian at 0.777, 6 phrases, 65 NCT hypotheses, `ambiguous: false` |
+| `reharmonize-selected-region` | **`harmony.reharmonize`** — 3 candidates, 3 strategies |
+| `extend-selected-chords` | `harmony.reharmonize` with `preserve_cadence`, `preserve_harmonic_rhythm` and `complexity: 0.9` — every chord came back extended |
+| `create-smooth-voicings` | **`voicing.generate`** — 4 variants across `close`/`drop2`/`shell`/`quartal`, `preserve_top` |
+| `arrange-selected-sketch` | **`arrangement.generate`** — 3 parts plus a masking report carrying before/after collision counts |
+| `create-loopable-variants` | `loop.audit` on each of 3 candidates |
+| `audit-harmony-and-voice-leading` | **`theory.search`** |
+| `explain-generated-candidate` | `candidate.explain` at `detail: detailed`, plus the **`candidate://{id}/trace`** resource |
+| `harmonize-selected-melody` | the full workflow — see step 7 above |
+
+`harmony.reharmonize`, `voicing.generate`, `arrangement.generate`,
+`theory.search` and the trace resource had never run outside the unit suites
+before this.
+
+Two results worth recording because they show judgement rather than throughput.
+`create-loopable-variants` under `loop_intent: "modal_drone"` audited all three
+candidates as `compatible: true` (0.823, 0.760, 0.810), where the *same engine*
+returned `compatible: false` for the same music under `closed_tonic` — the
+prompt's own warning that "a modal drone loop does not need a dominant
+resolution" is borne out by the tool. And `theory.search` for *parallel fifths*
+under `modal_ambient` returned `voice_leading.planing_suppresses_parallel_penalty`
+— "in a planing or quartal context, parallel perfect intervals carry no penalty
+at all" — which is the profile-sensitive answer that prompt explicitly asks for,
+not the textbook one.
+
 > **A bug this walkthrough uncovered, since fixed.** On the first run, steps 12
 > and 14–16 each needed a *distinct* `seed`, because staging succeeded only once
 > per (music, profile, seed) per server process. `harmony.generate_candidates`
