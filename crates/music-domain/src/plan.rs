@@ -152,6 +152,10 @@ pub enum EditOperation {
     },
     /// Create a project region.
     CreateRegion {
+        /// Plan-local identifier for the new region. Empty means "do not
+        /// declare one", which costs the region its entry in the staging
+        /// result's `regions[]` — see [`EditOperation::CreateMidiSend`].
+        temp_id: String,
         /// Region name.
         name: String,
         /// Region start in quarter notes.
@@ -161,6 +165,13 @@ pub enum EditOperation {
     },
     /// Route MIDI from a plan-created track to an existing track.
     CreateMidiSend {
+        /// Plan-local identifier for the new send.
+        ///
+        /// The bridge only records a created object under a `temp_id`, and only
+        /// recorded objects are reported back. An empty `temp_id` therefore
+        /// still creates the send in REAPER but omits it from the staging
+        /// result's `sends[]`, leaving a client unable to see that it exists.
+        temp_id: String,
         /// Source track's `temp_id`.
         from_track: String,
         /// Destination track GUID in the host project.
@@ -234,23 +245,31 @@ impl EditOperation {
                 "muted" => *muted,
             },
             EditOperation::CreateRegion {
+                temp_id,
                 name,
                 start_qn,
                 end_qn,
-            } => json_obj! {
-                "op" => self.op_id(),
-                "name" => name.clone(),
-                "start_qn" => start_qn.to_json(),
-                "end_qn" => end_qn.to_json(),
-            },
+            } => with_temp_id(
+                json_obj! {
+                    "op" => self.op_id(),
+                    "name" => name.clone(),
+                    "start_qn" => start_qn.to_json(),
+                    "end_qn" => end_qn.to_json(),
+                },
+                temp_id,
+            ),
             EditOperation::CreateMidiSend {
+                temp_id,
                 from_track,
                 to_track_guid,
-            } => json_obj! {
-                "op" => self.op_id(),
-                "from_track" => from_track.clone(),
-                "to_track_guid" => to_track_guid.clone(),
-            },
+            } => with_temp_id(
+                json_obj! {
+                    "op" => self.op_id(),
+                    "from_track" => from_track.clone(),
+                    "to_track_guid" => to_track_guid.clone(),
+                },
+                temp_id,
+            ),
         }
     }
 
@@ -292,11 +311,13 @@ impl EditOperation {
                 muted: v.bool_field("muted")?,
             },
             "create_region" => EditOperation::CreateRegion {
+                temp_id: v.opt_str_field("temp_id")?.unwrap_or("").to_string(),
                 name: v.opt_str_field("name")?.unwrap_or("").to_string(),
                 start_qn: BeatTime::from_json(v.field("start_qn")?)?,
                 end_qn: BeatTime::from_json(v.field("end_qn")?)?,
             },
             "create_midi_send" => EditOperation::CreateMidiSend {
+                temp_id: v.opt_str_field("temp_id")?.unwrap_or("").to_string(),
                 from_track: v.str_field("from_track")?.to_string(),
                 to_track_guid: v.str_field("to_track_guid")?.to_string(),
             },
@@ -307,6 +328,21 @@ impl EditOperation {
             }
         })
     }
+}
+
+/// Adds `temp_id` to an operation object, but only when there is one.
+///
+/// The bridge rejects a `temp_id` that is present and empty — it must match the
+/// safe-id pattern — so an operation carrying no identifier has to omit the key
+/// entirely rather than send `""`. That keeps a plan parsed from JSON without a
+/// `temp_id` round-tripping to the same shape it arrived in.
+fn with_temp_id(mut obj: Json, temp_id: &str) -> Json {
+    if !temp_id.is_empty() {
+        if let Some(m) = obj.as_obj_mut() {
+            m.insert("temp_id".to_string(), Json::Str(temp_id.to_string()));
+        }
+    }
+    obj
 }
 
 /// Renders tags as a JSON object, preserving insertion order.
@@ -667,11 +703,13 @@ mod tests {
                     muted: false,
                 },
                 EditOperation::CreateRegion {
+                    temp_id: "r0".to_string(),
                     name: "QLabs candidate".to_string(),
                     start_qn: qn(0),
                     end_qn: qn(16),
                 },
                 EditOperation::CreateMidiSend {
+                    temp_id: "s0".to_string(),
                     from_track: "track".to_string(),
                     to_track_guid: "{TRACK}".to_string(),
                 },
@@ -839,6 +877,7 @@ mod tests {
     fn edit_plan_validation_catches_bad_regions_and_notes() {
         let mut p = sample_plan();
         p.operations[5] = EditOperation::CreateRegion {
+            temp_id: "r0".to_string(),
             name: "bad".to_string(),
             start_qn: qn(8),
             end_qn: qn(8),

@@ -153,24 +153,45 @@ pub fn operation_to_wire(op: &EditOperation) -> Json {
             "muted" => *muted,
         },
         EditOperation::CreateRegion {
+            temp_id,
             name,
             start_qn,
             end_qn,
-        } => qjson::json_obj! {
-            "op" => "create_region",
-            "name" => name.clone(),
-            "start_qn" => qn(*start_qn),
-            "end_qn" => qn(*end_qn),
-        },
+        } => wire_with_temp_id(
+            qjson::json_obj! {
+                "op" => "create_region",
+                "name" => name.clone(),
+                "start_qn" => qn(*start_qn),
+                "end_qn" => qn(*end_qn),
+            },
+            temp_id,
+        ),
         EditOperation::CreateMidiSend {
+            temp_id,
             from_track,
             to_track_guid,
-        } => qjson::json_obj! {
-            "op" => "create_midi_send",
-            "from_track" => from_track.clone(),
-            "to_track_guid" => to_track_guid.clone(),
-        },
+        } => wire_with_temp_id(
+            qjson::json_obj! {
+                "op" => "create_midi_send",
+                "from_track" => from_track.clone(),
+                "to_track_guid" => to_track_guid.clone(),
+            },
+            temp_id,
+        ),
     }
+}
+
+/// Adds `temp_id` to a wire operation, omitting the key when there is none.
+///
+/// The bridge only reports objects it recorded under a `temp_id`, and it
+/// rejects an empty one, so the key is written only when it carries a value.
+fn wire_with_temp_id(mut obj: Json, temp_id: &str) -> Json {
+    if !temp_id.is_empty() {
+        if let Some(m) = obj.as_obj_mut() {
+            m.insert("temp_id".to_string(), Json::Str(temp_id.to_string()));
+        }
+    }
+    obj
 }
 
 /// The wire form of one precondition, discriminated on `type`.
@@ -742,11 +763,13 @@ mod tests {
                 muted: false,
             },
             EditOperation::CreateRegion {
+                temp_id: "r0".into(),
                 name: String::new(),
                 start_qn: BeatTime::ZERO,
                 end_qn: BeatTime::from_quarters(1),
             },
             EditOperation::CreateMidiSend {
+                temp_id: "s0".into(),
                 from_track: "t".into(),
                 to_track_guid: "g".into(),
             },

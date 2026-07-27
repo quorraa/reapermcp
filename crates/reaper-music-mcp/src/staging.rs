@@ -333,9 +333,15 @@ pub fn build_plan(
 
     if options.create_region {
         operations.push(EditOperation::CreateRegion {
+            temp_id: "r0".to_string(),
             name: folder_name.clone(),
             start_qn: item_start_bt,
             end_qn: item_end_bt,
+        });
+        expected.push(ExpectedOutput {
+            temp_id: "r0".to_string(),
+            kind: "region".to_string(),
+            note_count: None,
         });
     }
 
@@ -349,8 +355,14 @@ pub fn build_plan(
             ToolError::internal("route_to_source_track was requested with no generated track")
         })?;
         operations.push(EditOperation::CreateMidiSend {
+            temp_id: "s0".to_string(),
             from_track: from,
             to_track_guid: track_guid,
+        });
+        expected.push(ExpectedOutput {
+            temp_id: "s0".to_string(),
+            kind: "send".to_string(),
+            note_count: None,
         });
     }
 
@@ -806,5 +818,61 @@ mod tests {
             .find(|e| e.kind == "midi_item")
             .unwrap();
         assert_eq!(item.note_count, Some(4));
+    }
+
+    /// Every object-creating operation must declare a `temp_id`.
+    ///
+    /// The bridge records a created object only under a `temp_id`, and reports
+    /// only what it recorded. An operation without one still performs the edit
+    /// in REAPER but vanishes from the staging result, so a client cannot see
+    /// that the object exists. `create_region` and `create_midi_send` both used
+    /// to omit it, which is why `regions[]` and `sends[]` were always empty.
+    #[test]
+    fn region_and_send_operations_declare_a_temp_id() {
+        let options = StageOptions {
+            create_region: true,
+            route_to_source_track: true,
+            ..StageOptions::default()
+        };
+        let built = build_plan(
+            &candidate(),
+            &record(),
+            "2026.07.1",
+            &options,
+            &qjson::uuid::UuidGen::from_seed(7),
+        )
+        .expect("plan builds");
+
+        let mut saw_region = false;
+        let mut saw_send = false;
+        for op in &built.plan.operations {
+            match op {
+                EditOperation::CreateRegion { temp_id, .. } => {
+                    assert!(!temp_id.is_empty(), "create_region has no temp_id");
+                    saw_region = true;
+                }
+                EditOperation::CreateMidiSend { temp_id, .. } => {
+                    assert!(!temp_id.is_empty(), "create_midi_send has no temp_id");
+                    saw_send = true;
+                }
+                _ => {}
+            }
+        }
+        assert!(saw_region, "no create_region operation was emitted");
+        assert!(saw_send, "no create_midi_send operation was emitted");
+
+        // And the plan must say it expects them back, so a bridge that drops
+        // one is caught rather than silently believed.
+        let kinds: Vec<&str> = built
+            .plan
+            .expected_outputs
+            .iter()
+            .map(|e| e.kind.as_str())
+            .collect();
+        assert!(
+            kinds.contains(&"region"),
+            "region is not an expected output"
+        );
+        assert!(kinds.contains(&"send"), "send is not an expected output");
     }
 }
