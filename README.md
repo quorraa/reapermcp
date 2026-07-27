@@ -436,6 +436,11 @@ the server's own `print-mcp-config` subcommand emits it too:
 Backslashes must be escaped in JSON. Use the snippet the installer prints rather
 than retyping paths.
 
+[`.mcp.json.example`](.mcp.json.example) is the same thing as a file, for hosts
+that read a project-local `.mcp.json`. Copy it to `.mcp.json` and replace the
+paths. The real file is git-ignored: it holds absolute paths belonging to one
+machine and one user account, so it is not something to share.
+
 Do not add any argument that opens a socket — there isn't one. Diagnostics go to
 `stderr`, so a host that surfaces server logs will show them there; `stdout`
 carries protocol bytes only.

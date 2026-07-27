@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "qlabs-reaper-music": {
+      "command": "C:\\Users\\you\\AppData\\Local\\Programs\\QLabs-Reaper-MCP\\qlabs-reaper-music-mcp.exe",
+      "args": [
+        "serve",
+        "--ipc-dir",
+        "C:\\Users\\you\\AppData\\Roaming\\REAPER\\Scripts\\QLabs-Reaper-MCP\\ipc"
+      ]
+    }
+  }
+}

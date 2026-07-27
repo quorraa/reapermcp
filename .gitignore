@@ -8,5 +8,10 @@
 .DS_Store
 Thumbs.db
 
+# MCP host configuration. The real file holds absolute paths for one machine
+# and one user account; copy .mcp.json.example, or generate it with
+# `qlabs-reaper-music-mcp print-mcp-config`.
+/.mcp.json
+
 # Packaging output
 /dist/
