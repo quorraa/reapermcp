@@ -10,7 +10,7 @@
 //! Nothing here decides whether the result is *good*. That depends on the loop
 //! intent and lives in [`crate::intent`].
 
-use crate::boundary::{is_marked_carry, LoopSpan};
+use crate::boundary::LoopSpan;
 use harmony_engine::keyctx::degree_for_semitones;
 use music_domain::prelude::*;
 use theory_kb::KnowledgeBase;
@@ -368,8 +368,19 @@ pub struct LayerRemoval {
 }
 
 /// Everything measured at the seam.
+///
+/// When real notes sound on both sides of the wrap, `end_pitches` and
+/// `start_pitches` are MIDI numbers and every motion is a real interval. When
+/// the caller supplied harmony without a realisation, they are **pitch
+/// classes** and motion is measured in pitch-class space, folded to the
+/// shortest signed distance. That is deliberate: inventing octaves for a chord
+/// the caller never voiced would invent a voice leading and then report it as
+/// an observation. [`WrapObservation::has_real_pitches`] says which space the
+/// numbers live in.
 #[derive(Clone, Debug, Default)]
 pub struct WrapObservation {
+    /// True when the numbers are MIDI pitches rather than pitch classes.
+    pub has_real_pitches: bool,
     /// Function of the loop's last chord.
     pub final_function: Option<HarmonicFunction>,
     /// Function of the loop's first chord.
@@ -378,9 +389,9 @@ pub struct WrapObservation {
     pub final_symbol: Option<String>,
     /// Symbol of the first chord, for the report text.
     pub first_symbol: Option<String>,
-    /// Sounding MIDI pitches at the loop end, ascending.
+    /// Sounding pitches at the loop end, ascending.
     pub end_pitches: Vec<i32>,
-    /// Sounding MIDI pitches at the loop start, ascending.
+    /// Sounding pitches at the loop start, ascending.
     pub start_pitches: Vec<i32>,
     /// Lowest sounding pitch at the loop end.
     pub bass_end: Option<i32>,
@@ -517,8 +528,8 @@ pub fn connect(from: &[i32], to: &[i32]) -> (Vec<(i32, i32)>, i32, i32) {
     // dp[i][j] = cheapest way to map from[i..] onto to[j..], monotonically.
     let mut dp = vec![vec![inf; m + 1]; n + 1];
     let mut choice = vec![vec![0usize; m + 1]; n + 1];
-    for j in 0..=m {
-        dp[n][j] = 0;
+    for slot in dp[n].iter_mut() {
+        *slot = 0;
     }
     for i in (0..n).rev() {
         for j in (0..m).rev() {
@@ -551,6 +562,46 @@ pub fn connect(from: &[i32], to: &[i32]) -> (Vec<(i32, i32)>, i32, i32) {
     (pairs, total, max)
 }
 
+/// The shortest signed distance from one pitch class to another, `-6..=6`.
+pub fn folded_distance(from: i32, to: i32) -> i32 {
+    let d = (to - from).rem_euclid(12);
+    if d > 6 {
+        d - 12
+    } else {
+        d
+    }
+}
+
+/// The connection between two pitch-class sets.
+///
+/// Used when the caller supplied chords without a realisation. Each source
+/// pitch class moves to its nearest target by the shortest signed distance,
+/// with ties broken toward the lower target so the answer is deterministic.
+/// The returned pairs are `(from_pc, from_pc + delta)`, so `to - from` reads as
+/// the signed motion and `to % 12` reads as the destination pitch class,
+/// exactly as it does for real pitches.
+pub fn connect_pitch_classes(from: &[i32], to: &[i32]) -> (Vec<(i32, i32)>, i32, i32) {
+    if from.is_empty() || to.is_empty() {
+        return (Vec::new(), 0, 0);
+    }
+    let mut pairs = Vec::with_capacity(from.len());
+    for f in from {
+        let mut best = folded_distance(*f, to[0]);
+        let mut best_target = to[0];
+        for t in &to[1..] {
+            let d = folded_distance(*f, *t);
+            if d.abs() < best.abs() || (d.abs() == best.abs() && *t < best_target) {
+                best = d;
+                best_target = *t;
+            }
+        }
+        pairs.push((*f, *f + best));
+    }
+    let total = pairs.iter().map(|(a, b)| (a - b).abs()).sum();
+    let max = pairs.iter().map(|(a, b)| (a - b).abs()).max().unwrap_or(0);
+    (pairs, total, max)
+}
+
 /// True when some non-crossing connection moves every voice by at most a whole
 /// step.
 pub fn stepwise_connection_available(from: &[i32], to: &[i32]) -> bool {
@@ -561,8 +612,8 @@ pub fn stepwise_connection_available(from: &[i32], to: &[i32]) -> bool {
     let m = to.len();
     let inf = i32::MAX / 4;
     let mut dp = vec![vec![inf; m + 1]; n + 1];
-    for j in 0..=m {
-        dp[n][j] = 0;
+    for slot in dp[n].iter_mut() {
+        *slot = 0;
     }
     for i in (0..n).rev() {
         for j in (0..m).rev() {
@@ -632,12 +683,12 @@ fn unresolved_tendencies(
 }
 
 /// True when the note behaves as a pedal or drone.
+///
+/// Either it is declared one, or it sustains for the whole loop, which is what
+/// a drone does. A merely long note is not a drone: a bass note holding three
+/// quarters of a bar is still a bass note.
 fn is_pedal(note: &Note, span: &LoopSpan) -> bool {
-    if note.role == NoteRole::Pedal {
-        return true;
-    }
-    let half = span.length().scale(1, 2);
-    half.is_positive() && note.duration >= half
+    note.role == NoteRole::Pedal || (span.length().is_positive() && note.duration >= span.length())
 }
 
 /// Percussion phase metadata, when the material has percussion at all.
@@ -821,34 +872,97 @@ pub fn observe(
         _ => false,
     };
 
-    // Real notes are preferred; chords give a nominal close position when the
-    // caller supplied harmony without a realisation.
-    o.end_pitches = final_sonority(notes, span);
-    if o.end_pitches.is_empty() {
-        if let Some(c) = final_chord {
-            o.end_pitches = nominal_pitches(&c.spec);
-        }
-    }
-    o.start_pitches = initial_sonority(notes, span);
-    if o.start_pitches.is_empty() {
-        if let Some(c) = first_chord {
-            o.start_pitches = nominal_pitches(&c.spec);
-        }
+    // Real notes are preferred. When either side has none, both sides drop to
+    // pitch-class space rather than having octaves invented for them.
+    let real_end = final_sonority(notes, span);
+    let real_start = initial_sonority(notes, span);
+    o.has_real_pitches = !real_end.is_empty() && !real_start.is_empty();
+
+    if o.has_real_pitches {
+        o.end_pitches = real_end;
+        o.start_pitches = real_start;
+    } else {
+        let pcs = |pitches: &[i32], chord: Option<&ChordEvent>| -> Vec<i32> {
+            let mut v: Vec<i32> = if pitches.is_empty() {
+                chord
+                    .map(|c| c.spec.pitch_classes())
+                    .unwrap_or_default()
+                    .iter()
+                    .map(|p| p.rem_euclid(12))
+                    .collect()
+            } else {
+                pitches.iter().map(|p| p.rem_euclid(12)).collect()
+            };
+            v.sort_unstable();
+            v.dedup();
+            v
+        };
+        // The bass pitch class leads, so the reported bass motion is the root
+        // motion the caller actually wrote rather than an artefact of sorting.
+        let order = |mut v: Vec<i32>, bass: Option<i32>| -> Vec<i32> {
+            if let Some(b) = bass {
+                let b = b.rem_euclid(12);
+                if let Some(i) = v.iter().position(|p| *p == b) {
+                    v.remove(i);
+                    v.insert(0, b);
+                }
+            }
+            v
+        };
+        o.end_pitches = order(
+            pcs(&real_end, final_chord),
+            final_chord.map(|c| c.spec.bass_pc()),
+        );
+        o.start_pitches = order(
+            pcs(&real_start, first_chord),
+            first_chord.map(|c| c.spec.bass_pc()),
+        );
     }
 
     o.bass_end = o.end_pitches.first().copied();
     o.bass_start = o.start_pitches.first().copied();
     o.bass_interval = match (o.bass_end, o.bass_start) {
-        (Some(a), Some(b)) => Some(b - a),
+        (Some(a), Some(b)) => Some(if o.has_real_pitches {
+            b - a
+        } else {
+            folded_distance(a, b)
+        }),
         _ => None,
     };
     o.bass_leaps = o.bass_interval.map(|i| i.abs() > 7).unwrap_or(false);
 
-    let (pairs, total, max) = connect(&o.end_pitches, &o.start_pitches);
-    o.total_motion = total;
-    o.max_leap = max;
-    o.stepwise_available = stepwise_connection_available(&o.end_pitches, &o.start_pitches);
-    o.common_tone_retained = pairs.iter().any(|(a, b)| (a - b).rem_euclid(12) == 0);
+    let pairs = if o.has_real_pitches {
+        let (pairs, total, _) = connect(&o.end_pitches, &o.start_pitches);
+        o.total_motion = total;
+        // The bass is judged separately, and reported separately, so it is
+        // excluded from the smoothness measure: a dominant-to-tonic wrap has a
+        // bass leap by construction and that is not a voice-leading fault.
+        let upper_end = if o.end_pitches.len() > 1 {
+            &o.end_pitches[1..]
+        } else {
+            &o.end_pitches[..]
+        };
+        let upper_start = if o.start_pitches.len() > 1 {
+            &o.start_pitches[1..]
+        } else {
+            &o.start_pitches[..]
+        };
+        o.max_leap = connect(upper_end, upper_start).2;
+        o.stepwise_available = stepwise_connection_available(upper_end, upper_start);
+        pairs
+    } else {
+        let mut sorted_end = o.end_pitches.clone();
+        sorted_end.sort_unstable();
+        let mut sorted_start = o.start_pitches.clone();
+        sorted_start.sort_unstable();
+        let (pairs, total, max) = connect_pitch_classes(&sorted_end, &sorted_start);
+        o.total_motion = total;
+        o.max_leap = max;
+        o.stepwise_available = !pairs.is_empty() && max <= 2;
+        pairs
+    };
+    o.common_tone_retained =
+        !pairs.is_empty() && pairs.iter().any(|(a, b)| (a - b).rem_euclid(12) == 0);
 
     let end_pcs: Vec<i32> = o.end_pitches.iter().map(|m| m.rem_euclid(12)).collect();
     let start_pcs: Vec<i32> = o.start_pitches.iter().map(|m| m.rem_euclid(12)).collect();
@@ -862,8 +976,7 @@ pub fn observe(
     o.common_tone_available = !common.is_empty();
     o.common_tone_pcs = common;
 
-    o.unresolved_tendencies =
-        unresolved_tendencies(key, final_chord.map(|c| &c.spec), &pairs);
+    o.unresolved_tendencies = unresolved_tendencies(key, final_chord.map(|c| &c.spec), &pairs);
 
     let pedals: Vec<&Note> = notes
         .notes
@@ -871,15 +984,12 @@ pub fn observe(
         .filter(|n| sounds(n) && is_pedal(n, span))
         .collect();
     o.pedal_active = !pedals.is_empty();
-    o.pedal_continues = pedals.iter().any(|n| {
-        (n.onset < span.end && n.end() > span.end)
-            || (n.end() == span.end
-                && notes.notes.iter().any(|m| {
-                    sounds(m)
-                        && m.onset == span.start
-                        && m.midi.rem_euclid(12) == n.midi.rem_euclid(12)
-                }))
-    }) || pedals.iter().any(|n| is_marked_carry(n));
+    // A drone that ends exactly at the loop end re-articulates on the repeat,
+    // which is the seam this rule exists to catch. Only a pedal that actually
+    // sounds past the loop end continues across the wrap.
+    o.pedal_continues = pedals
+        .iter()
+        .any(|n| n.onset < span.end && n.end() > span.end);
 
     o.percussion = percussion_phase(notes, span);
     let (layers_known, removal) = layer_removal(parts, chords, span);

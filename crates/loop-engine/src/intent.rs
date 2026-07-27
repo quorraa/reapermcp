@@ -209,11 +209,7 @@ fn seam_integrity(i: &SeamIntegrity) -> f64 {
 }
 
 /// Combines named, weighted criteria into a `0.0..=1.0` fit.
-fn combine(
-    intent: LoopIntent,
-    parts: &[(&'static str, f64, f64)],
-    summary: String,
-) -> IntentFit {
+fn combine(intent: LoopIntent, parts: &[(&'static str, f64, f64)], summary: String) -> IntentFit {
     let total_weight: f64 = parts.iter().map(|(_, _, w)| *w).sum();
     let fit = if total_weight <= 0.0 {
         0.0
@@ -324,7 +320,7 @@ pub fn evaluate(intent: LoopIntent, o: &WrapObservation, i: &SeamIntegrity) -> I
         }
 
         LoopIntent::ModalDrone => {
-            let modal = if i.modal { 1.0 } else { 0.25 };
+            let modal = if i.modal { 1.0 } else { 0.1 };
             // Explicitly *not* a criterion: a dominant-to-tonic wrap. It is
             // subtracted rather than rewarded, because a strong cadence turns a
             // drone into a closed tonal loop.
@@ -348,10 +344,14 @@ pub fn evaluate(intent: LoopIntent, o: &WrapObservation, i: &SeamIntegrity) -> I
             combine(
                 intent,
                 &[
-                    ("modal_center", modal, 0.25),
-                    ("collection_stability", o.collection_stability.max(0.5), 0.20),
+                    ("modal_center", modal, 0.30),
+                    (
+                        "collection_stability",
+                        o.collection_stability.max(0.5),
+                        0.20,
+                    ),
                     ("pedal_or_common_tone", cont, 0.20),
-                    ("seam_smoothness", smooth, 0.20),
+                    ("seam_smoothness", smooth, 0.15),
                     ("non_functional_wrap", non_functional, 0.15),
                 ],
                 summary,
@@ -421,9 +421,9 @@ pub fn evaluate(intent: LoopIntent, o: &WrapObservation, i: &SeamIntegrity) -> I
             combine(
                 intent,
                 &[
-                    ("ends_conclusively", stops, 0.60),
-                    ("self_contained", self_contained, 0.25),
-                    ("length_is_exact", f64::from(i.length_exact), 0.15),
+                    ("ends_conclusively", stops, 0.70),
+                    ("self_contained", self_contained, 0.20),
+                    ("length_is_exact", f64::from(i.length_exact), 0.10),
                 ],
                 summary,
             )
@@ -498,7 +498,11 @@ mod tests {
 
     #[test]
     fn modal_drone_does_not_use_the_functional_wrap_as_a_criterion() {
-        let fit = evaluate(LoopIntent::ModalDrone, &functional_wrap_observation(), &clean());
+        let fit = evaluate(
+            LoopIntent::ModalDrone,
+            &functional_wrap_observation(),
+            &clean(),
+        );
         assert!(
             fit.criteria.iter().all(|(n, _)| *n != "functional_wrap"),
             "modal_drone must not be scored on dominant-to-tonic motion"

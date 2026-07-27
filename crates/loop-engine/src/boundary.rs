@@ -56,7 +56,7 @@ pub const CARRY_MARKS: &[&str] = &[CARRY_MARK, "carry", "tie", "let_ring"];
 /// names: overhanging is a fault *unless* it was asked for.
 pub fn is_marked_carry(note: &Note) -> bool {
     match &note.articulation {
-        Some(a) => CARRY_MARKS.iter().any(|m| *m == a.as_str()),
+        Some(a) => CARRY_MARKS.contains(&a.as_str()),
         None => false,
     }
 }
@@ -320,12 +320,20 @@ pub fn exit_points(notes: &NoteSet, span: &LoopSpan) -> Vec<NoteId> {
 
 /// The span the material actually occupies once the loop region is included.
 ///
-/// A loop whose notes fit exactly reports the requested length; a pickup or an
-/// overhang makes it longer. Returned as an exact [`BeatTime`].
+/// A loop whose notes fit exactly reports the requested length; an anacrusis or
+/// an unintended overhang makes it longer. Notes explicitly marked to carry are
+/// **excluded**: they sound outside the span because someone asked them to, so
+/// counting them would report a deliberate drone as a length fault.
+///
+/// Returned as an exact [`BeatTime`], so the caller compares it with `==`.
 pub fn occupied_length(notes: &NoteSet, span: &LoopSpan) -> BeatTime {
     let mut lo = span.start;
     let mut hi = span.end;
-    for n in notes.notes.iter().filter(|n| sounds(n)) {
+    for n in notes
+        .notes
+        .iter()
+        .filter(|n| sounds(n) && !is_marked_carry(n))
+    {
         lo = lo.min(n.onset);
         hi = hi.max(n.end());
     }
@@ -498,14 +506,23 @@ mod tests {
             LoopIntent::ClosedTonic,
         );
         assert!(!s.is_valid());
-        assert_eq!(s.validate().unwrap_err().code, crate::error::INVALID_LOOP_SPAN);
+        assert_eq!(
+            s.validate().unwrap_err().code,
+            crate::error::INVALID_LOOP_SPAN
+        );
     }
 
     #[test]
     fn wrap_folds_into_the_span() {
         let s = span();
-        assert_eq!(s.wrap(BeatTime::from_quarters(17)), BeatTime::from_quarters(1));
-        assert_eq!(s.wrap(BeatTime::from_quarters(-1)), BeatTime::from_quarters(15));
+        assert_eq!(
+            s.wrap(BeatTime::from_quarters(17)),
+            BeatTime::from_quarters(1)
+        );
+        assert_eq!(
+            s.wrap(BeatTime::from_quarters(-1)),
+            BeatTime::from_quarters(15)
+        );
     }
 
     #[test]
@@ -665,8 +682,14 @@ mod tests {
             let mut b = build();
             apply_boundary_policy(&mut a, &span(), *policy);
             apply_boundary_policy(&mut b, &span(), *policy);
-            let ja: Vec<String> = a.iter().map(|n| n.to_json().to_canonical_string()).collect();
-            let jb: Vec<String> = b.iter().map(|n| n.to_json().to_canonical_string()).collect();
+            let ja: Vec<String> = a
+                .iter()
+                .map(|n| n.to_json().to_canonical_string())
+                .collect();
+            let jb: Vec<String> = b
+                .iter()
+                .map(|n| n.to_json().to_canonical_string())
+                .collect();
             assert_eq!(ja, jb, "policy {}", policy.id());
         }
     }

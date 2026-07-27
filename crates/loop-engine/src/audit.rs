@@ -27,8 +27,8 @@
 //! * `voicing_family` — no single voicing family describes a whole loop.
 
 use crate::boundary::{
-    self, carried_notes, crossing_notes, hanging_notes, occupied_length, pickup_length,
-    tail_length, LoopSpan,
+    carried_notes, crossing_notes, hanging_notes, occupied_length, pickup_length, tail_length,
+    LoopSpan,
 };
 use crate::intent::{self, IntentFit, SeamIntegrity};
 use crate::wrap::{self, KeyFrame, WrapObservation};
@@ -165,6 +165,9 @@ impl LoopAudit {
 ///
 /// Every fact the fourteen looping rules read is set here. See the module
 /// documentation for the two that are deliberately left unset.
+// Each argument is a distinct measurement the caller already computed; bundling
+// them into a struct would only move the same nine values behind a name.
+#[allow(clippy::too_many_arguments)]
 pub fn boundary_context(
     kb: &KnowledgeBase,
     key: &KeyFrame,
@@ -273,11 +276,11 @@ fn harmonic_wrap_text(o: &WrapObservation) -> String {
         (Some(last), Some(first)) => {
             let lf = o
                 .final_function
-                .map(|f| wrap::function_id(f))
+                .map(wrap::function_id)
                 .unwrap_or("unclassified");
             let ff = o
                 .first_function
-                .map(|f| wrap::function_id(f))
+                .map(wrap::function_id)
                 .unwrap_or("unclassified");
             let shape = if lf == "dominant" && ff == "tonic" {
                 "an authentic cadence across the wrap"
@@ -293,6 +296,16 @@ fn harmonic_wrap_text(o: &WrapObservation) -> String {
             format!("{last} ({lf}) to {first} ({ff}): {shape}")
         }
         _ => "no harmony was supplied, so the wrap was judged on the notes alone".to_string(),
+    }
+}
+
+/// Names a value that is a MIDI pitch or a pitch class depending on the space
+/// the observation was taken in.
+fn pitch_name(value: i32, real: bool) -> String {
+    if real {
+        SpelledPitch::from_midi(value, None).to_ascii()
+    } else {
+        SpelledPitch::from_midi(60 + value.rem_euclid(12), None).class_ascii()
     }
 }
 
@@ -313,8 +326,8 @@ fn bass_wrap_text(o: &WrapObservation) -> String {
             };
             format!(
                 "{} to {}, {iv:+} semitones, {quality}",
-                SpelledPitch::from_midi(a, None).to_ascii(),
-                SpelledPitch::from_midi(b, None).to_ascii()
+                pitch_name(a, o.has_real_pitches),
+                pitch_name(b, o.has_real_pitches)
             )
         }
         _ => "no bass material crosses the wrap".to_string(),
@@ -328,8 +341,15 @@ fn voice_leading_wrap_text(o: &WrapObservation) -> String {
     }
     let common = o.common_tone_pcs.len();
     format!(
-        "{} voices into {}, total motion {} semitones, largest move {}, {} common pitch class{}{}",
+        "{} {} into {}, total motion {} semitones, largest upper-voice move {}, {} common pitch \
+         class{}{}",
         o.end_pitches.len(),
+        match (o.has_real_pitches, o.end_pitches.len()) {
+            (true, 1) => "voice",
+            (true, _) => "voices",
+            (false, 1) => "pitch class",
+            (false, _) => "pitch classes",
+        },
         o.start_pitches.len(),
         o.total_motion,
         o.max_leap,
@@ -343,6 +363,20 @@ fn voice_leading_wrap_text(o: &WrapObservation) -> String {
     )
 }
 
+/// Above this much upper-voice motion the wrap is reported as a voice-leading
+/// discontinuity.
+///
+/// A genuinely polyphonic wrap is expected to connect within a third; a single
+/// melodic line crossing the seam is allowed a fifth, because a monophonic
+/// leap of a fourth is a melodic decision rather than a voice-leading fault.
+fn discontinuity_threshold(o: &WrapObservation) -> i32 {
+    if o.end_pitches.len() >= 2 && o.start_pitches.len() >= 2 {
+        4
+    } else {
+        7
+    }
+}
+
 /// Whether phrase analysis marks the final slot as a cadential arrival.
 fn cadence_expected(analysis: Option<&Analysis>, span: &LoopSpan) -> bool {
     match analysis {
@@ -350,8 +384,7 @@ fn cadence_expected(analysis: Option<&Analysis>, span: &LoopSpan) -> bool {
             .grid
             .slots
             .iter()
-            .filter(|s| s.start < span.end && s.end > span.start)
-            .next_back()
+            .rfind(|s| s.start < span.end && s.end > span.start)
             .map(|s| s.is_cadential)
             .unwrap_or(false),
         None => false,
@@ -389,7 +422,13 @@ pub fn audit_detailed(
         ));
     }
 
-    let key = wrap::infer_key(kb, input.notes, input.chords, input.time_map, input.analysis);
+    let key = wrap::infer_key(
+        kb,
+        input.notes,
+        input.chords,
+        input.time_map,
+        input.analysis,
+    );
     let observation = wrap::observe(kb, &key, &span, input.notes, input.chords, input.parts);
 
     let hanging = hanging_notes(input.notes, &span);
@@ -493,11 +532,16 @@ pub fn audit_detailed(
     if tail_qn.is_positive() && hanging.is_empty() && carried.is_empty() {
         findings.push(Warning::new(
             "LOOP_TAIL_PRESENT",
-            format!("{} of material sounds after the loop end", tail_qn.to_display()),
+            format!(
+                "{} of material sounds after the loop end",
+                tail_qn.to_display()
+            ),
             Severity::Info,
         ));
     }
-    if !length_exact {
+    // Reported on its own only when the hanging-note and pickup findings do not
+    // already account for it, so one fault is not counted three times.
+    if !length_exact && hanging.is_empty() && !integrity.pickup {
         findings.push(Warning::new(
             "LOOP_LENGTH_MISMATCH",
             format!(
@@ -523,7 +567,7 @@ pub fn audit_detailed(
     if !observation.end_pitches.is_empty()
         && !observation.start_pitches.is_empty()
         && !observation.stepwise_available
-        && observation.max_leap > 4
+        && observation.max_leap > discontinuity_threshold(&observation)
     {
         findings.push(Warning::new(
             "LOOP_VOICE_LEADING_DISCONTINUITY",
@@ -600,7 +644,7 @@ pub fn audit_detailed(
             },
         ));
     }
-    if fit.fit < 0.5 {
+    if fit.fit < COMPATIBLE_THRESHOLD {
         findings.push(Warning::new(
             "LOOP_INTENT_MISMATCH",
             format!("for {} intent, {}", span.intent.id(), fit.summary),
@@ -625,16 +669,28 @@ pub fn audit_detailed(
         ));
     }
 
+    // Compatibility is always relative to the declared intent: the material
+    // has to both serve the intent and survive the seam intact. A high overall
+    // score cannot rescue a loop that is wrong for what the caller asked for,
+    // and a good intent fit cannot rescue a hanging note.
     let compatible = if one_shot {
-        // A stinger is meant to stop; it is judged on doing that well.
+        // A stinger is meant to stop; it is judged on doing that well, and its
+        // wrap is not scored at all.
         fit.fit >= COMPATIBLE_THRESHOLD && length_exact
     } else {
-        score >= COMPATIBLE_THRESHOLD && hanging.is_empty() && length_exact
+        score >= COMPATIBLE_THRESHOLD
+            && fit.fit >= COMPATIBLE_THRESHOLD
+            && hanging.is_empty()
+            && length_exact
     };
 
     let evidence = 0.4
         + if input.chords.is_empty() { 0.0 } else { 0.2 }
-        + if input.notes.notes.is_empty() { 0.0 } else { 0.2 };
+        + if input.notes.notes.is_empty() {
+            0.0
+        } else {
+            0.2
+        };
     let confidence = (evidence + 0.2 * key.confidence).clamp(0.0, 1.0);
 
     let mut report = LoopReport {
