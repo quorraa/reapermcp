@@ -379,10 +379,15 @@ The script is at:
 opens. Never assume `%APPDATA%\REAPER`: portable installations are supported,
 and the bridge resolves its own location at runtime.
 
-**The bridge must be running for every project operation.** `reaper.status`,
+**The bridge must be running for every project operation.**
 `reaper.inspect_selection`, `reaper.stage_candidate`, `commit`, `discard` and
 `undo` all fail with `BRIDGE_OFFLINE` when it is not. Theory search, fixture
 analysis and candidate generation from an existing snapshot do not need it.
+
+`reaper.status` is the exception, deliberately: it **succeeds** with no bridge
+running and answers `"bridge_connected": false` with a `bridge_offline` or
+`bridge_not_configured` warning, so a client can diagnose the problem instead of
+retrying blindly. It is the right first call of any session.
 
 The bridge is a single-instance, `defer()`-driven polling loop. It writes a
 heartbeat once a second, holds `bridge.lock`, and sets its own toolbar toggle
@@ -461,7 +466,8 @@ carries protocol bytes only.
 Steps 10–12 are the only ones that write anything, and every one of them is
 reversible.
 
-Every tool, argument, output and error is documented in `docs/MCP_API.md`.
+Every tool, argument, output and error is documented in
+[`docs/MCP_API.md`](docs/MCP_API.md).
 
 ---
 
@@ -617,7 +623,7 @@ The short version. The honest, complete version is
 | [`docs/MUSIC_IR.md`](docs/MUSIC_IR.md) | The musical domain model, type by type and field by field |
 | [`docs/THEORY_MODEL.md`](docs/THEORY_MODEL.md) | Rule kinds, predicates, profiles, chord semantics, how to add a rule safely |
 | [`docs/RESEARCH_AND_PROVENANCE.md`](docs/RESEARCH_AND_PROVENANCE.md) | Source policy, registry, licensing posture, paraphrasing policy, confidence |
-| `docs/MCP_API.md` | Every tool, resource, prompt, argument, output and error |
+| [`docs/MCP_API.md`](docs/MCP_API.md) | Every tool, resource, prompt, argument, output and error |
 | [`docs/REAPER_BRIDGE.md`](docs/REAPER_BRIDGE.md) | The Lua bridge: IPC, snapshots, hashing, tagging, undo, recovery, logs |
 | [`docs/INSTALL_WINDOWS.md`](docs/INSTALL_WINDOWS.md) | Step-by-step Windows 11 + REAPER 7.x installation |
 | [`docs/SECURITY.md`](docs/SECURITY.md) | Threat model, trust boundaries, retention, recovery |

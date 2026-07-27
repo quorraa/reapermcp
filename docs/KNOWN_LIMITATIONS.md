@@ -28,6 +28,8 @@ This is not a roadmap. It is a description of version 1.0.0 as built.
 16. [Analysis limits](#16-analysis-limits)
 17. [Platform and packaging limits](#17-platform-and-packaging-limits)
 18. [Explicitly deferred](#18-explicitly-deferred)
+19. [`StateChangeCount` as a staging precondition](#19-statechangecount-as-a-staging-precondition)
+20. [Parallel unisons are under-reported in one list](#20-parallel-unisons-are-under-reported-in-one-list)
 
 ---
 
@@ -179,10 +181,18 @@ options, and you will get near-neighbours because that is what exists.
 ## 7. The bridge must be running
 
 Every operation that touches your project requires `QLabs_Reaper_MCP_Bridge.lua`
-to be running as an action inside REAPER: `reaper.status`,
-`reaper.inspect_selection`, `reaper.stage_candidate`,
-`reaper.commit_candidate`, `reaper.discard_candidate` and
-`reaper.undo_last_generation`. Without it they fail with `BRIDGE_OFFLINE`.
+to be running as an action inside REAPER: `reaper.inspect_selection`,
+`reaper.stage_candidate`, `reaper.commit_candidate`,
+`reaper.discard_candidate` and `reaper.undo_last_generation`. Without it they
+fail with `BRIDGE_OFFLINE`.
+
+`reaper.status` is the deliberate exception: it succeeds either way, answering
+`"bridge_connected": false` with a `bridge_offline` or `bridge_not_configured`
+warning. Reporting whether the bridge is up is the whole point of it, so
+failing when the bridge is down would make it useless precisely when it is
+needed. Everything that does not touch your project — `theory.search`,
+`music.analyze_selection` and the generation tools operating on an existing
+snapshot, and every CLI subcommand — works with no bridge at all.
 
 There is no way around this and it is not an oversight. REAPER exposes no
 network API, no IPC endpoint and no headless mode that would let an external
@@ -458,6 +468,47 @@ virtual-instrument selection · preset browsing · cloud inference · remote
 project control · a native C++ REAPER extension · microtonal generation beyond
 retaining a future-compatible cents field · music-notation engraving ·
 orchestration sample-library management.
+
+## 19. `StateChangeCount` as a staging precondition
+
+Every edit plan carries REAPER's project state-change counter among its seven
+preconditions, alongside the project UUID, the item and take GUIDs, the MIDI
+hash, the tempo-map hash and the item bounds.
+
+That counter increments on **any** project edit — including a mere selection
+change. So a perfectly benign interaction between generating a candidate and
+staging it, a click on another track, a nudge of the edit cursor that REAPER
+counts, can move the counter and produce a `PROJECT_CHANGED` / `STALE_SNAPSHOT`
+rejection for material that did not actually change.
+
+Nothing is lost when this happens: preconditions are evaluated before any object
+is created, so a rejected plan writes nothing at all. The safe response is
+always the same one the error's own `remedy` gives — call
+`reaper.inspect_selection` again and regenerate. The regenerated candidate is
+deterministic, so on genuinely unchanged material you get the same music back.
+
+This is a **precision** problem, not a **safety** problem: the precondition is
+too eager, never too permissive. If it proves noisy in real use, that one
+precondition is the candidate for removal. The content hashes — `midi_hash`,
+`tempo_map_hash`, `snapshot_hash` — are the substantive guard, and they change
+only when the material does.
+
+## 20. Parallel unisons are under-reported in one list
+
+`harmony-engine`'s voice-leading report omits parallel unisons from its
+`parallels` list. The list excludes zero-interval motion, so two voices moving
+in parallel at the unison are simply not recorded there.
+
+The rule still fires. `counterpoint.no_parallel_unisons` is evaluated normally,
+matches normally, and applies its penalty normally, so the **score is correct**
+and the **explanation is correct** — the rule appears in `rule_applications`
+with its `score_delta` and its matched conditions, and `candidate.explain`
+reports it like any other.
+
+The consequence is narrow but real: a client reading the `parallels` array
+directly, in a voicing result or a voice-leading audit, should not treat it as
+the complete record of parallel motion. The rule applications are. Where the two
+appear to disagree about unisons, the rule applications are right.
 
 ---
 
