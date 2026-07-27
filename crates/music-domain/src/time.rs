@@ -641,9 +641,9 @@ impl TimeMap {
     pub fn new(tempos: Vec<TempoEvent>, meters: Vec<MeterEvent>) -> TimeMap {
         let mut tempos = tempos;
         let mut meters = meters;
-        tempos.sort_by(|a, b| a.qn.cmp(&b.qn));
+        tempos.sort_by_key(|a| a.qn);
         tempos.dedup_by(|a, b| a.qn == b.qn);
-        meters.sort_by(|a, b| a.qn.cmp(&b.qn));
+        meters.sort_by_key(|a| a.qn);
         meters.dedup_by(|a, b| a.qn == b.qn);
 
         if tempos.is_empty() {
@@ -818,9 +818,8 @@ impl TimeMap {
         if end <= start {
             return out;
         }
-        let mut bar = self.bar_of(start);
-        // Guard against a pathological map producing zero-length bars.
-        for _ in 0..MAX_GRID_STEPS {
+        // Bounded to guard against a pathological map producing zero-length bars.
+        for bar in (self.bar_of(start)..).take(MAX_GRID_STEPS) {
             let p = self.bar_start(bar);
             if p >= end {
                 break;
@@ -832,7 +831,6 @@ impl TimeMap {
             if next <= p {
                 break;
             }
-            bar += 1;
         }
         out
     }

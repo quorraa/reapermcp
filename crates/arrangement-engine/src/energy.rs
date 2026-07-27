@@ -127,7 +127,7 @@ pub fn resolve_curve(
             curve.push((s.start, s.energy.clamp(0.0, 1.0)));
             curve.push((s.end, s.energy.clamp(0.0, 1.0)));
         }
-        curve.sort_by(|a, b| a.0.cmp(&b.0));
+        curve.sort_by_key(|a| a.0);
         return curve;
     }
     default_curve(span, profile)

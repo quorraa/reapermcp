@@ -39,8 +39,10 @@ jobs:
       - name: Format
         run: cargo fmt --all --check
 
+      # --keep-going so a lint failure in one crate does not hide the lints in
+      # every crate downstream of it; one run reports the whole workspace.
       - name: Clippy
-        run: cargo clippy --workspace --all-targets --all-features --offline -- -D warnings
+        run: cargo clippy --workspace --all-targets --all-features --offline --keep-going -- -D warnings
 
       - name: Test
         run: cargo test --workspace --all-features --offline

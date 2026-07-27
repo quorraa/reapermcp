@@ -75,7 +75,7 @@ fn a_pulse_states_only_the_root() {
     assert!(!part.polyphonic);
     // One sounding pitch at a time: no note starts before the previous ends.
     let mut sorted = part.notes.clone();
-    sorted.sort_by(|a, b| a.onset.cmp(&b.onset));
+    sorted.sort_by_key(|a| a.onset);
     for w in sorted.windows(2) {
         assert!(
             w[0].end() <= w[1].onset,

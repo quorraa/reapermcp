@@ -92,7 +92,7 @@ fn check(plan: &ArrangementPlan, label: &str) {
         }
         if !part.polyphonic {
             let mut sorted = part.notes.clone();
-            sorted.sort_by(|a, b| a.onset.cmp(&b.onset));
+            sorted.sort_by_key(|a| a.onset);
             for w in sorted.windows(2) {
                 assert!(
                     !w[0].overlaps(&w[1]),
