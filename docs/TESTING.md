@@ -51,11 +51,16 @@ cargo run -p xtask -- check-all                       # knowledge, schemas, fixt
 cd reaper && lua5.4 tests/run_tests.lua               # the REAPER bridge suite
 ```
 
+> **The Lua interpreter is named `lua5.4` on Debian and Ubuntu**, which is what
+> CI installs. Elsewhere it is usually plain `lua` — the official Windows build
+> installs `lua.exe`, so on Windows run `lua tests/run_tests.lua`.
+> `validate-release.ps1` tries both.
+
 **Measured results**, from running these in this repository:
 
 | Suite | Result |
 |---|---|
-| `cargo test --workspace` | **1926 passed, 0 failed**, across 45 test binaries and doc-test targets |
+| `cargo test --workspace` | **2239 passed, 0 failed**, across 50 test binaries and doc-test targets |
 | `lua5.4 tests/run_tests.lua` | **184 passed, 0 failed, 0 skipped**, across 8 suites |
 | In-REAPER smoke test | **28 passed, 0 failed** on REAPER 7.78/x64 (Windows 11) |
 
@@ -64,18 +69,22 @@ Per-crate Rust totals:
 | Crate | Tests |
 |---|---|
 | `reaper-ipc` | 330 |
+| `reaper-music-mcp` | 306 |
 | `harmony-engine` | 299 |
 | `music-analysis` | 275 |
 | `music-domain` | 260 |
-| `arrangement-engine` | 218 |
+| `arrangement-engine` | 225 |
 | `theory-kb` | 202 |
 | `qjson` | 169 |
 | `loop-engine` | 156 |
 | `xtask` | 17 |
+| **total** | **2239** |
 
 (Counts include each crate's unit tests, its integration test binaries and its
-doc-tests. `reaper-music-mcp` is counted with the MCP protocol tests in
-[§9](#9-mcp-protocol-tests).)
+doc-tests. `reaper-music-mcp`'s 306 are the MCP protocol tests described in
+[§9](#9-mcp-protocol-tests); they are listed here too, because
+`cargo test --workspace` runs them and the table has to add up to what that
+command reports.)
 
 ---
 
@@ -379,11 +388,12 @@ byte.
 
 ```sh
 cd reaper
-lua5.4 tests/run_tests.lua
+lua5.4 tests/run_tests.lua     # Debian/Ubuntu
+lua tests/run_tests.lua        # Windows, macOS, and anywhere else
 ```
 
 **184 cases across 8 suites, 0 failures.** No REAPER and no external Lua package
-required.
+required. Measured on Lua 5.4.6.
 
 | Suite | Cases | Covers |
 |---|---|---|
@@ -410,8 +420,16 @@ One suite asserts that the mock host exposes every `reaper.*` function the
 bridge calls, so the mock cannot fall behind the code.
 
 **Installing Lua on Windows** is not required to use the product. If you want to
-run this suite, install Lua 5.4 and put `lua5.4` (or `lua`) on `PATH`;
-`validate-release.ps1` reports a clear **SKIP**, not a pass, when it is missing.
+run this suite:
+
+```powershell
+winget install --id DEVCOM.Lua --exact
+```
+
+That installs Lua 5.4.6 to `%LOCALAPPDATA%\Programs\Lua\bin` and puts it on
+`PATH` as **`lua`** — there is no `lua5.4` executable on Windows, so use
+`lua tests/run_tests.lua`. `validate-release.ps1` tries `lua5.4` first, falls
+back to `lua`, and reports a clear **SKIP**, not a pass, when neither is found.
 
 ---
 
@@ -434,11 +452,11 @@ Because this build does not use the official MCP SDK (decision D1), **MCP
 conformance is verified here rather than inherited**. That makes this suite
 load-bearing in a way it would not otherwise be.
 
-> At the time this document was written, `crates/reaper-music-mcp` was still
-> being implemented and contributed **0** tests to the 1926 total reported
-> above. The counts in [Quick start](#quick-start) are from a run in that state.
-> Re-run `cargo test --workspace` for the current figure. `docs/MCP_API.md`
-> documents the surface these tests exercise.
+> When this document was first written, `crates/reaper-music-mcp` was still
+> being implemented and contributed **0** tests, which is why the total then
+> read 1926. It now contributes **306** across 7 binaries, and the counts in
+> [Quick start](#quick-start) have been re-measured to include them.
+> `docs/MCP_API.md` documents the surface these tests exercise.
 
 ---
 

@@ -294,7 +294,7 @@ separately as **`qlabs-reaper-ipc/1`**; the bridge is version **`1.0.0`**.
 ## Build
 
 Requirements: a stable Rust toolchain (edition 2021, `rust-version` 1.85) and,
-if you want to run the bridge test suite, `lua5.4`. Nothing else. No network.
+if you want to run the bridge test suite, Lua 5.4. Nothing else. No network.
 
 ```sh
 cargo build --workspace --release
@@ -310,8 +310,13 @@ cargo fmt --all --check
 cargo clippy --workspace --all-targets -- -D warnings
 cargo test --workspace
 cargo run -p xtask -- check-all          # knowledge, schemas, fixtures
-cd reaper && lua5.4 tests/run_tests.lua  # 184 bridge cases, mock REAPER host
+cd reaper && lua tests/run_tests.lua     # 184 bridge cases, mock REAPER host
 ```
+
+The Lua interpreter is `lua5.4` on Debian and Ubuntu, which is what CI uses,
+and plain `lua` everywhere else including the official Windows build
+(`winget install --id DEVCOM.Lua`). `scripts\validate-release.ps1` runs every
+gate above and tries both names.
 
 See [`docs/TESTING.md`](docs/TESTING.md) for every test group, the golden-fixture
 regeneration commands, and the coverage ledger.
