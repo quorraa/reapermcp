@@ -544,8 +544,20 @@ actually happened, including where a result was a considered "no".
    hands a script its command id only when it was run as a registered action,
    and reports **`-1`** otherwise, so a command-line launch never lit the
    toolbar button. The bridge now recovers the id from the registration REAPER
-   itself wrote in `reaper-kb.ini`; a CLI launch takes the toggle from `0` to
-   `1` like an action launch does.
+   itself wrote in `reaper-kb.ini`, and the full cycle was measured for a
+   command-line launch:
+
+   | Stage | Heartbeat | Toggle |
+   |---|---|---|
+   | before launch | offline | `0` |
+   | launched from the command line | online | `1` |
+   | shut down | offline | `0` |
+
+   The shutdown was forced by removing `bridge.lock`, so the bridge took the
+   "another instance took the lock" route. That is a different trigger from
+   running the action a second time, but it converges on the same
+   `atexit` → `cleanup()` → `set_toggle(0)` sequence, and the log confirms
+   `atexit` ran rather than the script dying.
 3. **[run]** Select one MIDI melody item, or notes in the MIDI editor.
 4. **[run]** The MCP client calls `reaper.status` — answered `bridge_connected`,
    bridge 1.0.0, REAPER 7.78/x64.
