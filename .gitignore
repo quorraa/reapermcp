@@ -15,3 +15,7 @@ Thumbs.db
 
 # Packaging output
 /dist/
+
+# Python bytecode from the examples
+__pycache__/
+*.pyc
