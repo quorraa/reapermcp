@@ -190,7 +190,7 @@ function Copy-Tracked {
     param(
         [Parameter(Mandatory = $true)][string] $Source,
         [Parameter(Mandatory = $true)][string] $Target,
-        [Parameter(Mandatory = $true)][System.Collections.ArrayList] $Tracker
+        [Parameter(Mandatory = $true)][AllowEmptyCollection()][System.Collections.ArrayList] $Tracker
     )
     if (-not (Test-Path -LiteralPath $Source -PathType Leaf)) {
         throw "Source file not found: $Source"
