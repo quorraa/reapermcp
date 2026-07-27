@@ -7,9 +7,9 @@ Two things to know before reading further:
 1. **The in-REAPER smoke test has now been executed**, on Windows 11 with
    REAPER 7.78/x64: **28 passed, 0 failed**, and the manual acceptance
    walkthrough has been run alongside it. See
-   [§10](#10-the-in-reaper-smoke-test--executed). Two of its sixteen steps are
-   qualified rather than clean — the natural-language request in step 7 and the
-   Actions-list registration in step 2 — and are marked there individually.
+   [§10](#10-the-in-reaper-smoke-test--executed). One of its sixteen steps is
+   qualified rather than clean — the natural-language request in step 7 — and is
+   marked there individually.
 2. **Everything else runs offline.** The workspace has zero external
    dependencies and the knowledge bundle is compiled in, so no test needs a
    network, a DAW, or any external package beyond `lua5.4` for the bridge suite.
@@ -527,9 +527,22 @@ the brief is a manual sequence. It has now been performed against REAPER
 actually happened. Two remain qualified rather than clean, and say so.
 
 1. **[run]** Open REAPER.
-2. **[run]** Run `QLabs_Reaper_MCP_Bridge.lua`. *(Started via
-   `reaper.exe -nonewinst <script>` rather than the Actions list; the Actions-list
-   registration path in [§how to run it](#how-to-run-it) is itself still unrun.)*
+2. **[run]** Run `QLabs_Reaper_MCP_Bridge.lua`, registered through
+   *Actions → Show action list → New action → Load ReaScript* exactly as
+   [§how to run it](#how-to-run-it) describes. REAPER wrote the registration to
+   `reaper-kb.ini` — a file that did not previously exist, so nothing had ever
+   been registered — and running the action brought the bridge online with a
+   fresh `pid_token` and `uptime_seconds` reset to 0. `doctor` then reported
+   14/14, and a full `status` -> `inspect` -> `analyze` -> `generate` -> `stage`
+   -> `discard` round trip ran against it.
+
+   Two things this path shows that a command-line launch does not. Running the
+   action while an instance is already live raises REAPER's *ReaScript task
+   control* dialog (terminate / new instance / cancel) rather than starting a
+   second bridge. And the toolbar toggle only works here: the script reads its
+   command id from `reaper.get_action_context()`, which is `0` for a
+   command-line launch, so `set_toggle` is a no-op and a CLI-started bridge
+   never lights its toolbar button.
 3. **[run]** Select one MIDI melody item, or notes in the MIDI editor.
 4. **[run]** The MCP client calls `reaper.status` — answered `bridge_connected`,
    bridge 1.0.0, REAPER 7.78/x64.
