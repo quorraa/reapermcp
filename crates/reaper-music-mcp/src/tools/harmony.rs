@@ -243,23 +243,48 @@ pub fn generate_candidates(
     );
 
     if let Some(ids) = core.with_store(|s| s.cached(&key, ctx.now)) {
-        let records: Vec<CandidateRecord> = core.with_store(|s| {
+        // A cached candidate still remembers the snapshot it was generated
+        // from. Staging derives its preconditions from that record, so serving
+        // the hit unchanged would bind the plan to a superseded snapshot and
+        // make every stage after the first fail with PROJECT_CHANGED. The hit
+        // proves the music is identical; re-point the candidates at the
+        // snapshot the caller actually holds. See
+        // SessionStore::rebind_candidates.
+        //
+        // Guard on project identity: the snapshot hash covers the material and
+        // the object identities, but the cache should never carry a candidate
+        // across into a different project.
+        let same_project = core.with_store(|s| {
             ids.iter()
-                .filter_map(|id| s.candidate(id, ctx.now).ok().cloned())
-                .collect()
+                .filter_map(|id| s.candidate(id, ctx.now).ok())
+                .all(|c| {
+                    s.snapshot(&c.snapshot_id, ctx.now)
+                        .map(|prev| prev.snapshot.project_uuid == record.snapshot.project_uuid)
+                        .unwrap_or(false)
+                })
         });
-        if records.len() == ids.len() {
-            crate::log::debug("serving candidates from the generation cache");
-            return Ok(candidate_list_body(
-                core,
-                Some(&record.snapshot.snapshot_id),
-                Some(&analysis.id),
-                &params.profile_id,
-                params.seed,
-                true,
-                &records,
-                Vec::new(),
-            ));
+        if same_project {
+            core.with_store(|s| {
+                s.rebind_candidates(&ids, &record.snapshot.snapshot_id, &analysis.id, ctx.now)
+            });
+            let records: Vec<CandidateRecord> = core.with_store(|s| {
+                ids.iter()
+                    .filter_map(|id| s.candidate(id, ctx.now).ok().cloned())
+                    .collect()
+            });
+            if records.len() == ids.len() {
+                crate::log::debug("serving candidates from the generation cache");
+                return Ok(candidate_list_body(
+                    core,
+                    Some(&record.snapshot.snapshot_id),
+                    Some(&analysis.id),
+                    &params.profile_id,
+                    params.seed,
+                    true,
+                    &records,
+                    Vec::new(),
+                ));
+            }
         }
     }
 

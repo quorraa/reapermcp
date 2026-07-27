@@ -266,6 +266,13 @@ impl<T> Bucket<T> {
         self.entries.get(id).is_some_and(|e| e.expires_at > now)
     }
 
+    fn get_mut(&mut self, id: &str, now: i64) -> Option<&mut T> {
+        match self.entries.get_mut(id) {
+            Some(e) if e.expires_at > now => Some(&mut e.value),
+            _ => None,
+        }
+    }
+
     fn ids(&self, now: i64) -> Vec<String> {
         self.entries
             .iter()
@@ -382,6 +389,39 @@ impl SessionStore {
     /// Reads a candidate.
     pub fn candidate(&self, id: &str, now: i64) -> Result<&CandidateRecord, ToolError> {
         self.candidates.get(id, now)
+    }
+
+    /// Re-points cached candidates at the snapshot the caller just took.
+    ///
+    /// A candidate remembers the snapshot it came from, and
+    /// [`crate::staging::build_plan`] derives the plan's preconditions from that
+    /// record — including `project_state_change_count`, which is a volatile
+    /// property of the *project*, not of the *music*.
+    ///
+    /// The generation cache deliberately keys on the snapshot **hash**, so a
+    /// re-inspection of unmodified material hits and the engine is not re-run.
+    /// Left alone, that hit would hand back candidates still bound to the first
+    /// snapshot, whose state-change count is now behind the project — and since
+    /// staging itself increments that counter, every stage after the first would
+    /// fail with `PROJECT_CHANGED`, unfixable by re-inspecting.
+    ///
+    /// Re-binding is sound precisely because the cache hit proves the snapshot
+    /// hashes are equal, and that hash covers the MIDI, the tempo map, the
+    /// object identities and the item bounds. Only the volatile counter differs.
+    /// Callers must still confirm the project identity matches.
+    pub fn rebind_candidates(
+        &mut self,
+        ids: &[String],
+        snapshot_id: &str,
+        analysis_id: &str,
+        now: i64,
+    ) {
+        for id in ids {
+            if let Some(record) = self.candidates.get_mut(id, now) {
+                record.snapshot_id = snapshot_id.to_string();
+                record.analysis_id = analysis_id.to_string();
+            }
+        }
     }
 
     // ---- plans -----------------------------------------------------------
@@ -632,6 +672,46 @@ mod tests {
         assert_eq!(store.cached(&key, 1), Some(vec!["c1".to_string()]));
         let changed = SessionStore::cache_key("fnv1a64:bbbb", "p", "{}", "kh", 1);
         assert_eq!(store.cached(&changed, 1), None);
+    }
+
+    /// A cached candidate must follow the caller to the current snapshot.
+    ///
+    /// Staging derives its preconditions from the snapshot a candidate is bound
+    /// to, and one of them is `project_state_change_count` — a property of the
+    /// project, not of the music. Staging increments it. So a cache hit that
+    /// kept the original binding would make every stage after the first fail
+    /// with `PROJECT_CHANGED`, and re-inspecting could never clear it, because
+    /// regenerating returns the same cached candidate.
+    #[test]
+    fn a_cached_candidate_is_rebound_to_the_current_snapshot() {
+        let mut store = SessionStore::new();
+        store.put_candidate(candidate("c1"), 0);
+        assert_eq!(store.candidate("c1", 1).unwrap().snapshot_id, "s");
+
+        store.rebind_candidates(&["c1".to_string()], "snap-2", "an-2", 1);
+
+        let rec = store.candidate("c1", 1).unwrap();
+        assert_eq!(rec.snapshot_id, "snap-2");
+        assert_eq!(rec.analysis_id, "an-2");
+    }
+
+    #[test]
+    fn rebinding_ignores_ids_that_are_gone() {
+        let mut store = SessionStore::new();
+        store.put_candidate(candidate("c1"), 0);
+        // An expired or unknown id must not panic and must not resurrect.
+        store.rebind_candidates(
+            &["c1".to_string(), "nope".to_string()],
+            "snap-2",
+            "an-2",
+            CANDIDATE_TTL_SECONDS + 1,
+        );
+        assert!(store.candidate("nope", 1).is_err());
+        assert_eq!(
+            store.candidate("c1", 1).unwrap().snapshot_id,
+            "s",
+            "an expired candidate must not be rebound"
+        );
     }
 
     #[test]
