@@ -4,10 +4,10 @@ Every test group in this repository, what it covers, and how to run it.
 
 Two things to know before reading further:
 
-1. **The in-REAPER smoke test has NOT been executed.** No REAPER host was
-   available in the build environment. See
-   [§10](#10-the-in-reaper-smoke-test--not-executed). Nothing else in this
-   document implies otherwise.
+1. **The in-REAPER smoke test has now been executed**, on Windows 11 with
+   REAPER 7.78/x64: **28 passed, 0 failed**. See
+   [§10](#10-the-in-reaper-smoke-test--executed). Parts of the manual acceptance
+   walkthrough in that section remain unrun, and are marked there individually.
 2. **Everything else runs offline.** The workspace has zero external
    dependencies and the knowledge bundle is compiled in, so no test needs a
    network, a DAW, or any external package beyond `lua5.4` for the bridge suite.
@@ -26,7 +26,7 @@ Two things to know before reading further:
 - [7. Cross-language mock-REAPER fixtures](#7-cross-language-mock-reaper-fixtures)
 - [8. The REAPER Lua bridge suite](#8-the-reaper-lua-bridge-suite)
 - [9. MCP protocol tests](#9-mcp-protocol-tests)
-- [10. The in-REAPER smoke test — NOT EXECUTED](#10-the-in-reaper-smoke-test--not-executed)
+- [10. The in-REAPER smoke test — EXECUTED](#10-the-in-reaper-smoke-test--executed)
 - [Regenerating generated test data](#regenerating-generated-test-data)
 - [Continuous integration](#continuous-integration)
 - [Writing a new test](#writing-a-new-test)
@@ -57,7 +57,7 @@ cd reaper && lua5.4 tests/run_tests.lua               # the REAPER bridge suite
 |---|---|
 | `cargo test --workspace` | **1926 passed, 0 failed**, across 45 test binaries and doc-test targets |
 | `lua5.4 tests/run_tests.lua` | **184 passed, 0 failed, 0 skipped**, across 8 suites |
-| In-REAPER smoke test | **not executed — no REAPER host available** |
+| In-REAPER smoke test | **28 passed, 0 failed** on REAPER 7.78/x64 (Windows 11) |
 
 Per-crate Rust totals:
 
@@ -442,25 +442,36 @@ load-bearing in a way it would not otherwise be.
 
 ---
 
-## 10. The in-REAPER smoke test — NOT EXECUTED
+## 10. The in-REAPER smoke test — EXECUTED
 
 ```text
 reaper/QLabs_Reaper_MCP_Smoke_Test.lua
 ```
 
-### Status: NOT EXECUTED
+### Status: EXECUTED — 28 passed, 0 failed
 
-**This test has not been run.** No REAPER host was available in the build
-environment — there is no REAPER installation, no GUI, and no way to load a
-ReaScript. Nothing in this repository, this document, the README or the
-CHANGELOG claims that it passed, and it must not be described as passing until
-someone has actually run it inside REAPER and seen the output.
+| | |
+|---|---|
+| Host | REAPER **7.78/x64**, Windows 11 Pro (26200) |
+| Bridge | 1.0.0, IPC protocol `qlabs-reaper-ipc/1` |
+| Result | **28 passed, 0 failed** |
+| Script | run **unmodified**, in a fresh project tab, `ALLOW_MODIFY_THIS_PROJECT` left `false` |
 
-Everything the bridge does is covered by the 184 mock-host cases in
-[§8](#8-the-reaper-lua-bridge-suite), and the mock implements a real undo
-journal rather than a stub. But a mock is a model of REAPER, and only REAPER is
-REAPER. Until this script has been run against a real host, the REAPER-facing
-behaviour is **verified against a model, not against the product**.
+Every group in the script passed: setup, inspection, staging, source integrity,
+ownership tags, undo and cleanup. The checks that matter most for the safety
+claims all held against the real host —
+
+- the source take still held its 4 notes afterwards, with an **unchanged MIDI
+  hash** and unchanged item bounds;
+- the source item carried **no** QLabs ownership tag;
+- every generated track, item and take carried matching tags, and every required
+  `P_EXT` tag was present;
+- the top undo entry was the owned transaction, and **one** undo removed every
+  generated track while the source survived.
+
+The 184 mock-host cases in [§8](#8-the-reaper-lua-bridge-suite) remain the
+detailed coverage; this run is what establishes that the model and the product
+agree. The REAPER-facing behaviour is no longer verified only against a model.
 
 ### How to run it
 
@@ -491,33 +502,43 @@ that the script will create and delete tracks and items in the open project.
 ### The manual acceptance walkthrough
 
 The smoke test is automated-ish but narrow. The full acceptance workflow from
-the brief is a manual sequence, and it has **not** been performed either, for
-the same reason. It is written down here so that whoever has a REAPER host can
-run it:
+the brief is a manual sequence. It has now been **partially** performed against
+REAPER 7.78/x64, driving the real `serve` binary over stdio. Steps are marked
+with what actually happened; the unmarked ones are still unrun and must not be
+described as passing.
 
-1. Open REAPER.
-2. Run `QLabs_Reaper_MCP_Bridge.lua`.
-3. Select one MIDI melody item, or notes in the MIDI editor.
-4. The MCP client calls `reaper.status`.
-5. The MCP client calls `reaper.inspect_selection`.
-6. The MCP client calls `music.analyze_selection`.
-7. Ask for: *"Create three harmonizations. Preserve the melody and timing. Make
-   one warm and extended, one dark and modal, and one chromatic. Add bass and a
-   restrained countermelody. Keep the eight-bar region loopable."*
-8. Confirm the server produces three genuinely different candidates, preserves
-   the source melody, explains each candidate, reports score components, reports
-   applied theory rules and sources, and audits the loop.
-9. Select one candidate.
-10. `reaper.stage_candidate` creates new tagged tracks and MIDI items.
-11. **Confirm the original MIDI item is unchanged.**
-12. Edit the source, then try to stage again — confirm the stale snapshot is
-    rejected.
-13. `reaper.discard_candidate` removes only that candidate.
-14. Stage again and `reaper.commit_candidate` — confirm the chosen generated
-    tracks are preserved.
-15. `reaper.undo_last_generation` undoes only the owned current transaction.
-16. Perform an unrelated REAPER action, then try undo again — confirm the
-    unrelated entry is never undone.
+1. **[run]** Open REAPER.
+2. **[run]** Run `QLabs_Reaper_MCP_Bridge.lua`. *(Started via
+   `reaper.exe -nonewinst <script>` rather than the Actions list; the Actions-list
+   registration path in [§how to run it](#how-to-run-it) is itself still unrun.)*
+3. **[run]** Select one MIDI melody item, or notes in the MIDI editor.
+4. **[run]** The MCP client calls `reaper.status` — answered `bridge_connected`,
+   bridge 1.0.0, REAPER 7.78/x64.
+5. **[run]** The MCP client calls `reaper.inspect_selection`.
+6. **[run]** The MCP client calls `music.analyze_selection`.
+7. **[partial]** Three candidates were requested via explicit tool arguments
+   (`candidate_count: 3`, `loop_intent: "closed_tonic"`), **not** via the
+   natural-language request quoted in the brief. The countermelody option was
+   not exercised.
+8. **[run]** Three genuinely different candidates, melody preserved, each with
+   score components, applied rule ids and source ids; `loop.audit` returned a
+   substantive finding. Candidate ordering, scores and chord symbols were
+   **byte-identical** to the same music run through `generate-fixture` offline,
+   on two different pieces — the REAPER path and the pure-engine path agree.
+9. **[run]** Select one candidate.
+10. **[run]** `reaper.stage_candidate` created a folder plus tagged
+    melody/harmony/bass tracks and MIDI items.
+11. **[run]** The original MIDI item was unchanged.
+12. **[NOT RUN]** Edit the source, then try to stage again — stale-snapshot
+    rejection is **not** yet verified against a real host.
+13. **[run]** `reaper.discard_candidate` removed only that candidate's objects
+    (3 items, 4 tracks, 0 retained).
+14. **[NOT RUN]** `reaper.commit_candidate` has **not** been exercised against a
+    real host.
+15. **[partial]** `undo_last_generation` was verified inside the smoke test at
+    the bridge level, but **not** through the MCP tool against a real host.
+16. **[NOT RUN]** Unrelated-action undo protection (`UNDO_NOT_OWNED`) is **not**
+    yet verified against a real host.
 
 ---
 

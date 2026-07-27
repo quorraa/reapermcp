@@ -609,9 +609,10 @@ The short version. The honest, complete version is
   the remaining 32 are declared pending, not silently missing.
 - **Source licences are marked `unverified-reference-only`**, because the build
   had no network access to verify them.
-- **The in-REAPER smoke test has not been executed**, because no REAPER host was
-  available in the build environment. See
-  [`docs/TESTING.md`](docs/TESTING.md).
+- **The in-REAPER smoke test has been executed** on REAPER 7.78/x64 (Windows 11):
+  **28 passed, 0 failed**. Parts of the manual acceptance walkthrough — stale-snapshot
+  rejection, `commit_candidate`, and unrelated-action undo protection — remain
+  unrun against a real host. See [`docs/TESTING.md`](docs/TESTING.md).
 
 ---
 
