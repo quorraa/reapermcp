@@ -188,10 +188,15 @@ fn the_committed_ledger_is_current() {
         return;
     }
 
-    let on_disk = std::fs::read_to_string(ledger_path()).expect(
-        "tests/test_id_coverage.json must exist; \
-         regenerate with THEORY_KB_WRITE_COVERAGE=1",
-    );
+    // Line endings normalized: `.gitattributes` checks this file out with LF,
+    // but a stray `core.autocrlf` should not fail a comparison that is about
+    // coverage drift rather than whitespace.
+    let on_disk = std::fs::read_to_string(ledger_path())
+        .expect(
+            "tests/test_id_coverage.json must exist; \
+             regenerate with THEORY_KB_WRITE_COVERAGE=1",
+        )
+        .replace("\r\n", "\n");
     assert_eq!(
         on_disk, text,
         "the coverage ledger has drifted; regenerate with \

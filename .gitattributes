@@ -1,0 +1,20 @@
+# Normalize every text file to LF in the repository and on checkout.
+#
+# Golden analyses and knowledge records are compared byte for byte against
+# canonically serialized JSON, which uses LF. Without this, a Windows checkout
+# rewrites them to CRLF and the comparison fails for a reason that has nothing
+# to do with the analysis. Lua and Rust sources are equally happier with one
+# line ending everywhere.
+* text=auto eol=lf
+
+# PowerShell is the one exception: some older hosts are unhappy with LF-only
+# scripts, and .editorconfig already declares CRLF for them.
+*.ps1 text eol=crlf
+
+# Never touch binary content.
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.exe binary

@@ -84,7 +84,7 @@ fn every_fixture_analyses_and_matches_its_golden() {
             std::fs::write(&path, &text).expect("the golden must be writable");
             continue;
         }
-        let on_disk = std::fs::read_to_string(&path).unwrap_or_else(|_| {
+        let on_disk = read_golden(&path).unwrap_or_else(|_| {
             panic!(
                 "the fixture {} has no committed golden at {}; \
                  generate it with MUSIC_ANALYSIS_WRITE_GOLDENS=1 \
@@ -103,12 +103,21 @@ fn every_fixture_analyses_and_matches_its_golden() {
     }
 }
 
+/// Reads a committed golden, normalizing line endings.
+///
+/// `.gitattributes` checks these files out with LF everywhere, but a stray
+/// `core.autocrlf` setting should not be able to fail a comparison that is
+/// about analysis content rather than about whitespace.
+fn read_golden(path: &std::path::Path) -> std::io::Result<String> {
+    Ok(std::fs::read_to_string(path)?.replace("\r\n", "\n"))
+}
+
 #[test]
 fn goldens_are_valid_canonical_json() {
     let dir = repo_root().join("fixtures/expected");
     for f in fixtures() {
         let path = dir.join(golden_name(&f.id));
-        let Ok(text) = std::fs::read_to_string(&path) else {
+        let Ok(text) = read_golden(&path) else {
             continue;
         };
         let parsed = qjson::Json::parse(text.trim_end()).unwrap_or_else(|e| {
