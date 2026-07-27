@@ -626,6 +626,7 @@ The short version. The honest, complete version is
 | [`docs/MCP_API.md`](docs/MCP_API.md) | Every tool, resource, prompt, argument, output and error |
 | [`docs/REAPER_BRIDGE.md`](docs/REAPER_BRIDGE.md) | The Lua bridge: IPC, snapshots, hashing, tagging, undo, recovery, logs |
 | [`docs/INSTALL_WINDOWS.md`](docs/INSTALL_WINDOWS.md) | Step-by-step Windows 11 + REAPER 7.x installation |
+| [`docs/FIRST_SESSIONS.md`](docs/FIRST_SESSIONS.md) | Ready-to-run scenarios for the first real session in REAPER, with pass criteria |
 | [`docs/SECURITY.md`](docs/SECURITY.md) | Threat model, trust boundaries, retention, recovery |
 | [`docs/TESTING.md`](docs/TESTING.md) | Every test group, how to run it, golden regeneration, the smoke test |
 | [`docs/KNOWN_LIMITATIONS.md`](docs/KNOWN_LIMITATIONS.md) | What this does not do, and where it is weak |
