@@ -535,13 +535,17 @@ actually happened, including where a result was a considered "no".
    14/14, and a full `status` -> `inspect` -> `analyze` -> `generate` -> `stage`
    -> `discard` round trip ran against it.
 
-   Two things this path shows that a command-line launch does not. Running the
-   action while an instance is already live raises REAPER's *ReaScript task
-   control* dialog (terminate / new instance / cancel) rather than starting a
-   second bridge. And the toolbar toggle only works here: the script reads its
-   command id from `reaper.get_action_context()`, which is `0` for a
-   command-line launch, so `set_toggle` is a no-op and a CLI-started bridge
-   never lights its toolbar button.
+   Running the action while an instance is already live raises REAPER's
+   *ReaScript task control* dialog (terminate / new instance / cancel) rather
+   than starting a second bridge — the single-instance guard at REAPER's level
+   rather than the lock's.
+
+   This step also exposed the toolbar-toggle gap. `reaper.get_action_context()`
+   hands a script its command id only when it was run as a registered action,
+   and reports **`-1`** otherwise, so a command-line launch never lit the
+   toolbar button. The bridge now recovers the id from the registration REAPER
+   itself wrote in `reaper-kb.ini`; a CLI launch takes the toggle from `0` to
+   `1` like an action launch does.
 3. **[run]** Select one MIDI melody item, or notes in the MIDI editor.
 4. **[run]** The MCP client calls `reaper.status` — answered `bridge_connected`,
    bridge 1.0.0, REAPER 7.78/x64.

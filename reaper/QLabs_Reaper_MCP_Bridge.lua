@@ -87,8 +87,15 @@ local bridge_mod = _G.QLABS_bridge
 
 local toolbar = { section = nil, command = nil }
 
+-- A command id of 0 means "not an action"; a command-line launch reports -1.
+-- Both must be rejected, or SetToggleCommandState is called with an id that
+-- names nothing.
+local function toolbar_usable()
+  return type(toolbar.command) == "number" and toolbar.command > 0
+end
+
 local function set_toggle(value)
-  if toolbar.command == nil or toolbar.command == 0 then return end
+  if not toolbar_usable() then return end
   if reaper.SetToggleCommandState then
     reaper.SetToggleCommandState(toolbar.section, toolbar.command, value)
   end
@@ -97,9 +104,56 @@ local function set_toggle(value)
   end
 end
 
+-- REAPER only tells a script its own command id when it was run as a registered
+-- action. Launched any other way — from the command line, or via dofile — it
+-- reports -1, and the toolbar button would never light even though the bridge
+-- is up.
+--
+-- When that happens, recover the id from the registration REAPER itself wrote
+-- in reaper-kb.ini and resolve it with NamedCommandLookup. This only reads the
+-- file, never writes it, and matches on the registered script's own filename so
+-- an unrelated entry cannot be picked up. Every failure path leaves the toggle
+-- alone, which is exactly the behaviour before this existed: a bridge with no
+-- resolvable action id simply does not drive a button.
+local function lookup_registered_command()
+  if not (reaper.GetResourcePath and reaper.NamedCommandLookup) then return nil, nil end
+  local want = SCRIPT_PATH:match("([^/\\]+)$")
+  if want == nil or want == "" then return nil, nil end
+
+  local kb = io.open(reaper.GetResourcePath() .. "/reaper-kb.ini", "r")
+  if not kb then return nil, nil end
+
+  local found_section, found_command
+  for line in kb:lines() do
+    if line:sub(1, 4) == "SCR " then
+      -- SCR <flags> <section> <id> "<description>" <path-under-Scripts>
+      local section, id, path = line:match('^SCR%s+%S+%s+(%S+)%s+(%S+)%s+"[^"]*"%s+(.+)$')
+      if path then
+        local base = path:gsub("%s+$", ""):match("([^/\\]+)$")
+        if base == want then
+          local command = reaper.NamedCommandLookup("_" .. id)
+          if type(command) == "number" and command > 0 then
+            found_section, found_command = tonumber(section) or 0, command
+            break
+          end
+        end
+      end
+    end
+  end
+  kb:close()
+  return found_section, found_command
+end
+
 if reaper.get_action_context then
   local _, _, section, command = reaper.get_action_context()
   toolbar.section, toolbar.command = section, command
+end
+
+if not toolbar_usable() then
+  local ok_lookup, section, command = pcall(lookup_registered_command)
+  if ok_lookup and command then
+    toolbar.section, toolbar.command = section, command
+  end
 end
 
 --------------------------------------------------------------------------------

@@ -398,9 +398,13 @@ them reached `harmony.reharmonize`, `voicing.generate`, `arrangement.generate`,
 `theory.search` and the `candidate://{id}/trace` resource for the first time
 outside the unit suites.
 
-One note worth keeping: the toolbar toggle works only when the bridge is
-launched as an action, because `reaper.get_action_context()` reports command id
-`0` for a command-line launch.
+Both notes from that round have since been fixed, and are described in the two
+commits that did it. In short: the toolbar toggle used to work only when the
+bridge was launched as a registered action, because `get_action_context()`
+reports `-1` to a script started any other way; the bridge now recovers its
+command id from the registration REAPER wrote in `reaper-kb.ini`. And the
+shipped scripts used to resolve `lib/` strictly beside themselves, so a copy run
+from elsewhere failed to load.
 
 The three shipped scripts used to resolve `lib/` strictly beside themselves, so
 a copy run from anywhere else failed to load. They now fall back to the
