@@ -537,7 +537,10 @@ pub const PREDICATE_TABLE: &[(&str, &str)] = &[
     ("key_is_minor", "the key is minor"),
     ("leading_tone_resolves_up_by_step", "the leading tone rises a half step to the tonic"),
     ("leap_is_followed_by_step_in_opposite_direction", "the leap is recovered by a step in the opposite direction"),
-    ("loop_length_is_exact", "the generated span is exactly the requested loop length"),
+    (
+        "loop_length_is_not_exact",
+        "the generated span differs from the requested loop length",
+    ),
     ("melody_is_11", "the eleventh is in the melody"),
     ("melody_is_altered_tone", "the melody note is an altered degree of the chord"),
     ("melody_is_at_phrase_end", "the note ends its phrase"),
@@ -1015,12 +1018,15 @@ pub fn evaluate_predicate(name: &str, ctx: &RuleContext) -> Result<Tri, KbError>
         }),
         // Exact rational comparison, never a float epsilon: both facts come
         // from `BeatTime`, whose values are exact.
-        "loop_length_is_exact" => asserted.or_else(|| {
+        // Stated in the negative so the length invariant fires when the span has
+        // drifted, rather than when it is correct. Exact rational comparison,
+        // never a float epsilon: both facts come from `BeatTime`.
+        "loop_length_is_not_exact" => asserted.or_else(|| {
             num_pair(
                 ctx,
                 facts::GENERATED_LENGTH_QN,
                 facts::REQUESTED_LOOP_LENGTH_QN,
-                |got, want| got == want,
+                |got, want| got != want,
             )
         }),
         "is_loop_wrap_boundary" | "pickup_is_present" | "pedal_continues_across_wrap" => asserted,
@@ -1957,11 +1963,13 @@ mod tests {
         let exact = RuleContext::new()
             .with_num(facts::GENERATED_LENGTH_QN, 32.0)
             .with_num(facts::REQUESTED_LOOP_LENGTH_QN, 32.0);
-        assert_eq!(t("loop_length_is_exact", &exact), Tri::True);
+        // Stated in the negative: the invariant must fire on drift, not on
+        // correctness. A matching length is therefore False, not True.
+        assert_eq!(t("loop_length_is_not_exact", &exact), Tri::False);
         let off = RuleContext::new()
             .with_num(facts::GENERATED_LENGTH_QN, 32.0 + f64::EPSILON * 32.0)
             .with_num(facts::REQUESTED_LOOP_LENGTH_QN, 32.0);
-        assert_eq!(t("loop_length_is_exact", &off), Tri::False);
+        assert_eq!(t("loop_length_is_not_exact", &off), Tri::True);
     }
 
     #[test]

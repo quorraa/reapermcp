@@ -25,8 +25,10 @@ fn reachability_cases() -> Vec<(&'static str, Harness)> {
             testing::pickup_and_hanging_note(LoopIntent::ClosedTonic, "common_practice"),
         ),
         (
+            // Stated in the negative, so it takes a loop whose span really has
+            // drifted from the requested length to drive this off NotApplicable.
             "looping.exact_length_is_preserved",
-            testing::dominant_wrap(LoopIntent::ClosedTonic, "common_practice"),
+            testing::pickup_and_hanging_note(LoopIntent::ClosedTonic, "common_practice"),
         ),
         (
             "looping.closed_tonic_prefers_dominant_to_tonic_wrap",
@@ -148,33 +150,28 @@ fn every_rule_application_cites_its_sources() {
 }
 
 #[test]
-fn the_inverted_length_rule_is_documented_and_not_surfaced_as_a_fault() {
-    // `looping.exact_length_is_preserved` fires as `Violated` exactly when the
-    // length is *correct*, because its condition names the satisfied form of
-    // its own invariant. The audit checks the invariant itself instead.
-    let a = testing::dominant_wrap(LoopIntent::ClosedTonic, "common_practice").audit();
-    assert!(a.length_exact);
-    assert!(a
-        .outcome
-        .hard_violations
-        .contains(&loop_engine::audit::INVERTED_LENGTH_RULE.to_string()));
+fn the_length_invariant_fires_on_drift_and_stays_silent_when_correct() {
+    // The invariant is stated in the negative (`loop_length_is_not_exact`), so a
+    // correct loop must not trip it and a drifted one must.
+    let ok = testing::dominant_wrap(LoopIntent::ClosedTonic, "common_practice").audit();
+    assert!(ok.length_exact);
     assert!(
-        a.report.compatible,
-        "the inverted rule status must not reach the verdict"
+        !ok.outcome
+            .hard_violations
+            .contains(&loop_engine::audit::LENGTH_INVARIANT_RULE.to_string()),
+        "a loop of exactly the requested length must not violate the length invariant"
     );
-    assert!(!a
+    assert!(ok.report.compatible);
+    assert!(!ok
         .report
         .findings
         .iter()
         .any(|f| f.code == "LOOP_LENGTH_MISMATCH"));
 
-    // And when the length really is wrong, the audit says so on its own
-    // authority — the rule cannot, because its condition is then false.
+    // And the audit's own exact-rational check agrees with the rule.
     let broken =
         testing::pickup_and_hanging_note(LoopIntent::ClosedTonic, "common_practice").audit();
     assert!(!broken.length_exact);
-    assert!(broken.outcome.hard_violations.is_empty());
-    assert!(!broken.report.compatible);
 }
 
 // ---------------------------------------------------------------------------

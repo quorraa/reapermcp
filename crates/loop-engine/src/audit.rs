@@ -41,21 +41,18 @@ use theory_kb::RuleEvent;
 /// Score at or above which a loop is reported as compatible with its intent.
 pub const COMPATIBLE_THRESHOLD: f64 = 0.6;
 
-/// The knowledge-base rule whose stated condition is the *satisfied* form of
-/// its own invariant.
+/// The knowledge-base rule stating the exact-loop-length invariant.
 ///
 /// `looping.exact_length_is_preserved` is a `mathematical_invariant` carrying a
-/// `-1000` effect, and its single condition is `loop_length_is_exact` — the
-/// predicate that is true when the length is *correct*. The rule engine
-/// therefore reports it as `Violated` precisely when nothing is wrong, and can
-/// never report it when the length has actually drifted.
+/// `-1000` effect. Its condition is `loop_length_is_not_exact`, so it reports
+/// `Violated` when the generated span has drifted from the requested length,
+/// which is the direction an invariant must fire in.
 ///
-/// This crate still executes the rule with honest facts, because suppressing it
-/// would hide the defect. It does not, however, let that inverted status reach
-/// the report: the length invariant is checked here with exact [`BeatTime`]
-/// equality, which is the guarantee the product actually needs. The knowledge
-/// defect is recorded rather than worked around silently.
-pub const INVERTED_LENGTH_RULE: &str = "looping.exact_length_is_preserved";
+/// The audit also checks the invariant here with exact [`BeatTime`] equality
+/// rather than relying on the rule alone: the report needs the answer even when
+/// no rule context has been built, and an exact rational comparison is the
+/// guarantee the product actually makes.
+pub const LENGTH_INVARIANT_RULE: &str = "looping.exact_length_is_preserved";
 
 /// Everything the audit reads.
 pub struct LoopInput<'a> {

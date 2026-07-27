@@ -241,7 +241,7 @@ data readable.
 
 | Predicate id | Meaning | Rules using it |
 | --- | --- | --- |
-| `role_is_bass` | The part's arrangement role is bass. | 6 |
+| `role_is_bass` | The part's arrangement role is bass. | 5 |
 | `role_is_lead` | The part's arrangement role is lead. | 3 |
 | `role_is_pad_or_sustained` | The part's role is pad, texture or ambience. | 6 |
 | `part_density_exceeds_role_target` | Onsets per bar exceed the pattern's density budget. | 2 |
@@ -270,7 +270,7 @@ data readable.
 | `pickup_is_present` | Material sounds before the first downbeat of the loop. | 1 |
 | `pedal_continues_across_wrap` | A pedal tone is sounding on both sides of the wrap. | 1 |
 | `harmonic_rhythm_changes_at_wrap` | The slot length before the wrap differs from the one after it. | 1 |
-| `loop_length_is_exact` | The generated span equals the requested loop length exactly. | 1 |
+| `loop_length_is_not_exact` | The generated span differs from the requested loop length. Exact logical negation of `loop_length_is_exact`; the length invariant needs the negative form so it fires on drift rather than on correctness. | 1 |
 
 #### Integrity
 
@@ -294,7 +294,7 @@ data readable.
 | --- | --- | --- |
 | `candidate_duplicates_existing_strategy` | A candidate matches an already-selected candidate on root motion, functional path, modal source and bass contour. | 1 |
 
-**Total: 116 predicates, all of them used by at least one rule (396 total references, average 3.4 uses per predicate).**
+**Total: 116 predicates, all of them used by at least one rule (395 total references).**
 
 This count is enforced, not asserted: `RuleEngine::known_predicates()` must equal the set
 of predicates the rule data actually uses, in both directions, and a predicate appearing in
