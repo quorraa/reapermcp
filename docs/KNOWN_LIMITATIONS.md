@@ -30,6 +30,7 @@ This is not a roadmap. It is a description of version 1.0.0 as built.
 18. [Explicitly deferred](#18-explicitly-deferred)
 19. [`StateChangeCount` as a staging precondition](#19-statechangecount-as-a-staging-precondition)
 20. [Parallel unisons are under-reported in one list](#20-parallel-unisons-are-under-reported-in-one-list)
+21. [What a script can and cannot do to a plugin](#21-what-a-script-can-and-cannot-do-to-a-plugin)
 
 ---
 
@@ -536,6 +537,61 @@ The consequence is narrow but real: a client reading the `parallels` array
 directly, in a voicing result or a voice-leading audit, should not treat it as
 the complete record of parallel motion. The rule applications are. Where the two
 appear to disagree about unisons, the rule applications are right.
+
+## 21. What a script can and cannot do to a plugin
+
+[§4](#4-no-plugins-no-instruments-no-sound) says this product does not read or
+write plugin state, by design. Building the worked example in
+[`examples/five-genres/`](../examples/five-genres/) established that much of it
+is also **not possible** from a ReaScript, which is worth recording so the next
+person does not spend a day rediscovering it.
+
+Measured against REAPER 7.78/x64 with Surge XT 1.3.4 as a VST3, each result
+confirmed by rendering audio rather than by trusting a return value:
+
+| Route | Result |
+|---|---|
+| `TrackFX_SetPreset` with an `.fxp` | returns **false** — `.fxp` is the VST2 format |
+| `TrackFX_SetPreset` with a built `.vstpreset` | returns **true**, audio unchanged |
+| `TrackFX_SetNamedConfigParm(…, "vst_chunk", …)` | returns **true**, read-back byte-identical |
+| Editing the plugin chunk inside the `.RPP` | loads, then audio unchanged |
+| MIDI bank select + program change | ignored |
+| `TrackFX_SetParamNormalized` | **works** |
+
+So a script can configure an instrument parameter by parameter, and cannot
+install a preset. An example that wants a specific sound must build it from
+parameters. Note the pattern in the middle three rows: **three separate calls
+report success and change nothing.** Anything automating a plugin has to verify
+against rendered audio; return values are not evidence here.
+
+Three measurement traps sit alongside this, all of which produced confidently
+wrong numbers before they were understood:
+
+- **A clipped render reports its peak as `-0.0 dBFS`** however far past full
+  scale it actually went. Any loop that adjusts gain until the peak reaches a
+  target has no gradient to follow while the signal is clipping, and will
+  converge on nothing. Give the source headroom first, or render to float.
+- **A limiter anywhere in the measured path breaks gain staging.** Balancing
+  assumes moving a fader by *x* dB moves the measured level by *x* dB. A limiter
+  clamps whatever arrives, so every measurement is taken through it and every
+  correction is computed from a clamped number.
+- **Identical settings do not produce identical audio.** Surge randomises
+  oscillator phase per render, so the same project rendered twice differed in
+  ~90% of its samples. Comparing waveforms is useless; compare spectra
+  (`timbre.py` in the example does this, and calibrates against a
+  same-settings-twice baseline so "different" means something).
+
+Two REAPER-hosting lessons from the same work, both now in the example's
+`reaper_exec.py`:
+
+- **Do not save a project when closing it.** When a plugin fails to restore its
+  state REAPER substitutes a default instance, and saving then writes that
+  default over the project — silently destroying the instrument that was in the
+  file.
+- **Do not open a project tab per script.** `Main_openProject` with the
+  `noprompt:` prefix loads into the current tab without prompting. Opening a new
+  tab each time means every script that dies leaves an orphan, and REAPER asks
+  about each one when it eventually exits.
 
 ---
 

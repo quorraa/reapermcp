@@ -246,3 +246,14 @@ if __name__ == "__main__":
         print("%-18s %-16s %3.0f bpm  %d/%d  %2d bars  %2d notes  profile=%s" % (
             s["id"], s["genre"], s["tempo"], s["meter"][0], s["meter"][1],
             s["bars"], len(s["notes"]), s["profile"]))
+
+
+# The melodies are composed rather than listed. Hand-written note lists gave
+# every song the same plod: on-beat quarters and halves stepping around a
+# scale, no motif, no phrase shape, no rests. Harmonising that produces a
+# well-dressed dull tune, which under-sells the engine the example exists to
+# show. See melody.py for how the lines are built.
+import melody  # noqa: E402  (imported late: melody reads a song dict)
+
+for _song in SONGS:
+    _song["notes"] = melody.for_song(_song)
