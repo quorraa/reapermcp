@@ -30,7 +30,7 @@ This is not a roadmap. It is a description of version 1.0.0 as built.
 18. [Explicitly deferred](#18-explicitly-deferred)
 19. [`StateChangeCount` as a staging precondition](#19-statechangecount-as-a-staging-precondition)
 20. [Parallel unisons are under-reported in one list](#20-parallel-unisons-are-under-reported-in-one-list)
-21. [What a script can and cannot do to a plugin](#21-what-a-script-can-and-cannot-do-to-a-plugin)
+21. [Driving a plugin from a script](#21-driving-a-plugin-from-a-script)
 
 ---
 
@@ -538,31 +538,49 @@ directly, in a voicing result or a voice-leading audit, should not treat it as
 the complete record of parallel motion. The rule applications are. Where the two
 appear to disagree about unisons, the rule applications are right.
 
-## 21. What a script can and cannot do to a plugin
+## 21. Driving a plugin from a script
 
 [§4](#4-no-plugins-no-instruments-no-sound) says this product does not read or
 write plugin state, by design. Building the worked example in
-[`examples/five-genres/`](../examples/five-genres/) established that much of it
-is also **not possible** from a ReaScript, which is worth recording so the next
-person does not spend a day rediscovering it.
+[`examples/five-genres/`](../examples/five-genres/) mapped out what is actually
+possible, which is worth recording so the next person does not spend a day
+rediscovering it.
 
-Measured against REAPER 7.78/x64 with Surge XT 1.3.4 as a VST3, each result
-confirmed by rendering audio rather than by trusting a return value:
+Measured against REAPER 7.78/x64 with Surge XT 1.3.4 as a VST3, every result
+confirmed by rendering audio and comparing spectra rather than by trusting a
+return value:
 
 | Route | Result |
 |---|---|
-| `TrackFX_SetPreset` with an `.fxp` | returns **false** — `.fxp` is the VST2 format |
-| `TrackFX_SetPreset` with a built `.vstpreset` | returns **true**, audio unchanged |
-| `TrackFX_SetNamedConfigParm(…, "vst_chunk", …)` | returns **true**, read-back byte-identical |
-| Editing the plugin chunk inside the `.RPP` | loads, then audio unchanged |
-| MIDI bank select + program change | ignored |
+| `TrackFX_SetNamedConfigParm(…, "vst_chunk", …)` | **works**, with two conditions below |
 | `TrackFX_SetParamNormalized` | **works** |
+| `TrackFX_SetPreset` with a built `.vstpreset` | returns **true**, audio unchanged |
+| `TrackFX_SetPreset` with an `.fxp` | returns **false** — `.fxp` is the VST2 format |
+| MIDI bank select + program change | ignored |
 
-So a script can configure an instrument parameter by parameter, and cannot
-install a preset. An example that wants a specific sound must build it from
-parameters. Note the pattern in the middle three rows: **three separate calls
-report success and change nothing.** Anything automating a plugin has to verify
-against rendered audio; return values are not evidence here.
+So a factory patch **can** be installed from a script, by writing the plugin's
+state as a chunk. Two conditions decide whether it sticks:
+
+- **Write it when the plugin is created**, in the same script. Writing to a
+  plugin REAPER restored from a saved project does reach the plugin — it reports
+  the new patch — but the save afterwards records the host's own cached state,
+  so the patch is gone on reload.
+- **Make sure no stale project tab is shadowing the target.** A helper that
+  finds a project by track name will happily match a tab left open by an earlier
+  run, and then everything is done to the wrong project.
+
+This section previously stated the opposite: that no preset could be installed
+by any route. That conclusion was measured honestly but against a **broken
+plugin installation** — a portable Surge extracted by hand, missing three
+quarters of its wavetables, which was also faulting with `0xc0000005` and taking
+REAPER down. None of it survived retesting against a properly installed plugin.
+The lesson worth keeping is not about Surge: **a negative result obtained from a
+damaged environment is not a finding.** Re-run it when the environment changes.
+
+What does still hold is the shape of the failures. `SetPreset` with a
+`.vstpreset` returns success and changes nothing, and so did every write in the
+broken configuration. **Anything automating a plugin has to verify against
+rendered audio; return values are not evidence here.**
 
 Three measurement traps sit alongside this, all of which produced confidently
 wrong numbers before they were understood:
@@ -581,7 +599,7 @@ wrong numbers before they were understood:
   (`timbre.py` in the example does this, and calibrates against a
   same-settings-twice baseline so "different" means something).
 
-Two REAPER-hosting lessons from the same work, both now in the example's
+Four REAPER-hosting lessons from the same work, all now in the example's
 `reaper_exec.py`:
 
 - **Do not save a project when closing it.** When a plugin fails to restore its
@@ -590,8 +608,17 @@ Two REAPER-hosting lessons from the same work, both now in the example's
   file.
 - **Do not open a project tab per script.** `Main_openProject` with the
   `noprompt:` prefix loads into the current tab without prompting. Opening a new
-  tab each time means every script that dies leaves an orphan, and REAPER asks
-  about each one when it eventually exits.
+  tab each time means every script that dies leaves an orphan; the orphans then
+  shadow lookups by track name, hold file locks on old renders, and make REAPER
+  ask about each one when it eventually exits.
+- **To clear a tab without a dialog, load an empty saved project over it.**
+  `noprompt:` discards the contents silently, and what replaces it is
+  unmodified, so the close cannot prompt either. Saving each tab to a throwaway
+  path was the previous approach; it still prompted.
+- **Delete a render before re-rendering to the same path.** REAPER will not
+  overwrite silently — it raises a modal dialog and waits, which blocks every
+  script behind it. The file may also still be held by a project tab that
+  references it, so clear the tab first.
 
 ---
 

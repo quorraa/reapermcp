@@ -19,6 +19,17 @@ SCRATCH = os.path.dirname(os.path.abspath(__file__))
 # blocks every subsequent script.
 DISCARD = os.path.join(SCRATCH, "discard").replace("\\", "/")
 os.makedirs(DISCARD, exist_ok=True)
+
+# An empty, already-saved project. Loading it into a tab with the "noprompt:"
+# prefix discards whatever was there without asking, which leaves the tab
+# holding an unmodified file - so closing it cannot raise a save prompt either.
+# Saving each tab to a throwaway path was the previous approach and it still
+# prompted; this does not.
+_BLANK = os.path.join(DISCARD, "_blank.RPP")
+if not os.path.exists(_BLANK):
+    with open(_BLANK, "w", encoding="utf-8", newline="\n") as _fh:
+        _fh.write('<REAPER_PROJECT 0.1 "7.78" 0\n  TEMPO 120 4 4\n>\n')
+BLANK = _BLANK.replace("\\", "/")
 REAPER = r"C:\Program Files\REAPER (x64)\reaper.exe"
 _seq = [0]
 
@@ -41,7 +52,7 @@ local function findproj(trackname)
   return nil, nil
 end
 local __SWEEP = {sweep}
-local __SCRATCH = [[{scratch}]]
+local __BLANK = [[{blank}]]
 
 -- Sweep up before starting. Closing only the tabs this script opened is not
 -- enough: a script that dies partway - crash, timeout, killed batch - orphans
@@ -54,9 +65,10 @@ local function __discard_tabs(keep)
     local n = 0
     while reaper.EnumProjects(n, "") do n = n + 1 end
     if n <= keep then break end
-    -- Save to a scratch path first: that clears REAPER's "modified" flag, so
-    -- the close raises no dialog, and it never touches the real project file.
-    reaper.Main_SaveProjectEx(0, __SCRATCH .. "/discard_" .. closed .. ".RPP", 0)
+    -- Load an empty saved project over the tab, then close it. "noprompt:"
+    -- discards the current contents silently and what replaces it is
+    -- unmodified, so neither step can raise a dialog.
+    reaper.Main_openProject("noprompt:" .. __BLANK)
     reaper.Main_OnCommand(40860, 0)   -- File: Close current project tab
     closed = closed + 1
   end
@@ -83,6 +95,30 @@ __f:close()
 -- automatic close in between. Call cleanup_tabs() when you actually want it.
 if __SWEEP then __discard_tabs(1) end
 """
+
+
+def remove_render(path, tries=6, wait=2.0):
+    """Delete a previous render, waiting for REAPER to let go of it.
+
+    REAPER will not overwrite a render silently - it raises a modal dialog and
+    waits - so the file has to go first. It can still hold the handle for a
+    moment after finishing, so a single delete attempt raises PermissionError
+    and takes the run down with it.
+    """
+    for attempt in range(tries):
+        if not os.path.exists(path):
+            return True
+        try:
+            os.remove(path)
+            return True
+        except PermissionError:
+            if attempt == tries - 1:
+                print("  could not delete %s; REAPER still holds it" % path)
+                return False
+            time.sleep(wait)
+        except OSError:
+            return False
+    return False
 
 
 def reaper_running():
@@ -118,8 +154,8 @@ def run_lua(body, timeout=45, keep_open=True, sweep_tabs=False):
     log = os.path.join(SCRATCH, "exec_%s.log" % tag)
     indented = "\n".join("  " + ln for ln in body.strip().splitlines())
     with open(script, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(PRELUDE.format(log=log, body=indented, scratch=DISCARD,
-                                sweep="true" if sweep_tabs else "false"))
+        fh.write(PRELUDE.format(log=log, body=indented,
+                                blank=BLANK, sweep="true" if sweep_tabs else "false"))
 
     # Compile-check before handing it to REAPER. A syntax error otherwise shows
     # up as a blocking dialog inside REAPER and a timeout out here, which is a
@@ -179,28 +215,16 @@ def run_lua(body, timeout=45, keep_open=True, sweep_tabs=False):
            else ""))
 
 
-CLEANUP = """
--- Close every project tab except one, whatever left them behind. A run that
--- died partway leaves its tabs open and modified, and REAPER asks about each of
--- them the next time it tries to quit. Saving to a throwaway path clears the
--- modified flag without touching the real project file.
-local closed = 0
-for _ = 1, 64 do
-  local n = 0
-  while reaper.EnumProjects(n, "") do n = n + 1 end
-  if n <= 1 then break end
-  reaper.Main_SaveProjectEx(0, SCRATCH .. "/leftover_" .. closed .. ".RPP", 0)
-  reaper.Main_OnCommand(40860, 0)
-  closed = closed + 1
-end
-say("closed " .. closed .. " leftover project tab(s)")
-"""
+def cleanup_tabs(timeout=300):
+    """Close every project tab except one.
 
-
-def cleanup_tabs(timeout=120):
-    """Close project tabs left behind by earlier runs."""
-    return run_lua("local SCRATCH = [[%s]]\n%s" % (DISCARD, CLEANUP),
-                   timeout=timeout)
+    Runs through the prelude's post-completion sweep rather than as a script
+    body. Closing tabs inside the body terminates the script when it closes the
+    tab it is itself running in, so it never reports finishing and the call
+    times out even though the work was done.
+    """
+    return run_lua('say("sweeping project tabs")', timeout=timeout,
+                   sweep_tabs=True)
 
 
 if __name__ == "__main__":

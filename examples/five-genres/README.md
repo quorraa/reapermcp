@@ -79,10 +79,18 @@ a re-trim.
 
 Two things worth knowing before extending this:
 
-**Instruments are built parameter by parameter, not loaded from presets.** Not a
-stylistic choice — a script *cannot* install a preset into a VST3 here. Three
-different routes report success and change nothing. The measured table is in
-[`KNOWN_LIMITATIONS.md` §21](../../docs/KNOWN_LIMITATIONS.md#21-what-a-script-can-and-cannot-do-to-a-plugin).
+**Instruments are real Surge factory patches**, installed by writing the
+plugin's state as a chunk when the plugin is created. `build_project.py` does
+this per track from the map in `patches.py`; the patch has to be written in the
+same script that creates the plugin, or REAPER's save records its own cached
+state instead. Routes that do *not* work, and the two conditions that make this
+one work, are in
+[`KNOWN_LIMITATIONS.md` §21](../../docs/KNOWN_LIMITATIONS.md#21-driving-a-plugin-from-a-script).
+
+`instruments.py` builds voices from parameters instead, which was the approach
+before factory patches could be loaded. It is kept because it is what proved
+parameter writes reach the audio, and because it works without any patch
+library — but the factory patches sound better and are what the pipeline uses.
 
 **Anything automating a plugin must be verified against rendered audio.** Return
 values, parameter read-backs and plugin state read-backs all reported success

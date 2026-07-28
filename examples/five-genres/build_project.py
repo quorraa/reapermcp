@@ -14,7 +14,7 @@ import os
 import sys
 
 from mcp_driver import Server
-from reaper_exec import run_lua
+from reaper_exec import remove_render, run_lua
 from songs import SONGS, midi, validate
 
 OUT_DIR = os.environ.get("QLABS_SONGS_DIR",
@@ -26,12 +26,35 @@ def lua_str(s):
     return "[[" + s + "]]"
 
 
+BLANK = """<REAPER_PROJECT 0.1 "7.78" 0
+  TEMPO 120 4 4
+>
+"""
+
+
+def blank_project():
+    """Path to an empty project, created on demand.
+
+    Every song is built by loading this into the current tab rather than by
+    opening a new one. Opening a tab per song means they accumulate, closing
+    them means REAPER asks whether to save each one, and leaving them means
+    findproj() can match a stale tab and dress the wrong project. Loading a
+    blank project with the "noprompt:" prefix does none of those things.
+    """
+    path = os.path.join(OUT_DIR, "_blank.RPP")
+    os.makedirs(OUT_DIR, exist_ok=True)
+    if not os.path.exists(path):
+        with open(path, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(BLANK)
+    return path.replace("\\", "/")
+
+
 def build_midi(song):
-    """Create the project tab, the melody track and its MIDI item."""
+    """Load a blank project into the current tab, then write the melody in."""
     beats = song["bars"] * song["meter"][0]
     num, den = song["meter"]
     lines = [
-        "reaper.Main_OnCommand(40859, 0)",
+        'reaper.Main_openProject("noprompt:" .. [[%s]])' % blank_project(),
         "local proj = 0",
         "reaper.SetCurrentBPM(proj, %r, false)" % song["tempo"],
         "reaper.SetTempoTimeSigMarker(proj, -1, 0.0, -1, -1, %r, %d, %d, false)" % (
@@ -121,9 +144,87 @@ ROLE_OF = {
 }
 
 
+def surge_template():
+    """A Surge plugin state to carry each patch, captured from Surge itself.
+
+    Only the instance-specific tail of the state is kept; the patch payload is
+    swapped in. Capturing it here rather than shipping a state blob keeps an
+    opaque 67 kB binary out of the repository, and guarantees it matches the
+    installed plugin version.
+    """
+    cached = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          "surge_chunk.b64")
+    if os.path.exists(cached) and os.path.getsize(cached) > 1024:
+        import base64
+        return base64.b64decode(open(cached).read().strip())
+
+    out = cached.replace("\\", "/")
+    body = """
+reaper.InsertTrackAtIndex(0, true)
+local tr = reaper.GetTrack(0, 0)
+local fx = reaper.TrackFX_AddByName(tr, "VSTi: Surge XT", false, -1)
+if fx < 0 then say("no Surge") return end
+local ok, chunk = reaper.TrackFX_GetNamedConfigParm(tr, fx, "vst_chunk")
+if ok then
+  local fh = io.open(OUT, "w")
+  fh:write(chunk)
+  fh:close()
+  say("captured")
+end
+reaper.DeleteTrack(tr)
+"""
+    try:
+        run_lua("local OUT = [[%s]]\n%s" % (out, body), timeout=300)
+    except Exception as e:
+        print("  %s" % e)
+    if os.path.exists(cached) and os.path.getsize(cached) > 1024:
+        import base64
+        return base64.b64decode(open(cached).read().strip())
+    return None
+
+
+def patch_states(song):
+    """Write each track's Surge state to disk; return the Lua table for them."""
+    try:
+        from patches import ASSIGN, path_for
+        from surge_state import b64, build_state, fxp_payload
+    except Exception as e:                       # library not installed
+        print("  no factory patches (%s); falling back to ReaSynth" % e)
+        return "local PATCH = {}"
+    assign = ASSIGN.get(song["id"])
+    if not assign:
+        return "local PATCH = {}"
+    template = surge_template()
+    if not template:
+        print("  could not capture a Surge state; falling back to ReaSynth")
+        return "local PATCH = {}"
+    import base64
+    live = base64.b64decode(open(template).read().strip())
+    d = os.path.join(OUT_DIR, "patchstate", song["id"])
+    os.makedirs(d, exist_ok=True)
+    lines = ["local PATCH = {}"]
+    for track, (cat, name) in assign.items():
+        try:
+            state = build_state(live, fxp_payload(path_for(cat, name)))
+        except Exception as e:
+            print("  %s: %s" % (track, e))
+            continue
+        path = os.path.join(d, track + ".b64").replace("\\", "/")
+        with open(path, "w") as fh:
+            fh.write(b64(state))
+        lines.append('PATCH["%s"] = [[%s]]' % (track, path))
+    return "\n".join(lines)
+
+
 def dress_and_save(song):
     """Instruments, effect chains, levels, drums, save and render."""
     beats = song["bars"] * song["meter"][0]
+
+    # Remove the previous render first. REAPER will not overwrite silently: it
+    # raises a modal "Files already exist" dialog and waits, which blocks the
+    # script, blocks every script after it, and looks exactly like a hang.
+    remove_render(os.path.join(OUT_DIR, song["id"] + ".wav"))
+
     L = []
     add = L.append
     add("local proj = findproj(%s)" % lua_str(song["title"]))
@@ -131,6 +232,7 @@ def dress_and_save(song):
     add("reaper.SelectProjectInstance(proj)")
 
     # Per-role instrument + timbre + fx + level.
+    add(patch_states(song))
     add("local ROLE = {}")
     for tname, role in ROLE_OF.items():
         if role not in song["timbre"] and role != "lead":
@@ -161,11 +263,32 @@ for t = 0, reaper.CountTracks(proj) - 1 do
       reaper.SetMediaTrackInfo_Value(tr, "B_MUTE", 1)
     else
       if reaper.TrackFX_GetCount(tr) == 0 then
-        local ins = reaper.TrackFX_AddByName(tr, "VSTi: ReaSynth (Cockos)", false, -1)
-        local tb = TIMBRE[role]
-        if ins >= 0 and tb then
-          for pidx, val in pairs(tb) do
-            reaper.TrackFX_SetParamNormalized(tr, ins, pidx, val)
+        -- Surge with a factory patch where one is assigned, ReaSynth otherwise.
+        -- The patch is written here, at the moment the plugin is created, in the
+        -- same script that created the project: writing it to a plugin REAPER
+        -- restored from a saved project reaches the plugin but does not survive
+        -- the next save, because the host writes its own cached state.
+        local ins = -1
+        local patchfile = PATCH[tn]
+        if patchfile then
+          ins = reaper.TrackFX_AddByName(tr, "VSTi: Surge XT", false, -1)
+          if ins >= 0 then
+            local f = io.open(patchfile, "r")
+            if f then
+              local data = f:read("*a")
+              f:close()
+              local ok = reaper.TrackFX_SetNamedConfigParm(tr, ins, "vst_chunk", data)
+              say(string.format("  %-20s patch %s", tn, tostring(ok)))
+            end
+          end
+        end
+        if ins < 0 then
+          ins = reaper.TrackFX_AddByName(tr, "VSTi: ReaSynth (Cockos)", false, -1)
+          local tb = TIMBRE[role]
+          if ins >= 0 and tb then
+            for pidx, val in pairs(tb) do
+              reaper.TrackFX_SetParamNormalized(tr, ins, pidx, val)
+            end
           end
         end
         local chain = FX[role]
@@ -234,7 +357,7 @@ end
     add('reaper.GetSetProjectInfo(proj, "RENDER_ADDTOPROJ", 0, true)')
     add("reaper.Main_OnCommand(41824, 0)")
     add('say("render issued")')
-    return run_lua("\n".join(L), timeout=180)
+    return run_lua("\n".join(L), timeout=900)
 
 
 def build(song):

@@ -21,6 +21,23 @@ def lua_str(s):
     return "[[" + s + "]]"
 
 
+def _clear_previous(song_id):
+    """Delete this song's stems before rendering them again.
+
+    REAPER will not overwrite a render silently - it raises a modal "Files
+    already exist" dialog and waits, which blocks this script and every script
+    after it, and presents as a hang rather than as a question.
+    """
+    if not os.path.isdir(STEM_DIR):
+        return
+    for f in os.listdir(STEM_DIR):
+        if f.startswith(song_id + "__") and f.endswith(".wav"):
+            try:
+                os.remove(os.path.join(STEM_DIR, f))
+            except OSError:
+                pass
+
+
 def render_stems(song_id):
     os.makedirs(STEM_DIR, exist_ok=True)
     # REAPER prompts instead of overwriting, and a modal dialog stalls the whole
@@ -120,6 +137,7 @@ for t = 0, reaper.CountTracks(proj) - 1 do
 end
 say("  levels restored")
 """)
+    _clear_previous(song_id)
     return run_lua("\n".join(L), timeout=1500)
 
 
