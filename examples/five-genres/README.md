@@ -53,6 +53,12 @@ Each stage measures rather than assumes, and each can be run on its own:
 | `track_limiter.py` | limits lead and harmony transients so the mix can sit louder |
 | `crest_report.py` | loudness, peak and crest for every mix |
 
+Run them in that order, and **run `gain_stage.py` once more after the
+compressor and the limiter**. Both add makeup gain after the master trim was
+set, so the mix comes back slightly hot - that is how neo-soul ended a run with
+four clipped samples at -0.0 dBFS. Anything that adds gain has to be followed by
+a re-trim.
+
 Two things worth knowing before extending this:
 
 **Instruments are built parameter by parameter, not loaded from presets.** Not a
