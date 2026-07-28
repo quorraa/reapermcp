@@ -13,8 +13,12 @@ import subprocess
 import time
 
 SCRATCH = os.path.dirname(os.path.abspath(__file__))
-# throwaway projects written only to clear REAPER's "modified" flag
+# Throwaway projects, written only to clear REAPER's "modified" flag before a
+# tab is closed. Created eagerly: REAPER will not make the directory itself, and
+# a save into a missing path raises a modal "Error creating project file" that
+# blocks every subsequent script.
 DISCARD = os.path.join(SCRATCH, "discard").replace("\\", "/")
+os.makedirs(DISCARD, exist_ok=True)
 REAPER = r"C:\Program Files\REAPER (x64)\reaper.exe"
 _seq = [0]
 
@@ -36,7 +40,7 @@ local function findproj(trackname)
   end
   return nil, nil
 end
-local __CLOSE = {close}
+local __SWEEP = {sweep}
 local __SCRATCH = [[{scratch}]]
 
 -- Sweep up before starting. Closing only the tabs this script opened is not
@@ -59,7 +63,7 @@ local function __discard_tabs(keep)
   return closed
 end
 
-if __CLOSE then __discard_tabs(1) end
+if __SWEEP then __discard_tabs(1) end
 local __ntabs = 0
 do
   local pi = 0
@@ -74,13 +78,10 @@ if not __ok then say("LUA_ERROR: " .. tostring(__err)) end
 say("__DONE__")
 __f:close()
 
--- Close every project tab this script opened, so REAPER does not end the
--- session with a hundred of them. Scripts that mean to change a project save it
--- themselves; nothing here writes to a real project file.
---
--- This runs *after* the log is finalised on purpose: closing the tab the script
--- is running in terminates the script, so anything after it may never execute.
-if __CLOSE then __discard_tabs(1) end
+-- Deliberately does not close anything by default. A workflow that spans
+-- several calls - create a project here, inspect it there - is destroyed by an
+-- automatic close in between. Call cleanup_tabs() when you actually want it.
+if __SWEEP then __discard_tabs(1) end
 """
 
 
@@ -94,14 +95,22 @@ def reaper_running():
     return "reaper.exe" in out.lower()
 
 
-def run_lua(body, timeout=45, keep_open=False):
+def run_lua(body, timeout=45, keep_open=True, sweep_tabs=False):
     """Execute `body` in REAPER; return its say() output as a list of lines.
 
-    `keep_open` leaves any project tab the script opened in place. Plugins
-    restore their state asynchronously after a project loads, so anything that
-    inspects plugin state has to open the project in one call and read it in a
-    later one; reading in the same call sees defaults and reports, wrongly, that
-    nothing loaded.
+    Project tabs are left alone unless `sweep_tabs` asks for them to be closed.
+    Two reasons this is not automatic:
+
+    * A workflow can span several calls - build a project in one, let the server
+      inspect it in the next. Closing tabs in between destroys it.
+    * Plugins restore their state asynchronously after a project loads, so
+      reading plugin state in the same call that opened the project sees
+      defaults and reports, wrongly, that nothing loaded. That too needs the
+      project to survive between calls.
+
+    Nothing here creates a tab incidentally: scripts open projects with the
+    `noprompt:` prefix, which loads into the current tab. Call `cleanup_tabs()`
+    when you want the session tidied.
     """
     _seq[0] += 1
     tag = "x%03d_%d" % (_seq[0], int(time.time()))
@@ -110,7 +119,7 @@ def run_lua(body, timeout=45, keep_open=False):
     indented = "\n".join("  " + ln for ln in body.strip().splitlines())
     with open(script, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(PRELUDE.format(log=log, body=indented, scratch=DISCARD,
-                                close="false" if keep_open else "true"))
+                                sweep="true" if sweep_tabs else "false"))
 
     # Compile-check before handing it to REAPER. A syntax error otherwise shows
     # up as a blocking dialog inside REAPER and a timeout out here, which is a

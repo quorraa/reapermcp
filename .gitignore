@@ -19,3 +19,6 @@ Thumbs.db
 # Python bytecode from the examples
 __pycache__/
 *.pyc
+
+# throwaway projects written to clear REAPER's modified flag
+examples/five-genres/discard/

@@ -83,8 +83,23 @@ PLAN = [
     dict(transpose=-1, invert=True,  stretch=1.25),  # inverted, broadened answer
 ]
 
-# Where a phrase comes to rest. Unresolved, unresolved, unresolved, home.
-CADENCE_DEGREE = [4, 1, 6, 0]
+# Where a phrase comes to rest: dominant, tonic, dominant, tonic. The tonic has
+# to be asserted, not merely implied. An earlier version cadenced 5-2-7-1 and
+# opened away from the tonic, and the analyser read the F major ballad as G
+# dorian - the same seven notes with the weight in the wrong place.
+CADENCE_DEGREE = [4, 0, 4, 0]
+
+# Held long, because duration is what makes a pitch read as the tonal centre -
+# and the tonic is held longer than the dominant. Holding both for the same
+# three beats left the F major ballad reading as C mixolydian by a hair: same
+# seven notes, and the dominant had been given equal weight to the tonic.
+CADENCE_BEATS = {0: 3.5, 4: 2.0}
+DEFAULT_CADENCE_BEATS = 2.5
+
+# Silence at the end of each phrase. Phrase detection needs somewhere to put a
+# boundary; a melody that plays continuously reads as one long phrase, and a
+# single phrase collapses the harmonic grid to a single slot.
+PHRASE_REST_BEATS = 1.0
 
 
 def compose(root_midi, mode, bars, beats_per_bar, profile, seed,
@@ -104,7 +119,8 @@ def compose(root_midi, mode, bars, beats_per_bar, profile, seed,
     for p in range(phrases):
         shape = PLAN[p % len(PLAN)]
         base = phrase_beats * p
-        start_degree = 2 if p == 0 else rng.choice([0, 2, 4])
+        # open on the tonic, and return to it or the third thereafter
+        start_degree = 0 if p == 0 else rng.choice([0, 0, 2, 4])
 
         # A developed cell in every bar of the phrase. Stating the motif twice
         # in sixteen beats leaves the melody absent for bars at a time; the
@@ -120,13 +136,13 @@ def compose(root_midi, mode, bars, beats_per_bar, profile, seed,
             elif bar == 1:                    # sequence, one degree higher
                 cell = motif.at(start_degree, shape["transpose"] + 1,
                                 shape["invert"], shape["stretch"])
-            else:                             # fragment: the head of the cell,
-                cell = motif.at(start_degree, shape["transpose"] - 1,   # answered lower
+            else:
+                # Fragment: the head of the cell only, answered a step lower.
+                # Deliberately just two notes - filling every bar with a full
+                # cell makes an unbroken stream, and a melody with no seams
+                # reads to the analyser as a single phrase.
+                cell = motif.at(start_degree, shape["transpose"] - 1,
                                 not shape["invert"], shape["stretch"])[:2]
-                tail = motif.at(start_degree, shape["transpose"] + 2,
-                                shape["invert"], shape["stretch"] * 0.5)[:2]
-                cell = cell + [(d, o + beats_per_bar / 2.0, dur)
-                               for d, o, dur in tail]
             cells.append([(d, o + at, dur) for d, o, dur in cell])
 
         for cell in cells:
@@ -139,35 +155,79 @@ def compose(root_midi, mode, bars, beats_per_bar, profile, seed,
                     midi -= 12
                 while midi < low:
                     midi += 12
-                # Push some notes off the beat. On-beat everything is what made
-                # the previous melodies plod.
-                if rng.random() < 0.35 and dur > 0.5:
+                # Push some notes off the beat - but never the first note of a
+                # phrase. Phrase boundaries score on arrival exactly on a bar
+                # line, so syncopating that one note throws away the strongest
+                # segmentation signal the melody has, and the whole tune comes
+                # back as a single phrase.
+                first_of_phrase = abs(t - base) < 1e-6
+                if not first_of_phrase and rng.random() < 0.35 and dur > 0.5:
                     t += 0.25
                     dur -= 0.25
                 vel = 78 + rng.randint(-6, 10)
                 notes.append([midi, t, max(0.25, dur), vel])
 
-        # the phrase comes to rest, held, so the line punctuates
-        rest_at = base + phrase_beats - 1.5
-        cad = _degree_to_midi(root_midi, scale, CADENCE_DEGREE[p % 4])
+        # The phrase comes to rest on a held note, then stops, so the line
+        # punctuates and the next phrase has somewhere to begin.
+        degree = CADENCE_DEGREE[p % 4]
+        held = CADENCE_BEATS.get(degree, DEFAULT_CADENCE_BEATS)
+        cad_at = base + phrase_beats - held - PHRASE_REST_BEATS
+        cad = _degree_to_midi(root_midi, scale, degree)
         while cad > high:
             cad -= 12
         while cad < low:
             cad += 12
-        notes.append([cad, rest_at, 1.25, 74])
+        notes = [n for n in notes if n[1] + n[2] <= cad_at + 0.01]
+        notes.append([cad, cad_at, held, 76])
 
     # One climax: the highest note of the third phrase is raised so the melody
     # has a single peak, approached by leap and quit by step.
     third = [n for n in notes if phrase_beats * 2 <= n[1] < phrase_beats * 3]
     if third:
         peak = max(third, key=lambda n: n[0])
-        if peak[0] + 3 <= high:
-            peak[0] += 3
+        # Up a scale step, not a fixed interval: +3 semitones invents a note
+        # outside the key, which muddies exactly the reading this melody needs
+        # the analyser to get right.
+        step = scale[1] if len(scale) > 1 else 2
+        if peak[0] + step <= high:
+            peak[0] += step
         peak[3] = min(110, peak[3] + 14)
 
     notes.sort(key=lambda n: n[1])
-    return [(_pitch_name(m, prefer_flats), round(t, 3), round(d, 3), v)
-            for m, t, d, v in notes]
+
+    # Play it legato: every note runs to the next onset, except where a phrase
+    # deliberately breathes. A melody chopped into detached fragments reads as
+    # one undifferentiated phrase - the hand-written line it replaced averaged
+    # 1.8 beats a note with no gaps at all, and the analyser found four phrases
+    # in it against one in an earlier, choppier version of this.
+    for a, b in zip(notes, notes[1:]):
+        gap = b[1] - (a[1] + a[2])
+        if 0 < gap < PHRASE_REST_BEATS:
+            a[2] = b[1] - a[1]
+
+    # A melody is one voice: no note may outlast the next one's start. The
+    # rhythmic stretch and the legato pass above can both push a note past its
+    # successor, and even a 0.125 beat overlap is enough to wreck the analysis -
+    # one such overlap produced a single "phrase" 0.125 beats long, which
+    # collapsed the harmonic grid to one slot and yielded exactly one chord for
+    # a sixteen bar tune.
+    # Round before the overlap check, not after: rounding a note's start and
+    # length independently can put its end past the next onset again, and the
+    # analysis is sensitive to overlaps a thousandth of a beat wide.
+    for n in notes:
+        n[1] = round(n[1], 3)
+        n[2] = round(n[2], 3)
+
+    kept = []
+    for i, n in enumerate(notes):
+        nxt = notes[i + 1][1] if i + 1 < len(notes) else None
+        if nxt is not None and n[1] + n[2] > nxt:
+            n[2] = nxt - n[1]
+        if n[2] >= 0.125:            # anything shorter is not a note, it is a click
+            kept.append(n)
+    notes = kept
+
+    return [(_pitch_name(m, prefer_flats), t, d, v) for m, t, d, v in notes]
 
 
 # root, mode, whether the key is written with flats, and the register the tune
